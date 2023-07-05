@@ -64,7 +64,7 @@ public class Cup : MonoBehaviour
         Managers.Game.CalcMoney(_trans.GetComponent<Product>()._price);
         //Managers.Game.Money += _trans.GetComponent<Product>()._price;
 
-        Managers.Game.PopText(Managers.ToCurrencyString(_trans.GetComponent<Product>()._price), transform);
+        Managers.Game.PopText(_trans.GetComponent<Product>()._price, transform);
 
         if (isMoveCup)
             SetPopcornPos();

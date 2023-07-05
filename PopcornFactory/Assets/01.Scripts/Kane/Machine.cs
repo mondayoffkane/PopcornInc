@@ -209,7 +209,7 @@ public class Machine : MonoBehaviour
 
             CheckPrice(_panel);
             _gamemanager._stageManager.CheckButton();
-
+            Managers.Sound.Play("Money");
             SaveData();
         }
     }

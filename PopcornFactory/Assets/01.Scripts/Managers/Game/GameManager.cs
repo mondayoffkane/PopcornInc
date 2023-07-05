@@ -42,9 +42,29 @@ public class GameManager : MonoBehaviour
     public int Gem = 0;
     public GameObject _FloatingText;
 
+    public void AddMoney(double _value)
+    {
+        Money += _value;
+        Managers.GameUI.Money_Text.text = $"{Managers.ToCurrencyString(Money)}";
+        //Managers.
+        ES3.Save<double>("Money", Managers.Game.Money);
+        _stageManager.CheckButton();
+    }
+
     public void CalcMoney(double _value)
     {
-        Money += _value > 0 ? _value * (_stageManager._income_ugrade_level + 1) : _value;
+        if (_value > 0)
+        {
+            double _double = _stageManager.isRvDouble ? 2d : 1d;
+            Money += _value * (_stageManager._income_ugrade_level + 1) * _double;
+        }
+        else
+        {
+            Money += _value;
+        }
+
+
+        //Money += _value > 0 ? _value * (_stageManager._income_ugrade_level + 1) : _value;
         //Money += _value * (_stageManager._income_ugrade_level + 1);
         Managers.GameUI.Money_Text.text = $"{Managers.ToCurrencyString(Money)}";
         //Managers.
@@ -62,11 +82,14 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void PopText(string _str, Transform _trans)
+    public void PopText(double _value, Transform _trans)
     {
+        double _double = _stageManager.isRvDouble ? 2d : 1d;
+        _value *= _double;
+
         Transform _floatingText = Managers.Pool.Pop(_FloatingText, _trans).GetComponent<Transform>();
         _floatingText.localPosition = new Vector3(0f, 3f, 0f);
-        _floatingText.GetComponentInChildren<Text>().text = $"{_str}";
+        _floatingText.GetComponentInChildren<Text>().text = $"{Managers.ToCurrencyString(_value)}";
         _floatingText.DOLocalMoveY(4f, 1f).SetEase(Ease.Linear)
             .OnComplete(() => Managers.Pool.Push(_floatingText.GetComponent<Poolable>()));
     }

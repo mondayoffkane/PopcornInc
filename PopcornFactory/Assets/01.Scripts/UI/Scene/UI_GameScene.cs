@@ -21,6 +21,7 @@ public class UI_GameScene : UI_Scene
         AddParts_Upgrade_Button,
         AddUpgrade_Button,
         RV_Income_Double,
+        BigMoneyButton,
         AddStaff_Upgrade_Button,
         Income_Upgrade_Button,
         Sound_Button,
@@ -43,10 +44,12 @@ public class UI_GameScene : UI_Scene
 
 
     public Button AddStaff_Upgrade_Button, Income_Upgrade_Button, AddParts_Upgrade_Button,
-        Sound_Button, Vibe_Button, AddUpgrade_Button, RV_Income_Double;
+        Sound_Button, Vibe_Button, AddUpgrade_Button, RV_Income_Double
+        , BigMoneyButton;
 
     public Text Money_Text
-       , AddStaff_Price_Text, Income_Price_Text, AddParts_Price_Text, Gem_Text, UpgradeCountText;
+       , AddStaff_Price_Text, Income_Price_Text, AddParts_Price_Text, Gem_Text, UpgradeCountText
+        , RV_Income_TimeText;
 
     public GameObject Setting_Panel, Scroll_Panel,
         Worker_Hire,
@@ -81,7 +84,7 @@ public class UI_GameScene : UI_Scene
         Vibe_Button = GetButton(Buttons.Vibe_Button);
         AddUpgrade_Button = GetButton(Buttons.AddUpgrade_Button);
         RV_Income_Double = GetButton(Buttons.RV_Income_Double);
-
+        BigMoneyButton = GetButton(Buttons.BigMoneyButton);
 
 
 
@@ -91,7 +94,7 @@ public class UI_GameScene : UI_Scene
         AddParts_Price_Text = GetText(Texts.AddParts_Price_Text);
         Gem_Text = GetText(Texts.Gem_Text);
         UpgradeCountText = GetText(Texts.UpgradeCountText);
-
+        RV_Income_TimeText = GetText(Texts.RV_Income_TimeText);
 
 
 
@@ -147,6 +150,7 @@ public class UI_GameScene : UI_Scene
         // rv
 
         RV_Income_Double.AddButtonEvent(() => AdsManager.ShowRewarded(() => Managers.Game._stageManager.RV_Income_Double()));
+        BigMoneyButton.AddButtonEvent(() => AdsManager.ShowRewarded(() => Managers.Game._stageManager.RV_BigMoney()));
 
     } /// ========= end Set buttons
 
