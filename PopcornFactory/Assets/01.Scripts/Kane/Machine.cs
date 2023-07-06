@@ -142,7 +142,7 @@ public class Machine : MonoBehaviour
             }
             else
             {
-                _productPrice[i] = _productPrice[i - 1] + _productScope * i;
+                _productPrice[i] = _productPrice[i - 1] * 0.5d + _productScope * i + 0.5d;
             }
         }
 
@@ -174,7 +174,7 @@ public class Machine : MonoBehaviour
         _upgrade_PriceText.text = _level < (_maxLevel - 1)
             ? $"{Managers.ToCurrencyString(_upgradePrice[_level])}" : "Max";
 
-        _guageImg.fillAmount = ((_level + 1) % 10) * 0.1f == 0 ? 1f : ((_level + 1) % 10) * 0.1f;
+        _guageImg.fillAmount = ((_level + 1) % 10) * 0.1f; //== 0 ? 1f : ((_level + 1) % 10) * 0.1f;
 
         if ((_gamemanager.Money >= _upgradePrice[_level]) && (_level < _maxLevel - 1))
         {

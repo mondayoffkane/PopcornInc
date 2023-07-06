@@ -63,14 +63,14 @@ public class CameraMove : MonoBehaviour
         {
             _stageManager.AddParts(false);
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            _stageManager._staff_upgrade_level = 0;
-            _stageManager._income_ugrade_level = 0;
-            _stageManager._parts_upgrade_level = 0;
-            Managers.Game.Money = 0;
-            _stageManager.SaveData();
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    _stageManager._staff_upgrade_level = 0;
+        //    _stageManager._income_ugrade_level = 0;
+        //    _stageManager._parts_upgrade_level = 0;
+        //    Managers.Game.Money = 0;
+        //    _stageManager.SaveData();
+        //}
         if (Input.GetKey(KeyCode.W))
         {
             Camera.main.orthographicSize += 0.1f;
@@ -105,8 +105,15 @@ public class CameraMove : MonoBehaviour
             _endXY = _startXY;
 
             _startPos = transform.position;
-            if (!EventSystem.current.IsPointerOverGameObject()) // ui가 아닌곳을 눌렀을때 ui 끄기
+            if (!EventSystem.current.IsPointerOverGameObject())// ui가 아닌곳을 눌렀을때 ui 끄기
+            {
                 _stageManager.OffPopup();
+            }
+            else
+            {
+                return;
+
+            }
 
             Vector3 touchPos;
             Ray ray;
@@ -180,9 +187,14 @@ public class CameraMove : MonoBehaviour
                 _endXY = _startXY;
 
                 _startPos = transform.position;
-                if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)){
                _stageManager.OffPopup();
+                }
+            else
+            {
+                return;
 
+            }
 
                 Vector3 touchPos;
                 Ray ray;
