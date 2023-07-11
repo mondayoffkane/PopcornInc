@@ -8,6 +8,8 @@ TagManager:
   - CPI_Obj
   - Upgrade_Obj
   - WorkerBox
+  - Ball
+  - None
   layers:
   - Default
   - TransparentFX

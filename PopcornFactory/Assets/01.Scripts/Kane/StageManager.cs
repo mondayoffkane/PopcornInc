@@ -161,7 +161,9 @@ public class StageManager : MonoBehaviour
 
 
 
-        _popupPanel = Managers.Pool.Pop(Resources.Load<GameObject>("Upgrade_Panel"), _canvas.transform).transform;
+        //_popupPanel = Managers.Pool.Pop(Resources.Load<GameObject>("Upgrade_Panel"), _canvas.transform).transform;
+        //_popupPanel.gameObject.SetActive(false);
+        _popupPanel = _gameUi.Upgrade_Panel.transform;
         _popupPanel.gameObject.SetActive(false);
 
 
@@ -692,7 +694,7 @@ public class StageManager : MonoBehaviour
 
 
             _gameUi.BigMoneyButton.gameObject.SetActive(true);
-            _gameUi.BigMoneyButton.transform.DOLocalMoveX(420f, 1f).SetEase(Ease.Linear);
+            _gameUi.BigMoneyButton.transform.DOLocalMoveX(0, 1f).SetEase(Ease.Linear);
             _gameUi.BigMoneyButton.transform.GetChild(0).GetComponent<Text>().text = $"{"+"}{Managers.ToCurrencyString(bigMoney * 5d)}";
         }
         else
@@ -701,7 +703,7 @@ public class StageManager : MonoBehaviour
             _gameUi.UpgradeCountText.transform.parent.GetChild(1).gameObject.SetActive(true);
             _gameUi.UpgradeCountText.text = $"{upgradeCount} Upgrades";
             //_gameUi.BigMoneyButton.gameObject.SetActive(false);
-            _gameUi.BigMoneyButton.transform.DOLocalMoveX(930f, 1f).SetEase(Ease.Linear);
+            _gameUi.BigMoneyButton.transform.DOLocalMoveX(380, 1f).SetEase(Ease.Linear);
 
         }
 

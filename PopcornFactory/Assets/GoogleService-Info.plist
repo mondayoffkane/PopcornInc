@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>677605951499-u2kkt4r9t99uq9e3kk7u5lpe08soao1p.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.677605951499-u2kkt4r9t99uq9e3kk7u5lpe08soao1p</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBq7SY4TdThqgeE3L6HUEbzVqKFKdwBFAU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>677605951499</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mondayoff.popcorninc</string>
+	<key>PROJECT_ID</key>
+	<string>popcorn-inc</string>
+	<key>STORAGE_BUCKET</key>
+	<string>popcorn-inc.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:677605951499:ios:9d41f13e30d5c29a101f0e</string>
+</dict>
+</plist>

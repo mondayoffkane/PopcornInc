@@ -29,6 +29,7 @@ public class UI_GameScene : UI_Scene
     }
     enum GameObjects
     {
+        Upgrade_Panel,
         Setting_Panel,
         Scroll_Panel,
         Content,
@@ -59,7 +60,8 @@ public class UI_GameScene : UI_Scene
         Upg2_Income,
         Upg2_Speed,
         Upg3_Income,
-        Upg3_Speed;
+        Upg3_Speed
+        , Upgrade_Panel;
 
 
     // =============================================
@@ -109,7 +111,7 @@ public class UI_GameScene : UI_Scene
         Upg2_Speed = GetObject(GameObjects.Upg2_Speed);
         Upg3_Income = GetObject(GameObjects.Upg3_Income);
         Upg3_Speed = GetObject(GameObjects.Upg3_Speed);
-
+        Upgrade_Panel = GetObject(GameObjects.Upgrade_Panel);
 
 
         // ======================================

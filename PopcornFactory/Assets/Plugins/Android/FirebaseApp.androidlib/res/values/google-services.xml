@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="gcm_defaultSenderId" translatable="false">677605951499</string>
+  <string name="google_storage_bucket" translatable="false">popcorn-inc.appspot.com</string>
+  <string name="project_id" translatable="false">popcorn-inc</string>
+  <string name="google_api_key" translatable="false">AIzaSyCiZkkjxFyMAlf26YK_PCQvpBgvikJzY90</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCiZkkjxFyMAlf26YK_PCQvpBgvikJzY90</string>
+  <string name="google_app_id" translatable="false">1:677605951499:android:6cd998bcee52e678101f0e</string>
+  <string name="default_web_client_id" translatable="false">677605951499-a8t6c99p7vsqh998je07ja25271clejo.apps.googleusercontent.com</string>
+</resources>
