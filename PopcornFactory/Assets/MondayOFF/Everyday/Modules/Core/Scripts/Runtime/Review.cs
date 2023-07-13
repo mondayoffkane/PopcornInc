@@ -87,7 +87,6 @@ namespace MondayOFF {
 #else
 
     public static class Review {
-        private static ReviewManager _reviewManager = new ReviewManager();
         public static void RequestReview() {
             EverydayLogger.Warn("Review is not supported on this platform");
         }

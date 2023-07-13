@@ -16,6 +16,7 @@ namespace MondayOFF {
             CopyGradleTemplate("mainTemplate.gradle");
             CopyGradleTemplate("launcherTemplate.gradle");
             EnableMultiDex();
+            FixLintOptions();
         }
 
         private static void CopyAndroidManifest() {
@@ -85,6 +86,60 @@ namespace MondayOFF {
 
                 if (isModified) {
                     File.WriteAllLines(targetPath, fileContent);
+                }
+            } catch (System.Exception e) {
+                Debug.Log(e.ToString());
+            }
+        }
+
+        private static void FixLintOptions() {
+            try {
+                const string mainTemplateTargetPath = "Assets/Plugins/Android/mainTemplate.gradle";
+                const string launcherTemplateTargetPath = "Assets/Plugins/Android/launcherTemplate.gradle";
+
+                const string lintOptions = "lintOptions {";
+                const string checkReleaseBuilds = "        checkReleaseBuilds false";
+
+                bool hasCheckReleaseBuilds = false;
+
+                var fileContent = File.ReadAllLines(mainTemplateTargetPath).ToList();
+                foreach (var item in fileContent) {
+                    if (item.Contains(checkReleaseBuilds)) {
+                        hasCheckReleaseBuilds = true;
+                    }
+                }
+                bool isModified = false;
+                for (int i = 0; i < fileContent.Count; ++i) {
+                    var line = fileContent[i];
+                    if (!hasCheckReleaseBuilds && line.Contains(lintOptions)) {
+                        fileContent.Insert(i + 1, checkReleaseBuilds);
+                        isModified = true;
+                    }
+                }
+
+                if (isModified) {
+                    File.WriteAllLines(mainTemplateTargetPath, fileContent);
+                }
+
+                hasCheckReleaseBuilds = false;
+
+                fileContent = File.ReadAllLines(launcherTemplateTargetPath).ToList();
+                foreach (var item in fileContent) {
+                    if (item.Contains(checkReleaseBuilds)) {
+                        hasCheckReleaseBuilds = true;
+                    }
+                }
+                isModified = false;
+                for (int i = 0; i < fileContent.Count; ++i) {
+                    var line = fileContent[i];
+                    if (!hasCheckReleaseBuilds && line.Contains(lintOptions)) {
+                        fileContent.Insert(i + 1, checkReleaseBuilds);
+                        isModified = true;
+                    }
+                }
+
+                if (isModified) {
+                    File.WriteAllLines(launcherTemplateTargetPath, fileContent);
                 }
             } catch (System.Exception e) {
                 Debug.Log(e.ToString());

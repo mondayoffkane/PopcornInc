@@ -52,6 +52,10 @@ namespace MondayOFF {
         [SerializeField] internal bool initializeAdvertyOnAwake = true;
 
 #if UNITY_IOS
+        internal string interstitialAdUnitId => iOS_IS_AdUnitID;
+        internal string rewardedAdUnitId => iOS_RV_AdUnitID;
+        internal string bannerAdUnitId => iOS_BN_AdUnitID;
+
         internal string playOnAPIKey => iOS_PlayOnApiKey;
 
         internal string advertyApiKey => iOS_AdvertyApiKey;
@@ -61,6 +65,10 @@ namespace MondayOFF {
         internal string apsRewardedSlotId => iOS_APS_RV_SlotID;
         internal string apsBannerSlotId => iOS_APS_BN_SlotID;
 #else
+        internal string interstitialAdUnitId => AOS_IS_AdUnitID;
+        internal string rewardedAdUnitId => AOS_RV_AdUnitID;
+        internal string bannerAdUnitId => AOS_BN_AdUnitID;
+
         internal string playOnAPIKey => AOS_PlayOnApiKey;
         internal string advertyApiKey => AOS_AdvertyApiKey;
 
@@ -72,17 +80,6 @@ namespace MondayOFF {
         internal bool hasInterstitial => !string.IsNullOrEmpty(interstitialAdUnitId);
         internal bool hasRewarded => !string.IsNullOrEmpty(rewardedAdUnitId);
         internal bool hasBanner => !string.IsNullOrEmpty(bannerAdUnitId);
-
-        internal string interstitialAdUnitId => interstitialAdUnitIDs[interstitialAdUnitLevel];
-        internal string rewardedAdUnitId => rewardedAdUnitIDs[rewardedAdUnitLevel];
-        internal string bannerAdUnitId => bannerAdUnitIDs[bannerAdUnitLevel];
-        internal AdUnitLevel interstitialAdUnitLevel = AdUnitLevel.Backup;
-        internal AdUnitLevel rewardedAdUnitLevel = AdUnitLevel.Backup;
-        internal AdUnitLevel bannerAdUnitLevel = AdUnitLevel.Backup;
-
-        private Dictionary<AdUnitLevel, string> interstitialAdUnitIDs = default;
-        private Dictionary<AdUnitLevel, string> rewardedAdUnitIDs = default;
-        private Dictionary<AdUnitLevel, string> bannerAdUnitIDs = default;
 
         internal System.Func<bool> IsNoAds = () => false;
 
@@ -108,44 +105,6 @@ namespace MondayOFF {
             }
 
             return false;
-        }
-
-        internal void Initialize() {
-            // Backup check on initialization
-            if (Retention.Days < BACKUP_RETENTION_THRESHOLD) {
-                interstitialAdUnitLevel = rewardedAdUnitLevel = bannerAdUnitLevel = AdUnitLevel.Default;
-            } else {
-                interstitialAdUnitLevel = rewardedAdUnitLevel = bannerAdUnitLevel = AdUnitLevel.Backup;
-            }
-
-            interstitialAdUnitIDs = new Dictionary<AdUnitLevel, string>() {
-#if UNITY_IOS
-                {AdUnitLevel.Default, iOS_IS_AdUnitID},
-                {AdUnitLevel.Backup, string.IsNullOrEmpty(iOS_IS_Backup_AdUnitID)? iOS_IS_AdUnitID : iOS_IS_Backup_AdUnitID},
-#else
-            { AdUnitLevel.Backup, AOS_IS_AdUnitID},
-                { AdUnitLevel.Default, string.IsNullOrEmpty(AOS_IS_Backup_AdUnitID)? AOS_IS_AdUnitID : AOS_IS_Backup_AdUnitID },
-#endif
-        };
-
-            rewardedAdUnitIDs = new Dictionary<AdUnitLevel, string>(){
-#if UNITY_IOS
-                {AdUnitLevel.Default, iOS_RV_AdUnitID},
-                {AdUnitLevel.Backup, string.IsNullOrEmpty(iOS_RV_Backup_AdUnitID)? iOS_RV_AdUnitID : iOS_RV_Backup_AdUnitID},
-#else
-                {AdUnitLevel.Backup, AOS_RV_AdUnitID},
-                {AdUnitLevel.Default, string.IsNullOrEmpty(AOS_RV_Backup_AdUnitID)? AOS_RV_AdUnitID : AOS_RV_Backup_AdUnitID},
-#endif
-            };
-            bannerAdUnitIDs = new Dictionary<AdUnitLevel, string>(){
-#if UNITY_IOS
-                {AdUnitLevel.Default, iOS_BN_AdUnitID},
-                {AdUnitLevel.Backup, string.IsNullOrEmpty(iOS_BN_Backup_AdUnitID)? iOS_BN_AdUnitID : iOS_BN_Backup_AdUnitID},
-#else
-                {AdUnitLevel.Backup, AOS_BN_AdUnitID},
-                {AdUnitLevel.Default, string.IsNullOrEmpty(AOS_BN_Backup_AdUnitID)? AOS_BN_AdUnitID : AOS_BN_Backup_AdUnitID},
-#endif
-            };
         }
     }
 

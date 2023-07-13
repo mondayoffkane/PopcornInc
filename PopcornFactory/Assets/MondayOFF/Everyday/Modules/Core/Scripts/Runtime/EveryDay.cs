@@ -1,37 +1,36 @@
 using UnityEngine;
 
-namespace MondayOFF {
-    public static partial class EveryDay {
-        public const string Version = "3.0.26";
+namespace MondayOFF
+{
+    public static partial class EveryDay
+    {
+        public const string Version = "3.0.27";
 
         internal static System.Action onEverydayInitialized = default;
         internal static bool isInitialized = false;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        private static void AfterSceneLoad() {
+        //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        public static void AfterSceneLoad()
+        {
             isInitialized = false;
             var initMessage =
 @$"
 ================== Everyday {Version} ==================
     Log Level: {EverydaySettings.Instance.logLevel}
     Test Mode: {EverydaySettings.Instance.isTestMode}
-    Retention: {Retention.Days}
 ========================================================";
             Debug.Log(initMessage);
 
-            var isGdprApplies = GDPR.IsApplicable();
-            PlayerPrefs.SetInt("IABTCF_gdprApplies", isGdprApplies ? 1 : 0);
-
-            EverydayAppTracking.RequestTrackingAuthorization(Initialize);
+            // Privacy.Initialize(Initialize);
+            Privacy.RequestTrackingAuthorization(Initialize);
         }
 
-        private static void Initialize(AttAuthorizationStatus consentStatus) {
-            if (isInitialized) {
+        private static void Initialize(AttAuthorizationStatus consentStatus)
+        {
+            if (isInitialized)
+            {
                 return;
             }
-
-
-            EverydaySettings.AdSettings.Initialize();
 
             EverydayLogger.Info($"Consent status: {consentStatus}");
 
@@ -43,7 +42,8 @@ namespace MondayOFF {
 
             // Initialize Singular
             EverydayLogger.Info("Initializing Singular SDK");
-            if (SingularSDK.instance != null) {
+            if (SingularSDK.instance != null)
+            {
                 GameObject.Destroy(SingularSDK.instance);
                 SingularSDK.instance = null;
             }
@@ -60,7 +60,8 @@ namespace MondayOFF {
             MaxSdk.InitializeSdk();
         }
 
-        private static void OnMaxSdkInitialized(MaxSdk.SdkConfiguration sdkConfiguration) {
+        private static void OnMaxSdkInitialized(MaxSdk.SdkConfiguration sdkConfiguration)
+        {
             // Send Max AdInfo to Singular
             MaxSdkCallbacks.Interstitial.OnAdRevenuePaidEvent -= SingularAdDataSender.SendAdData;
             MaxSdkCallbacks.Rewarded.OnAdRevenuePaidEvent -= SingularAdDataSender.SendAdData;
@@ -72,7 +73,8 @@ namespace MondayOFF {
 
             // Initialize Ads Manager
             AdsManager.PrepareManager();
-            if (EverydaySettings.AdSettings.initializeOnLoad) {
+            if (EverydaySettings.AdSettings.initializeOnLoad)
+            {
                 AdsManager.Initialize();
             }
 

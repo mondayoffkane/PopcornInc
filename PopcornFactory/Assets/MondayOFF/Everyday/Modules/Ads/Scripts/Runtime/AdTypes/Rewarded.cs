@@ -67,9 +67,6 @@ namespace MondayOFF {
                 LoadRewardedAd();
             };
 
-            rewardedVideoAd.PutCustomTarget("us_privacy", AdsManager.US_PRIVACY_STRING);
-            rewardedVideoAd.PutCustomTarget("aps_privacy", AdsManager.US_PRIVACY_STRING.Substring(0, 3));
-
             rewardedVideoAd.LoadAd();
         }
 
@@ -95,11 +92,7 @@ namespace MondayOFF {
             _retryAttempt = Mathf.Min(_retryAttempt + 1, MaxRetryCount);
             int retryDelay = _retryAttempt * RetryInterval;
 
-            if (EverydaySettings.AdSettings.rewardedAdUnitLevel == AdUnitLevel.Default) {
-                AdsManager.ChangeAdUnitLevel(AdType.Rewarded, AdUnitLevel.Backup);
-            } else {
-                TryLoadingAfterDelay(System.TimeSpan.FromSeconds(retryDelay));
-            }
+            TryLoadingAfterDelay(System.TimeSpan.FromSeconds(retryDelay));
         }
 
         private void OnAdDisplayFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo) {

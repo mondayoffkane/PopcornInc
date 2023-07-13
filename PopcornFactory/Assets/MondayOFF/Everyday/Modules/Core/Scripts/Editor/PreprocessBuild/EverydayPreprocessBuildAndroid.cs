@@ -21,6 +21,10 @@ namespace MondayOFF {
             VerifySingularSDK(SINGULAR_SDK_FILENAME);
             VerifySingularSDK(SINGULAR_UNITYBRIDGE_FILENAME);
 
+            if (PlayerSettings.Android.minSdkVersion < AndroidSdkVersions.AndroidApiLevel24) {
+                PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel24;
+            }
+
             ConfigProguard();
             ConfigAndroidManifest();
         }

@@ -82,9 +82,10 @@ namespace MondayOFF {
 
             var mainThreadDispatcherInstance = UnityMainThreadDispatcher.Instance();
             mainThreadDispatcherInstance.gameObject.AddComponent<ApplicationLifecycleTracker>();
-
-            PlayOnSDK.SetGdprConsent(AdsManager.HAS_USER_CONSENT);
-            PlayOnSDK.SetDoNotSell(!AdsManager.HAS_USER_CONSENT, AdsManager.US_PRIVACY_STRING);
+            if (Privacy.IS_GDPR_APPLICABLE == 1) {
+                PlayOnSDK.SetGdprConsent(Privacy.HAS_ATT_CONSENT, Privacy.GDPR_STRING);
+            }
+            PlayOnSDK.SetDoNotSell(!Privacy.HAS_ATT_CONSENT, Privacy.CCPA_STRING);
             PlayOnSDK.SetIsChildDirected(false);
 
             _adUnit.AdCallbacks.OnImpression += OnAdImpression;

@@ -23,7 +23,16 @@ namespace MondayOFF {
             if (EverydaySettings.Instance.logLevel >= LogLevel.Error)
 #endif
             UnityEngine.Debug.LogError($"{EVERYDAY_TAG}{ERROR_TAG} {message}");
+        }
 
+#if EVERYDAY_NO_LOG
+        [Conditional("EVERYDAY_DONT_SHOW_LOGGING_NAME_SOMETHING_NEVER_USED")]
+#endif
+        public static void Error(object message) {
+#if !UNITY_EDITOR
+            if (EverydaySettings.Instance.logLevel >= LogLevel.Error)
+#endif
+            UnityEngine.Debug.LogError($"{EVERYDAY_TAG}{ERROR_TAG} {message}");
         }
 
 #if EVERYDAY_NO_LOG

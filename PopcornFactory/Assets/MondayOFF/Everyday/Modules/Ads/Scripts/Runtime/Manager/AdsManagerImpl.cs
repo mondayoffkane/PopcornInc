@@ -35,32 +35,6 @@ namespace MondayOFF {
             return (_activeAdTypes & adType) == adType;
         }
 
-        internal static void ChangeAdUnitLevel(in AdType adType, in AdUnitLevel adUnitLevel) {
-            switch (adType) {
-                case AdType.Interstitial:
-                    DisableInterstitial();
-                    _activeAdTypes |= AdType.Interstitial;
-                    EverydaySettings.AdSettings.interstitialAdUnitLevel = adUnitLevel;
-                    CreateInterstitial();
-                    break;
-                case AdType.Rewarded:
-                    DisableRewarded();
-                    _activeAdTypes |= AdType.Rewarded;
-                    EverydaySettings.AdSettings.rewardedAdUnitLevel = adUnitLevel;
-                    CreateRewarded();
-                    break;
-                case AdType.Banner:
-                    DisableBanner();
-                    _activeAdTypes |= AdType.Banner;
-                    EverydaySettings.AdSettings.bannerAdUnitLevel = adUnitLevel;
-                    CreateBanner();
-                    break;
-                default:
-                    EverydayLogger.Error("AdType is not supported!");
-                    break;
-            }
-        }
-
 #if UNITY_EDITOR
         private static void OnEditorStop() {
             EverydayLogger.Info("Stop Playmode Ads Manager");
@@ -90,8 +64,6 @@ namespace MondayOFF {
                 return;
             }
 
-            EverydayLogger.Info($"IS Ad Unit Level: {EverydaySettings.AdSettings.interstitialAdUnitLevel}\nRV Ad Unit Level: {EverydaySettings.AdSettings.rewardedAdUnitLevel}\nBN Ad Unit Level: {EverydaySettings.AdSettings.bannerAdUnitLevel}");
-
             if (EverydaySettings.AdSettings.HasAPSKey()) {
                 EverydayLogger.Info($"Initializing APS");
                 Amazon.Initialize(EverydaySettings.AdSettings.apsAppId);
@@ -99,7 +71,7 @@ namespace MondayOFF {
                 Amazon.UseGeoLocation(true);
                 // Amazon.SetConsentStatus(AdsManager.HAS_USER_CONSENT ? Amazon.ConsentStatus.EXPLICIT_YES : Amazon.ConsentStatus.EXPLICIT_NO);
 #if UNITY_IOS
-                Amazon.SetAPSPublisherExtendedIdFeatureEnabled(true);
+                                Amazon.SetAPSPublisherExtendedIdFeatureEnabled(true);
 #endif
                 // Amazon.EnableTesting(true);
                 // Amazon.EnableLogging(true);

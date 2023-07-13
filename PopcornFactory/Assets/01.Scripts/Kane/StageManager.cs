@@ -186,7 +186,7 @@ public class StageManager : MonoBehaviour
 
         //_gameUi.UpgradeCountText.transform.parent.gameObject.SetActive(false);
 
-        StartCoroutine(Cor_start());
+        //StartCoroutine(Cor_start());
         StartCoroutine(Cor_Interstial());
 
 
@@ -381,6 +381,7 @@ public class StageManager : MonoBehaviour
         //_staff_upgrade_level++;
         //SaveData();
         CheckButton();
+        Debug.Log("check Point");
 
     }
 

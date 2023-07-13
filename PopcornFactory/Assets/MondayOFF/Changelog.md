@@ -1,3 +1,8 @@
+# v3.0.27
+
+- [Privacy] [IN TEST] Uses Google's UMP for GDPR applicable region
+- [Settings] `Facebook App ID`, `Facebook Client Token`, `Bundle Id (Package Name)`, and `AdMob ID` are now editable in the settings window
+
 # v3.0.26
 
 - [Ads] Fixed a bug where `no_ads`was not working properly when restored

@@ -30,15 +30,12 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
-    - ACTk.Editor
-    - ACTk.Runtime
     - AdvertyPlatformSpecific
     - Amazon.Editor
     - Amazon.Scripts
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
     - Cinemachine
-    - CodeStage.Maintainer.Editor
     - Coffee.UIParticle
     - Coffee.UIParticle.Editor
     - Everyday
@@ -72,7 +69,7 @@ MonoBehaviour:
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
-  autoUpdateReferences: 1
+  autoUpdateReferences: 0
   addAllPrefabsToManager: 1
   logDebugInfo: 0
   logWarnings: 1

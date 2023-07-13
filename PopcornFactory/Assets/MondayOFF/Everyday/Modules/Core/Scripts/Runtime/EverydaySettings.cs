@@ -36,6 +36,6 @@ namespace MondayOFF {
         [SerializeField] internal LogLevel logLevel = LogLevel.Warning;
         [SerializeField] internal bool isTestMode = false;
         [SerializeField] internal AdSettings adSettings = default;
-        [SerializeField] internal string appId = "";
+        [SerializeField] internal string gameId = "";
     }
 }

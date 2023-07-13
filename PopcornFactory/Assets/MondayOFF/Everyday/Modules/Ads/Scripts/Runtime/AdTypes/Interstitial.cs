@@ -78,8 +78,6 @@ namespace MondayOFF {
                 MaxSdk.SetInterstitialLocalExtraParameter(EverydaySettings.AdSettings.interstitialAdUnitId, "amazon_ad_error", adError.GetAdError());
                 LoadInterstitialAd();
             };
-            interstitialVideoAd.PutCustomTarget("us_privacy", AdsManager.US_PRIVACY_STRING);
-            interstitialVideoAd.PutCustomTarget("aps_privacy", AdsManager.US_PRIVACY_STRING.Substring(0, 3));
 
             interstitialVideoAd.LoadAd();
         }
@@ -107,11 +105,7 @@ namespace MondayOFF {
             _retryAttempt = Mathf.Min(_retryAttempt + 1, MaxRetryCount);
             int retryDelay = _retryAttempt * RetryInterval;
 
-            if (EverydaySettings.AdSettings.interstitialAdUnitLevel == AdUnitLevel.Default) {
-                AdsManager.ChangeAdUnitLevel(AdType.Interstitial, AdUnitLevel.Backup);
-            } else {
-                TryLoadingAfterDelay(System.TimeSpan.FromSeconds(retryDelay));
-            }
+            TryLoadingAfterDelay(System.TimeSpan.FromSeconds(retryDelay));
         }
 
         private void OnAdDisplayFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo) {

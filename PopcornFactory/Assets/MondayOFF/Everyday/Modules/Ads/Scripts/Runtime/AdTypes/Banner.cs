@@ -59,9 +59,6 @@ namespace MondayOFF {
                 CreateMaxBannerAd();
             };
 
-            apsBanner.PutCustomTarget("us_privacy", AdsManager.US_PRIVACY_STRING);
-            apsBanner.PutCustomTarget("aps_privacy", AdsManager.US_PRIVACY_STRING.Substring(0, 3));
-
             apsBanner.LoadAd();
         }
 
@@ -77,9 +74,7 @@ namespace MondayOFF {
 
         private void OnAdLoadFailed(string adUnitId, MaxSdk.ErrorInfo errorInfo) {
             EverydayLogger.Info("Banner ad failed to load with error code: " + errorInfo.Code + ", and message: " + errorInfo.Message);
-            if (EverydaySettings.AdSettings.bannerAdUnitLevel == AdUnitLevel.Default) {
-                AdsManager.ChangeAdUnitLevel(AdType.Banner, AdUnitLevel.Backup);
-            }
+            CreateMaxBannerAd();
         }
     }
 }

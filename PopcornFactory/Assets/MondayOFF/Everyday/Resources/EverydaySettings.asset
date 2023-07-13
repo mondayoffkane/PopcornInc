@@ -19,7 +19,7 @@ MonoBehaviour:
     showBannerOnLoad: 1
     adInitializationOrder: 84
     adInitializationDelay: 2
-    interstitialInterval: 60
+    interstitialInterval: 30
     resetTimerOnRewarded: 1
     bannerPosition: 7
     AOS_IS_AdUnitID: 045769d98b24bde0
@@ -55,4 +55,4 @@ MonoBehaviour:
       playOnLogoOffset: {x: 0, y: 150}
       playOnLogoSize: 64
     initializeAdvertyOnAwake: 1
-  appId: 
+  gameId: 
