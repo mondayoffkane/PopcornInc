@@ -10,6 +10,8 @@ TagManager:
   - WorkerBox
   - Ball
   - None
+  - Bullet
+  - Gate
   layers:
   - Default
   - TransparentFX
