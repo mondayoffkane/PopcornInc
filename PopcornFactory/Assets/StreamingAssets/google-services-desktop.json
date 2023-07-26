@@ -7,29 +7,39 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:677605951499:ios:9d41f13e30d5c29a101f0e",
+        "mobilesdk_app_id": "1:677605951499:android:6cd998bcee52e678101f0e",
         "android_client_info": {
           "package_name": "com.mondayoff.popcorninc"
         }
       },
+      "oauth_client": [
+        {
+          "client_id": "677605951499-a8t6c99p7vsqh998je07ja25271clejo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyBq7SY4TdThqgeE3L6HUEbzVqKFKdwBFAU"
+          "current_key": "AIzaSyCiZkkjxFyMAlf26YK_PCQvpBgvikJzY90"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 0
-        },
         "appinvite_service": {
-          "status": 1
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677605951499-a8t6c99p7vsqh998je07ja25271clejo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "677605951499-u2kkt4r9t99uq9e3kk7u5lpe08soao1p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mondayoff.popcorninc"
+              }
+            }
+          ]
         }
-      },
-      "oauth_client": [
-        {
-          "client_id": "677605951499-u2kkt4r9t99uq9e3kk7u5lpe08soao1p.apps.googleusercontent.com"
-        }
-      ]
+      }
     }
   ],
   "configuration_version": "1"
