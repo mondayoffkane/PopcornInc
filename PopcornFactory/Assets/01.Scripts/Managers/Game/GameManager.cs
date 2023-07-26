@@ -20,9 +20,20 @@ public class GameManager : MonoBehaviour
 
     public void Init()
     {
-        _stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
+
+        //GameObject[] _obj = GameObject.FindGameObjectsWithTag("StageManager");
+
+        //foreach (GameObject _stagemanager in _obj)
+        //{
+        //    _allstageManagers[_stagemanager.GetComponent<StageManager>()._stageLevel] = _stagemanager.GetComponent<StageManager>();
+        //}
+
+        _stageManager = _allstageManagers[0];
+        //_stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
         _FloatingText = Resources.Load<GameObject>("Floating");
         //CalcMoney(0);
+
+
     }
     public void Clear()
     {
@@ -36,8 +47,24 @@ public class GameManager : MonoBehaviour
 
     /////////// ==============================
 
-    public StageManager _stageManager;
+    public StageManager[] _allstageManagers = new StageManager[3];
 
+    public StageManager _StageManager;
+    public StageManager _stageManager
+    {
+        get
+        {
+            if (_StageManager == null)
+            {
+                _StageManager = _allstageManagers[0];
+            }
+            return _StageManager;
+        }
+        set
+        {
+            _StageManager = _stageManager;
+        }
+    }
     public double Money = 0f;
     public int Gem = 0;
     public GameObject _FloatingText;

@@ -143,12 +143,10 @@ public class Staff : MonoBehaviour
                             if (_productStack.Count > 0)
                             {
                                 _productType = _productStack.Peek()._productType;
-                                //_agent.areaMask = 1;
-
 
                                 switch (_productType)
                                 {
-                                    case ProductType.Corn:
+                                    case ProductType.BaseCorn:
                                         if (_stageManager._cupObjs[0].gameObject.activeSelf == false)
                                         {
                                             _target = _stageManager._tableList[1].transform;
@@ -162,10 +160,10 @@ public class Staff : MonoBehaviour
                                         }
                                         break;
 
-                                    case ProductType.PopCorn_base:
+                                    case ProductType.KernelCorn:
                                         if (_stageManager._cupObjs[1].gameObject.activeSelf == false)
                                         {
-                                            _target = _stageManager._tableList[2].transform;
+                                            _target = _stageManager._activeTableList[2].transform;
                                             _table = _target.GetComponent<Table>();
                                         }
                                         else
@@ -176,10 +174,24 @@ public class Staff : MonoBehaviour
                                         }
                                         break;
 
-                                    case ProductType.Popcorn_1:
-                                    case ProductType.Popcorn_2:
-                                    case ProductType.Popcorn_3:
-                                        _target = _stageManager._cupObjs[2].transform;
+                                    case ProductType.MixCorn:
+                                        if (_stageManager._cupObjs[2].gameObject.activeSelf == false)
+                                        {
+                                            _target = _stageManager._activeTableList[3].transform;
+                                            _table = _target.GetComponent<Table>();
+                                        }
+                                        else
+                                        {
+                                            _target = _stageManager._cupObjs[2].transform;
+                                            _cup = _target.GetComponent<Cup>();
+
+                                        }
+                                        break;
+
+
+                                    case ProductType.PopCorn_base:
+
+                                        _target = _stageManager._cupObjs[3].transform;
                                         _cup = _target.GetComponent<Cup>();
 
                                         break;
@@ -202,7 +214,7 @@ public class Staff : MonoBehaviour
 
                     switch (_productType)
                     {
-                        case ProductType.Corn:
+                        case ProductType.BaseCorn:
                             if (_stageManager._cupObjs[0].gameObject.activeSelf == false)
                             {
                                 _target = _stageManager._tableList[1].transform;
@@ -216,10 +228,10 @@ public class Staff : MonoBehaviour
                             }
                             break;
 
-                        case ProductType.PopCorn_base:
+                        case ProductType.KernelCorn:
                             if (_stageManager._cupObjs[1].gameObject.activeSelf == false)
                             {
-                                _target = _stageManager._activeTableList[Random.Range(0, _stageManager._activeTableList.Count)].transform;
+                                _target = _stageManager._activeTableList[1].transform;
                                 _table = _target.GetComponent<Table>();
                             }
                             else
@@ -230,10 +242,24 @@ public class Staff : MonoBehaviour
                             }
                             break;
 
-                        case ProductType.Popcorn_1:
-                        case ProductType.Popcorn_2:
-                        case ProductType.Popcorn_3:
-                            _target = _stageManager._cupObjs[2].transform;
+                        case ProductType.MixCorn:
+                            if (_stageManager._cupObjs[2].gameObject.activeSelf == false)
+                            {
+                                _target = _stageManager._activeTableList[2].transform;
+                                _table = _target.GetComponent<Table>();
+                            }
+                            else
+                            {
+                                _target = _stageManager._cupObjs[2].transform;
+                                _cup = _target.GetComponent<Cup>();
+
+                            }
+                            break;
+
+
+                        case ProductType.PopCorn_base:
+
+                            _target = _stageManager._cupObjs[3].transform;
                             _cup = _target.GetComponent<Cup>();
 
                             break;
@@ -289,18 +315,11 @@ public class Staff : MonoBehaviour
 
     public void FindWork()
     {
-        //_target = _stageManager._machineList[Random.Range(0, _stageManager._machineList.Count)].transform;
-        //_table = _target.GetComponent<Machine>()._table;
-        //_table = _stageManager._targetList[Random.Range(0, _stageManager._targetList.Count)];
 
-
-        //int _num = Random.Range(0, _stageManager._targetList.Count);
         _target = ReFind();
 
-        //_target = _stageManager._targetList[Random.Range(0, _stageManager._targetList.Count)].transform;
-        _table = _target.GetComponent<Table>();
 
-        //_agent.areaMask = 9;
+        _table = _target.GetComponent<Table>();
 
 
         SetDest(_target);

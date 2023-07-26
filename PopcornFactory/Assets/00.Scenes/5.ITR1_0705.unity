@@ -753,7 +753,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh539780
+  m_Name: pb_Mesh55106
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2044,7 +2044,7 @@ MonoBehaviour:
   _table: {fileID: 363924188}
   _x: 0
   _z: 0
-  _machineType: 1
+  _machineType: 3
   isAutoSpawn: 0
   _currentCount: 0
   _spawnPos: {fileID: 3924232458236407105}
@@ -94626,7 +94626,7 @@ MonoBehaviour:
   _table: {fileID: 8147100752726153255}
   _x: 0
   _z: 0
-  _machineType: 0
+  _machineType: 2
   isAutoSpawn: 1
   _currentCount: 0
   _spawnPos: {fileID: 0}

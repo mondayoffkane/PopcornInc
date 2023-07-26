@@ -31,6 +31,8 @@ public class StageManager : MonoBehaviour
     public Machine[] _upgrade_Obj;
 
     public GameObject[] _mapObjs;
+    public GameObject[] _mapOffObjs;
+
     public GameObject[] _unLockObjs;
 
     public List<Table> _targetList = new List<Table>();
@@ -76,7 +78,7 @@ public class StageManager : MonoBehaviour
     CameraMove _cam;
     Transform _partsbutton_Trans;
 
-    public Vector3[] _popupOffset = new Vector3[3];
+    public Vector3[] _popupOffset = new Vector3[4];
     public Vector3 _addpartsOffset = new Vector3();
 
     [SerializeField] List<Staff> _staffList = new List<Staff>();
@@ -99,6 +101,7 @@ public class StageManager : MonoBehaviour
     private void Start()
     {
         _gameManager = Managers.Game;
+        _gameManager._allstageManagers[_stageLevel] = this;
         _navmeshsurface = GetComponent<NavMeshSurface>();
 
 
@@ -223,6 +226,7 @@ public class StageManager : MonoBehaviour
     {
         _targetMachine_Trans.GetComponent<Machine>().isPress = true;
         _targetMachine_Trans.GetComponent<Machine>().UpgradeMachine();
+        _cam.GetComponent<CameraMove>().isClick = false;
     }
 
     void OnPointerUp(PointerEventData data)
@@ -253,8 +257,8 @@ public class StageManager : MonoBehaviour
 
     public void SetTrans()
     {
-        transform.eulerAngles = Vector3.up * 30f;
-        transform.position = new Vector3(-10.5f, 0f, 0f);
+        //transform.eulerAngles = Vector3.up * 30f;
+        //transform.position = new Vector3(-10.5f, 0f, 0f);
 
         SettingMap();
     }
@@ -307,38 +311,40 @@ public class StageManager : MonoBehaviour
             {
                 case 0:
                     _cupObjs[0].gameObject.SetActive(false);
-                    _mapObjs[0].SetActive(true);
                     _cupObjs[1].gameObject.SetActive(true);
                     _targetList.Add(_tableList[1]);
+                    _activeTableList.Add(_tableList[1]);
                     _partsbutton_Trans = _cupObjs[1];
                     break;
 
                 case 1:
                     _cupObjs[1].gameObject.SetActive(false);
+                    _cupObjs[2].gameObject.SetActive(true);
+                    _mapObjs[0].SetActive(true);
+                    _mapOffObjs[0].SetActive(false);
                     _mapObjs[1].SetActive(true);
-                    _mapObjs[2].SetActive(true);
 
                     _targetList.Add(_tableList[2]);
                     _activeTableList.Add(_tableList[2]);
-                    _cupObjs[2].gameObject.SetActive(true);
                     _partsbutton_Trans = _cupObjs[2];
-                    _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(false);
+
 
 
                     break;
 
-                    //case 2:
-                    //    _targetList.Add(_tableList[3]);
-                    //    _activeTableList.Add(_tableList[3]);
-                    //    break;
-
-                    //case 3:
-                    //    _targetList.Add(_tableList[4]);
-                    //    _activeTableList.Add(_tableList[4]);
-                    //    break;
+                case 2:
+                    _cupObjs[2].gameObject.SetActive(false);
+                    _cupObjs[3].gameObject.SetActive(true);
+                    _targetList.Add(_tableList[3]);
+                    _activeTableList.Add(_tableList[3]);
+                    _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(false);
+                    break;
             }
 
             _unLockObjs[i].SetActive(true);
+
+            _mapObjs[i].SetActive(true);
+            _mapOffObjs[i].SetActive(false);
 
 
             _navmeshsurface.RemoveData();
@@ -368,7 +374,7 @@ public class StageManager : MonoBehaviour
 
     public void AddStaff(bool isPay = true, GameObject _box = null)
     {
-        //if (isPay) Managers.Game.CalcMoney(-_addStaff_Upgrade_Price[_staff_upgrade_level]);
+
         if (_box != null) Managers.Pool.Push(_box.GetComponent<Poolable>());
         // add fog particle 0630
 
@@ -377,11 +383,8 @@ public class StageManager : MonoBehaviour
         _staffList.Add(_trans.GetComponent<Staff>());
         _trans.GetComponent<Staff>()._speed = 5f + (float)_speed_Upgrade_level * 0.5f;
 
-
-        //_staff_upgrade_level++;
-        //SaveData();
         CheckButton();
-        Debug.Log("check Point");
+
 
     }
 
@@ -403,37 +406,43 @@ public class StageManager : MonoBehaviour
             {
                 case 0:
                     _cupObjs[0].gameObject.SetActive(false);
-                    _mapObjs[0].SetActive(true);
                     _cupObjs[1].gameObject.SetActive(true);
                     _targetList.Add(_tableList[1]);
+                    _activeTableList.Add(_tableList[1]);
                     _partsbutton_Trans = _cupObjs[1];
                     break;
 
                 case 1:
                     _cupObjs[1].gameObject.SetActive(false);
+                    _cupObjs[2].gameObject.SetActive(true);
+                    _mapObjs[0].SetActive(true);
+                    _mapOffObjs[0].SetActive(false);
                     _mapObjs[1].SetActive(true);
-                    _mapObjs[2].SetActive(true);
 
                     _targetList.Add(_tableList[2]);
                     _activeTableList.Add(_tableList[2]);
-                    _cupObjs[2].gameObject.SetActive(true);
-                    //_partsbutton_Trans = _cupObjs[2];
-                    _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(false);
+                    _partsbutton_Trans = _cupObjs[2];
+
+
 
                     break;
 
-                    //case 2:
-                    //    _targetList.Add(_tableList[3]);
-                    //    _activeTableList.Add(_tableList[3]);
-                    //    break;
+                case 2:
+                    _cupObjs[2].gameObject.SetActive(false);
+                    _cupObjs[3].gameObject.SetActive(true);
+                    _targetList.Add(_tableList[3]);
+                    _activeTableList.Add(_tableList[3]);
+                    _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(false);
+                    break;
 
-                    //case 3:
-                    //    _targetList.Add(_tableList[4]);
-                    //    _activeTableList.Add(_tableList[4]);
-                    //    break;
+
             }
 
             _unLockObjs[_parts_upgrade_level].SetActive(true);
+
+            _mapObjs[_parts_upgrade_level].SetActive(true);
+            _mapOffObjs[_parts_upgrade_level].SetActive(false);
+
 
             _navmeshsurface.RemoveData();
             _navmeshsurface.BuildNavMesh();
@@ -442,6 +451,8 @@ public class StageManager : MonoBehaviour
             SaveData();
             CheckButton();
         }
+
+
     }
 
 

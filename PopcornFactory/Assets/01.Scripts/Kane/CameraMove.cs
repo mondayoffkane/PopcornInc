@@ -33,6 +33,7 @@ public class CameraMove : MonoBehaviour
     bool isFix = false;
     public float _lookdistance = 50f;
     public Vector3 _lookOffset = new Vector3(0f, 10f, 0f);
+    public bool isClick = false;
     // ===========
     private void Start()
     {
@@ -101,19 +102,19 @@ public class CameraMove : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            _startXY = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            _startXY = new Vector2(Input.mousePosition.x /*0f*/, Input.mousePosition.y);
             _endXY = _startXY;
-
+            isClick = true;
             _startPos = transform.position;
             if (!EventSystem.current.IsPointerOverGameObject())// ui가 아닌곳을 눌렀을때 ui 끄기
             {
                 _stageManager.OffPopup();
             }
-            else
-            {
-                return;
+            //else
+            //{
+            //    return;
 
-            }
+            //}
 
             Vector3 touchPos;
             Ray ray;
@@ -124,7 +125,7 @@ public class CameraMove : MonoBehaviour
             ray = Camera.main.ScreenPointToRay(touchPosToVector3);
 
 
-            if (Physics.Raycast(ray, out hit, 100))
+            if (Physics.Raycast(ray, out hit, 1000))
             {
                 Debug.DrawLine(ray.origin, hit.point, Color.red, 1.5f);
 
@@ -133,7 +134,7 @@ public class CameraMove : MonoBehaviour
                 {
                     //Debug.Log("Hit Obj");
                     _stageManager.SelecteTarget(hit.transform);
-
+                    isClick = false;
                 }
                 else if (hit.collider.tag == "WorkerBox")
                 {
@@ -146,27 +147,32 @@ public class CameraMove : MonoBehaviour
         {
             if (EventSystem.current.IsPointerOverGameObject()) // ui 터치시 화면 이동 안하도÷
             {
+
+                isClick = false;
                 return;
             }
-            _endXY = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
-            _x = (transform.right * (_startXY.x - _endXY.x) * _moveSense).x;
-            _y = (transform.up * (_startXY.y - _endXY.y) * _moveSense).y;
-
-            Vector3 _horizon = transform.right * (_startXY.x - _endXY.x) * _moveSense;
-            Vector3 _vertical = transform.up * (_startXY.y - _endXY.y) * _moveSense;
-
-            Vector3 _delta = _startPos + _horizon + _vertical;
-
-            if (_delta.x >= _limitPos.x && _delta.x <= _limitPos.y && _delta.y >= _limitPos.z && _delta.y <= _limitPos.w)
+            if (isClick)
             {
-                transform.position = _delta;
-            }
+                _endXY = new Vector2(Input.mousePosition.x/*0f */, Input.mousePosition.y);
 
+                _x = (transform.right * (_startXY.x - _endXY.x) * _moveSense).x;
+                _y = (transform.up * (_startXY.y - _endXY.y) * _moveSense).y;
+
+                Vector3 _horizon = transform.right * (_startXY.x - _endXY.x) * _moveSense;
+                Vector3 _vertical = transform.up * (_startXY.y - _endXY.y) * _moveSense;
+
+                Vector3 _delta = _startPos + _horizon + _vertical;
+
+                if (_delta.x >= _limitPos.x && _delta.x <= _limitPos.y && _delta.y >= _limitPos.z && _delta.y <= _limitPos.w)
+                {
+                    transform.position = _delta;
+                }
+            }
         }
 
         else if (Input.GetMouseButtonUp(0))
         {
+            isClick = false;
             _startXY = Vector2.zero;
             _endXY = _startXY;
 
@@ -175,7 +181,7 @@ public class CameraMove : MonoBehaviour
 #endif
 
 #if !UNITY_EDITOR
-        //TestText.text = $"{Input.touchCount}";
+
 
         if (Input.touchCount > 0 && Input.touchCount < 2)
         {
@@ -183,18 +189,16 @@ public class CameraMove : MonoBehaviour
             Touch _touch = Input.GetTouch(0);
             if (_touch.phase == TouchPhase.Began)
             {
+                isClick = true;
                 _startXY = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
                 _endXY = _startXY;
 
                 _startPos = transform.position;
-                if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)){
-               _stageManager.OffPopup();
+                if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                {
+                    _stageManager.OffPopup();
                 }
-            else
-            {
-                return;
 
-            }
 
                 Vector3 touchPos;
                 Ray ray;
@@ -214,7 +218,7 @@ public class CameraMove : MonoBehaviour
                     {
                         //Debug.Log("Hit Obj");
                         _stageManager.SelecteTarget(hit.transform);
-
+                        isClick = false;
                     }
                     else if (hit.collider.tag == "WorkerBox")
                     {
@@ -225,27 +229,32 @@ public class CameraMove : MonoBehaviour
             else if ((_touch.phase == TouchPhase.Moved || _touch.phase == TouchPhase.Stationary) && !isFix)
             {
                 if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                    return;
-
-                _endXY = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
-                _x = (transform.right * (_startXY.x - _endXY.x) * _moveSense).x;
-                _y = (transform.up * (_startXY.y - _endXY.y) * _moveSense).y;
-
-                Vector3 _horizon = transform.right * (_startXY.x - _endXY.x) * _moveSense;
-                Vector3 _vertical = transform.up * (_startXY.y - _endXY.y) * _moveSense;
-
-                Vector3 _delta = _startPos + _horizon + _vertical;
-
-                if (Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).x >= _limitPos.x && Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).x <= _limitPos.y && Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).y >= _limitPos.z && Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).y <= _limitPos.w)
                 {
-                    transform.position = Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f);
+                    isClick = false;
+                    return;
                 }
+                if (isClick)
+                {
+                    _endXY = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
+                    _x = (transform.right * (_startXY.x - _endXY.x) * _moveSense).x;
+                    _y = (transform.up * (_startXY.y - _endXY.y) * _moveSense).y;
+
+                    Vector3 _horizon = transform.right * (_startXY.x - _endXY.x) * _moveSense;
+                    Vector3 _vertical = transform.up * (_startXY.y - _endXY.y) * _moveSense;
+
+                    Vector3 _delta = _startPos + _horizon + _vertical;
+
+                    if (Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).x >= _limitPos.x && Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).x <= _limitPos.y && Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).y >= _limitPos.z && Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).y <= _limitPos.w)
+                    {
+                        transform.position = Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f);
+                    }
+                }
             }
 
             else if (_touch.phase == TouchPhase.Ended)
             {
+                isClick = false;
                 _startXY = Vector2.zero;
                 _endXY = _startXY;
             }

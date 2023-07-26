@@ -52,6 +52,7 @@ public class Managers : MonoBehaviour
             _instance._scene.Init();
             _instance._resource.Init();
 
+
             _instance._game = go.AddComponent<GameManager>();
         }
     }

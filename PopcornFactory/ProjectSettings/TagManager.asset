@@ -12,6 +12,8 @@ TagManager:
   - None
   - Bullet
   - Gate
+  - WaveManager
+  - Enemy
   layers:
   - Default
   - TransparentFX

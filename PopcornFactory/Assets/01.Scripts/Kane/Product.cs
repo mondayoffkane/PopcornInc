@@ -12,11 +12,10 @@ public class Product : MonoBehaviour
     public Material[] Mats; // 0 : stage , 1 : base popcorn, 2~ other popcorns
     public enum ProductType
     {
-        Corn,
-        PopCorn_base,
-        Popcorn_1,
-        Popcorn_2,
-        Popcorn_3
+        BaseCorn,
+        KernelCorn,
+        MixCorn,
+        PopCorn_base
 
 
     }
