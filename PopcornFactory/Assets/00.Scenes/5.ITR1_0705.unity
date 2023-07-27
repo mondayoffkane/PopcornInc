@@ -753,7 +753,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh55106
+  m_Name: pb_Mesh1876474
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1228,7 +1228,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605334995}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1245,7 +1245,7 @@ Transform:
   - {fileID: 88783832}
   m_Father: {fileID: 0}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
 --- !u!114 &605334997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1276,6 +1276,7 @@ MonoBehaviour:
   - {fileID: 4257120412217646027}
   - {fileID: 1303472747750988686}
   - {fileID: 3346941812699980294}
+  _mapOffObjs: []
   _unLockObjs:
   - {fileID: 919132149216452890}
   - {fileID: 1509127154}
@@ -9617,6 +9618,7 @@ MonoBehaviour:
   _startXY: {x: 0, y: 0}
   _endXY: {x: 0, y: 0}
   _viewLimit: {x: 15, y: 70}
+  returnSpeed: 50
   _moveSense: 0.05
   _wheelSense: 10
   _zoomSense: 0.05
@@ -9630,6 +9632,7 @@ MonoBehaviour:
   _testCurrentPos: {x: 0, y: 0}
   _lookdistance: 60
   _lookOffset: {x: 0, y: 10, z: 0}
+  isClick: 0
 --- !u!33 &900040816826673
 MeshFilter:
   m_ObjectHideFlags: 0

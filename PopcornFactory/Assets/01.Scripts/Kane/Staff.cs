@@ -163,7 +163,7 @@ public class Staff : MonoBehaviour
                                     case ProductType.KernelCorn:
                                         if (_stageManager._cupObjs[1].gameObject.activeSelf == false)
                                         {
-                                            _target = _stageManager._activeTableList[2].transform;
+                                            _target = _stageManager._activeTableList[1].transform;
                                             _table = _target.GetComponent<Table>();
                                         }
                                         else
@@ -177,7 +177,7 @@ public class Staff : MonoBehaviour
                                     case ProductType.MixCorn:
                                         if (_stageManager._cupObjs[2].gameObject.activeSelf == false)
                                         {
-                                            _target = _stageManager._activeTableList[3].transform;
+                                            _target = _stageManager._activeTableList[2].transform;
                                             _table = _target.GetComponent<Table>();
                                         }
                                         else
