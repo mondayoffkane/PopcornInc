@@ -17,7 +17,7 @@ public class Staff : MonoBehaviour
     public float _speed = 5f;
 
 
-    public Table _table;
+    //public Table _table;
     public Cup _cup;
 
     StageManager _stageManager;
@@ -36,6 +36,7 @@ public class Staff : MonoBehaviour
 
     public Product.ProductType _productType;
     Animator _animator;
+    public int _num;
     // ================================
 
     private void Start()
@@ -113,10 +114,10 @@ public class Staff : MonoBehaviour
                     if (_current_pickInterval >= _pickInterval)
                     {
                         _current_pickInterval = 0f;
-                        if (_table._productList.Count > 0)
+                        if (_target.GetComponent<Machine>()._table._productList.Count > 0)
                         {
-                            Product _product = _table._productList[0];
-                            _table._productList.RemoveAt(0);
+                            Product _product = _target.GetComponent<Machine>()._table._productList[0];
+                            _target.GetComponent<Machine>()._table._productList.RemoveAt(0);
                             //_table._productList.Remove(_product);
                             _product.transform.SetParent(transform);
                             switch (_productStack.Count)
@@ -149,8 +150,8 @@ public class Staff : MonoBehaviour
                                     case ProductType.BaseCorn:
                                         if (_stageManager._cupObjs[0].gameObject.activeSelf == false)
                                         {
-                                            _target = _stageManager._tableList[1].transform;
-                                            _table = _target.GetComponent<Table>();
+                                            _target = _stageManager._machineList[1].transform;
+
                                         }
                                         else
                                         {
@@ -163,8 +164,8 @@ public class Staff : MonoBehaviour
                                     case ProductType.KernelCorn:
                                         if (_stageManager._cupObjs[1].gameObject.activeSelf == false)
                                         {
-                                            _target = _stageManager._activeTableList[1].transform;
-                                            _table = _target.GetComponent<Table>();
+                                            _target = _stageManager._machineList[2].transform;
+
                                         }
                                         else
                                         {
@@ -177,8 +178,8 @@ public class Staff : MonoBehaviour
                                     case ProductType.MixCorn:
                                         if (_stageManager._cupObjs[2].gameObject.activeSelf == false)
                                         {
-                                            _target = _stageManager._activeTableList[2].transform;
-                                            _table = _target.GetComponent<Table>();
+                                            _target = _stageManager._machineList[3].transform;
+
                                         }
                                         else
                                         {
@@ -217,8 +218,8 @@ public class Staff : MonoBehaviour
                         case ProductType.BaseCorn:
                             if (_stageManager._cupObjs[0].gameObject.activeSelf == false)
                             {
-                                _target = _stageManager._tableList[1].transform;
-                                _table = _target.GetComponent<Table>();
+                                _target = _stageManager._machineList[1].transform;
+
                             }
                             else
                             {
@@ -231,8 +232,8 @@ public class Staff : MonoBehaviour
                         case ProductType.KernelCorn:
                             if (_stageManager._cupObjs[1].gameObject.activeSelf == false)
                             {
-                                _target = _stageManager._activeTableList[1].transform;
-                                _table = _target.GetComponent<Table>();
+                                _target = _stageManager._machineList[2].transform;
+
                             }
                             else
                             {
@@ -245,8 +246,8 @@ public class Staff : MonoBehaviour
                         case ProductType.MixCorn:
                             if (_stageManager._cupObjs[2].gameObject.activeSelf == false)
                             {
-                                _target = _stageManager._activeTableList[2].transform;
-                                _table = _target.GetComponent<Table>();
+                                _target = _stageManager._machineList[3].transform;
+
                             }
                             else
                             {
@@ -281,9 +282,9 @@ public class Staff : MonoBehaviour
                         _current_pickInterval = 0f;
                         Transform _trans = _productStack.Pop().transform;
                         _agent.avoidancePriority--;
-                        if (_target.GetComponent<Table>() != null)
+                        if (_target.GetComponent<Machine>() != null)
                         {
-                            _table.PushProduct(_trans);
+                            _target.GetComponent<Machine>()._table.PushProduct(_trans);
                         }
                         else if (_target.GetComponent<Cup>() != null)
                         {
@@ -319,22 +320,20 @@ public class Staff : MonoBehaviour
         _target = ReFind();
 
 
-        _table = _target.GetComponent<Table>();
-
-
         SetDest(_target);
         _staffState = StaffState.Move;
 
 
         Transform ReFind(int _val = -1)
         {
-            int _num;
+
             if (_val == -1)
             {
-                _num = Random.Range(0, _stageManager._targetList.Count);
-                if (_stageManager._targetList[_num].GetComponent<Table>()._productList.Count > 0)
+                _num = Random.Range(0, _stageManager._machineList.Count);
+                if (_stageManager._machineList[_num]._table._productList.Count > 0)
                 {
-                    return _stageManager._targetList[_num].transform;
+
+                    return _stageManager._machineList[_num].transform;
                 }
                 else
                 {
@@ -345,16 +344,21 @@ public class Staff : MonoBehaviour
             {
                 if (_val == 0)
                 {
-                    return _stageManager._targetList[_val].transform;
-                }
-                else { }
-                if (_stageManager._targetList[_val - 1].GetComponent<Table>()._productList.Count > 0)
-                {
-                    return _stageManager._targetList[_val - 1].transform;
+
+                    return _stageManager._machineList[_val].transform;
                 }
                 else
                 {
-                    return ReFind(_val - 1);
+
+                    if (_stageManager._machineList[_val - 1]._table._productList.Count > 0)
+                    {
+
+                        return _stageManager._machineList[_val - 1].transform;
+                    }
+                    else
+                    {
+                        return ReFind(_val - 1);
+                    }
                 }
             }
 
@@ -363,10 +367,5 @@ public class Staff : MonoBehaviour
 
 
     }
-
-
-
-
-
 
 }

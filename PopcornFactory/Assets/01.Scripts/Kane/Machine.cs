@@ -7,10 +7,12 @@ using UnityEngine.UI;
 
 public class Machine : MonoBehaviour
 {
+    public bool isRail = false;
+
     public double _upgradeBase = 1d, _productBase = 1d;
     public double _upgradeScope = 0.5d, _productScope = 0.5d;
     public int _maxLevel = 150;
-    public double[] _upgradePrice;
+    public double[] _upgradePrice; 
     public double[] _productPrice;
 
     public int _level;
@@ -55,8 +57,6 @@ public class Machine : MonoBehaviour
         _x = _table.GetComponent<BoxCollider>().bounds.size.x * 0.5f;
         _z = _table.GetComponent<BoxCollider>().bounds.size.z * 0.5f;
         StartCoroutine(Cor_Update());
-
-
 
 
         // add get data

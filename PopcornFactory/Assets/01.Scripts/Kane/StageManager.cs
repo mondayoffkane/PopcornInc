@@ -11,75 +11,66 @@ using MondayOFF;
 
 public class StageManager : MonoBehaviour
 {
-    public Vector3 _testoffset;
+    GameManager _gameManager;
+    NavMeshSurface _navmeshsurface;
+
+    // ======================
     public Canvas _canvas;
 
     public int _stageLevel = 0;
 
-    //public List<Machine> _machineList = new List<Machine>();
-    //public 
-    public Transform[] _cupObjs;
     public GameObject _staff_Pref;
-
-
-    GameManager _gameManager;
-
     public Transform _spawnPos;
 
-    NavMeshSurface _navmeshsurface;
-
-    public Machine[] _upgrade_Obj;
-
-    public GameObject[] _mapObjs;
-    public GameObject[] _mapOffObjs;
-
-    public GameObject[] _unLockObjs;
-
-    public List<Table> _targetList = new List<Table>();
-    public List<Table> _activeTableList = new List<Table>();
-
-    public Table[] _tableList;
+    [FoldoutGroup("SetObjects_1")] public Transform[] _cupObjs;
+    [FoldoutGroup("SetObjects_1")] public Machine[] _machineGroup;
+    [FoldoutGroup("SetObjects_1")] public GameObject[] _mapObjs;
+    [FoldoutGroup("SetObjects_1")] public List<Machine> _machineList = new List<Machine>();
 
 
-    public double[] _addStaff_Upgrade_Price;
-    public double[] _staffSpeed_Upgrade_Price;
-    public double[] _income_Upgrade_Price;
-    public double[] _addParts_Upgrade_Price;
+    [FoldoutGroup("Upgrade_1")] public double[] _addStaff_Upgrade_Price;
+    [FoldoutGroup("Upgrade_1")] public double[] _staffSpeed_Upgrade_Price;
+    [FoldoutGroup("Upgrade_1")] public double[] _income_Upgrade_Price;
+    [FoldoutGroup("Upgrade_1")] public double[] _addParts_Upgrade_Price;
 
-    public int _staff_upgrade_level;
-    public int _speed_Upgrade_level;
-    public int _income_ugrade_level;
-    public int _parts_upgrade_level;
+    [FoldoutGroup("Upgrade_1")] public int _staff_upgrade_level;
+    [FoldoutGroup("Upgrade_1")] public int _speed_Upgrade_level;
+    [FoldoutGroup("Upgrade_1")] public int _income_ugrade_level;
+    [FoldoutGroup("Upgrade_1")] public int _parts_upgrade_level;
 
     // ===========================================
 
-    public double[] _cutting_Income_Upgrade_Price;
-    public double[] _cutting_Speed_Upgrade_Price;
-    public double[] _popcorn_Income_Upgrade_Price;
-    public double[] _popcorn_Speed_Upgrade_Price;
-    public double[] _seasoning_Income_Upgrade_Price;
-    public double[] _seasoning_Speed_Upgrade_Price;
+    [FoldoutGroup("Upgrade_2")] public double[] _cutting_Income_Upgrade_Price;
+    [FoldoutGroup("Upgrade_2")] public double[] _cutting_Speed_Upgrade_Price;
+    [FoldoutGroup("Upgrade_2")] public double[] _popcorn_Income_Upgrade_Price;
+    [FoldoutGroup("Upgrade_2")] public double[] _popcorn_Speed_Upgrade_Price;
+    [FoldoutGroup("Upgrade_2")] public double[] _seasoning_Income_Upgrade_Price;
+    [FoldoutGroup("Upgrade_2")] public double[] _seasoning_Speed_Upgrade_Price;
 
-    public int _cutting_Income_Level;
-    public int _cutting_Speed_Level;
-    public int _popcorn_Income_Level;
-    public int _popcorn_Speed_Level;
-    public int _seasoning_Income_Level;
-    public int _seasoning_Speed_Level;
+    [FoldoutGroup("Upgrade_2")] public int _cutting_Income_Level;
+    [FoldoutGroup("Upgrade_2")] public int _cutting_Speed_Level;
+    [FoldoutGroup("Upgrade_2")] public int _popcorn_Income_Level;
+    [FoldoutGroup("Upgrade_2")] public int _popcorn_Speed_Level;
+    [FoldoutGroup("Upgrade_2")] public int _seasoning_Income_Level;
+    [FoldoutGroup("Upgrade_2")] public int _seasoning_Speed_Level;
+
+    ///
+    public double[] _MachineUpgrade_Price;
+
 
     // ===========================================
     public GameObject[] _popupButtons;
     public Transform _popupPanel;
 
 
-    public Transform _targetMachine_Trans;
+    Transform _targetMachine_Trans;
     EventTrigger _eventTrigger;
 
     CameraMove _cam;
     Transform _partsbutton_Trans;
 
     public Vector3[] _popupOffset = new Vector3[4];
-    public Vector3 _addpartsOffset = new Vector3();
+
 
     [SerializeField] List<Staff> _staffList = new List<Staff>();
 
@@ -105,7 +96,7 @@ public class StageManager : MonoBehaviour
         _navmeshsurface = GetComponent<NavMeshSurface>();
 
 
-        _targetList.Add(_tableList[0]);
+        //_targetList.Add(_tableList[0]);
 
         DataManager.StageData _data = Managers.Data.GetStageData(_stageLevel);
 
@@ -128,44 +119,20 @@ public class StageManager : MonoBehaviour
         _cam = Camera.main.transform.GetComponent<CameraMove>();
 
         // check stage settings , objects.. etc..
-        _popupButtons = new GameObject[_upgrade_Obj.Length];
+        _popupButtons = new GameObject[_machineGroup.Length];
 
-        for (int i = 0; i < _upgrade_Obj.Length; i++)
+        for (int i = 0; i < _machineGroup.Length; i++)
         {
 
             Transform _popupButton = Managers.Pool.Pop(Resources.Load<GameObject>("PopUp_Button"), _canvas.transform).transform;
-            _popupButton.position = Camera.main.WorldToScreenPoint(_upgrade_Obj[i].transform.position + _popupOffset[i]);
+            _popupButton.position = Camera.main.WorldToScreenPoint(_machineGroup[i].transform.position + _popupOffset[i]);
             _popupButton.gameObject.SetActive(false);
             _popupButtons[i] = _popupButton.gameObject;
 
 
         }
-        //_popupButtons[0].GetComponent<Button>().AddButtonEvent(() =>
-        //{
-        //    _targetMachine_Trans = _upgrade_Obj[0].transform;
-        //    _targetMachine_Trans.GetComponent<Machine>().CheckPrice(_popupPanel);
-        //    _popupPanel.gameObject.SetActive(true);
-        //    _cam.LookTarget(_targetMachine_Trans);
-        //});
-        //_popupButtons[1].GetComponent<Button>().AddButtonEvent(() =>
-        //{
-        //    _targetMachine_Trans = _upgrade_Obj[1].transform;
-        //    _targetMachine_Trans.GetComponent<Machine>().CheckPrice(_popupPanel);
-        //    _popupPanel.gameObject.SetActive(true);
-        //    _cam.LookTarget(_targetMachine_Trans);
-        //});
-        //_popupButtons[2].GetComponent<Button>().AddButtonEvent(() =>
-        //{
-        //    _targetMachine_Trans = _upgrade_Obj[2].transform;
-        //    _targetMachine_Trans.GetComponent<Machine>().CheckPrice(_popupPanel);
-        //    _popupPanel.gameObject.SetActive(true);
-        //    _cam.LookTarget(_targetMachine_Trans);
-        //});
 
 
-
-        //_popupPanel = Managers.Pool.Pop(Resources.Load<GameObject>("Upgrade_Panel"), _canvas.transform).transform;
-        //_popupPanel.gameObject.SetActive(false);
         _popupPanel = _gameUi.Upgrade_Panel.transform;
         _popupPanel.gameObject.SetActive(false);
 
@@ -183,13 +150,11 @@ public class StageManager : MonoBehaviour
         eventTrigger.triggers.Add(entry_PointerUp);
 
 
-        _upgrade_Obj[1]._interval = 1f - 0.1f * _popcorn_Speed_Level;
-        _upgrade_Obj[1]._interval = 1f - 0.1f * _popcorn_Speed_Level;
-        _upgrade_Obj[2]._interval = 1f - 0.1f * _seasoning_Speed_Level;
+        _machineGroup[1]._interval = 1f - 0.1f * _popcorn_Speed_Level;
+        _machineGroup[1]._interval = 1f - 0.1f * _popcorn_Speed_Level;
+        _machineGroup[2]._interval = 1f - 0.1f * _seasoning_Speed_Level;
 
-        //_gameUi.UpgradeCountText.transform.parent.gameObject.SetActive(false);
 
-        //StartCoroutine(Cor_start());
         StartCoroutine(Cor_Interstial());
 
 
@@ -240,7 +205,7 @@ public class StageManager : MonoBehaviour
     {
         for (int i = 0; i < _popupButtons.Length; i++)
         {
-            _popupButtons[i].transform.position = Camera.main.WorldToScreenPoint(_upgrade_Obj[i].transform.position + _popupOffset[i]);
+            _popupButtons[i].transform.position = Camera.main.WorldToScreenPoint(_machineGroup[i].transform.position + _popupOffset[i]);
         }
 
         if (_popupPanel.gameObject.activeSelf)
@@ -248,8 +213,7 @@ public class StageManager : MonoBehaviour
             _popupPanel.position = Camera.main.WorldToScreenPoint(_targetMachine_Trans.position + Vector3.up * 20f);
         }
 
-        //  _gameUi.AddParts_Upgrade_Button.transform.position
-        //= Camera.main.WorldToScreenPoint(_partsbutton_Trans.position + _addpartsOffset);
+
 
         _gameUi.RV_Income_TimeText.text = $" {"Income X2"} \n {(intervalRvDouble / 60).ToString("F0") + ":" + (intervalRvDouble % 60).ToString("F0")}";
 
@@ -257,8 +221,7 @@ public class StageManager : MonoBehaviour
 
     public void SetTrans()
     {
-        //transform.eulerAngles = Vector3.up * 30f;
-        //transform.position = new Vector3(-10.5f, 0f, 0f);
+
 
         SettingMap();
     }
@@ -275,10 +238,12 @@ public class StageManager : MonoBehaviour
             _obj.gameObject.SetActive(false);
 
         }
-        foreach (GameObject _obj in _unLockObjs)
+        foreach (Machine _obj in _machineGroup)
         {
-            _obj.SetActive(false);
+            _obj.gameObject.SetActive(false);
         }
+        _machineGroup[0].gameObject.SetActive(true);
+
 
         _cupObjs[0].gameObject.SetActive(true);
         _partsbutton_Trans = _cupObjs[0];
@@ -305,59 +270,54 @@ public class StageManager : MonoBehaviour
 
 
 
-        for (int i = 0; i < _parts_upgrade_level; i++)
+        for (int i = 0; i <= _parts_upgrade_level; i++)
         {
             switch (i)
             {
                 case 0:
+                    _cupObjs[0].gameObject.SetActive(true);
+                    break;
+
+
+                case 1:
                     _cupObjs[0].gameObject.SetActive(false);
                     _cupObjs[1].gameObject.SetActive(true);
-                    _targetList.Add(_tableList[1]);
-                    _activeTableList.Add(_tableList[1]);
+                    _mapObjs[0].SetActive(true);
                     _partsbutton_Trans = _cupObjs[1];
                     break;
 
-                case 1:
+                case 2:
                     _cupObjs[1].gameObject.SetActive(false);
                     _cupObjs[2].gameObject.SetActive(true);
-                    _mapObjs[0].SetActive(true);
-                    _mapOffObjs[0].SetActive(false);
                     _mapObjs[1].SetActive(true);
-
-                    _targetList.Add(_tableList[2]);
-                    _activeTableList.Add(_tableList[2]);
                     _partsbutton_Trans = _cupObjs[2];
-
-
-
                     break;
 
-                case 2:
+                case 3:
                     _cupObjs[2].gameObject.SetActive(false);
                     _cupObjs[3].gameObject.SetActive(true);
-                    _targetList.Add(_tableList[3]);
-                    _activeTableList.Add(_tableList[3]);
+                    _mapObjs[2].SetActive(true);
                     _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(false);
+
                     break;
+
             }
 
-            _unLockObjs[i].SetActive(true);
 
-            _mapObjs[i].SetActive(true);
-            _mapOffObjs[i].SetActive(false);
-
-
-            _navmeshsurface.RemoveData();
-            _navmeshsurface.BuildNavMesh();
+            _machineList.Add(_machineGroup[i]);
+            _machineGroup[i].gameObject.SetActive(true);
         }
+        //_machineList.Add(_machineGroup[0]);
 
+        _navmeshsurface.RemoveData();
+        _navmeshsurface.BuildNavMesh();
 
-        _upgrade_Obj[0]._priceScopeLevel = _cutting_Income_Level;
-        _upgrade_Obj[0]._interval = 1f - 0.1f * _cutting_Speed_Level;
-        _upgrade_Obj[1]._priceScopeLevel = _popcorn_Income_Level;
-        _upgrade_Obj[1]._interval = 1f - 0.1f * _popcorn_Speed_Level;
-        _upgrade_Obj[2]._priceScopeLevel = _seasoning_Income_Level;
-        _upgrade_Obj[2]._interval = 1f - 0.1f * _seasoning_Speed_Level;
+        _machineGroup[0]._priceScopeLevel = _cutting_Income_Level;
+        _machineGroup[0]._interval = 1f - 0.1f * _cutting_Speed_Level;
+        _machineGroup[1]._priceScopeLevel = _popcorn_Income_Level;
+        _machineGroup[1]._interval = 1f - 0.1f * _popcorn_Speed_Level;
+        _machineGroup[2]._priceScopeLevel = _seasoning_Income_Level;
+        _machineGroup[2]._interval = 1f - 0.1f * _seasoning_Speed_Level;
 
 
         CheckButton();
@@ -399,7 +359,7 @@ public class StageManager : MonoBehaviour
 
     public void AddParts(bool isPay = true)
     {
-        if (_parts_upgrade_level < _unLockObjs.Length)
+        if (_parts_upgrade_level < _machineGroup.Length - 1)
         {
             if (isPay) Managers.Game.CalcMoney(-_addParts_Upgrade_Price[_parts_upgrade_level]);
             switch (_parts_upgrade_level)
@@ -407,52 +367,37 @@ public class StageManager : MonoBehaviour
                 case 0:
                     _cupObjs[0].gameObject.SetActive(false);
                     _cupObjs[1].gameObject.SetActive(true);
-                    _targetList.Add(_tableList[1]);
-                    _activeTableList.Add(_tableList[1]);
                     _partsbutton_Trans = _cupObjs[1];
                     break;
 
                 case 1:
                     _cupObjs[1].gameObject.SetActive(false);
                     _cupObjs[2].gameObject.SetActive(true);
-                    _mapObjs[0].SetActive(true);
-                    _mapOffObjs[0].SetActive(false);
-                    _mapObjs[1].SetActive(true);
-
-                    _targetList.Add(_tableList[2]);
-                    _activeTableList.Add(_tableList[2]);
+                    //_mapObjs[0].SetActive(true);
+                    //_mapObjs[1].SetActive(true);
                     _partsbutton_Trans = _cupObjs[2];
-
-
-
                     break;
 
                 case 2:
                     _cupObjs[2].gameObject.SetActive(false);
                     _cupObjs[3].gameObject.SetActive(true);
-                    _targetList.Add(_tableList[3]);
-                    _activeTableList.Add(_tableList[3]);
                     _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(false);
                     break;
 
-
             }
-
-            _unLockObjs[_parts_upgrade_level].SetActive(true);
-
+            _machineList.Add(_machineGroup[_parts_upgrade_level + 1]);
+            _machineGroup[_parts_upgrade_level + 1].gameObject.SetActive(true);
             _mapObjs[_parts_upgrade_level].SetActive(true);
-            _mapOffObjs[_parts_upgrade_level].SetActive(false);
-
-
+            Debug.Log("MapObj On " + _parts_upgrade_level);
             _navmeshsurface.RemoveData();
             _navmeshsurface.BuildNavMesh();
 
-            _parts_upgrade_level++;
-            SaveData();
-            CheckButton();
         }
 
 
+        _parts_upgrade_level++;
+        SaveData();
+        CheckButton();
     }
 
 
@@ -555,12 +500,12 @@ public class StageManager : MonoBehaviour
         {
 
 
-            for (int i = 0; i < _upgrade_Obj.Length; i++)
+            for (int i = 0; i < _machineGroup.Length; i++)
             {
                 _popupButtons[i].SetActive(
-                (_gameManager.Money >= _upgrade_Obj[i]._upgradePrice[_upgrade_Obj[i]._level])
-                && _upgrade_Obj[i].gameObject.activeSelf
-                && (_upgrade_Obj[i]._level < _upgrade_Obj[i]._maxLevel - 1)
+                (_gameManager.Money >= _machineGroup[i]._upgradePrice[_machineGroup[i]._level])
+                && _machineGroup[i].gameObject.activeSelf
+                && (_machineGroup[i]._level < _machineGroup[i]._maxLevel - 1)
                 && _staff_upgrade_level > 2);
 
             }
@@ -779,39 +724,39 @@ public class StageManager : MonoBehaviour
             case 2:
                 _gameManager.CalcMoney(-_cutting_Income_Upgrade_Price[_cutting_Income_Level]);
                 _cutting_Income_Level++;
-                _upgrade_Obj[0]._priceScopeLevel = _cutting_Income_Level;
+                _machineGroup[0]._priceScopeLevel = _cutting_Income_Level;
 
                 break;
 
             case 3:
                 _gameManager.CalcMoney(-_cutting_Speed_Upgrade_Price[_cutting_Speed_Level]);
                 _cutting_Speed_Level++;
-                _upgrade_Obj[0]._interval = 1f - 0.1f * _cutting_Speed_Level;
+                _machineGroup[0]._interval = 1f - 0.1f * _cutting_Speed_Level;
 
                 break;
 
             case 4:
                 _gameManager.CalcMoney(-_popcorn_Income_Upgrade_Price[_popcorn_Income_Level]);
                 _popcorn_Income_Level++;
-                _upgrade_Obj[1]._priceScopeLevel = _popcorn_Income_Level;
+                _machineGroup[1]._priceScopeLevel = _popcorn_Income_Level;
                 break;
 
             case 5:
                 _gameManager.CalcMoney(-_popcorn_Speed_Upgrade_Price[_popcorn_Speed_Level]);
                 _popcorn_Speed_Level++;
-                _upgrade_Obj[1]._interval = 1f - 0.1f * _popcorn_Speed_Level;
+                _machineGroup[1]._interval = 1f - 0.1f * _popcorn_Speed_Level;
                 break;
 
             case 6:
                 _gameManager.CalcMoney(-_seasoning_Income_Upgrade_Price[_seasoning_Income_Level]);
                 _seasoning_Income_Level++;
-                _upgrade_Obj[2]._priceScopeLevel = _seasoning_Income_Level;
+                _machineGroup[2]._priceScopeLevel = _seasoning_Income_Level;
                 break;
 
             case 7:
                 _gameManager.CalcMoney(-_seasoning_Speed_Upgrade_Price[_seasoning_Speed_Level]);
                 _seasoning_Speed_Level++;
-                _upgrade_Obj[2]._interval = 1f - 0.1f * _seasoning_Speed_Level;
+                _machineGroup[2]._interval = 1f - 0.1f * _seasoning_Speed_Level;
                 break;
 
             default:
