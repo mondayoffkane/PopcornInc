@@ -114,10 +114,10 @@ public class Staff : MonoBehaviour
                     if (_current_pickInterval >= _pickInterval)
                     {
                         _current_pickInterval = 0f;
-                        if (_target.GetComponent<Machine>()._table._productList.Count > 0)
+                        if (_target.GetComponent<Table>()._productList.Count > 0)
                         {
-                            Product _product = _target.GetComponent<Machine>()._table._productList[0];
-                            _target.GetComponent<Machine>()._table._productList.RemoveAt(0);
+                            Product _product = _target.GetComponent<Table>()._productList[0];
+                            _target.GetComponent<Table>()._productList.RemoveAt(0);
                             //_table._productList.Remove(_product);
                             _product.transform.SetParent(transform);
                             switch (_productStack.Count)
@@ -150,7 +150,7 @@ public class Staff : MonoBehaviour
                                     case ProductType.BaseCorn:
                                         if (_stageManager._cupObjs[0].gameObject.activeSelf == false)
                                         {
-                                            _target = _stageManager._machineList[1].transform;
+                                            _target = _stageManager._machineList[1]._table.transform;
 
                                         }
                                         else
@@ -164,7 +164,7 @@ public class Staff : MonoBehaviour
                                     case ProductType.KernelCorn:
                                         if (_stageManager._cupObjs[1].gameObject.activeSelf == false)
                                         {
-                                            _target = _stageManager._machineList[2].transform;
+                                            _target = _stageManager._machineList[2]._table.transform;
 
                                         }
                                         else
@@ -178,7 +178,7 @@ public class Staff : MonoBehaviour
                                     case ProductType.MixCorn:
                                         if (_stageManager._cupObjs[2].gameObject.activeSelf == false)
                                         {
-                                            _target = _stageManager._machineList[3].transform;
+                                            _target = _stageManager._machineList[3]._table.transform;
 
                                         }
                                         else
@@ -218,7 +218,7 @@ public class Staff : MonoBehaviour
                         case ProductType.BaseCorn:
                             if (_stageManager._cupObjs[0].gameObject.activeSelf == false)
                             {
-                                _target = _stageManager._machineList[1].transform;
+                                _target = _stageManager._machineList[1]._table.transform;
 
                             }
                             else
@@ -232,7 +232,7 @@ public class Staff : MonoBehaviour
                         case ProductType.KernelCorn:
                             if (_stageManager._cupObjs[1].gameObject.activeSelf == false)
                             {
-                                _target = _stageManager._machineList[2].transform;
+                                _target = _stageManager._machineList[2]._table.transform;
 
                             }
                             else
@@ -246,7 +246,7 @@ public class Staff : MonoBehaviour
                         case ProductType.MixCorn:
                             if (_stageManager._cupObjs[2].gameObject.activeSelf == false)
                             {
-                                _target = _stageManager._machineList[3].transform;
+                                _target = _stageManager._machineList[3]._table.transform;
 
                             }
                             else
@@ -282,9 +282,9 @@ public class Staff : MonoBehaviour
                         _current_pickInterval = 0f;
                         Transform _trans = _productStack.Pop().transform;
                         _agent.avoidancePriority--;
-                        if (_target.GetComponent<Machine>() != null)
+                        if (_target.GetComponent<Table>() != null)
                         {
-                            _target.GetComponent<Machine>()._table.PushProduct(_trans);
+                            _target.GetComponent<Table>().PushProduct(_trans);
                         }
                         else if (_target.GetComponent<Cup>() != null)
                         {
@@ -333,7 +333,7 @@ public class Staff : MonoBehaviour
                 if (_stageManager._machineList[_num]._table._productList.Count > 0)
                 {
 
-                    return _stageManager._machineList[_num].transform;
+                    return _stageManager._machineList[_num]._table.transform;
                 }
                 else
                 {
@@ -345,7 +345,7 @@ public class Staff : MonoBehaviour
                 if (_val == 0)
                 {
 
-                    return _stageManager._machineList[_val].transform;
+                    return _stageManager._machineList[_val]._table.transform;
                 }
                 else
                 {
@@ -353,7 +353,7 @@ public class Staff : MonoBehaviour
                     if (_stageManager._machineList[_val - 1]._table._productList.Count > 0)
                     {
 
-                        return _stageManager._machineList[_val - 1].transform;
+                        return _stageManager._machineList[_val - 1]._table.transform;
                     }
                     else
                     {

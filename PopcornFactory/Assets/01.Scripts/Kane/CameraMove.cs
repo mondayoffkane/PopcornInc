@@ -35,12 +35,16 @@ public class CameraMove : MonoBehaviour
     public float _lookdistance = 50f;
     public Vector3 _lookOffset = new Vector3(0f, 10f, 0f);
     public bool isClick = false;
+    public Material _beltMat;
     // ===========
     private void Start()
     {
         _cam = GetComponent<Camera>();
         //TestText = Managers.GameUI.TestText;
         _stageManager = Managers.Game._stageManager;
+
+        _beltMat.DOOffset(Vector2.zero, 0f);
+        _beltMat.DOOffset(new Vector2(0f, -1f), 1f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
     }
 
     void Update()
@@ -49,10 +53,7 @@ public class CameraMove : MonoBehaviour
         {
             Managers.Game.CalcMoney(100);
         }
-        //if (Input.GetKeyDown(KeyCode.W))
-        //{
-        //    Managers.Sound.Play("Effect_1");
-        //}
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             _stageManager.AddStaff(false);
@@ -181,21 +182,21 @@ public class CameraMove : MonoBehaviour
 
         if (isClick == false)
         {
-            if (transform.position.x < _limitPos.x)
+            if (transform.localPosition.x < _limitPos.x)
             {
-                transform.position += Vector3.right * Time.deltaTime * returnSpeed;
+                transform.localPosition += Vector3.right * Time.deltaTime * returnSpeed;
             }
-            if (transform.position.x > _limitPos.y)
+            if (transform.localPosition.x > _limitPos.y)
             {
-                transform.position -= Vector3.right * Time.deltaTime * returnSpeed;
+                transform.localPosition -= Vector3.right * Time.deltaTime * returnSpeed;
             }
-            if (transform.position.y > _limitPos.w)
+            if (transform.localPosition.y > _limitPos.w)
             {
-                transform.position -= Vector3.up * Time.deltaTime * returnSpeed;
+                transform.localPosition -= Vector3.up * Time.deltaTime * returnSpeed;
             }
-            if (transform.position.y < _limitPos.z)
+            if (transform.localPosition.y < _limitPos.z)
             {
-                transform.position += Vector3.up * Time.deltaTime * returnSpeed;
+                transform.localPosition += Vector3.up * Time.deltaTime * returnSpeed;
             }
 
         }
