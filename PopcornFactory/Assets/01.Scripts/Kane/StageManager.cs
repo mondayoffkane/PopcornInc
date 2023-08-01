@@ -11,7 +11,7 @@ using MondayOFF;
 
 public class StageManager : MonoBehaviour
 {
-    GameManager _gameManager;
+    public GameManager _gameManager;
     NavMeshSurface _navmeshsurface;
 
     // ======================
@@ -25,6 +25,7 @@ public class StageManager : MonoBehaviour
     [FoldoutGroup("SetObjects_1")] public Transform[] _cupObjs;
     [FoldoutGroup("SetObjects_1")] public Machine[] _machineGroup;
     [FoldoutGroup("SetObjects_1")] public GameObject[] _mapObjs;
+    [FoldoutGroup("SetObjects_1")] public GameObject[] _mapOutline;
     [FoldoutGroup("SetObjects_1")] public List<Machine> _machineList = new List<Machine>();
 
 
@@ -40,21 +41,14 @@ public class StageManager : MonoBehaviour
 
     // ===========================================
 
-    [FoldoutGroup("Upgrade_2")] public double[] _cutting_Income_Upgrade_Price;
-    [FoldoutGroup("Upgrade_2")] public double[] _cutting_Speed_Upgrade_Price;
-    [FoldoutGroup("Upgrade_2")] public double[] _popcorn_Income_Upgrade_Price;
-    [FoldoutGroup("Upgrade_2")] public double[] _popcorn_Speed_Upgrade_Price;
-    [FoldoutGroup("Upgrade_2")] public double[] _seasoning_Income_Upgrade_Price;
-    [FoldoutGroup("Upgrade_2")] public double[] _seasoning_Speed_Upgrade_Price;
 
-    [FoldoutGroup("Upgrade_2")] public int _cutting_Income_Level;
-    [FoldoutGroup("Upgrade_2")] public int _cutting_Speed_Level;
-    [FoldoutGroup("Upgrade_2")] public int _popcorn_Income_Level;
-    [FoldoutGroup("Upgrade_2")] public int _popcorn_Speed_Level;
-    [FoldoutGroup("Upgrade_2")] public int _seasoning_Income_Level;
-    [FoldoutGroup("Upgrade_2")] public int _seasoning_Speed_Level;
+
 
     ///
+    [FoldoutGroup("Upgrade_3")] public double[] _scrollUpgrades_Price;
+    public AnimationCurve _ease;
+    public float _easeInterval = 0.75f;
+
     public double[] _MachineUpgrade_Price;
 
 
@@ -91,10 +85,12 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = Managers.Game;
-        _gameManager._allstageManagers[_stageLevel] = this;
+        if (_gameManager == null) _gameManager = Managers.Game;
+        _gameUi = Managers.GameUI;
+
         _navmeshsurface = GetComponent<NavMeshSurface>();
 
+        AddScrollContent();
 
         //_targetList.Add(_tableList[0]);
 
@@ -106,21 +102,15 @@ public class StageManager : MonoBehaviour
 
 
         _speed_Upgrade_level = _data.Speed_Upgrade_Level;
-        _cutting_Income_Level = _data.Cutting_Income_Level;
-        _cutting_Speed_Level = _data.Cutting_Speed_Level;
-        _popcorn_Income_Level = _data.Popcorn_Income_Level;
-        _popcorn_Speed_Level = _data.Popcorn_Speed_Level;
-        _seasoning_Income_Level = _data.Seasoning_Income_Level;
-        _seasoning_Speed_Level = _data.Seasoning_Speed_Level;
 
 
-        _gameUi = Managers.GameUI;
         SetTrans();
         _cam = Camera.main.transform.GetComponent<CameraMove>();
 
         // check stage settings , objects.. etc..
         _popupButtons = new GameObject[_machineGroup.Length];
 
+        if (_canvas == null) _canvas = GameObject.FindGameObjectWithTag("Popup_Canvas").GetComponent<Canvas>();
         for (int i = 0; i < _machineGroup.Length; i++)
         {
 
@@ -150,9 +140,6 @@ public class StageManager : MonoBehaviour
         eventTrigger.triggers.Add(entry_PointerUp);
 
 
-        _machineGroup[1]._interval = 1f - 0.1f * _popcorn_Speed_Level;
-        _machineGroup[1]._interval = 1f - 0.1f * _popcorn_Speed_Level;
-        _machineGroup[2]._interval = 1f - 0.1f * _seasoning_Speed_Level;
 
 
         StartCoroutine(Cor_Interstial());
@@ -268,7 +255,11 @@ public class StageManager : MonoBehaviour
 
         }
 
-
+        for (int i = 0; i < _mapOutline.Length; i++)
+        {
+            _mapOutline[i].SetActive(false);
+        }
+        _mapOutline[0].SetActive(true);
 
         for (int i = 0; i <= _parts_upgrade_level; i++)
         {
@@ -302,7 +293,8 @@ public class StageManager : MonoBehaviour
                     break;
 
             }
-
+            if (i < _parts_upgrade_level) _mapOutline[i].SetActive(false);
+            if (i + 1 < _mapOutline.Length) _mapOutline[i + 1l].SetActive(true);
 
             _machineList.Add(_machineGroup[i]);
             _machineGroup[i].gameObject.SetActive(true);
@@ -311,13 +303,6 @@ public class StageManager : MonoBehaviour
 
         _navmeshsurface.RemoveData();
         _navmeshsurface.BuildNavMesh();
-
-        _machineGroup[0]._priceScopeLevel = _cutting_Income_Level;
-        _machineGroup[0]._interval = 1f - 0.1f * _cutting_Speed_Level;
-        _machineGroup[1]._priceScopeLevel = _popcorn_Income_Level;
-        _machineGroup[1]._interval = 1f - 0.1f * _popcorn_Speed_Level;
-        _machineGroup[2]._priceScopeLevel = _seasoning_Income_Level;
-        _machineGroup[2]._interval = 1f - 0.1f * _seasoning_Speed_Level;
 
 
         CheckButton();
@@ -367,30 +352,50 @@ public class StageManager : MonoBehaviour
                 case 0:
                     _cupObjs[0].gameObject.SetActive(false);
                     _cupObjs[1].gameObject.SetActive(true);
+                    _cupObjs[1].localScale = Vector3.zero;
+                    _cupObjs[1].DOScale(Vector3.one, _easeInterval).SetEase(_ease);
                     _partsbutton_Trans = _cupObjs[1];
+
                     break;
 
                 case 1:
                     _cupObjs[1].gameObject.SetActive(false);
                     _cupObjs[2].gameObject.SetActive(true);
-                    //_mapObjs[0].SetActive(true);
-                    //_mapObjs[1].SetActive(true);
+                    _cupObjs[2].localScale = Vector3.zero;
+                    _cupObjs[2].DOScale(Vector3.one, _easeInterval).SetEase(_ease);
                     _partsbutton_Trans = _cupObjs[2];
                     break;
 
                 case 2:
                     _cupObjs[2].gameObject.SetActive(false);
                     _cupObjs[3].gameObject.SetActive(true);
+                    _cupObjs[3].localScale = Vector3.zero;
+                    _cupObjs[3].DOScale(Vector3.one, _easeInterval).SetEase(_ease);
                     _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(false);
                     break;
 
             }
+            _mapOutline[_parts_upgrade_level].SetActive(false);
+            if (_parts_upgrade_level + 1 < _mapOutline.Length) _mapOutline[_parts_upgrade_level + 1l].SetActive(true);
+
             _machineList.Add(_machineGroup[_parts_upgrade_level + 1]);
             _machineGroup[_parts_upgrade_level + 1].gameObject.SetActive(true);
+            float _size1 = _machineGroup[_parts_upgrade_level + 1].transform.lossyScale.x;
+            _machineGroup[_parts_upgrade_level + 1].transform.localScale = Vector3.zero;
+            _machineGroup[_parts_upgrade_level + 1].transform.DOScale(Vector3.one * _size1, _easeInterval).SetEase(_ease);
+
             _mapObjs[_parts_upgrade_level].SetActive(true);
-            Debug.Log("MapObj On " + _parts_upgrade_level);
-            _navmeshsurface.RemoveData();
-            _navmeshsurface.BuildNavMesh();
+            float _size2 = _mapObjs[_parts_upgrade_level].transform.lossyScale.x;
+
+            _mapObjs[_parts_upgrade_level].transform.localScale = Vector3.zero;
+            _mapObjs[_parts_upgrade_level].transform.DOScale(Vector3.one * _size2, _easeInterval).SetEase(_ease);
+
+            DOTween.Sequence().AppendInterval(_easeInterval).AppendCallback(() =>
+            {
+                _navmeshsurface.RemoveData();
+                _navmeshsurface.BuildNavMesh();
+            });
+
 
         }
 
@@ -400,7 +405,18 @@ public class StageManager : MonoBehaviour
         CheckButton();
     }
 
-
+    [Button]
+    public void RemoveMesh()
+    {
+        _navmeshsurface.RemoveData();
+        //_navmeshsurface.BuildNavMesh();
+    }
+    [Button]
+    public void RebuildMesh()
+    {
+        //_navmeshsurface.RemoveData();
+        _navmeshsurface.BuildNavMesh();
+    }
     // -====================================================
 
     public void SaveData()
@@ -412,12 +428,7 @@ public class StageManager : MonoBehaviour
         _stagedata.Parts_Upgrade_Level = _parts_upgrade_level;
 
         _stagedata.Speed_Upgrade_Level = _speed_Upgrade_level;
-        _stagedata.Cutting_Income_Level = _cutting_Income_Level;
-        _stagedata.Cutting_Speed_Level = _cutting_Speed_Level;
-        _stagedata.Popcorn_Income_Level = _popcorn_Income_Level;
-        _stagedata.Popcorn_Speed_Level = _popcorn_Speed_Level;
-        _stagedata.Seasoning_Income_Level = _seasoning_Income_Level;
-        _stagedata.Seasoning_Speed_Level = _seasoning_Speed_Level;
+
 
         Managers.Data.SetStageData(_stagedata);
     }
@@ -518,134 +529,11 @@ public class StageManager : MonoBehaviour
         }
         catch { }
 
-
-        /// add Upgrade scroll  Button check
-
-        if (_staff_upgrade_level < _addStaff_Upgrade_Price.Length)
-        {
-            _gameUi.Worker_Hire.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = _addStaff_Upgrade_Price[_staff_upgrade_level] == 0 ? "Free" : $"{Managers.ToCurrencyString(_addStaff_Upgrade_Price[_staff_upgrade_level], 3)}";
-
-            _gameUi.Worker_Hire.transform.Find("List_Upgrade").GetComponent<Button>().interactable =
-                (_gameManager.Money >= _addStaff_Upgrade_Price[_staff_upgrade_level]);
-
-            bigMoney = _addStaff_Upgrade_Price[_staff_upgrade_level];
-
-        }
-        else
-        {
-            _gameUi.Worker_Hire.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Max";
-
-            _gameUi.Worker_Hire.transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
-        }
-
-        if (_speed_Upgrade_level < 5)
-        {
-            _gameUi.Worker_Speed.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_staffSpeed_Upgrade_Price[_speed_Upgrade_level], 3)}";
-            _gameUi.Worker_Speed.transform.Find("List_Upgrade").GetComponent<Button>().interactable =
-          (_gameManager.Money >= _staffSpeed_Upgrade_Price[_speed_Upgrade_level]);
-
-            bigMoney = bigMoney > _staffSpeed_Upgrade_Price[_speed_Upgrade_level] ? _staffSpeed_Upgrade_Price[_speed_Upgrade_level] : bigMoney;
-        }
-        else
-        {
-            _gameUi.Worker_Speed.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Max";
-            _gameUi.Worker_Speed.transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
-        }
-
-        if (_cutting_Income_Level < 5)
-        {
-            _gameUi.Upg1_Income.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_cutting_Income_Upgrade_Price[_cutting_Income_Level], 3)}";
-            _gameUi.Upg1_Income.transform.Find("List_Upgrade").GetComponent<Button>().interactable =
-          (_gameManager.Money >= _cutting_Income_Upgrade_Price[_cutting_Income_Level]);
-
-            bigMoney = bigMoney > _cutting_Income_Upgrade_Price[_cutting_Income_Level] ? _cutting_Income_Upgrade_Price[_cutting_Income_Level] : bigMoney;
-        }
-        else
-        {
-            _gameUi.Upg1_Income.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Max";
-            _gameUi.Upg1_Income.transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
-        }
-
-        if (_cutting_Speed_Level < 5)
-        {
-            _gameUi.Upg1_Speed.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_cutting_Speed_Upgrade_Price[_cutting_Speed_Level], 3)}";
-            _gameUi.Upg1_Speed.transform.Find("List_Upgrade").GetComponent<Button>().interactable =
-          (_gameManager.Money >= _cutting_Speed_Upgrade_Price[_cutting_Speed_Level]);
-            bigMoney = bigMoney > _cutting_Speed_Upgrade_Price[_cutting_Speed_Level] ? _cutting_Speed_Upgrade_Price[_cutting_Speed_Level] : bigMoney;
-        }
-        else
-        {
-            _gameUi.Upg1_Speed.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Max";
-            _gameUi.Upg1_Speed.transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
-        }
-
-        if (_popcorn_Income_Level < 5)
-        {
-            _gameUi.Upg2_Income.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_popcorn_Income_Upgrade_Price[_popcorn_Income_Level], 3)}";
-            _gameUi.Upg2_Income.transform.Find("List_Upgrade").GetComponent<Button>().interactable =
-           (_gameManager.Money >= _popcorn_Income_Upgrade_Price[_popcorn_Income_Level]);
-            bigMoney = bigMoney > _popcorn_Income_Upgrade_Price[_popcorn_Income_Level] ? _popcorn_Income_Upgrade_Price[_popcorn_Income_Level] : bigMoney;
-        }
-        else
-        {
-            _gameUi.Upg2_Income.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Max";
-            _gameUi.Upg2_Income.transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
-        }
-
-        if (_popcorn_Speed_Level < 5)
-        {
-            _gameUi.Upg2_Speed.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_popcorn_Speed_Upgrade_Price[_popcorn_Speed_Level], 3)}";
-            _gameUi.Upg2_Speed.transform.Find("List_Upgrade").GetComponent<Button>().interactable =
-          (_gameManager.Money >= _popcorn_Speed_Upgrade_Price[_popcorn_Speed_Level]);
-            bigMoney = bigMoney > _popcorn_Speed_Upgrade_Price[_popcorn_Speed_Level] ? _popcorn_Speed_Upgrade_Price[_popcorn_Speed_Level] : bigMoney;
-        }
-        else
-        {
-            _gameUi.Upg2_Speed.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Max";
-            _gameUi.Upg2_Speed.transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
-        }
-
-        if (_seasoning_Income_Level < 5)
-        {
-            _gameUi.Upg3_Income.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_seasoning_Income_Upgrade_Price[_seasoning_Income_Level], 3)}";
-            _gameUi.Upg3_Income.transform.Find("List_Upgrade").GetComponent<Button>().interactable =
-         (_gameManager.Money >= _seasoning_Income_Upgrade_Price[_seasoning_Income_Level]);
-            bigMoney = bigMoney > _seasoning_Income_Upgrade_Price[_seasoning_Income_Level] ? _seasoning_Income_Upgrade_Price[_seasoning_Income_Level] : bigMoney;
-        }
-        else
-        {
-            _gameUi.Upg3_Income.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Max";
-            _gameUi.Upg3_Income.transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
-        }
-
-        if (_seasoning_Speed_Level < 5)
-        {
-            _gameUi.Upg3_Speed.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_seasoning_Speed_Upgrade_Price[_seasoning_Speed_Level], 3)}";
-            _gameUi.Upg3_Speed.transform.Find("List_Upgrade").GetComponent<Button>().interactable =
-          (_gameManager.Money >= _seasoning_Speed_Upgrade_Price[_seasoning_Speed_Level]);
-            bigMoney = bigMoney > _seasoning_Speed_Upgrade_Price[_seasoning_Speed_Level] ? _seasoning_Speed_Upgrade_Price[_seasoning_Speed_Level] : bigMoney;
-        }
-        else
-        {
-            _gameUi.Upg3_Speed.transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Max";
-            _gameUi.Upg3_Speed.transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
-        }
-
-
-        upgradeCount = 0;
-        upgradeCount = _gameUi.Worker_Hire.transform.Find("List_Upgrade").GetComponent<Button>().interactable ? upgradeCount + 1 : upgradeCount;
-        upgradeCount = _gameUi.Worker_Speed.transform.Find("List_Upgrade").GetComponent<Button>().interactable ? upgradeCount + 1 : upgradeCount;
-        upgradeCount = _gameUi.Upg1_Income.transform.Find("List_Upgrade").GetComponent<Button>().interactable ? upgradeCount + 1 : upgradeCount;
-        upgradeCount = _gameUi.Upg1_Speed.transform.Find("List_Upgrade").GetComponent<Button>().interactable ? upgradeCount + 1 : upgradeCount;
-        upgradeCount = _gameUi.Upg2_Income.transform.Find("List_Upgrade").GetComponent<Button>().interactable ? upgradeCount + 1 : upgradeCount;
-        upgradeCount = _gameUi.Upg2_Speed.transform.Find("List_Upgrade").GetComponent<Button>().interactable ? upgradeCount + 1 : upgradeCount;
-        upgradeCount = _gameUi.Upg3_Income.transform.Find("List_Upgrade").GetComponent<Button>().interactable ? upgradeCount + 1 : upgradeCount;
-        upgradeCount = _gameUi.Upg3_Speed.transform.Find("List_Upgrade").GetComponent<Button>().interactable ? upgradeCount + 1 : upgradeCount;
+        ScrollButtonCheck();
 
 
         if ((upgradeCount == 0) && bigMoney != 0)
         {
-            //_gameUi.UpgradeCountText.transform.parent.gameObject.SetActive(false);
             _gameUi.UpgradeCountText.transform.parent.GetChild(1).gameObject.SetActive(false);
             _gameUi.UpgradeCountText.text = $"-";
 
@@ -656,10 +544,8 @@ public class StageManager : MonoBehaviour
         }
         else
         {
-            //_gameUi.UpgradeCountText.transform.parent.gameObject.SetActive(true);
             _gameUi.UpgradeCountText.transform.parent.GetChild(1).gameObject.SetActive(true);
             _gameUi.UpgradeCountText.text = $"{upgradeCount} Upgrades";
-            //_gameUi.BigMoneyButton.gameObject.SetActive(false);
             _gameUi.BigMoneyButton.transform.DOLocalMoveX(380, 1f).SetEase(Ease.Linear);
 
         }
@@ -721,43 +607,6 @@ public class StageManager : MonoBehaviour
                 _speed_Upgrade_level++;
                 break;
 
-            case 2:
-                _gameManager.CalcMoney(-_cutting_Income_Upgrade_Price[_cutting_Income_Level]);
-                _cutting_Income_Level++;
-                _machineGroup[0]._priceScopeLevel = _cutting_Income_Level;
-
-                break;
-
-            case 3:
-                _gameManager.CalcMoney(-_cutting_Speed_Upgrade_Price[_cutting_Speed_Level]);
-                _cutting_Speed_Level++;
-                _machineGroup[0]._interval = 1f - 0.1f * _cutting_Speed_Level;
-
-                break;
-
-            case 4:
-                _gameManager.CalcMoney(-_popcorn_Income_Upgrade_Price[_popcorn_Income_Level]);
-                _popcorn_Income_Level++;
-                _machineGroup[1]._priceScopeLevel = _popcorn_Income_Level;
-                break;
-
-            case 5:
-                _gameManager.CalcMoney(-_popcorn_Speed_Upgrade_Price[_popcorn_Speed_Level]);
-                _popcorn_Speed_Level++;
-                _machineGroup[1]._interval = 1f - 0.1f * _popcorn_Speed_Level;
-                break;
-
-            case 6:
-                _gameManager.CalcMoney(-_seasoning_Income_Upgrade_Price[_seasoning_Income_Level]);
-                _seasoning_Income_Level++;
-                _machineGroup[2]._priceScopeLevel = _seasoning_Income_Level;
-                break;
-
-            case 7:
-                _gameManager.CalcMoney(-_seasoning_Speed_Upgrade_Price[_seasoning_Speed_Level]);
-                _seasoning_Speed_Level++;
-                _machineGroup[2]._interval = 1f - 0.1f * _seasoning_Speed_Level;
-                break;
 
             default:
 
@@ -770,107 +619,7 @@ public class StageManager : MonoBehaviour
     }
 
 
-    [Button]
-    public void setupdagrdata(int max = 10, int num = 0, double _base = 0, double _scope = 1f)
-    {
-        switch (num)
-        {
-            case 0:
-                _cutting_Income_Upgrade_Price = new double[max];
-                for (int i = 0; i < max; i++)
-                {
-                    if (i == 0)
-                    {
-                        _cutting_Income_Upgrade_Price[i] = _base;
-                    }
-                    else
-                    {
-                        _cutting_Income_Upgrade_Price[i] = _cutting_Income_Upgrade_Price[i - 1] * _scope + _base * i;
-                    }
-                }
-                break;
 
-            case 1:
-                _cutting_Speed_Upgrade_Price = new double[max];
-                for (int i = 0; i < max; i++)
-                {
-                    if (i == 0)
-                    {
-                        _cutting_Speed_Upgrade_Price[i] = _base;
-                    }
-                    else
-                    {
-                        _cutting_Speed_Upgrade_Price[i] = _cutting_Speed_Upgrade_Price[i - 1] * _scope + _base * i;
-                    }
-                }
-                break;
-
-            case 2:
-                _popcorn_Income_Upgrade_Price = new double[max];
-                for (int i = 0; i < max; i++)
-                {
-                    if (i == 0)
-                    {
-                        _popcorn_Income_Upgrade_Price[i] = _base;
-                    }
-                    else
-                    {
-                        _popcorn_Income_Upgrade_Price[i] = _popcorn_Income_Upgrade_Price[i - 1] * _scope + _base * i;
-                    }
-                }
-                break;
-
-            case 3:
-                _popcorn_Speed_Upgrade_Price = new double[max];
-                for (int i = 0; i < max; i++)
-                {
-                    if (i == 0)
-                    {
-                        _popcorn_Speed_Upgrade_Price[i] = _base;
-                    }
-                    else
-                    {
-                        _popcorn_Speed_Upgrade_Price[i] = _popcorn_Speed_Upgrade_Price[i - 1] * _scope + _base * i;
-                    }
-                }
-                break;
-            case 4:
-                _seasoning_Income_Upgrade_Price = new double[max];
-                for (int i = 0; i < max; i++)
-                {
-                    if (i == 0)
-                    {
-                        _seasoning_Income_Upgrade_Price[i] = _base;
-                    }
-                    else
-                    {
-                        _seasoning_Income_Upgrade_Price[i] = _seasoning_Income_Upgrade_Price[i - 1] * _scope + _base * i;
-                    }
-                }
-                break;
-
-
-            case 5:
-                _seasoning_Speed_Upgrade_Price = new double[max];
-                for (int i = 0; i < max; i++)
-                {
-                    if (i == 0)
-                    {
-                        _seasoning_Speed_Upgrade_Price[i] = _base;
-                    }
-                    else
-                    {
-                        _seasoning_Speed_Upgrade_Price[i] = _seasoning_Speed_Upgrade_Price[i - 1] * _scope + _base * i;
-                    }
-                }
-                break;
-
-            default:
-
-                break;
-        }
-
-    }
 
     //////////////////////////////////
     /// RV
@@ -919,5 +668,178 @@ public class StageManager : MonoBehaviour
     }
 
 
+    public void AddScrollContent()
+    {
+
+        int _upgradeCount = (_machineGroup.Length + 1) * 2;
+
+        _gameUi.ScrollUpgrades = new GameObject[_upgradeCount];
+        _scrollUpgrades_Price = new double[_upgradeCount];
+
+        _gameUi.Content.GetComponent<RectTransform>().sizeDelta = new Vector3(0f, _upgradeCount * 200f + 200f);
+
+        _gameUi.ScrollUpgrades[0] = Instantiate(Resources.Load<GameObject>("Worker_Hire"), _gameUi.Content.transform);
+        _gameUi.ScrollUpgrades[1] = Instantiate(Resources.Load<GameObject>("Worker_Speed"), _gameUi.Content.transform);
+
+        _gameUi.ScrollUpgrades[0].transform.Find("List_Upgrade").GetComponent<Button>().AddButtonEvent(() => ScrollButtonUpgrade(-2, 0));
+        _gameUi.ScrollUpgrades[1].transform.Find("List_Upgrade").GetComponent<Button>().AddButtonEvent(() => ScrollButtonUpgrade(-1, 0));
+
+
+        for (int i = 2; i < _upgradeCount; i++)
+        {
+            _gameUi.ScrollUpgrades[i] = Instantiate(Resources.Load<GameObject>("Upgrade_Content"), _gameUi.Content.transform);
+        }
+
+        for (int i = 0; i < _machineGroup.Length; i++)
+        {
+            int n = i;
+            _gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Icon").GetComponent<Image>().sprite = _machineGroup[i]._upgrade1_sprite;
+            _gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("Upgrade_Name").GetComponent<Text>().text
+                = _machineGroup[i]._name + _machineGroup[i]._upgrade1_name;
+            _gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("Upgrade_Explain").GetComponent<Text>().text
+                = _machineGroup[i]._name + _machineGroup[i]._upgrade1_explain;
+            _gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Upgrade").GetComponent<Button>().AddButtonEvent(() => ScrollButtonUpgrade(n, 0));
+
+
+            _gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("List_Icon").GetComponent<Image>().sprite = _machineGroup[i]._upgrade2_sprite;
+            _gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("Upgrade_Name").GetComponent<Text>().text
+                = _machineGroup[i]._name + _machineGroup[i]._upgrade2_name;
+            _gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("Upgrade_Explain").GetComponent<Text>().text
+                = _machineGroup[i]._name + _machineGroup[i]._upgrade2_explain;
+            _gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("List_Upgrade").GetComponent<Button>().AddButtonEvent(() => ScrollButtonUpgrade(n, 1));
+
+        }
+    }
+
+    public void ScrollButtonCheck()
+    {
+
+        if (_staff_upgrade_level < _addStaff_Upgrade_Price.Length)
+        {
+
+            _gameUi.ScrollUpgrades[0].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = _addStaff_Upgrade_Price[_staff_upgrade_level] == 0 ? "Free" : $"{Managers.ToCurrencyString(_addStaff_Upgrade_Price[_staff_upgrade_level], 2)}";
+
+            _gameUi.ScrollUpgrades[0].transform.Find("List_Upgrade").GetComponent<Button>().interactable =
+                (_gameManager.Money >= _addStaff_Upgrade_Price[_staff_upgrade_level]);
+
+            bigMoney = _addStaff_Upgrade_Price[_staff_upgrade_level];
+
+        }
+        else
+        {
+            _gameUi.ScrollUpgrades[0].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Max";
+
+            _gameUi.ScrollUpgrades[0].transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
+        }
+
+        if (_speed_Upgrade_level < 5)
+        {
+            _gameUi.ScrollUpgrades[1].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_staffSpeed_Upgrade_Price[_speed_Upgrade_level], 2)}";
+            _gameUi.ScrollUpgrades[1].transform.Find("List_Upgrade").GetComponent<Button>().interactable =
+          (_gameManager.Money >= _staffSpeed_Upgrade_Price[_speed_Upgrade_level]);
+
+            bigMoney = bigMoney > _staffSpeed_Upgrade_Price[_speed_Upgrade_level] ? _staffSpeed_Upgrade_Price[_speed_Upgrade_level] : bigMoney;
+        }
+        else
+        {
+            _gameUi.ScrollUpgrades[1].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Max";
+            _gameUi.ScrollUpgrades[1].transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
+        }
+
+
+
+        for (int i = 0; i < _machineGroup.Length; i++)
+        {
+            if (_machineGroup[i]._priceScopeLevel < 5 && _machineGroup[i].gameObject.activeSelf) // income upgrade
+            {
+
+                _gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_machineGroup[i]._scrollUpgrade1_Price[_machineGroup[i]._priceScopeLevel], 2)}";
+                _gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Upgrade").GetComponent<Button>().interactable =
+               (_gameManager.Money >= _machineGroup[i]._scrollUpgrade1_Price[_machineGroup[i]._priceScopeLevel]);
+                bigMoney = bigMoney > _machineGroup[i]._scrollUpgrade1_Price[_machineGroup[i]._priceScopeLevel] ? _machineGroup[i]._scrollUpgrade1_Price[_machineGroup[i]._priceScopeLevel] : bigMoney;
+                LayoutRebuilder.ForceRebuildLayoutImmediate(_gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Upgrade").GetComponent<RectTransform>());
+            }
+            else if (!_machineGroup[i].gameObject.activeSelf)
+            {
+
+                _gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Unlock";
+                _gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
+                LayoutRebuilder.ForceRebuildLayoutImmediate(_gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Upgrade").GetComponent<RectTransform>());
+            }
+            else
+            {
+
+                _gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Max";
+                _gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
+                LayoutRebuilder.ForceRebuildLayoutImmediate(_gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Upgrade").GetComponent<RectTransform>());
+            }
+
+            if (_machineGroup[i]._spawnLevel < 5 && _machineGroup[i].gameObject.activeSelf) // speed upgrade
+            {
+
+                _gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_machineGroup[i]._scrollUpgrade2_Price[_machineGroup[i]._spawnLevel], 2)}";
+                _gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("List_Upgrade").GetComponent<Button>().interactable =
+               (_gameManager.Money >= _machineGroup[i]._scrollUpgrade2_Price[_machineGroup[i]._spawnLevel]);
+                bigMoney = bigMoney > _machineGroup[i]._scrollUpgrade2_Price[_machineGroup[i]._spawnLevel] ? _machineGroup[i]._scrollUpgrade2_Price[_machineGroup[i]._spawnLevel] : bigMoney;
+                LayoutRebuilder.ForceRebuildLayoutImmediate(_gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("List_Upgrade").GetComponent<RectTransform>());
+            }
+            else if (!_machineGroup[i].gameObject.activeSelf)
+            {
+                _gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Unlock";
+                _gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
+                LayoutRebuilder.ForceRebuildLayoutImmediate(_gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("List_Upgrade").GetComponent<RectTransform>());
+            }
+            else
+            {
+
+                _gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = "Max";
+                _gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
+                LayoutRebuilder.ForceRebuildLayoutImmediate(_gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("List_Upgrade").GetComponent<RectTransform>());
+            }
+
+
+        }
+
+        //LayoutRebuilder.ForceRebuildLayoutImmediate(_gameUi.Content.GetComponent<RectTransform>());
+
+    }
+
+    public void ScrollButtonUpgrade(int _num, int _typeNum)
+    {
+        switch (_num)
+        {
+            case -2:
+                Managers.Game.CalcMoney(-_addStaff_Upgrade_Price[_staff_upgrade_level]);
+
+                Transform _workerbox = Managers.Pool.Pop(Resources.Load<GameObject>("WorkerBox"), _spawnPos.transform).transform;
+                _workerbox.position = _spawnPos.position;
+                _workerbox.localScale = Vector3.zero;
+                _workerbox.DOScale(Vector3.one, 1f);
+
+                _staff_upgrade_level++;
+                break;
+
+            case -1:
+                Managers.Game.CalcMoney(-_staffSpeed_Upgrade_Price[_speed_Upgrade_level]);
+                for (int i = 0; i < _staffList.Count; i++)
+                {
+                    _staffList[i]._speed = 5f + (float)_speed_Upgrade_level * 0.5f;
+                }
+
+                _speed_Upgrade_level++;
+                break;
+
+            default:
+                _machineGroup[_num].UpgradeMachine2(_typeNum);
+
+
+                break;
+        }
+
+        Managers.Sound.Play("Money");
+        SaveData();
+        CheckButton();
+
+    }
 
 }

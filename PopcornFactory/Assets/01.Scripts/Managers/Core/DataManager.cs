@@ -81,6 +81,30 @@ public class DataManager
         ES3.Save<double>("Money", Managers.Game.Money);
         ES3.Save<int>("Gem", Managers.Game.Gem);
     }
+    // =====================================
+    public class MachineData
+    {
+        public int Machin_Level;
+        public int PriceScope_Level;
+        public int Spawn_Level;
+    }
+    public MachineData _machineData;
+
+    public MachineData GetMachineData(int _stageLevel, string _machineName)
+    {
+        MachineData loadMachineData = ES3.Load<MachineData>("Stage_" + _stageLevel.ToString() + "_" + _machineName, new MachineData());
+
+
+        return loadMachineData;
+    }
+
+    public void SetMachineData(int _stageLevel, string _machineName, MachineData _data)
+    {
+        ES3.Save<MachineData>("Stage_" + _stageLevel.ToString() + "_" + _machineName, _data);
+    }
+
+
+
 
 
 }

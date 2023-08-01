@@ -7,6 +7,28 @@ using UnityEngine.UI;
 
 public class Machine : MonoBehaviour
 {
+    public int _level;
+    [FoldoutGroup("UI_Description_1")] public string _name;
+    [FoldoutGroup("UI_Description_1")] public Sprite _upgrade1_sprite;
+    [FoldoutGroup("UI_Description_1")] public string _upgrade1_name = "Income";
+    [FoldoutGroup("UI_Description_1")] public string _upgrade1_explain = "Income Up";
+    [FoldoutGroup("UI_Description_1")] public Sprite _upgrade2_sprite;
+    [FoldoutGroup("UI_Description_1")] public string _upgrade2_name = "Speed";
+    [FoldoutGroup("UI_Description_1")] public string _upgrade2_explain = "Speed Up";
+
+    [FoldoutGroup("UI_Description_2")] public double _scrollUpgrade1_base = 500;
+    [FoldoutGroup("UI_Description_2")] public double _scrollUpgrade2_base = 700;
+    [FoldoutGroup("UI_Description_2")] public double _scrollUpgrade1_scope = 1.2d;
+    [FoldoutGroup("UI_Description_2")] public double _scrollUpgrade2_scope = 1.5d;
+    [FoldoutGroup("UI_Description_2")] public double[] _scrollUpgrade1_Price;
+    [FoldoutGroup("UI_Description_2")] public double[] _scrollUpgrade2_Price;
+    [FoldoutGroup("UI_Description_2")] public int _priceScopeLevel;
+    [FoldoutGroup("UI_Description_2")] public int _spawnLevel;
+
+    public double _priceScope = 0.2d;
+
+    public float _interval = 0.5f;
+
     public Table _table;
 
     public bool isRail = false;
@@ -22,8 +44,9 @@ public class Machine : MonoBehaviour
     public double[] _upgradePrice;
     public double[] _productPrice;
 
-    public int _level;
-    public string _name;
+
+
+
 
     Transform _panel;
     GameObject _popupButton;
@@ -36,7 +59,7 @@ public class Machine : MonoBehaviour
 
     public bool isPress = false;
 
-    public float _interval = 0.5f;
+
     public float _jumpPower = 5f;
 
     public GameObject _popcorn_Pref;
@@ -54,11 +77,10 @@ public class Machine : MonoBehaviour
     public float _term = 0.1f;
     float _currentterm = 0.1f;
 
-    public double _priceScope = 0.2d;
-    public int _priceScopeLevel = 0;
+
     // ==========================================================================
     public int max_count = 20;
-    private void OnEnable()
+    private void Start()
     {
         _x = _table.GetComponent<BoxCollider>().bounds.size.x * 0.5f;
         _z = _table.GetComponent<BoxCollider>().bounds.size.z * 0.5f;
@@ -95,6 +117,7 @@ public class Machine : MonoBehaviour
         //WaitForSeconds _term = new WaitForSeconds(_interval);
         while (true)
         {
+            _interval = 1f - (0.1f * _spawnLevel);
             yield return new WaitForSeconds(_interval);
 
             if (isAutoSpawn || _currentCount > 0)
@@ -180,6 +203,41 @@ public class Machine : MonoBehaviour
 
     }
 
+    [Button]
+    public void CreateDataTable2()
+    {
+
+        _scrollUpgrade1_Price = new double[5];
+
+        for (int i = 0; i < _scrollUpgrade1_Price.Length; i++)
+        {
+            if (i == 0)
+            {
+                _scrollUpgrade1_Price[i] = _scrollUpgrade1_base;
+            }
+            else
+            {
+                _scrollUpgrade1_Price[i] = _scrollUpgrade1_Price[i - 1] * _scrollUpgrade1_scope;
+            }
+        }
+
+        _scrollUpgrade2_Price = new double[5];
+        for (int i = 0; i < _scrollUpgrade2_Price.Length; i++)
+        {
+            if (i == 0)
+            {
+                _scrollUpgrade2_Price[i] = _scrollUpgrade2_base;
+            }
+            else
+            {
+                _scrollUpgrade2_Price[i] = _scrollUpgrade2_Price[i - 1] * _scrollUpgrade2_scope;
+            }
+        }
+
+    }
+
+
+
     public void CheckPrice(Transform _Panel)
     {
 
@@ -250,10 +308,39 @@ public class Machine : MonoBehaviour
         }
     }
 
+    public void UpgradeMachine2(int _typeNum)
+    {
+        switch (_typeNum)
+        {
+            case 0:
+                _gamemanager.CalcMoney(-_scrollUpgrade1_Price[_priceScopeLevel]);
+                _priceScopeLevel++;
+
+                break;
+
+            case 1:
+                _gamemanager.CalcMoney(-_scrollUpgrade2_Price[_spawnLevel]);
+                _spawnLevel++;
+                break;
+
+            default:
+
+                break;
+        }
+
+        SaveData();
+    }
+
 
     public void SaveData()
     {
-        ES3.Save<int>(_name.ToString(), _level);
+        //ES3.Save<int>(_name.ToString(), _level);
+        DataManager.MachineData _data = new DataManager.MachineData();
+        _data.Machin_Level = _level;
+        _data.PriceScope_Level = _priceScopeLevel;
+        _data.Spawn_Level = _spawnLevel;
+
+        Managers.Data.SetMachineData(_gamemanager._stageManager._stageLevel, _name, _data);
     }
 
     public void LoadData()
@@ -264,6 +351,13 @@ public class Machine : MonoBehaviour
         {
             RailOnOff(true);
         }
+
+        DataManager.MachineData _data = Managers.Data.GetMachineData(_gamemanager._stageManager._stageLevel, _name);
+
+        _level = _data.Machin_Level;
+        _priceScopeLevel = _data.PriceScope_Level;
+        _spawnLevel = _data.Spawn_Level;
+
     }
 
 
@@ -343,4 +437,5 @@ public class Machine : MonoBehaviour
         }
 
     }
+
 }

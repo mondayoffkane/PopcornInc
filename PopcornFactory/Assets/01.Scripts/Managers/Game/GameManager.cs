@@ -28,7 +28,10 @@ public class GameManager : MonoBehaviour
         //    _allstageManagers[_stagemanager.GetComponent<StageManager>()._stageLevel] = _stagemanager.GetComponent<StageManager>();
         //}
 
-        _stageManager = _allstageManagers[0];
+        _stageManager = SpawnStage();
+        //Debug.Log(_stageManager.name);
+
+
         //_stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
         _FloatingText = Resources.Load<GameObject>("Floating");
         //CalcMoney(0);
@@ -47,24 +50,38 @@ public class GameManager : MonoBehaviour
 
     /////////// ==============================
 
-    public StageManager[] _allstageManagers = new StageManager[3];
+    //public StageManager[] _allstageManagers = new StageManager[3];
 
-    public StageManager _StageManager;
+    [SerializeField] StageManager _StageManager;
     public StageManager _stageManager
     {
         get
         {
             if (_StageManager == null)
             {
-                _StageManager = _allstageManagers[0];
+                //_StageManager = SpawnStage();
             }
             return _StageManager;
         }
         set
         {
-            _StageManager = _stageManager;
+
+            _StageManager = value;
         }
     }
+
+    public StageManager SpawnStage()
+    {
+        _lastStageLevel = ES3.Load<int>("LastStageLevel", 0);
+        StageManager _loadstage = Instantiate(Resources.Load<GameObject>("Stage_" + _lastStageLevel.ToString())).GetComponent<StageManager>();
+        _loadstage._gameManager = this;
+        //UnityEditor.EditorApplication.isPaused = true;
+        //Debug.Log(_loadstage.name);
+        return _loadstage;
+    }
+
+    public int _lastStageLevel;
+
     public double Money = 0f;
     public int Gem = 0;
     public GameObject _FloatingText;
@@ -72,7 +89,7 @@ public class GameManager : MonoBehaviour
     public void AddMoney(double _value)
     {
         Money += _value;
-        Managers.GameUI.Money_Text.text = $"{Managers.ToCurrencyString(Money)}";
+        Managers.GameUI.Money_Text.text = $"{Managers.ToCurrencyString(Money, 2)}";
         //Managers.
         ES3.Save<double>("Money", Managers.Game.Money);
         _stageManager.CheckButton();
@@ -93,7 +110,7 @@ public class GameManager : MonoBehaviour
 
         //Money += _value > 0 ? _value * (_stageManager._income_ugrade_level + 1) : _value;
         //Money += _value * (_stageManager._income_ugrade_level + 1);
-        Managers.GameUI.Money_Text.text = $"{Managers.ToCurrencyString(Money)}";
+        Managers.GameUI.Money_Text.text = $"{Managers.ToCurrencyString(Money, 2)}";
         //Managers.
         ES3.Save<double>("Money", Managers.Game.Money);
         _stageManager.CheckButton();

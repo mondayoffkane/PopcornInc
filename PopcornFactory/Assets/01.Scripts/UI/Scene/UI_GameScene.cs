@@ -33,14 +33,7 @@ public class UI_GameScene : UI_Scene
         Setting_Panel,
         Scroll_Panel,
         Content,
-        Worker_Hire,
-        Worker_Speed,
-        Upg1_Income,
-        Upg1_Speed,
-        Upg2_Income,
-        Upg2_Speed,
-        Upg3_Income,
-        Upg3_Speed,
+
     }
 
 
@@ -52,17 +45,13 @@ public class UI_GameScene : UI_Scene
        , AddStaff_Price_Text, Income_Price_Text, AddParts_Price_Text, Gem_Text, UpgradeCountText
         , RV_Income_TimeText;
 
-    public GameObject Setting_Panel, Scroll_Panel,
-        Worker_Hire,
-        Worker_Speed,
-        Upg1_Income,
-        Upg1_Speed,
-        Upg2_Income,
-        Upg2_Speed,
-        Upg3_Income,
-        Upg3_Speed
-        , Upgrade_Panel;
+    public GameObject Setting_Panel, Scroll_Panel
 
+        , Upgrade_Panel
+        , Content;
+
+
+    public GameObject[] ScrollUpgrades;
 
     // =============================================
 
@@ -103,20 +92,11 @@ public class UI_GameScene : UI_Scene
         Setting_Panel = GetObject(GameObjects.Setting_Panel);
         Scroll_Panel = GetObject(GameObjects.Scroll_Panel);
 
-        Worker_Hire = GetObject(GameObjects.Worker_Hire);
-        Worker_Speed = GetObject(GameObjects.Worker_Speed);
-        Upg1_Income = GetObject(GameObjects.Upg1_Income);
-        Upg1_Speed = GetObject(GameObjects.Upg1_Speed);
-        Upg2_Income = GetObject(GameObjects.Upg2_Income);
-        Upg2_Speed = GetObject(GameObjects.Upg2_Speed);
-        Upg3_Income = GetObject(GameObjects.Upg3_Income);
-        Upg3_Speed = GetObject(GameObjects.Upg3_Speed);
         Upgrade_Panel = GetObject(GameObjects.Upgrade_Panel);
-
+        Content = GetObject(GameObjects.Content);
 
         // ======================================
-        //AddStaff_Upgrade_Button.AddButtonEvent(() => Managers.Game._stageManager.AddStaff());
-        //Income_Upgrade_Button.AddButtonEvent(() => Managers.Game._stageManager.AddIncome());
+
         AddParts_Upgrade_Button.AddButtonEvent(() => Managers.Game._stageManager.AddParts());
 
         Sound_Button.AddButtonEvent(() =>
@@ -136,16 +116,11 @@ public class UI_GameScene : UI_Scene
             Vibe_Button.transform.GetChild(2).gameObject.SetActive(!Managers.Data.UseHaptic);
         });
 
-        AddUpgrade_Button.AddButtonEvent(() => Scroll_Panel.SetActive(!Scroll_Panel.activeSelf));
-
-        Worker_Hire.transform.GetChild(3).GetComponent<Button>().AddButtonEvent(() => Managers.Game._stageManager.UpgradeType(0));
-        Worker_Speed.transform.GetChild(3).GetComponent<Button>().AddButtonEvent(() => Managers.Game._stageManager.UpgradeType(1));
-        Upg1_Income.transform.GetChild(3).GetComponent<Button>().AddButtonEvent(() => Managers.Game._stageManager.UpgradeType(2));
-        Upg1_Speed.transform.GetChild(3).GetComponent<Button>().AddButtonEvent(() => Managers.Game._stageManager.UpgradeType(3));
-        Upg2_Income.transform.GetChild(3).GetComponent<Button>().AddButtonEvent(() => Managers.Game._stageManager.UpgradeType(4));
-        Upg2_Speed.transform.GetChild(3).GetComponent<Button>().AddButtonEvent(() => Managers.Game._stageManager.UpgradeType(5));
-        Upg3_Income.transform.GetChild(3).GetComponent<Button>().AddButtonEvent(() => Managers.Game._stageManager.UpgradeType(6));
-        Upg3_Speed.transform.GetChild(3).GetComponent<Button>().AddButtonEvent(() => Managers.Game._stageManager.UpgradeType(7));
+        AddUpgrade_Button.AddButtonEvent(() =>
+        {
+            Scroll_Panel.SetActive(!Scroll_Panel.activeSelf);
+            Managers.Game._stageManager.ScrollButtonCheck();
+        });
 
 
 
