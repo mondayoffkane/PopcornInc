@@ -15,6 +15,7 @@ public class CameraMove : MonoBehaviour
     public Vector2 _startXY, _endXY;
 
     public Vector2 _viewLimit = new Vector2(30f, 60f);
+    public float returnSpeed = 50f;
     //public float _minY = 0f, _maxY = 30f;
     //public float _startY, _endY;
 
@@ -34,12 +35,16 @@ public class CameraMove : MonoBehaviour
     public float _lookdistance = 50f;
     public Vector3 _lookOffset = new Vector3(0f, 10f, 0f);
     public bool isClick = false;
+    public Material _beltMat;
     // ===========
     private void Start()
     {
         _cam = GetComponent<Camera>();
         //TestText = Managers.GameUI.TestText;
         _stageManager = Managers.Game._stageManager;
+
+        _beltMat.DOOffset(Vector2.zero, 0f);
+        _beltMat.DOOffset(new Vector2(0f, -1f), 1f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
     }
 
     void Update()
@@ -48,10 +53,7 @@ public class CameraMove : MonoBehaviour
         {
             Managers.Game.CalcMoney(100);
         }
-        //if (Input.GetKeyDown(KeyCode.W))
-        //{
-        //    Managers.Sound.Play("Effect_1");
-        //}
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             _stageManager.AddStaff(false);
@@ -155,18 +157,18 @@ public class CameraMove : MonoBehaviour
             {
                 _endXY = new Vector2(Input.mousePosition.x/*0f */, Input.mousePosition.y);
 
-                _x = (transform.right * (_startXY.x - _endXY.x) * _moveSense).x;
-                _y = (transform.up * (_startXY.y - _endXY.y) * _moveSense).y;
+                _x = (Vector3.right * (_startXY.x - _endXY.x) * _moveSense).x;
+                _y = (Vector3.up * (_startXY.y - _endXY.y) * _moveSense).y;
 
-                Vector3 _horizon = transform.right * (_startXY.x - _endXY.x) * _moveSense;
-                Vector3 _vertical = transform.up * (_startXY.y - _endXY.y) * _moveSense;
+                Vector3 _horizon = Vector3.right * (_startXY.x - _endXY.x) * _moveSense;
+                Vector3 _vertical = Vector3.up * (_startXY.y - _endXY.y) * _moveSense;
 
                 Vector3 _delta = _startPos + _horizon + _vertical;
 
-                if (_delta.x >= _limitPos.x && _delta.x <= _limitPos.y && _delta.y >= _limitPos.z && _delta.y <= _limitPos.w)
-                {
-                    transform.position = _delta;
-                }
+                //if (_delta.x >= _limitPos.x && _delta.x <= _limitPos.y && _delta.y >= _limitPos.z && _delta.y <= _limitPos.w)
+                //{
+                transform.position = _delta;
+                //}
             }
         }
 
@@ -177,6 +179,29 @@ public class CameraMove : MonoBehaviour
             _endXY = _startXY;
 
         }
+
+        if (isClick == false)
+        {
+            if (transform.localPosition.x < _limitPos.x)
+            {
+                transform.localPosition += Vector3.right * Time.deltaTime * returnSpeed;
+            }
+            if (transform.localPosition.x > _limitPos.y)
+            {
+                transform.localPosition -= Vector3.right * Time.deltaTime * returnSpeed;
+            }
+            if (transform.localPosition.y > _limitPos.w)
+            {
+                transform.localPosition -= Vector3.up * Time.deltaTime * returnSpeed;
+            }
+            if (transform.localPosition.y < _limitPos.z)
+            {
+                transform.localPosition += Vector3.up * Time.deltaTime * returnSpeed;
+            }
+
+        }
+
+
 
 #endif
 
@@ -296,8 +321,14 @@ public class CameraMove : MonoBehaviour
 
     public void LookTarget(Transform _target)
     {
+        //Vector3 _temppos = new Vector3(_target.position.x, _target.position.y, -_lookdistance)
+
+        _lookdistance = (-_target.position.z - 60f) * 1.156f;
+
+
         DOTween.Sequence()
-            .Append(transform.DOMove(_target.position + _lookOffset - transform.forward * _lookdistance, 0.5f).SetEase(Ease.Linear))
+            .Append(transform.DOMove(_target.position + transform.forward * _lookdistance, 0.5f).SetEase(Ease.Linear))
+            //.Append(transform.DOMove(_target.position + _lookOffset - transform.forward * _lookdistance, 0.5f).SetEase(Ease.Linear))
             //.Append(transform.DOMove(_target.transform.position + new Vector3(30f, 50f, 50f), 0.5f).SetEase(Ease.Linear))
             .AppendCallback(() => { isFix = true; })
             .OnComplete(() => isFix = false);
