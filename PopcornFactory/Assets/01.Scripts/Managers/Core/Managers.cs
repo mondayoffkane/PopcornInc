@@ -181,7 +181,7 @@ public class Managers : MonoBehaviour
                     break;
 
                 case 2: //  소수 둘째자리까지만 출력한다.
-                    showNumber = temp.ToString("F2").Replace(".0", "");
+                    showNumber = temp.ToString("F2").Replace(".00", "");
                     break;
 
                 case 3:

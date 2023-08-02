@@ -55,12 +55,7 @@ public class DataManager
         public int Parts_Upgrade_Level;
 
         public int Speed_Upgrade_Level;
-        public int Cutting_Income_Level;
-        public int Cutting_Speed_Level;
-        public int Popcorn_Income_Level;
-        public int Popcorn_Speed_Level;
-        public int Seasoning_Income_Level;
-        public int Seasoning_Speed_Level;
+
 
     }
     public StageData _stageData;

@@ -20,22 +20,8 @@ public class GameManager : MonoBehaviour
 
     public void Init()
     {
-
-        //GameObject[] _obj = GameObject.FindGameObjectsWithTag("StageManager");
-
-        //foreach (GameObject _stagemanager in _obj)
-        //{
-        //    _allstageManagers[_stagemanager.GetComponent<StageManager>()._stageLevel] = _stagemanager.GetComponent<StageManager>();
-        //}
-
         _stageManager = SpawnStage();
-        //Debug.Log(_stageManager.name);
-
-
-        //_stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
         _FloatingText = Resources.Load<GameObject>("Floating");
-        //CalcMoney(0);
-
 
     }
     public void Clear()
@@ -50,7 +36,6 @@ public class GameManager : MonoBehaviour
 
     /////////// ==============================
 
-    //public StageManager[] _allstageManagers = new StageManager[3];
 
     [SerializeField] StageManager _StageManager;
     public StageManager _stageManager
@@ -59,7 +44,7 @@ public class GameManager : MonoBehaviour
         {
             if (_StageManager == null)
             {
-                //_StageManager = SpawnStage();
+                _StageManager = SpawnStage();
             }
             return _StageManager;
         }
@@ -75,9 +60,22 @@ public class GameManager : MonoBehaviour
         _lastStageLevel = ES3.Load<int>("LastStageLevel", 0);
         StageManager _loadstage = Instantiate(Resources.Load<GameObject>("Stage_" + _lastStageLevel.ToString())).GetComponent<StageManager>();
         _loadstage._gameManager = this;
-        //UnityEditor.EditorApplication.isPaused = true;
-        //Debug.Log(_loadstage.name);
+
         return _loadstage;
+    }
+
+    public void NextStage()
+    {
+
+        Destroy(_stageManager.gameObject);
+
+        _lastStageLevel++;
+        Money = 0;
+
+        ES3.Save<int>("LastStageLevel", _lastStageLevel);
+        ES3.Save<double>("Money", Money);
+
+        _stageManager = SpawnStage();
     }
 
     public int _lastStageLevel;
@@ -108,10 +106,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        //Money += _value > 0 ? _value * (_stageManager._income_ugrade_level + 1) : _value;
-        //Money += _value * (_stageManager._income_ugrade_level + 1);
         Managers.GameUI.Money_Text.text = $"{Managers.ToCurrencyString(Money, 2)}";
-        //Managers.
         ES3.Save<double>("Money", Managers.Game.Money);
         _stageManager.CheckButton();
 
@@ -134,7 +129,7 @@ public class GameManager : MonoBehaviour
         Transform _floatingText = Managers.Pool.Pop(_FloatingText, _trans).GetComponent<Transform>();
         _floatingText.localPosition = new Vector3(0f, 3f, 0f);
         _floatingText.GetComponentInChildren<Text>().text = $"{Managers.ToCurrencyString(_value)}";
-        _floatingText.DOLocalMoveY(4f, 1f).SetEase(Ease.Linear)
+        _floatingText.DOLocalMoveY(6f, 1f).SetEase(Ease.Linear)
             .OnComplete(() => Managers.Pool.Push(_floatingText.GetComponent<Poolable>()));
     }
 

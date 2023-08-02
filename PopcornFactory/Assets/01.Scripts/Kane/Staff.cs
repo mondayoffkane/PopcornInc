@@ -39,14 +39,28 @@ public class Staff : MonoBehaviour
     public int _num;
     // ================================
 
-    private void Start()
+    private void OnEnable()
     {
+        Init();
+
         _stageManager = Managers.Game._stageManager;
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _speed * Random.Range(1f, 1.2f);
         _agent.Warp(transform.position);
         //_cup = _stageManager._cupObj.GetComponent<Cup>();
         _animator = transform.GetComponent<Animator>();
+    }
+
+    void Init()
+    {
+        int _n = _productStack.Count;
+        for (int i = 0; i < _n; i++)
+        {
+            Managers.Pool.Push(_productStack.Pop().GetComponent<Poolable>());
+        }
+        _productStack.Clear();
+        _target = null;
+        _staffState = StaffState.Idle;
     }
 
     void SetDest(Transform _trans)
@@ -192,7 +206,7 @@ public class Staff : MonoBehaviour
 
                                     case ProductType.PopCorn_base:
 
-                                        _target = _stageManager._cupObjs[3].transform;
+                                        _target = _stageManager._cupObjs[_stageManager._cupObjs.Length - 1].transform;
                                         _cup = _target.GetComponent<Cup>();
 
                                         break;
@@ -260,7 +274,7 @@ public class Staff : MonoBehaviour
 
                         case ProductType.PopCorn_base:
 
-                            _target = _stageManager._cupObjs[3].transform;
+                            _target = _stageManager._cupObjs[_stageManager._cupObjs.Length - 1].transform;
                             _cup = _target.GetComponent<Cup>();
 
                             break;

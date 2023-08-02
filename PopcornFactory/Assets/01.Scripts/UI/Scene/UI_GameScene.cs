@@ -10,9 +10,9 @@ public class UI_GameScene : UI_Scene
     {
         Money_Text,
         Gem_Text,
-        AddParts_Price_Text,
         RV_Income_TimeText,
         UpgradeCountText,
+        AddParts_Price_Text,
         AddStaff_Price_Text,
         Income_Price_Text,
     }
@@ -26,6 +26,7 @@ public class UI_GameScene : UI_Scene
         Income_Upgrade_Button,
         Sound_Button,
         Vibe_Button,
+        NextStageButton,
     }
     enum GameObjects
     {
@@ -33,22 +34,23 @@ public class UI_GameScene : UI_Scene
         Setting_Panel,
         Scroll_Panel,
         Content,
-
+        RvRail_Panel,
+        RvWorker_Panel,
     }
 
 
     public Button AddStaff_Upgrade_Button, Income_Upgrade_Button, AddParts_Upgrade_Button,
         Sound_Button, Vibe_Button, AddUpgrade_Button, RV_Income_Double
-        , BigMoneyButton;
+        , BigMoneyButton, NextStageButton;
 
     public Text Money_Text
        , AddStaff_Price_Text, Income_Price_Text, AddParts_Price_Text, Gem_Text, UpgradeCountText
         , RV_Income_TimeText;
 
     public GameObject Setting_Panel, Scroll_Panel
-
-        , Upgrade_Panel
-        , Content;
+                , Upgrade_Panel
+        , Content, RvRail_Panel,
+        RvWorker_Panel;
 
 
     public GameObject[] ScrollUpgrades;
@@ -76,7 +78,7 @@ public class UI_GameScene : UI_Scene
         AddUpgrade_Button = GetButton(Buttons.AddUpgrade_Button);
         RV_Income_Double = GetButton(Buttons.RV_Income_Double);
         BigMoneyButton = GetButton(Buttons.BigMoneyButton);
-
+        NextStageButton = GetButton(Buttons.NextStageButton);
 
 
         Money_Text = GetText(Texts.Money_Text);
@@ -94,6 +96,10 @@ public class UI_GameScene : UI_Scene
 
         Upgrade_Panel = GetObject(GameObjects.Upgrade_Panel);
         Content = GetObject(GameObjects.Content);
+
+        RvRail_Panel = GetObject(GameObjects.RvRail_Panel);
+        RvWorker_Panel = GetObject(GameObjects.RvWorker_Panel);
+
 
         // ======================================
 
@@ -128,6 +134,8 @@ public class UI_GameScene : UI_Scene
 
         RV_Income_Double.AddButtonEvent(() => AdsManager.ShowRewarded(() => Managers.Game._stageManager.RV_Income_Double()));
         BigMoneyButton.AddButtonEvent(() => AdsManager.ShowRewarded(() => Managers.Game._stageManager.RV_BigMoney()));
+        RvRail_Panel.transform.Find("Claim_Button").GetComponent<Button>().AddButtonEvent(() => AdsManager.ShowRewarded(() => Managers.Game._stageManager.RV_Rail()));
+        RvWorker_Panel.transform.Find("Claim_Button").GetComponent<Button>().AddButtonEvent(() => AdsManager.ShowRewarded(() => Managers.Game._stageManager.RV_Worker()));
 
     } /// ========= end Set buttons
 

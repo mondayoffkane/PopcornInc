@@ -16,8 +16,7 @@ public class CameraMove : MonoBehaviour
 
     public Vector2 _viewLimit = new Vector2(30f, 60f);
     public float returnSpeed = 50f;
-    //public float _minY = 0f, _maxY = 30f;
-    //public float _startY, _endY;
+
 
     public float _moveSense = 0.05f;
     public float _wheelSense = 10f;
@@ -29,18 +28,32 @@ public class CameraMove : MonoBehaviour
     Camera _cam;
     [SerializeField] Vector2 _testStartPos, _testCurrentPos;
 
-    StageManager _stageManager;
-    //public Text TestText;
+    StageManager _StageManager;
+    public StageManager _stageManager
+    {
+        get
+        {
+            if (_StageManager == null) _StageManager = Managers.Game._stageManager;
+            return _StageManager;
+        }
+        set
+        {
+            _StageManager = value;
+        }
+    }
+
     bool isFix = false;
     public float _lookdistance = 50f;
     public Vector3 _lookOffset = new Vector3(0f, 10f, 0f);
     public bool isClick = false;
     public Material _beltMat;
+
+
     // ===========
     private void Start()
     {
         _cam = GetComponent<Camera>();
-        //TestText = Managers.GameUI.TestText;
+
         _stageManager = Managers.Game._stageManager;
 
         _beltMat.DOOffset(Vector2.zero, 0f);
@@ -66,14 +79,7 @@ public class CameraMove : MonoBehaviour
         {
             _stageManager.AddParts(false);
         }
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    _stageManager._staff_upgrade_level = 0;
-        //    _stageManager._income_ugrade_level = 0;
-        //    _stageManager._parts_upgrade_level = 0;
-        //    Managers.Game.Money = 0;
-        //    _stageManager.SaveData();
-        //}
+
         if (Input.GetKey(KeyCode.W))
         {
             Camera.main.orthographicSize += 0.1f;
@@ -112,11 +118,7 @@ public class CameraMove : MonoBehaviour
             {
                 _stageManager.OffPopup();
             }
-            //else
-            //{
-            //    return;
 
-            //}
 
             Vector3 touchPos;
             Ray ray;
@@ -131,10 +133,10 @@ public class CameraMove : MonoBehaviour
             {
                 Debug.DrawLine(ray.origin, hit.point, Color.red, 1.5f);
 
-                //Debug.Log(hit.collider.tag);
+
                 if (hit.collider.tag == "Upgrade_Obj")
                 {
-                    //Debug.Log("Hit Obj");
+
                     _stageManager.SelecteTarget(hit.transform);
                     isClick = false;
                 }
@@ -165,10 +167,8 @@ public class CameraMove : MonoBehaviour
 
                 Vector3 _delta = _startPos + _horizon + _vertical;
 
-                //if (_delta.x >= _limitPos.x && _delta.x <= _limitPos.y && _delta.y >= _limitPos.z && _delta.y <= _limitPos.w)
-                //{
                 transform.position = _delta;
-                //}
+
             }
         }
 
@@ -327,12 +327,13 @@ public class CameraMove : MonoBehaviour
 
 
         DOTween.Sequence()
-            .Append(transform.DOMove(_target.position + transform.forward * _lookdistance, 0.5f).SetEase(Ease.Linear))
+            .Append(transform.DOMove(_target.position + Vector3.up * 5f + transform.forward * _lookdistance, 0.5f).SetEase(Ease.Linear))
             //.Append(transform.DOMove(_target.position + _lookOffset - transform.forward * _lookdistance, 0.5f).SetEase(Ease.Linear))
             //.Append(transform.DOMove(_target.transform.position + new Vector3(30f, 50f, 50f), 0.5f).SetEase(Ease.Linear))
             .AppendCallback(() => { isFix = true; })
             .OnComplete(() => isFix = false);
     }
+
 
 
 

@@ -285,9 +285,12 @@ public class Machine : MonoBehaviour
             _gamemanager.CalcMoney(-_upgradePrice[_level]);
 
             _level++;
+
+
             if (_level >= _maxLevel - 1)
             {
                 RailOnOff(true);
+                _gamemanager._stageManager.FullUpgrade();
             }
             // add gem
             if ((_level + 1) % 10 == 0)
@@ -345,19 +348,18 @@ public class Machine : MonoBehaviour
 
     public void LoadData()
     {
-        _level = ES3.Load<int>(_name.ToString(), 0);
-
-        if (_level >= _maxLevel - 1)
-        {
-            RailOnOff(true);
-        }
-
         DataManager.MachineData _data = Managers.Data.GetMachineData(_gamemanager._stageManager._stageLevel, _name);
 
         _level = _data.Machin_Level;
         _priceScopeLevel = _data.PriceScope_Level;
         _spawnLevel = _data.Spawn_Level;
 
+        if (_level >= _maxLevel - 1)
+        {
+            
+            RailOnOff(true);
+            _gamemanager._stageManager.FullUpgrade();
+        }
     }
 
 
