@@ -20,7 +20,8 @@ public class StageManager : MonoBehaviour
     public int _stageLevel = 0;
 
     public GameObject _staff_Pref;
-    public Transform _spawnPos;
+    //public Transform _spawnPos;
+    public Transform[] _spawnPosGroup;
 
     [FoldoutGroup("SetObjects_1")] public Transform[] _cupObjs;
     [FoldoutGroup("SetObjects_1")] public Machine[] _machineGroup;
@@ -73,6 +74,9 @@ public class StageManager : MonoBehaviour
     UI_GameScene _gameUi;
     bool isEnd = true;
     [SerializeField] int _fullUpg_count = 0;
+    [SerializeField] int _rvRailNum = -1;
+    [SerializeField] bool isFirst = true;
+    [SerializeField] int _playTime = 0;
     /// RV /========================================
 
     public bool isRvDouble = false;
@@ -81,14 +85,20 @@ public class StageManager : MonoBehaviour
     public double bigMoney = 0d;
 
     public float Init_IS_term = 180f;
+    public bool isMoreWorker = false;
+    public float _bigmoney_term = 20f;
+    public bool isBigMoney = false;
     // ====================== =================================
 
 
     private void Start()
     {
+        Debug.Log("Spawn");
+
         if (_gameManager == null) _gameManager = Managers.Game;
         _gameUi = Managers.GameUI;
 
+        //EventTracker.TryStage(_stageLevel);
         _navmeshsurface = GetComponent<NavMeshSurface>();
 
         AddScrollContent();
@@ -98,10 +108,17 @@ public class StageManager : MonoBehaviour
 
         DataManager.StageData _data = Managers.Data.GetStageData(_stageLevel);
 
+        //Debug.Log($"StageLevel : {_stageLevel} / isFirst : {_data.isFirst} ");
+
+        if (_data.isFirst)
+        {
+            EventTracker.TryStage(_stageLevel);
+            isFirst = false;
+        }
         _staff_upgrade_level = _data.Staff_Upgrade_Level;
         _income_ugrade_level = _data.Income_Upgrade_Level;
         _parts_upgrade_level = _data.Parts_Upgrade_Level;
-
+        _playTime = _data.PlayTime;
 
         _speed_Upgrade_level = _data.Speed_Upgrade_Level;
         //FullUpgrade(false);
@@ -121,6 +138,7 @@ public class StageManager : MonoBehaviour
             _popupButton.gameObject.SetActive(false);
             _popupButtons[i] = _popupButton.gameObject;
 
+            _machineGroup[i]._machineNum = i;
 
         }
 
@@ -132,6 +150,19 @@ public class StageManager : MonoBehaviour
 
         if (_mapObjs.Length > 0)
             _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(true);
+
+        if (_stageLevel == 0)
+        {
+            _gameUi.RV_Income_Double.gameObject.SetActive(false);
+            _gameUi.BigMoneyButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            _gameUi.RV_Income_Double.gameObject.SetActive(true);
+            _gameUi.BigMoneyButton.gameObject.SetActive(true);
+        }
+
+
 
 
 
@@ -152,6 +183,26 @@ public class StageManager : MonoBehaviour
 
         StartCoroutine(Cor_Interstial());
 
+        StartCoroutine(Cor_CheckPlayTime());
+
+        IEnumerator Cor_CheckPlayTime()
+        {
+            WaitForSeconds _term = new WaitForSeconds(1f);
+            while (true)
+            {
+                yield return _term;
+
+                _playTime++;
+                if (_playTime % 60 == 0)
+                {
+                    for (int i = 0; i < _machineGroup.Length; i++)
+                    {
+                        EventTracker.LogCustomEvent("Stage_" + _stageLevel.ToString() + "_Play_Time", new Dictionary<string, string>() { { _playTime.ToString() + "s", $"Machine_{i}_level :{_machineGroup[i]._level}" } });
+
+                    }
+                }
+            }
+        }
 
         IEnumerator Cor_start()
         {
@@ -163,7 +214,7 @@ public class StageManager : MonoBehaviour
 
         IEnumerator Cor_Interstial()
         {
-            //yield return new WaitForSeconds(Init_IS_term);
+            yield return new WaitForSeconds(60f);
 
             if (_stageLevel > 0)
             {
@@ -197,10 +248,35 @@ public class StageManager : MonoBehaviour
         _targetMachine_Trans.GetComponent<Machine>().isPress = false;
     }
 
+    //public void MachinePressFalse()
+    //{
+    //    if (_targetMachine_Trans != null)
+    //        _targetMachine_Trans.GetComponent<Machine>().isPress = false;
+    //}
+
 
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            for (int i = 0; i < _machineGroup.Length; i++)
+            {
+                EventTracker.LogCustomEvent("Stage_" + _stageLevel.ToString() + "_Play_Time", new Dictionary<string, string>() { { _playTime.ToString() + "s", $"Machine_{i}_level :{_machineGroup[i]._level}" } });
+
+            }
+
+            //EventTracker.LogCustomEvent("event_name1", new Dictionary<string, string>() { { "Col 1", "Col2" } });
+            //EventTracker.LogCustomEvent("event_name2", new Dictionary<string, Dictionary<string, string>>() { { "color4", new Dictionary<string, string>() { { "Col 1", "Col2" } } } });
+
+            //Dictionary<string, string> _dic1 = new Dictionary<string, string>();
+            //Dictionary<string, string> _dic2 = new Dictionary<string, string>();
+            //_dic1.Add("")
+
+            //EventTracker.LogCustomEvent("Test",)
+        }
+
+
         for (int i = 0; i < _popupButtons.Length; i++)
         {
             _popupButtons[i].transform.position = Camera.main.WorldToScreenPoint(_machineGroup[i].transform.position + _popupOffset[i]);
@@ -217,7 +293,15 @@ public class StageManager : MonoBehaviour
 
         _gameUi.RV_Income_TimeText.text = $" {"Income X2"} \n {(intervalRvDouble / 60).ToString("F0") + ":" + (intervalRvDouble % 60).ToString("F0")}";
 
-
+        if (isBigMoney == false)
+        {
+            _bigmoney_term -= Time.deltaTime;
+            if (_bigmoney_term <= 0)
+            {
+                _bigmoney_term = 20f;
+                isBigMoney = true;
+            }
+        }
 
     }
 
@@ -253,15 +337,15 @@ public class StageManager : MonoBehaviour
         for (int i = 0; i < _staff_upgrade_level; i++)
         {
             Transform _trans = Managers.Pool.Pop(_staff_Pref, transform).transform;
-            _trans.position = _spawnPos.position;  ///new Vector3(10f, 0.5f, 20f);
+            _trans.position = _spawnPosGroup[i % _spawnPosGroup.Length].position;  ///new Vector3(10f, 0.5f, 20f);
             _staffList.Add(_trans.GetComponent<Staff>());
             _trans.GetComponent<Staff>()._speed = 5f + (float)_speed_Upgrade_level * 0.5f;
         }
 
         if (_staff_upgrade_level == 0)
         {
-            Transform _workerbox = Managers.Pool.Pop(Resources.Load<GameObject>("WorkerBox_Init"), _spawnPos.transform).transform;
-            _workerbox.position = _spawnPos.position;
+            Transform _workerbox = Managers.Pool.Pop(Resources.Load<GameObject>("WorkerBox_Init"), _spawnPosGroup[_staff_upgrade_level % _spawnPosGroup.Length].transform).transform;
+            _workerbox.position = _spawnPosGroup[_staff_upgrade_level % _spawnPosGroup.Length].position; // _spawnPos.position;
             _workerbox.localScale = Vector3.zero;
             _workerbox.DOScale(Vector3.one, 1f);
 
@@ -334,12 +418,17 @@ public class StageManager : MonoBehaviour
 
     public void AddStaff(bool isPay = true, GameObject _box = null)
     {
-
-        if (_box != null) Managers.Pool.Push(_box.GetComponent<Poolable>());
+        Transform _boxTrans = _spawnPosGroup[0];
+        if (_box != null)
+        {
+            _boxTrans = _box.transform;
+            Managers.Pool.Push(_box.GetComponent<Poolable>());
+        }
         // add fog particle 0630
 
         Transform _trans = Managers.Pool.Pop(_staff_Pref, transform).transform;
-        _trans.position = _spawnPos.position;  ///new Vector3(10f, 0.5f, 20f);
+        _trans.position = _boxTrans.position; // _spawnPos.position;  ///new Vector3(10f, 0.5f, 20f);
+
         _staffList.Add(_trans.GetComponent<Staff>());
         _trans.GetComponent<Staff>()._speed = 5f + (float)_speed_Upgrade_level * 0.5f;
 
@@ -395,6 +484,8 @@ public class StageManager : MonoBehaviour
 
             _machineList.Add(_machineGroup[_parts_upgrade_level + 1]);
             _machineGroup[_parts_upgrade_level + 1].gameObject.SetActive(true);
+            //_machineGroup[_parts_upgrade_level + 1].RvRail()
+            ShowRvRailPanel(_machineGroup[_parts_upgrade_level + 1]._machineNum);
             float _size1 = _machineGroup[_parts_upgrade_level + 1].transform.lossyScale.x;
             _machineGroup[_parts_upgrade_level + 1].transform.localScale = Vector3.zero;
             _machineGroup[_parts_upgrade_level + 1].transform.DOScale(Vector3.one * _size1, _easeInterval).SetEase(_ease);
@@ -406,7 +497,7 @@ public class StageManager : MonoBehaviour
             _mapObjs[_parts_upgrade_level].transform.DOScale(Vector3.one * _size2, _easeInterval).SetEase(_ease);
             _cam.GetComponent<Camera>().DOOrthoSize(50f, _easeInterval * 0.5f);
 
-            DOTween.Sequence().AppendInterval(_easeInterval).AppendCallback(() =>
+            DOTween.Sequence().AppendInterval(_easeInterval + 3f).AppendCallback(() =>
             {
                 _navmeshsurface.RemoveData();
                 _navmeshsurface.BuildNavMesh();
@@ -444,15 +535,15 @@ public class StageManager : MonoBehaviour
     public void SaveData()
     {
         DataManager.StageData _stagedata = new DataManager.StageData();
-        _stagedata.Stage_Level = _stageLevel;
+        //_stagedata.Stage_Level = _stageLevel;
         _stagedata.Staff_Upgrade_Level = _staff_upgrade_level;
         _stagedata.Income_Upgrade_Level = _income_ugrade_level;
         _stagedata.Parts_Upgrade_Level = _parts_upgrade_level;
 
         _stagedata.Speed_Upgrade_Level = _speed_Upgrade_level;
+        _stagedata.isFirst = false;
 
-
-        Managers.Data.SetStageData(_stagedata);
+        Managers.Data.SetStageData(_stagedata, _stageLevel);
     }
 
     public void CheckButton()
@@ -566,17 +657,18 @@ public class StageManager : MonoBehaviour
             _gameUi.UpgradeCountText.transform.parent.GetChild(1).gameObject.SetActive(false);
             _gameUi.UpgradeCountText.text = $"-";
 
+            if (_bigmoney_term >= 20f && _stageLevel > 0)
+            {
+                isBigMoney = false;
+                BigMoneyOnOff(true);
+            }
 
-            _gameUi.BigMoneyButton.gameObject.SetActive(true);
-            _gameUi.BigMoneyButton.transform.DOLocalMoveX(0, 1f).SetEase(Ease.Linear);
-            _gameUi.BigMoneyButton.transform.GetChild(0).GetComponent<Text>().text = $"{"+"}{Managers.ToCurrencyString(bigMoney * 5d)}";
+
         }
         else
         {
             _gameUi.UpgradeCountText.transform.parent.GetChild(1).gameObject.SetActive(true);
             _gameUi.UpgradeCountText.text = $"{upgradeCount} Upgrades";
-            _gameUi.BigMoneyButton.transform.DOLocalMoveX(380, 1f).SetEase(Ease.Linear);
-
         }
 
         if (isEnd)
@@ -609,6 +701,7 @@ public class StageManager : MonoBehaviour
 
 
 
+
     public void SelecteTarget(Transform _trasnform)
     {
         _targetMachine_Trans = _trasnform;
@@ -631,41 +724,41 @@ public class StageManager : MonoBehaviour
 
 
 
-    public void UpgradeType(int _num)
-    {
-        switch (_num)
-        {
-            case 0:
-                Managers.Game.CalcMoney(-_addStaff_Upgrade_Price[_staff_upgrade_level]);
+    //public void UpgradeType(int _num)
+    //{
+    //    switch (_num)
+    //    {
+    //        case 0:
+    //            Managers.Game.CalcMoney(-_addStaff_Upgrade_Price[_staff_upgrade_level]);
 
-                Transform _workerbox = Managers.Pool.Pop(Resources.Load<GameObject>("WorkerBox"), _spawnPos.transform).transform;
-                _workerbox.position = _spawnPos.position;
-                _workerbox.localScale = Vector3.zero;
-                _workerbox.DOScale(Vector3.one, 1f);
+    //            Transform _workerbox = Managers.Pool.Pop(Resources.Load<GameObject>("WorkerBox"), _spawnPos.transform).transform;
+    //            _workerbox.position = _spawnPos.position;
+    //            _workerbox.localScale = Vector3.zero;
+    //            _workerbox.DOScale(Vector3.one, 1f);
 
-                _staff_upgrade_level++;
+    //            _staff_upgrade_level++;
 
-                break;
-            case 1:
+    //            break;
+    //        case 1:
 
-                for (int i = 0; i < _staffList.Count; i++)
-                {
-                    _staffList[i]._speed = 5f + (float)_speed_Upgrade_level * 0.5f;
-                }
+    //            for (int i = 0; i < _staffList.Count; i++)
+    //            {
+    //                _staffList[i]._speed = 5f + (float)_speed_Upgrade_level * 0.5f;
+    //            }
 
-                _speed_Upgrade_level++;
-                break;
+    //            _speed_Upgrade_level++;
+    //            break;
 
 
-            default:
+    //        default:
 
-                break;
-        }
+    //            break;
+    //    }
 
-        Managers.Sound.Play("Money");
-        SaveData();
-        CheckButton();
-    }
+    //    Managers.Sound.Play("Money");
+    //    SaveData();
+    //    CheckButton();
+    //}
 
 
 
@@ -704,26 +797,32 @@ public class StageManager : MonoBehaviour
 
     public void RV_BigMoney()
     {
+        isBigMoney = false;
         MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType_1", "Big_Money" } });
         _gameManager.AddMoney(bigMoney * 5d);
-        _gameUi.BigMoneyButton.gameObject.SetActive(false);
+        //_gameUi.BigMoneyButton.gameObject.SetActive(false);
+
+        BigMoneyOnOff(false);
     }
 
 
-    public void RV_Rail()
+    public void RV_Rail(int _num = 0)
     {
+        //int _num = _parts_upgrade_level;
+        _num = _rvRailNum;
         MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType_2", "Auto_Rail" } });
         _gameUi.RvRail_Panel.SetActive(false);
-        DOTween.Sequence().AppendCallback(() => { _machineGroup[_parts_upgrade_level].RailOnOff(true); })
+        DOTween.Sequence().AppendCallback(() => { _machineGroup[_num].RailOnOff(true); })
             .AppendInterval(30f)
-            .AppendCallback(() => { _machineGroup[_parts_upgrade_level].RailOnOff(false); });
+            .AppendCallback(() => { _machineGroup[_num].RailOnOff(false); });
     }
 
     public void RV_Worker()
     {
+
         MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType_2", "More Worker" } });
         _gameUi.RvWorker_Panel.SetActive(false);
-
+        isMoreWorker = true;
         List<Staff> _rvStaffList = new List<Staff>();
         DOTween.Sequence().AppendCallback(() =>
         {
@@ -731,7 +830,7 @@ public class StageManager : MonoBehaviour
             {
 
                 Transform _trans = Managers.Pool.Pop(_staff_Pref, transform).transform;
-                _trans.position = _spawnPos.position;
+                _trans.position = _spawnPosGroup[_staff_upgrade_level % _spawnPosGroup.Length].position;  // _spawnPos.position;
                 _rvStaffList.Add(_trans.GetComponent<Staff>());
                 _trans.GetComponent<Staff>()._speed = 5f + (float)_speed_Upgrade_level * 0.5f;
             }
@@ -746,7 +845,7 @@ public class StageManager : MonoBehaviour
                     _rvStaffList.Remove(_staff);
                     Managers.Pool.Push(_staff.GetComponent<Poolable>());
                 }
-
+                isMoreWorker = false;
 
             });
     }
@@ -755,6 +854,24 @@ public class StageManager : MonoBehaviour
     {
 
         MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType_1", "Skin" } });
+    }
+
+
+    public void BigMoneyOnOff(bool isOn)
+    {
+        if (isOn)
+        {
+            _gameUi.BigMoneyButton.gameObject.SetActive(true);
+            _gameUi.BigMoneyButton.transform.DOLocalMoveX(0, 1f).SetEase(Ease.Linear);
+            _gameUi.BigMoneyButton.transform.GetChild(0).GetComponent<Text>().text = $"{"+"}{Managers.ToCurrencyString(bigMoney * 5d)}";
+        }
+        else
+        {
+
+            _gameUi.BigMoneyButton.transform.DOLocalMoveX(380, 1f).SetEase(Ease.Linear);
+        }
+
+
     }
 
 
@@ -902,7 +1019,7 @@ public class StageManager : MonoBehaviour
 
 
         }
-
+        _gameUi.BigMoneyButton.transform.GetChild(0).GetComponent<Text>().text = $"{"+"}{Managers.ToCurrencyString(bigMoney * 5d)}";
         //LayoutRebuilder.ForceRebuildLayoutImmediate(_gameUi.Content.GetComponent<RectTransform>());
 
     }
@@ -914,12 +1031,18 @@ public class StageManager : MonoBehaviour
             case -2:
                 Managers.Game.CalcMoney(-_addStaff_Upgrade_Price[_staff_upgrade_level]);
 
-                Transform _workerbox = Managers.Pool.Pop(Resources.Load<GameObject>("WorkerBox"), _spawnPos.transform).transform;
-                _workerbox.position = _spawnPos.position;
+                Transform _workerbox = Managers.Pool.Pop(Resources.Load<GameObject>("WorkerBox"), _spawnPosGroup[_staff_upgrade_level % _spawnPosGroup.Length].transform).transform;
+                _workerbox.position = _spawnPosGroup[_staff_upgrade_level % _spawnPosGroup.Length].position;// _spawnPos.position;
                 _workerbox.localScale = Vector3.zero;
                 _workerbox.DOScale(Vector3.one, 1f);
 
                 _staff_upgrade_level++;
+
+                if (_staff_upgrade_level % 5 == 0 && isMoreWorker == false)
+                {
+
+                    ShowRvWorkerPanel();
+                }
                 break;
 
             case -1:
@@ -948,6 +1071,7 @@ public class StageManager : MonoBehaviour
     [Button]
     public void ToNextStage()
     {
+        EventTracker.ClearStage(_stageLevel);
         _gameManager.CalcMoney(-_nextStagePrice);
         _gameManager.NextStage();
     }
@@ -969,20 +1093,54 @@ public class StageManager : MonoBehaviour
 
             _staff_upgrade_level = _addStaff_Upgrade_Price.Length;
 
-
-            DOTween.Sequence().AppendInterval(2f).AppendCallback(() =>
+            if (_stageLevel < 1)
             {
-                _gameUi.NextStageButton.transform.localScale = Vector3.zero;
-                _gameUi.NextStageButton.gameObject.SetActive(true);
-                _gameUi.NextStageButton.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InOutCirc);
-                _gameUi.NextStageButton.interactable = false;
-                _gameUi.NextStageButton.transform.Find("Image").Find("NextStagePriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_nextStagePrice, 2)}";
-                _gameUi.NextStageButton.AddButtonEvent(() => ToNextStage());
+                DOTween.Sequence().AppendInterval(2f).AppendCallback(() =>
+                {
+                    _gameUi.NextStageButton.transform.localScale = Vector3.zero;
+                    _gameUi.NextStageButton.gameObject.SetActive(true);
+                    _gameUi.NextStageButton.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InOutCirc);
+                    _gameUi.NextStageButton.interactable = false;
+                    _gameUi.NextStageButton.transform.Find("Image").Find("NextStagePriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_nextStagePrice, 2)}";
+                    _gameUi.NextStageButton.AddButtonEvent(() => ToNextStage());
 
-            });
+                });
+            }
+            else
+            {
+
+            }
 
         }
         CheckButton();
+
+
+    }
+
+    public void ShowRvRailPanel(int _num)
+    {
+        //OffPopup();
+        DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
+        {
+            _rvRailNum = _num;
+            _gameUi.RvRail_Panel.SetActive(true);
+        });
+        MondayOFF.EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", "Rv_Rail" } });
+
+
+    }
+
+    public void ShowRvWorkerPanel()
+    {
+        DOTween.Sequence().AppendInterval(5f).AppendCallback(() =>
+        {
+            if (_targetMachine_Trans != null)
+                _targetMachine_Trans.GetComponent<Machine>().isPress = false;
+            OffPopup();
+            _gameUi.RvWorker_Panel.SetActive(true);
+
+        });
+        MondayOFF.EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", "Rv_Worker" } });
 
 
     }

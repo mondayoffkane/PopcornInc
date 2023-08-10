@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         JoyStickController?.AddMoveEvent(action);
     }
 
+
     public void Init()
     {
         _stageManager = SpawnStage();

@@ -77,6 +77,7 @@ public class Machine : MonoBehaviour
     public float _term = 0.1f;
     float _currentterm = 0.1f;
 
+    public int _machineNum = -1;
 
     // ==========================================================================
     public int max_count = 20;
@@ -94,6 +95,8 @@ public class Machine : MonoBehaviour
         LoadData();
 
     }
+
+
 
     private void Update()
     {
@@ -197,7 +200,7 @@ public class Machine : MonoBehaviour
             }
             else
             {
-                _productPrice[i] = _productPrice[i - 1] * 0.5d + _productScope * i + 0.5d;
+                _productPrice[i] = _productBase + _productPrice[i - 1] * 0.5d + _productScope * i + 0.5d;
             }
         }
 
@@ -258,13 +261,15 @@ public class Machine : MonoBehaviour
 
         _levelText.text = $"Level  {(_level + 1).ToString()}";
         _productText.text = $"{_name}";
-        _product_PriceText.text = $"{Managers.ToCurrencyString(_productPrice[_level])}";
+        _product_PriceText.text = $"{Managers.ToCurrencyString(_productPrice[_level] * (1 + _priceScope * _priceScopeLevel))}";
         _intervalText.text = $"{_interval}s";
 
         _upgrade_PriceText.text = _level < (_maxLevel - 1)
             ? $"{Managers.ToCurrencyString(_upgradePrice[_level])}" : "Max";
 
         _guageImg.fillAmount = ((_level + 1) % 10) * 0.1f; //== 0 ? 1f : ((_level + 1) % 10) * 0.1f;
+        if (_level >= _maxLevel - 1)
+            _guageImg.fillAmount = 1f; //== 0 ? 1f : ((_level + 1) % 10) * 0.1f;
 
         if ((_gamemanager.Money >= _upgradePrice[_level]) && (_level < _maxLevel - 1))
         {
@@ -296,6 +301,33 @@ public class Machine : MonoBehaviour
             if ((_level + 1) % 10 == 0)
             {
                 _gamemanager.CalcGem(1);
+            }
+
+            switch (_maxLevel)
+            {
+                case int n when (n < 26):
+                    if (_level % 20 == 0 && isRail == false)
+                        _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
+                    break;
+
+                case int n when (n > 25 && n < 51):
+                    if (_level % 25 == 0 && isRail == false)
+                        _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
+                    break;
+
+                case int n when (n > 50 && n < 101):
+                    if (_level % 30 == 0 && isRail == false)
+                        _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
+                    break;
+
+                case int n when (n > 100 && n < 151):
+                    if (_level % 50 == 0 && isRail == false)
+                        _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
+                    break;
+
+                default:
+
+                    break;
             }
 
 
@@ -356,7 +388,7 @@ public class Machine : MonoBehaviour
 
         if (_level >= _maxLevel - 1)
         {
-            
+
             RailOnOff(true);
             _gamemanager._stageManager.FullUpgrade();
         }
@@ -439,5 +471,16 @@ public class Machine : MonoBehaviour
         }
 
     }
+
+    //public void RvRail(float _term = 1f)
+    //{
+    //    StartCoroutine(Cor_RvRail(_term));
+    //}
+
+    //IEnumerator Cor_RvRail(float _term = 0f)
+    //{
+    //    yield return new WaitForSeconds(_term);
+    //    _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
+    //}
 
 }

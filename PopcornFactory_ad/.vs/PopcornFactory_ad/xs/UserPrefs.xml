@@ -1,0 +1,15 @@
+﻿<Properties StartupConfiguration="{328F226B-3967-AE17-62DC-A02C1CEF4155}|">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.AdvertyPlatformSpecific PreferredExecutionTarget="fb8c9603-94a2-4f61-8d78-a5c40e045731" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/MondayOFF/Everyday/Modules/Core/Scripts/Runtime/EveryDay.cs">
+    <Files>
+      <File FileName="Assets/01.Scripts/Kane/ATTLoad.cs" Line="10" Column="45" />
+      <File FileName="Assets/MondayOFF/Everyday/Modules/Core/Scripts/Runtime/EveryDay.cs" Line="17" Column="30" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+</Properties>

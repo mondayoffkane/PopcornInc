@@ -6,40 +6,68 @@ using System.Runtime.InteropServices;
 
 namespace Adverty.PlatformSpecific
 {
-    public class AndroidRenderingPlugin : IAndroidRenderingBridge
+    public class AndroidRenderingPlugin : IAndroidRenderingPlugin
     {
 #if !UNITY_EDITOR && UNITY_ANDROID
+        [DllImport("glbridge")]
+        private static extern void SetGlIssuePluginEventMethod(IntPtr glIssuePluginMethod, int renderMode);
+
+        [DllImport("glbridge")]
+        private static extern void IssuePluginEvent(int eventId);
+
+        [DllImport("glbridge")]
+        private static extern void CustomRenderEvent(int eventId);
+
         [DllImport("glbridge")]
         private static extern void SetNativeTexture(IntPtr handler, int width, int height, int id, int scale);
 
         [DllImport("glbridge")]
         private static extern void DestroyNativeTexture(int textureId);
 
-        [DllImport("glbridge")]
-        private static extern IntPtr getCustomRenderEventFunc();
-#endif
+        public void NativeSetGlIssuePluginEventMethod(IntPtr glIssuePluginMethod, int renderMode)
+        {
+            SetGlIssuePluginEventMethod(glIssuePluginMethod, renderMode);
+        }
+
+        public void NativeIssuePluginEvent(int eventId)
+        {
+            IssuePluginEvent(eventId);
+        }
+
+        public void Render(int eventId)
+        {
+            CustomRenderEvent(eventId);
+        }
 
         public void SendTexture(IntPtr handler, int width, int height, int id, int scale)
         {
-#if !UNITY_EDITOR && UNITY_ANDROID
             SetNativeTexture(handler, width, height, id, scale);
-#endif
         }
 
         public void DestroyTexture(int id)
         {
-#if !UNITY_EDITOR && UNITY_ANDROID
             DestroyNativeTexture(id);
-#endif
+        }
+#else
+        public void NativeSetGlIssuePluginEventMethod(IntPtr glIssuePluginMethod, int renderMode)
+        {
         }
 
-        public IntPtr GetRenderEventFunction()
+        public void NativeIssuePluginEvent(int eventId)
         {
-#if !UNITY_EDITOR && UNITY_ANDROID
-            return getCustomRenderEventFunc();
-#else
-            return IntPtr.Zero;
-#endif
         }
+
+        public void Render(int eventId)
+        {
+        }
+
+        public void SendTexture(IntPtr handler, int width, int height, int id, int scale)
+        {
+        }
+
+        public void DestroyTexture(int id)
+        {
+        }
+#endif
     }
 }

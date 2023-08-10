@@ -64,7 +64,6 @@ public class UI_GameScene : UI_Scene
         Bind<GameObject>(typeof(GameObjects));
 
         base.Init();
-
         SetButton();
     }
 

@@ -32,6 +32,8 @@ public class Cup : MonoBehaviour
 
     public bool isMoveCup = false;
     public Material _beltMat;
+
+    float _z;
     // ================================
 
 
@@ -88,24 +90,31 @@ public class Cup : MonoBehaviour
     }
 
 
-
+    [Button]
     public void SellProducts()
     {
-        _beltMat.DOOffset(Vector2.zero, 0f);
+        if (isMoveCup)
+        {
+            isMoveCup = false;
+            _beltMat.DOOffset(Vector2.zero, 0f);
 
-        DOTween.Sequence()
-            .Append(transform.DOLocalMoveZ(-15, 1f).SetEase(Ease.Linear))
-            .Join(_beltMat.DOOffset(new Vector2(0f, -2f), 1f))
-            .AppendCallback(() =>
-            {
-                _currentCount = 0;
-                SetPopcornPos();
-                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 15f);
+            _z = transform.localPosition.z;
 
-            })
-            .Append(transform.DOLocalMoveZ(0f, 1f).SetEase(Ease.Linear))
-        .Join(_beltMat.DOOffset(new Vector2(0f, -4f), 1f));
+            DOTween.Sequence()
+                .Append(transform.DOLocalMoveZ(_z - 15, 1f).SetEase(Ease.Linear))
+                .Join(_beltMat.DOOffset(new Vector2(0f, -2f), 1f))
+                .AppendCallback(() =>
+                {
+                    _currentCount = 0;
+                    SetPopcornPos();
+                    transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, _z + 15f);
 
+                })
+                .Append(transform.DOLocalMoveZ(_z, 1f).SetEase(Ease.Linear))
+            .Join(_beltMat.DOOffset(new Vector2(0f, -4f), 1f))
+            .OnComplete(() => isMoveCup = true);
+
+        }
 
 
 

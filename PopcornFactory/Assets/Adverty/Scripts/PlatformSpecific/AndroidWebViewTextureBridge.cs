@@ -9,6 +9,7 @@ namespace Adverty.PlatformSpecific
     public class AndroidWebViewTextureBridge : BaseWebViewTextureBridge, IAndroidWebViewTextureBridge
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
+
         [DllImport(LIBRARY_NAME)]
         private static extern IntPtr getCustomRenderEventFunc();
 
@@ -16,31 +17,48 @@ namespace Adverty.PlatformSpecific
         private static extern void setOnPageStarted(IntPtr ptr, IntPtr onPageStartedDelegate);
 
         [DllImport(LIBRARY_NAME)]
-        private static extern IntPtr create(int cbo, int width, int height, int loadTimeout, int scale, bool showDebugView);
-#endif
+        private static extern void setOnCreated(IntPtr ptr, IntPtr onCreatedDelegate);
+
+        [DllImport(LIBRARY_NAME)]
+        private static extern IntPtr create(int cbo, int width, int height, int loadTimeout, int scale);
+
         public IntPtr GetCustomRenderEventFunc()
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
             return getCustomRenderEventFunc();
-#else
-            return IntPtr.Zero;
-#endif
         }
 
-        public override IntPtr Create(IntPtr cbo, int width, int height, int loadTimeout, int scale, bool showDebugView)
+        public override IntPtr Create(IntPtr cbo, int width, int height, int loadTimeout, int scale)
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
-            return create(cbo.ToInt32(), width, height, loadTimeout, scale, showDebugView);
-#else
-            return IntPtr.Zero;
-#endif
+            return create(cbo.ToInt32(), width, height, loadTimeout, scale);
+        }
+
+        public void SetOnCreate(IntPtr ptr, IntPtr onCreateDelegate)
+        {
+            setOnCreated(ptr, onCreateDelegate);
         }
 
         public void SetOnPageStarted(IntPtr ptr, IntPtr onPageStartedDelegate)
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
             setOnPageStarted(ptr, onPageStartedDelegate);
-#endif
         }
+#else
+        public override IntPtr Create(IntPtr cbo, int width, int height, int loadTimeout, int scale)
+        {
+            return IntPtr.Zero;
+        }
+
+        public IntPtr GetCustomRenderEventFunc()
+        {
+            return IntPtr.Zero;
+        }
+
+        public void SetOnCreate(IntPtr ptr, IntPtr onCreateDelegate)
+        {
+        }
+
+        public void SetOnPageStarted(IntPtr ptr, IntPtr onPageStartedDelegate)
+        {
+        }
+#endif
     }
 }

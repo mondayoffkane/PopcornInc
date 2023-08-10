@@ -19,7 +19,7 @@ MonoBehaviour:
     showBannerOnLoad: 1
     adInitializationOrder: 84
     adInitializationDelay: 2
-    interstitialInterval: 30
+    interstitialInterval: 60
     resetTimerOnRewarded: 1
     bannerPosition: 7
     AOS_IS_AdUnitID: 045769d98b24bde0
@@ -32,8 +32,8 @@ MonoBehaviour:
     AOS_APS_IS_SlotID: 
     AOS_APS_RV_SlotID: 
     AOS_APS_BN_SlotID: 
-    AOS_PlayOnApiKey: 
-    AOS_AdvertyApiKey: 
+    AOS_PlayOnApiKey: d6d89ba8-75ef-46ad-a618-67ae37a68193
+    AOS_AdvertyApiKey: MGNjNjkwOWYtZmNmMC00MmE0LWJlNDYtY2UyMzNjNTg4MjBkJGh0dHBzOi8vYWRzZXJ2ZXIuYWR2ZXJ0eS5jb20=
     iOS_IS_AdUnitID: 35d2e9be2c59bbf5
     iOS_RV_AdUnitID: 923be71792d7e85f
     iOS_BN_AdUnitID: dc08e83993a3292d
@@ -44,13 +44,13 @@ MonoBehaviour:
     iOS_APS_IS_SlotID: 
     iOS_APS_RV_SlotID: 
     iOS_APS_BN_SlotID: 
-    iOS_PlayOnApiKey: 
-    iOS_storeID: 
-    iOS_AdvertyApiKey: 
+    iOS_PlayOnApiKey: 384a72e9-3848-4552-a615-a609c355b8d6
+    iOS_storeID: 6450912365
+    iOS_AdvertyApiKey: M2ViNGI3ZTEtYTYxZC00ZGQ2LTk1NmUtNzQ1ZWU1NWNkOGM4JGh0dHBzOi8vYWRzZXJ2ZXIuYWR2ZXJ0eS5jb20=
     showPlayOnAfterInterstitial: 1
     playOnInterstitialCount: 2
     playOnPosition:
-      useScreenPositioning: 0
+      useScreenPositioning: 1
       playOnLogoAnchor: 0
       playOnLogoOffset: {x: 0, y: 150}
       playOnLogoSize: 64

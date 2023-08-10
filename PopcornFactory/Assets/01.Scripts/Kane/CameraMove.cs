@@ -92,6 +92,7 @@ public class CameraMove : MonoBehaviour
 
 
 
+
 #if UNITY_EDITOR
 
 
@@ -153,6 +154,7 @@ public class CameraMove : MonoBehaviour
             {
 
                 isClick = false;
+                //_stageManager.MachinePressFalse();
                 return;
             }
             if (isClick)
@@ -234,7 +236,7 @@ public class CameraMove : MonoBehaviour
                 ray = Camera.main.ScreenPointToRay(touchPosToVector3);
 
 
-                if (Physics.Raycast(ray, out hit, 100))
+                if (Physics.Raycast(ray, out hit, 1000))
                 {
                     Debug.DrawLine(ray.origin, hit.point, Color.red, 1.5f);
 
@@ -270,10 +272,10 @@ public class CameraMove : MonoBehaviour
 
                     Vector3 _delta = _startPos + _horizon + _vertical;
 
-                    if (Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).x >= _limitPos.x && Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).x <= _limitPos.y && Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).y >= _limitPos.z && Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).y <= _limitPos.w)
-                    {
+                    //if (Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).x >= _limitPos.x && Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).x <= _limitPos.y && Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).y >= _limitPos.z && Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f).y <= _limitPos.w)
+                    //{
                         transform.position = Vector3.Lerp(transform.position, _delta, Time.deltaTime * 5f);
-                    }
+                    //}
                 }
             }
 
@@ -284,6 +286,28 @@ public class CameraMove : MonoBehaviour
                 _endXY = _startXY;
             }
 
+          
+
+        }
+
+        if (isClick == false)
+        {
+            if (transform.localPosition.x < _limitPos.x)
+            {
+                transform.localPosition += Vector3.right * Time.deltaTime * returnSpeed;
+            }
+            if (transform.localPosition.x > _limitPos.y)
+            {
+                transform.localPosition -= Vector3.right * Time.deltaTime * returnSpeed;
+            }
+            if (transform.localPosition.y > _limitPos.w)
+            {
+                transform.localPosition -= Vector3.up * Time.deltaTime * returnSpeed;
+            }
+            if (transform.localPosition.y < _limitPos.z)
+            {
+                transform.localPosition += Vector3.up * Time.deltaTime * returnSpeed;
+            }
         }
 
 

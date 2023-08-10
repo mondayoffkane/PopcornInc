@@ -49,12 +49,14 @@ public class DataManager
 
     public class StageData
     {
-        public int Stage_Level;
+        public bool isFirst = true;
+        //public int Stage_Level;
         public int Staff_Upgrade_Level;
         public int Income_Upgrade_Level;
         public int Parts_Upgrade_Level;
 
         public int Speed_Upgrade_Level;
+        public int PlayTime;
 
 
     }
@@ -70,11 +72,13 @@ public class DataManager
         return _stageData;
 
     }
-    public void SetStageData(StageData _stagedata)
+    public void SetStageData(StageData _stagedata, int _stageLevel)
     {
-        ES3.Save<StageData>("StageData" + _stagedata.Stage_Level.ToString(), _stagedata);
+        ES3.Save<StageData>("StageData" + _stageLevel.ToString(), _stagedata);
         ES3.Save<double>("Money", Managers.Game.Money);
         ES3.Save<int>("Gem", Managers.Game.Gem);
+        ES3.Save<int>("Stage_" + _stageLevel.ToString(), _stagedata.PlayTime);
+
     }
     // =====================================
     public class MachineData

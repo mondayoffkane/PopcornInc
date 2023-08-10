@@ -267,6 +267,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SplashUIRoot
       objectReference: {fileID: 0}
+    - target: {fileID: 5773524595288062599, guid: 74b27b955dfb74a6e87b6e7c6f294814,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74b27b955dfb74a6e87b6e7c6f294814, type: 3}
 --- !u!114 &1124859108 stripped

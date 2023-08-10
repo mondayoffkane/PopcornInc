@@ -18,10 +18,24 @@ public class Explosion : MonoBehaviour
 
     public AnimationCurve _ease;
 
+
+
+    public KeyCode _key;
+    public float _time = 1f;
+    Vector3 _pos;
     private void Start()
     {
+        _pos = transform.localPosition;
 
+    }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(_key))
+        {
+            transform.localPosition = _pos;
+            transform.DOLocalMoveY(15f, _time).SetEase(Ease.Linear);
+        }
     }
 
 
