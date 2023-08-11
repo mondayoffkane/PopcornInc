@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CPIWorker : MonoBehaviour
 {
 
     public Animator _animator;
 
+    NavMeshAgent _agent;
+
+    public Transform[] _targetPos;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        _agent = GetComponent<NavMeshAgent>();
     }
 
     public KeyCode[] _keys;
@@ -43,5 +48,18 @@ public class CPIWorker : MonoBehaviour
             _animator.SetBool("Axe_1", false);
         }
 
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _agent.destination = _targetPos[0].transform.position;
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            _agent.destination = _targetPos[1].transform.position;
+        }
+
     }
+
+
+
 }
