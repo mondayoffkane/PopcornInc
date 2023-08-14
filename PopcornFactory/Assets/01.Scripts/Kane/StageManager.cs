@@ -25,8 +25,10 @@ public class StageManager : MonoBehaviour
 
     [FoldoutGroup("SetObjects_1")] public Transform[] _cupObjs;
     [FoldoutGroup("SetObjects_1")] public Machine[] _machineGroup;
-    [FoldoutGroup("SetObjects_1")] public GameObject[] _mapObjs;
-    [FoldoutGroup("SetObjects_1")] public GameObject[] _mapOutline;
+    [FoldoutGroup("SetObjects_1")] public List<GameObject> _mapObjs = new List<GameObject>();
+    [FoldoutGroup("SetObjects_1")] public GameObject _landGroup;
+
+    //[FoldoutGroup("SetObjects_1")] public GameObject[] _mapOutline;
     [FoldoutGroup("SetObjects_1")] public List<Machine> _machineList = new List<Machine>();
 
 
@@ -101,6 +103,16 @@ public class StageManager : MonoBehaviour
         //EventTracker.TryStage(_stageLevel);
         _navmeshsurface = GetComponent<NavMeshSurface>();
 
+
+
+        // add map list
+
+
+
+
+
+
+
         AddScrollContent();
 
         _gameUi.NextStageButton.gameObject.SetActive(false);
@@ -108,7 +120,7 @@ public class StageManager : MonoBehaviour
 
         DataManager.StageData _data = Managers.Data.GetStageData(_stageLevel);
 
-        //Debug.Log($"StageLevel : {_stageLevel} / isFirst : {_data.isFirst} ");
+
 
         if (_data.isFirst)
         {
@@ -148,7 +160,7 @@ public class StageManager : MonoBehaviour
         _popupPanel = _gameUi.Upgrade_Panel.transform;
         _popupPanel.gameObject.SetActive(false);
 
-        if (_mapObjs.Length > 0)
+        if (_mapObjs.Count > 0)
             _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(true);
 
         if (_stageLevel == 0)
@@ -183,26 +195,27 @@ public class StageManager : MonoBehaviour
 
         StartCoroutine(Cor_Interstial());
 
-        StartCoroutine(Cor_CheckPlayTime());
+        //StartCoroutine(Cor_CheckPlayTime());
 
-        IEnumerator Cor_CheckPlayTime()
-        {
-            WaitForSeconds _term = new WaitForSeconds(1f);
-            while (true)
-            {
-                yield return _term;
+        //IEnumerator Cor_CheckPlayTime()
+        //{
+        //    WaitForSeconds _term = new WaitForSeconds(1f);
+        //    while (true)
+        //    {
+        //        yield return _term;
 
-                _playTime++;
-                if (_playTime % 60 == 0)
-                {
-                    for (int i = 0; i < _machineGroup.Length; i++)
-                    {
-                        EventTracker.LogCustomEvent("Stage_" + _stageLevel.ToString() + "_Play_Time", new Dictionary<string, string>() { { _playTime.ToString() + "s", $"Machine_{i}_level :{_machineGroup[i]._level}" } });
+        //        _playTime++;
+        //if (_playTime % 60 == 0)
+        //{
+        //    for (int i = 0; i < _machineGroup.Length; i++)
+        //    {
+        //        //EventTracker.LogCustomEvent("Stage_" + _stageLevel.ToString() + "_Play_Time", new Dictionary<string, string>() { { _playTime.ToString() + "s", $"Machine_{i}_level :{_machineGroup[i]._level}" } });
+        //        //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string>() { { $"Machine_", " " } });
 
-                    }
-                }
-            }
-        }
+        //    }
+        //}
+        //    }
+        //}
 
         IEnumerator Cor_start()
         {
@@ -258,23 +271,23 @@ public class StageManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            for (int i = 0; i < _machineGroup.Length; i++)
-            {
-                EventTracker.LogCustomEvent("Stage_" + _stageLevel.ToString() + "_Play_Time", new Dictionary<string, string>() { { _playTime.ToString() + "s", $"Machine_{i}_level :{_machineGroup[i]._level}" } });
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    for (int i = 0; i < _machineGroup.Length; i++)
+        //    {
+        //        EventTracker.LogCustomEvent("Stage_" + _stageLevel.ToString() + "_Play_Time", new Dictionary<string, string>() { { _playTime.ToString() + "s", $"Machine_{i}_level :{_machineGroup[i]._level}" } });
 
-            }
+        //    }
 
-            //EventTracker.LogCustomEvent("event_name1", new Dictionary<string, string>() { { "Col 1", "Col2" } });
-            //EventTracker.LogCustomEvent("event_name2", new Dictionary<string, Dictionary<string, string>>() { { "color4", new Dictionary<string, string>() { { "Col 1", "Col2" } } } });
+        //    //EventTracker.LogCustomEvent("event_name1", new Dictionary<string, string>() { { "Col 1", "Col2" } });
+        //    //EventTracker.LogCustomEvent("event_name2", new Dictionary<string, Dictionary<string, string>>() { { "color4", new Dictionary<string, string>() { { "Col 1", "Col2" } } } });
 
-            //Dictionary<string, string> _dic1 = new Dictionary<string, string>();
-            //Dictionary<string, string> _dic2 = new Dictionary<string, string>();
-            //_dic1.Add("")
+        //    //Dictionary<string, string> _dic1 = new Dictionary<string, string>();
+        //    //Dictionary<string, string> _dic2 = new Dictionary<string, string>();
+        //    //_dic1.Add("")
 
-            //EventTracker.LogCustomEvent("Test",)
-        }
+        //    //EventTracker.LogCustomEvent("Test",)
+        //}
 
 
         for (int i = 0; i < _popupButtons.Length; i++)
@@ -286,8 +299,8 @@ public class StageManager : MonoBehaviour
         {
             _popupPanel.position = Camera.main.WorldToScreenPoint(_targetMachine_Trans.position + Vector3.up * 20f);
         }
-        if (_parts_upgrade_level < _mapOutline.Length)
-            _gameUi.AddParts_Upgrade_Button.transform.position = Camera.main.WorldToScreenPoint(_addPartsButtonPos);
+        //if (_parts_upgrade_level < _mapOutline.Length)
+        //    _gameUi.AddParts_Upgrade_Button.transform.position = Camera.main.WorldToScreenPoint(_addPartsButtonPos);
 
 
 
@@ -354,11 +367,11 @@ public class StageManager : MonoBehaviour
 
         }
 
-        for (int i = 0; i < _mapOutline.Length; i++)
-        {
-            _mapOutline[i].SetActive(false);
-        }
-        if (_mapOutline.Length > 0) _mapOutline[0].SetActive(true);
+        //for (int i = 0; i < _mapOutline.Length; i++)
+        //{
+        //    _mapOutline[i].SetActive(false);
+        //}
+        //if (_mapOutline.Length > 0) _mapOutline[0].SetActive(true);
 
         for (int i = 0; i <= _parts_upgrade_level; i++)
         {
@@ -392,8 +405,8 @@ public class StageManager : MonoBehaviour
                     break;
 
             }
-            if (i < _parts_upgrade_level) _mapOutline[i].SetActive(false);
-            if (i + 1 < _mapOutline.Length) _mapOutline[i + 1l].SetActive(true);
+            //if (i < _parts_upgrade_level) _mapOutline[i].SetActive(false);
+            //if (i + 1 < _mapOutline.Length) _mapOutline[i + 1l].SetActive(true);
 
             _machineList.Add(_machineGroup[i]);
             _machineGroup[i].gameObject.SetActive(true);
@@ -479,14 +492,15 @@ public class StageManager : MonoBehaviour
                     break;
 
             }
-            _mapOutline[_parts_upgrade_level].SetActive(false);
-            if (_parts_upgrade_level + 1 < _mapOutline.Length) _mapOutline[_parts_upgrade_level + 1l].SetActive(true);
+            //_mapOutline[_parts_upgrade_level].SetActive(false);
+            //if (_parts_upgrade_level + 1 < _mapOutline.Length) _mapOutline[_parts_upgrade_level + 1l].SetActive(true);
 
             _machineList.Add(_machineGroup[_parts_upgrade_level + 1]);
             _machineGroup[_parts_upgrade_level + 1].gameObject.SetActive(true);
             //_machineGroup[_parts_upgrade_level + 1].RvRail()
-            ShowRvRailPanel(_machineGroup[_parts_upgrade_level + 1]._machineNum);
+            //ShowRvRailPanel(_machineGroup[_parts_upgrade_level + 1]._machineNum);
             float _size1 = _machineGroup[_parts_upgrade_level + 1].transform.lossyScale.x;
+            Debug.Log("_size :" + _size1);
             _machineGroup[_parts_upgrade_level + 1].transform.localScale = Vector3.zero;
             _machineGroup[_parts_upgrade_level + 1].transform.DOScale(Vector3.one * _size1, _easeInterval).SetEase(_ease);
 
@@ -501,7 +515,7 @@ public class StageManager : MonoBehaviour
             {
                 _navmeshsurface.RemoveData();
                 _navmeshsurface.BuildNavMesh();
-                isEnd = true;
+                //isEnd = true;
             });
 
 
@@ -510,7 +524,8 @@ public class StageManager : MonoBehaviour
 
         _parts_upgrade_level++;
 
-        DOTween.Sequence().Append(_gameUi.AddParts_Upgrade_Button.transform.DOScale(Vector3.zero, 0.3f));
+        //Debug.Log("Scale Down");
+        //DOTween.Sequence().Append(_gameUi.AddParts_Upgrade_Button.transform.DOScale(Vector3.zero, 0.3f));
         _cam.LookTarget(_machineGroup[_parts_upgrade_level].transform);
 
 
@@ -671,20 +686,21 @@ public class StageManager : MonoBehaviour
             _gameUi.UpgradeCountText.text = $"{upgradeCount} Upgrades";
         }
 
-        if (isEnd)
-        {
+        //if (isEnd)
+        //{
 
-            DOTween.Sequence()
-                .AppendInterval(_easeInterval + 0.1f).AppendCallback(() =>
-                {
+        //    DOTween.Sequence()
+        //        .AppendInterval(_easeInterval + 0.1f).AppendCallback(() =>
+        //        {
 
-                    if (_parts_upgrade_level < _mapOutline.Length)
-                    {
-                        _addPartsButtonPos = _mapOutline[_parts_upgrade_level].transform.position;
-                        _gameUi.AddParts_Upgrade_Button.transform.DOScale(Vector3.one, 0.3f);
-                    };
-                }).OnComplete(() => isEnd = false);
-        }
+        //if (_parts_upgrade_level < _mapOutline.Length)
+        //{
+        //    _addPartsButtonPos = _mapOutline[_parts_upgrade_level].transform.position;
+        //Debug.Log("Scale Up");
+        //_gameUi.AddParts_Upgrade_Button.transform.DOScale(Vector3.one, 0.3f);
+        //};
+        //        }).OnComplete(() => isEnd = false);
+        //}
 
 
         if (_gameUi.NextStageButton.gameObject.activeSelf)
@@ -952,7 +968,7 @@ public class StageManager : MonoBehaviour
             _gameUi.ScrollUpgrades[0].transform.Find("List_Upgrade").GetComponent<Button>().interactable = false;
         }
 
-        if (_speed_Upgrade_level < 5)
+        if (_speed_Upgrade_level < 9)
         {
             _gameUi.ScrollUpgrades[1].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_staffSpeed_Upgrade_Price[_speed_Upgrade_level], 2)}";
             _gameUi.ScrollUpgrades[1].transform.Find("List_Upgrade").GetComponent<Button>().interactable =
@@ -970,7 +986,7 @@ public class StageManager : MonoBehaviour
 
         for (int i = 0; i < _machineGroup.Length; i++)
         {
-            if (_machineGroup[i]._priceScopeLevel < 5 && _machineGroup[i].gameObject.activeSelf) // income upgrade
+            if (_machineGroup[i]._priceScopeLevel < 9 && _machineGroup[i].gameObject.activeSelf) // income upgrade
             {
 
                 _gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_machineGroup[i]._scrollUpgrade1_Price[_machineGroup[i]._priceScopeLevel], 2)}";
@@ -994,7 +1010,7 @@ public class StageManager : MonoBehaviour
                 LayoutRebuilder.ForceRebuildLayoutImmediate(_gameUi.ScrollUpgrades[(i * 2) + 2].transform.Find("List_Upgrade").GetComponent<RectTransform>());
             }
 
-            if (_machineGroup[i]._spawnLevel < 5 && _machineGroup[i].gameObject.activeSelf) // speed upgrade
+            if (_machineGroup[i]._spawnLevel < 9 && _machineGroup[i].gameObject.activeSelf) // speed upgrade
             {
 
                 _gameUi.ScrollUpgrades[(i * 2) + 3].transform.Find("List_Upgrade").Find("PriceText").GetComponent<Text>().text = $"{Managers.ToCurrencyString(_machineGroup[i]._scrollUpgrade2_Price[_machineGroup[i]._spawnLevel], 2)}";
@@ -1038,11 +1054,11 @@ public class StageManager : MonoBehaviour
 
                 _staff_upgrade_level++;
 
-                if (_staff_upgrade_level % 5 == 0 && isMoreWorker == false)
-                {
+                //if (_staff_upgrade_level % 5 == 0 && isMoreWorker == false)
+                //{
 
-                    ShowRvWorkerPanel();
-                }
+                //ShowRvWorkerPanel();
+                //}
                 break;
 
             case -1:
@@ -1117,33 +1133,33 @@ public class StageManager : MonoBehaviour
 
     }
 
-    public void ShowRvRailPanel(int _num)
-    {
-        //OffPopup();
-        DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
-        {
-            _rvRailNum = _num;
-            _gameUi.RvRail_Panel.SetActive(true);
-        });
-        MondayOFF.EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", "Rv_Rail" } });
+    //public void ShowRvRailPanel(int _num)
+    //{
+    //    //OffPopup();
+    //    DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
+    //    {
+    //        _rvRailNum = _num;
+    //        _gameUi.RvRail_Panel.SetActive(true);
+    //    });
+    //    MondayOFF.EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", "Rv_Rail" } });
 
 
-    }
+    //}
 
-    public void ShowRvWorkerPanel()
-    {
-        DOTween.Sequence().AppendInterval(5f).AppendCallback(() =>
-        {
-            if (_targetMachine_Trans != null)
-                _targetMachine_Trans.GetComponent<Machine>().isPress = false;
-            OffPopup();
-            _gameUi.RvWorker_Panel.SetActive(true);
+    //public void ShowRvWorkerPanel()
+    //{
+    //    DOTween.Sequence().AppendInterval(5f).AppendCallback(() =>
+    //    {
+    //        if (_targetMachine_Trans != null)
+    //            _targetMachine_Trans.GetComponent<Machine>().isPress = false;
+    //        OffPopup();
+    //        _gameUi.RvWorker_Panel.SetActive(true);
 
-        });
-        MondayOFF.EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", "Rv_Worker" } });
+    //    });
+    //    MondayOFF.EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", "Rv_Worker" } });
 
 
-    }
+    //}
 
 
 

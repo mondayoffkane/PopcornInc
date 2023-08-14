@@ -1258,34 +1258,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da9149adc1b004ec193e942c0ccc4e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testoffset: {x: 0, y: 0, z: 0}
+  _gameManager: {fileID: 0}
   _canvas: {fileID: 70855296}
   _stageLevel: 0
+  _staff_Pref: {fileID: 4962727750787065006, guid: 46204bf8950fb465787eda7692bfc7f3,
+    type: 3}
+  _spawnPosGroup: []
   _cupObjs:
   - {fileID: 2944624332191841271}
   - {fileID: 669031942}
   - {fileID: 264041804}
-  _staff_Pref: {fileID: 4962727750787065006, guid: 46204bf8950fb465787eda7692bfc7f3,
-    type: 3}
-  _spawnPos: {fileID: 911565813}
-  _upgrade_Obj:
-  - {fileID: 8147100752760145246}
-  - {fileID: 813684465}
-  - {fileID: 1509127155}
+  _machineGroup: []
   _mapObjs:
   - {fileID: 4257120412217646027}
   - {fileID: 1303472747750988686}
   - {fileID: 3346941812699980294}
-  _mapOffObjs: []
-  _unLockObjs:
-  - {fileID: 919132149216452890}
-  - {fileID: 1509127154}
-  _targetList: []
-  _activeTableList: []
-  _tableList:
-  - {fileID: 8147100752726153255}
-  - {fileID: 363924188}
-  - {fileID: 788418169}
+  _mapOutline: []
+  _machineList: []
   _addStaff_Upgrade_Price:
   - 0
   - 5
@@ -1353,48 +1342,16 @@ MonoBehaviour:
   _speed_Upgrade_level: 0
   _income_ugrade_level: 0
   _parts_upgrade_level: 0
-  _cutting_Income_Upgrade_Price:
-  - 500
-  - 3000
-  - 16000
-  - 81500
-  - 409500
-  _cutting_Speed_Upgrade_Price:
-  - 600
-  - 3600
-  - 19200
-  - 97800
-  - 491400
-  _popcorn_Income_Upgrade_Price:
-  - 800
-  - 4800
-  - 25600
-  - 130400
-  - 655200
-  _popcorn_Speed_Upgrade_Price:
-  - 900
-  - 5400
-  - 28800
-  - 146700
-  - 737100
-  _seasoning_Income_Upgrade_Price:
-  - 1100
-  - 6600
-  - 35200
-  - 179300
-  - 900900
-  _seasoning_Speed_Upgrade_Price:
-  - 1200
-  - 7200
-  - 38400
-  - 195600
-  - 982800
-  _cutting_Income_Level: 0
-  _cutting_Speed_Level: 0
-  _popcorn_Income_Level: 0
-  _popcorn_Speed_Level: 0
-  _seasoning_Income_Level: 0
-  _seasoning_Speed_Level: 0
+  _nextStagePrice: 0
+  _scrollUpgrades_Price: []
+  _ease:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _easeInterval: 0.75
+  _MachineUpgrade_Price: []
   _popupButtons: []
   _popupPanel: {fileID: 0}
   _targetMachine_Trans: {fileID: 0}
@@ -1402,12 +1359,20 @@ MonoBehaviour:
   - {x: 5.06, y: 0, z: 1.75}
   - {x: 5.01, y: 0, z: 3.5}
   - {x: 4.42, y: 0, z: 2.47}
-  _addpartsOffset: {x: 0, y: 0, z: 0}
+  _addPartsButtonPos: {x: 0, y: 0, z: 0}
   _staffList: []
+  upgradeCount: 0
+  _fullUpg_count: 0
+  _rvRailNum: -1
+  isFirst: 1
+  _playTime: 0
   isRvDouble: 0
   intervalRvDouble: 0
   bigMoney: 0
   Init_IS_term: 180
+  isMoreWorker: 0
+  _bigmoney_term: 20
+  isBigMoney: 0
 --- !u!114 &605334998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1695,18 +1660,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &788418169 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 118302442326434092, guid: 173c3b880e03b4b0e9448e7dd3700275,
-    type: 3}
-  m_PrefabInstance: {fileID: 118302442562638124}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89959008d1f884bb68827a08cf5f2fc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &813684465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1719,6 +1672,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941519c1e2d3a424f81879361a881343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _level: 0
+  _name: Popcorn Maker
+  _upgrade1_sprite: {fileID: 0}
+  _upgrade1_name: Income
+  _upgrade1_explain: Income Up
+  _upgrade2_sprite: {fileID: 0}
+  _upgrade2_name: Speed
+  _upgrade2_explain: Speed Up
+  _scrollUpgrade1_base: 500
+  _scrollUpgrade2_base: 700
+  _scrollUpgrade1_scope: 1.2
+  _scrollUpgrade2_scope: 1.5
+  _scrollUpgrade1_Price: []
+  _scrollUpgrade2_Price: []
+  _priceScopeLevel: 0
+  _spawnLevel: 0
+  _priceScope: 0.2
+  _interval: 0.2
+  _table: {fileID: 363924188}
+  isRail: 0
+  _railGroup: {fileID: 0}
+  _moveSpeed: 0.5
+  _railJumpPower: 0
+  _nextMachine: {fileID: 0}
+  _cup: {fileID: 0}
   _upgradeBase: 1
   _productBase: 1
   _upgradeScope: 0.7
@@ -2026,33 +2004,16 @@ MonoBehaviour:
   - 132.4
   - 133.3
   - 134.2
-  _level: 0
-  _name: Popcorn Maker
-  _panel: {fileID: 0}
-  _popupButton: {fileID: 0}
-  _levelText: {fileID: 0}
-  _productText: {fileID: 0}
-  _product_PriceText: {fileID: 0}
-  _intervalText: {fileID: 0}
-  _upgrade_PriceText: {fileID: 0}
-  _upgradeButton: {fileID: 0}
-  _guageImg: {fileID: 0}
   isPress: 0
-  _interval: 0.2
   _jumpPower: 25
   _popcorn_Pref: {fileID: 8953688757958800938, guid: 52bc4d673e5c643ea888dd3ba0f08f00,
     type: 3}
-  _table: {fileID: 363924188}
-  _x: 0
-  _z: 0
   _machineType: 3
   isAutoSpawn: 0
   _currentCount: 0
   _spawnPos: {fileID: 3924232458236407105}
   _term: 0.1
-  _currentterm: 0.5
-  _priceScope: 0.2
-  _priceScopeLevel: 0
+  _machineNum: -1
   max_count: 20
 --- !u!95 &813684466
 Animator:
@@ -2515,6 +2476,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24bc7e8573847adbdf1198360b3c794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_References:
+    m_Keys: []
+    m_Values: []
 --- !u!4 &1121187707
 Transform:
   m_ObjectHideFlags: 1
@@ -2536,24 +2500,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 118302442562638124}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1509127154 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 965215766418407690, guid: 173c3b880e03b4b0e9448e7dd3700275,
-    type: 3}
-  m_PrefabInstance: {fileID: 118302442562638124}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1509127155 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 118302442360470613, guid: 173c3b880e03b4b0e9448e7dd3700275,
-    type: 3}
-  m_PrefabInstance: {fileID: 118302442562638124}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1509127154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 941519c1e2d3a424f81879361a881343, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1587806877
 GameObject:
   m_ObjectHideFlags: 0
@@ -9570,7 +9516,7 @@ Camera:
   far clip plane: 200
   field of view: 60
   orthographic: 1
-  orthographic size: 40
+  orthographic size: 64
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -9594,7 +9540,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1991404846}
   m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: -4.8899994, y: 46.91, z: -20.229996}
+  m_LocalPosition: {x: 9.7, y: 31.5, z: -20.229996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9633,6 +9579,7 @@ MonoBehaviour:
   _lookdistance: 60
   _lookOffset: {x: 0, y: 10, z: 0}
   isClick: 0
+  _beltMat: {fileID: 0}
 --- !u!33 &900040816826673
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -64412,6 +64359,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _key: 0
+  _time: 1
 --- !u!65 &5879217337321190294
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -94303,6 +94252,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941519c1e2d3a424f81879361a881343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _level: 0
+  _name: Corn Cutter
+  _upgrade1_sprite: {fileID: 0}
+  _upgrade1_name: Income
+  _upgrade1_explain: Income Up
+  _upgrade2_sprite: {fileID: 0}
+  _upgrade2_name: Speed
+  _upgrade2_explain: Speed Up
+  _scrollUpgrade1_base: 500
+  _scrollUpgrade2_base: 700
+  _scrollUpgrade1_scope: 1.2
+  _scrollUpgrade2_scope: 1.5
+  _scrollUpgrade1_Price: []
+  _scrollUpgrade2_Price: []
+  _priceScopeLevel: 0
+  _spawnLevel: 0
+  _priceScope: 0.2
+  _interval: 0.2
+  _table: {fileID: 8147100752726153255}
+  isRail: 0
+  _railGroup: {fileID: 0}
+  _moveSpeed: 0.5
+  _railJumpPower: 0
+  _nextMachine: {fileID: 0}
+  _cup: {fileID: 0}
   _upgradeBase: 1
   _productBase: 1
   _upgradeScope: 0.5
@@ -94610,33 +94584,16 @@ MonoBehaviour:
   - 103.19999999999999
   - 103.89999999999999
   - 104.6
-  _level: 0
-  _name: Corn Cutter
-  _panel: {fileID: 0}
-  _popupButton: {fileID: 0}
-  _levelText: {fileID: 0}
-  _productText: {fileID: 0}
-  _product_PriceText: {fileID: 0}
-  _intervalText: {fileID: 0}
-  _upgrade_PriceText: {fileID: 0}
-  _upgradeButton: {fileID: 0}
-  _guageImg: {fileID: 0}
   isPress: 0
-  _interval: 0.2
   _jumpPower: 10
   _popcorn_Pref: {fileID: 8953688757958800938, guid: 52bc4d673e5c643ea888dd3ba0f08f00,
     type: 3}
-  _table: {fileID: 8147100752726153255}
-  _x: 0
-  _z: 0
   _machineType: 2
   isAutoSpawn: 1
   _currentCount: 0
   _spawnPos: {fileID: 0}
   _term: 0.1
-  _currentterm: 0.5
-  _priceScope: 0.2
-  _priceScopeLevel: 0
+  _machineNum: -1
   max_count: 20
 --- !u!1 &8154143481587080293
 GameObject:

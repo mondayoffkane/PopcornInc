@@ -81,7 +81,7 @@ public class Machine : MonoBehaviour
 
     // ==========================================================================
     public int max_count = 20;
-    private void Start()
+    private void OnEnable()
     {
         _x = _table.GetComponent<BoxCollider>().bounds.size.x * 0.5f;
         _z = _table.GetComponent<BoxCollider>().bounds.size.z * 0.5f;
@@ -125,7 +125,7 @@ public class Machine : MonoBehaviour
 
             if (isAutoSpawn || _currentCount > 0)
             {
-
+                Debug.Log(transform.name);
                 if (isRail)
                 {
                     for (int i = 0; i < 3; i++)
@@ -210,7 +210,7 @@ public class Machine : MonoBehaviour
     public void CreateDataTable2()
     {
 
-        _scrollUpgrade1_Price = new double[5];
+        _scrollUpgrade1_Price = new double[9];
 
         for (int i = 0; i < _scrollUpgrade1_Price.Length; i++)
         {
@@ -224,7 +224,7 @@ public class Machine : MonoBehaviour
             }
         }
 
-        _scrollUpgrade2_Price = new double[5];
+        _scrollUpgrade2_Price = new double[9];
         for (int i = 0; i < _scrollUpgrade2_Price.Length; i++)
         {
             if (i == 0)
@@ -303,32 +303,32 @@ public class Machine : MonoBehaviour
                 _gamemanager.CalcGem(1);
             }
 
-            switch (_maxLevel)
-            {
-                case int n when (n < 26):
-                    if (_level % 20 == 0 && isRail == false)
-                        _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
-                    break;
+            //switch (_maxLevel)
+            //{
+            //    case int n when (n < 26):
+            //        if (_level % 20 == 0 && isRail == false)
+            //            _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
+            //        break;
 
-                case int n when (n > 25 && n < 51):
-                    if (_level % 25 == 0 && isRail == false)
-                        _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
-                    break;
+            //    case int n when (n > 25 && n < 51):
+            //        if (_level % 25 == 0 && isRail == false)
+            //            _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
+            //        break;
 
-                case int n when (n > 50 && n < 101):
-                    if (_level % 30 == 0 && isRail == false)
-                        _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
-                    break;
+            //    case int n when (n > 50 && n < 101):
+            //        if (_level % 30 == 0 && isRail == false)
+            //            _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
+            //        break;
 
-                case int n when (n > 100 && n < 151):
-                    if (_level % 50 == 0 && isRail == false)
-                        _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
-                    break;
+            //    case int n when (n > 100 && n < 151):
+            //        if (_level % 50 == 0 && isRail == false)
+            //            _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
+            //        break;
 
-                default:
+            //    default:
 
-                    break;
-            }
+            //        break;
+            //}
 
 
             for (int i = 0; i < _table._productList.Count; i++)

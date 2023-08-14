@@ -353,7 +353,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3351704
+  m_Name: pb_Mesh-591390
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1525,6 +1525,7 @@ MonoBehaviour:
   _startSize: 0
   _testStartPos: {x: 0, y: 0}
   _testCurrentPos: {x: 0, y: 0}
+  _targetDistance: 150
   _lookdistance: 60
   _lookOffset: {x: 0, y: 10, z: 0}
   isClick: 0

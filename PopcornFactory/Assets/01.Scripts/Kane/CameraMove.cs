@@ -28,6 +28,7 @@ public class CameraMove : MonoBehaviour
     Camera _cam;
     [SerializeField] Vector2 _testStartPos, _testCurrentPos;
 
+    public float _targetDistance = 150f;
     StageManager _StageManager;
     public StageManager _stageManager
     {
@@ -62,9 +63,9 @@ public class CameraMove : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q))
         {
-            Managers.Game.CalcMoney(100);
+            Managers.Game.CalcMoney(1000);
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -347,7 +348,7 @@ public class CameraMove : MonoBehaviour
     {
         //Vector3 _temppos = new Vector3(_target.position.x, _target.position.y, -_lookdistance)
 
-        _lookdistance = (-_target.position.z - 60f) * 1.156f;
+        _lookdistance = (-_target.position.z - _targetDistance) * 1.156f;
 
 
         DOTween.Sequence()

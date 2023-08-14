@@ -5041,10 +5041,10 @@ MonoBehaviour:
   _current_pickInterval: 0
   _moveInterval: 0.5
   _speed: 6
-  _table: {fileID: 0}
   _cup: {fileID: 0}
   _staffState: 0
   _productType: 0
+  _num: 0
 --- !u!195 &4962727750787065011
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5066,7 +5066,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 1
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!95 &5101549179428171929
 Animator:
   serializedVersion: 5

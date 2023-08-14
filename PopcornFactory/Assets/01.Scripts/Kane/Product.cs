@@ -15,11 +15,14 @@ public class Product : MonoBehaviour
         BaseCorn,
         KernelCorn,
         MixCorn,
-        PopCorn_base
+        PopCorn_base,
 
+        Corn,
+        Cacao
 
     }
     public ProductType _productType;
+    public int _productNum = 0;
 
 
     MeshFilter _meshFilter;
@@ -28,7 +31,7 @@ public class Product : MonoBehaviour
 
 
     // =================================
-    public void SetType(ProductType _type, double _pricevalue)
+    public void SetType(ProductType _type/*, int _num,*/, double _pricevalue)
     {
         if (_meshFilter == null)
         {
@@ -36,7 +39,11 @@ public class Product : MonoBehaviour
         }
 
         _productType = _type;
+        //_productNum = _num;
         _price = _pricevalue;
+
+        //Mesh _mesh = 
+
         _meshFilter.sharedMesh = _productMeshes[(int)_productType];
 
         if (_renderer == null) _renderer = GetComponent<Renderer>();
