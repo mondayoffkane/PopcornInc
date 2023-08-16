@@ -70,11 +70,11 @@ public class CameraMove : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            _stageManager.AddStaff(false);
+            //_stageManager.AddStaff(false);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            _stageManager.AddIncome(false);
+            //_stageManager.AddIncome(false);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
@@ -130,21 +130,26 @@ public class CameraMove : MonoBehaviour
             touchPos = Camera.main.ScreenToWorldPoint(touchPosToVector3);
             ray = Camera.main.ScreenPointToRay(touchPosToVector3);
 
-
-            if (Physics.Raycast(ray, out hit, 1000))
+            if (!EventSystem.current.IsPointerOverGameObject())// ui가 아닌곳을 눌렀을때 ui 끄기
             {
-                Debug.DrawLine(ray.origin, hit.point, Color.red, 1.5f);
-
-
-                if (hit.collider.tag == "Upgrade_Obj")
+                if (Physics.Raycast(ray, out hit, 1000))
                 {
+                    Debug.DrawLine(ray.origin, hit.point, Color.red, 1.5f);
 
-                    _stageManager.SelecteTarget(hit.transform);
-                    isClick = false;
-                }
-                else if (hit.collider.tag == "WorkerBox")
-                {
-                    _stageManager.AddStaff(false, hit.transform.gameObject);
+
+                    if (hit.collider.tag == "Upgrade_Obj")
+                    {
+
+                        _stageManager.SelecteTarget(hit.transform);
+                        isClick = false;
+                    }
+                    else if (hit.collider.tag == "WorkerBox")
+                    {
+                        int _landNum = hit.transform.GetComponent<WorkerBox>()._landNum;
+                        _StageManager._landManagers[_landNum].AddStaff(hit.transform.gameObject);
+                        //_stageManager.AddStaff(false, hit.transform.gameObject);
+
+                    }
                 }
             }
         }
@@ -236,7 +241,8 @@ public class CameraMove : MonoBehaviour
                 touchPos = Camera.main.ScreenToWorldPoint(touchPosToVector3);
                 ray = Camera.main.ScreenPointToRay(touchPosToVector3);
 
-
+                 if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                {
                 if (Physics.Raycast(ray, out hit, 1000))
                 {
                     Debug.DrawLine(ray.origin, hit.point, Color.red, 1.5f);
@@ -252,7 +258,7 @@ public class CameraMove : MonoBehaviour
                     {
                         _stageManager.AddStaff(false, hit.transform.gameObject);
                     }
-                }
+                }}
             }
             else if ((_touch.phase == TouchPhase.Moved || _touch.phase == TouchPhase.Stationary) && !isFix)
             {

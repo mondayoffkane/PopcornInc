@@ -25,6 +25,10 @@ public class Machine : MonoBehaviour
     [FoldoutGroup("UI_Description_2")] public int _priceScopeLevel;
     [FoldoutGroup("UI_Description_2")] public int _spawnLevel;
 
+    public int _machineNum = 0;
+    public Mesh _productMesh;
+    public Material _productMat;
+
     public double _priceScope = 0.2d;
 
     public float _interval = 0.5f;
@@ -67,7 +71,7 @@ public class Machine : MonoBehaviour
 
     float _x, _z;
 
-    public Product.ProductType _machineType;
+    //public Product.ProductType _machineType;
 
     public bool isAutoSpawn = false;
 
@@ -77,23 +81,24 @@ public class Machine : MonoBehaviour
     public float _term = 0.1f;
     float _currentterm = 0.1f;
 
-    public int _machineNum = -1;
+    //public int _machineNum = -1;
 
     // ==========================================================================
-    public int max_count = 20;
-    private void OnEnable()
+    public int max_count = 100;
+    //private void OnEnable()
+    //{
+    //    Init();
+
+    //}
+
+    public void Init()
     {
         _x = _table.GetComponent<BoxCollider>().bounds.size.x * 0.5f;
         _z = _table.GetComponent<BoxCollider>().bounds.size.z * 0.5f;
         StartCoroutine(Cor_Update());
 
-
-        // add get data
-
-        //_productText.text = $"{_name}";
         _gamemanager = Managers.Game;
         LoadData();
-
     }
 
 
@@ -120,18 +125,18 @@ public class Machine : MonoBehaviour
         //WaitForSeconds _term = new WaitForSeconds(_interval);
         while (true)
         {
-            _interval = 1f - (0.1f * _spawnLevel);
+            _interval = 1f - (0.05f * _spawnLevel);
             yield return new WaitForSeconds(_interval);
 
             if (isAutoSpawn || _currentCount > 0)
             {
-                Debug.Log(transform.name);
+                //Debug.Log(transform.name);
                 if (isRail)
                 {
                     for (int i = 0; i < 3; i++)
                     {
                         Transform _corn = Managers.Pool.Pop(_popcorn_Pref, _table.transform).transform;
-                        _corn.GetComponent<Product>().SetType(_machineType, _productPrice[_level] * (1 + _priceScope * _priceScopeLevel));
+                        _corn.GetComponent<Product>().SetType(_machineNum, _productMesh, _productMat, _productPrice[_level] * (1 + _priceScope * _priceScopeLevel));
                         if (_spawnPos != null)
                         {
                             _corn.position = _spawnPos.position;
@@ -148,21 +153,24 @@ public class Machine : MonoBehaviour
                 {
                     if (_table._productList.Count < max_count)
                     {
-                        Managers.Sound.Play("Effect_6");
-                        Transform _corn = Managers.Pool.Pop(_popcorn_Pref, _table.transform).transform;
-                        _corn.GetComponent<Product>().SetType(_machineType, _productPrice[_level] * (1 + _priceScope * _priceScopeLevel));
-                        if (_spawnPos != null)
+                        for (int i = 0; i < (_level / 20) + 1; i++)
                         {
-                            _corn.position = _spawnPos.position;
-                        }
-                        else
-                        {
-                            _corn.position = transform.position;
-                        }
+                            Managers.Sound.Play("Effect_6");
+                            Transform _corn = Managers.Pool.Pop(_popcorn_Pref, _table.transform).transform;
+                            _corn.GetComponent<Product>().SetType(_machineNum, _productMesh, _productMat, _productPrice[_level] * (1 + _priceScope * _priceScopeLevel));
+                            if (_spawnPos != null)
+                            {
+                                _corn.position = _spawnPos.position;
+                            }
+                            else
+                            {
+                                _corn.position = transform.position;
+                            }
 
-                        _corn.DOLocalJump(new Vector3(Random.Range(-_x, _x), 0f, Random.Range(-_z, _z)), _jumpPower, 1, 1f)
-                            .SetEase(Ease.Linear).OnComplete(() => _table._productList.Add(_corn.GetComponent<Product>()));
+                            _corn.DOLocalJump(new Vector3(Random.Range(-_x, _x), 0f, Random.Range(-_z, _z)), _jumpPower, 1, 1f)
+                                .SetEase(Ease.Linear).OnComplete(() => _table._productList.Add(_corn.GetComponent<Product>()));
 
+                        }
                         _currentCount--;
                     }
                 }
@@ -292,11 +300,11 @@ public class Machine : MonoBehaviour
             _level++;
 
 
-            if (_level >= _maxLevel - 1)
-            {
-                RailOnOff(true);
-                _gamemanager._stageManager.FullUpgrade();
-            }
+            //if (_level >= _maxLevel - 1)
+            //{
+            //    RailOnOff(true);
+            //_gamemanager._stageManager.FullUpgrade();
+            //}
             // add gem
             if ((_level + 1) % 10 == 0)
             {
@@ -386,12 +394,12 @@ public class Machine : MonoBehaviour
         _priceScopeLevel = _data.PriceScope_Level;
         _spawnLevel = _data.Spawn_Level;
 
-        if (_level >= _maxLevel - 1)
-        {
+        //if (_level >= _maxLevel - 1)
+        //{
 
-            RailOnOff(true);
-            _gamemanager._stageManager.FullUpgrade();
-        }
+        //RailOnOff(true);
+        //_gamemanager._stageManager.FullUpgrade();
+        //}
     }
 
 

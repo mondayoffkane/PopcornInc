@@ -34,7 +34,7 @@ public class ResetPos : MonoBehaviour
     [Button]
     public void Set_Pos()
     {
-        Debug.Log("reset");
+        //Debug.Log("reset");
         _count = _group.transform.childCount;
 
         _objs = new Transform[_count];

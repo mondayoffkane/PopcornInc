@@ -39,12 +39,18 @@ public class UI_GameScene : UI_Scene
     }
 
 
-    public Button AddStaff_Upgrade_Button, Income_Upgrade_Button, AddParts_Upgrade_Button,
+    public Button
+        //AddStaff_Upgrade_Button,
+        //Income_Upgrade_Button        ,
+        AddParts_Upgrade_Button,
         Sound_Button, Vibe_Button, AddUpgrade_Button, RV_Income_Double
-        , BigMoneyButton, NextStageButton;
+        , BigMoneyButton;
+        //, NextStageButton;
 
     public Text Money_Text
-       , AddStaff_Price_Text, Income_Price_Text, AddParts_Price_Text, Gem_Text, UpgradeCountText
+       //, AddStaff_Price_Text
+        //, Income_Price_Text
+        , AddParts_Price_Text, Gem_Text, UpgradeCountText
         , RV_Income_TimeText;
 
     public GameObject Setting_Panel, Scroll_Panel
@@ -69,20 +75,20 @@ public class UI_GameScene : UI_Scene
 
     void SetButton()
     {
-        AddStaff_Upgrade_Button = GetButton(Buttons.AddStaff_Upgrade_Button);
-        Income_Upgrade_Button = GetButton(Buttons.Income_Upgrade_Button);
+        //AddStaff_Upgrade_Button = GetButton(Buttons.AddStaff_Upgrade_Button);
+        //Income_Upgrade_Button = GetButton(Buttons.Income_Upgrade_Button);
         AddParts_Upgrade_Button = GetButton(Buttons.AddParts_Upgrade_Button);
         Sound_Button = GetButton(Buttons.Sound_Button);
         Vibe_Button = GetButton(Buttons.Vibe_Button);
         AddUpgrade_Button = GetButton(Buttons.AddUpgrade_Button);
         RV_Income_Double = GetButton(Buttons.RV_Income_Double);
         BigMoneyButton = GetButton(Buttons.BigMoneyButton);
-        NextStageButton = GetButton(Buttons.NextStageButton);
+        //NextStageButton = GetButton(Buttons.NextStageButton);
 
 
         Money_Text = GetText(Texts.Money_Text);
-        AddStaff_Price_Text = GetText(Texts.AddStaff_Price_Text);
-        Income_Price_Text = GetText(Texts.Income_Price_Text);
+        //AddStaff_Price_Text = GetText(Texts.AddStaff_Price_Text);
+        //Income_Price_Text = GetText(Texts.Income_Price_Text);
         AddParts_Price_Text = GetText(Texts.AddParts_Price_Text);
         Gem_Text = GetText(Texts.Gem_Text);
         UpgradeCountText = GetText(Texts.UpgradeCountText);

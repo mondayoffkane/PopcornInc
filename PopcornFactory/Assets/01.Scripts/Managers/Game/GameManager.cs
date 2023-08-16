@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
         if (_value > 0)
         {
             double _double = _stageManager.isRvDouble ? 2d : 1d;
-            Money += _value * (_stageManager._income_ugrade_level + 1) * _double;
+            Money += _value * _double;
         }
         else
         {

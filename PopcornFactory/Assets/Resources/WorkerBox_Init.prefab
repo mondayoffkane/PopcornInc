@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1988877128784204183}
   - component: {fileID: 2652071827480967449}
   - component: {fileID: 5969133625079773677}
+  - component: {fileID: -5221934414019828535}
   m_Layer: 0
   m_Name: WorkerBox_Init
   m_TagString: WorkerBox
@@ -207,6 +208,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.7316027, y: 3.440228, z: 2.7316027}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-5221934414019828535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43089062864318530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46ae829803e414e068ed83e79bf2c269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3391702791129798091
 GameObject:
   m_ObjectHideFlags: 0

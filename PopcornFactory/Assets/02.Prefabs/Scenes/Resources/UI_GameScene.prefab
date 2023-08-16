@@ -563,7 +563,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 442, y: 738}
+  m_AnchoredPosition: {x: 442, y: 923}
   m_SizeDelta: {x: 339.2, y: 183.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6267278851188090995
@@ -6095,18 +6095,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d954774d9c143c590ed98a25ddcea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AddStaff_Upgrade_Button: {fileID: 0}
-  Income_Upgrade_Button: {fileID: 0}
   AddParts_Upgrade_Button: {fileID: 0}
   Sound_Button: {fileID: 0}
   Vibe_Button: {fileID: 0}
   AddUpgrade_Button: {fileID: 0}
   RV_Income_Double: {fileID: 0}
   BigMoneyButton: {fileID: 0}
-  NextStageButton: {fileID: 0}
   Money_Text: {fileID: 0}
-  AddStaff_Price_Text: {fileID: 0}
-  Income_Price_Text: {fileID: 0}
   AddParts_Price_Text: {fileID: 0}
   Gem_Text: {fileID: 0}
   UpgradeCountText: {fileID: 0}
@@ -8582,7 +8577,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7812728045752074027
 RectTransform:
   m_ObjectHideFlags: 0

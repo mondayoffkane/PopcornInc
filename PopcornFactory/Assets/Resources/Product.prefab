@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8953688757958800938}
-  m_Mesh: {fileID: 1878168672877299918, guid: 420d5ff9065704360b5450e6af02b0e1, type: 3}
+  m_Mesh: {fileID: -7515560752391180372, guid: 49cdfc7999f8140478395fcb2cd3a891, type: 3}
 --- !u!23 &4349136109701661833
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -97,14 +97,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _price: 3
-  _productMeshes:
-  - {fileID: -7515560752391180372, guid: 49cdfc7999f8140478395fcb2cd3a891, type: 3}
-  - {fileID: -7306202452336225497, guid: 8bb517a50db4445e3aa35b3b8db4b110, type: 3}
-  - {fileID: -7306202452336225497, guid: 8bb517a50db4445e3aa35b3b8db4b110, type: 3}
-  - {fileID: 1878168672877299918, guid: 420d5ff9065704360b5450e6af02b0e1, type: 3}
-  Mats:
-  - {fileID: 2100000, guid: 428c1b446a4524717ab4fdc70410d42b, type: 2}
-  - {fileID: 2100000, guid: 428c1b446a4524717ab4fdc70410d42b, type: 2}
-  - {fileID: 2100000, guid: 428c1b446a4524717ab4fdc70410d42b, type: 2}
-  - {fileID: 2100000, guid: bc8ab0808e5aa43d998236eb33d449b8, type: 2}
-  _productType: 0
+  _productNum: 0
