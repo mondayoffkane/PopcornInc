@@ -344,11 +344,11 @@ public class StageManager : MonoBehaviour
         //    _popupButtons[i].transform.position = Camera.main.WorldToScreenPoint(_tempmachineGroup[i].transform.position + _popupOffset[i]);
         //}
 
-        int n = 0;
+        //int n = 0;
 
         for (int i = 0; i < _machineList.Count; i++)
         {
-            _popupButtons[i].transform.position = Camera.main.WorldToScreenPoint(_machineList[i].transform.position + _popupOffset[n]);
+            _popupButtons[i].transform.position = Camera.main.WorldToScreenPoint(_machineList[i].transform.position + _popupOffset[i]);
 
         }
 
@@ -488,10 +488,23 @@ public class StageManager : MonoBehaviour
             {
                 _mapObjs[i - 1].SetActive(true);
             }
-            Debug.Log(_parts_upgrade_level);
-            Debug.Log(_machineList.Count - 1);
+
             if (_parts_upgrade_level >= _machineList.Count - 1)
                 _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(false);
+
+            if (i < _land_machineGroup[0].GetLength(0))
+            {
+
+                _landManagers[0]._cup.NextPos();
+            }
+            else
+            {
+                _landManagers[1]._cup.NextPos();
+                _cupObjs[0].GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+                _cupObjs[0].GetChild(0).GetChild(0).GetChild(1).gameObject.SetActive(true);
+            }
+
+
             //if (i < _parts_upgrade_level) _mapOutline[i].SetActive(false);
             //if (i + 1 < _mapOutline.Length) _mapOutline[i + 1l].SetActive(true);
 
@@ -571,11 +584,7 @@ public class StageManager : MonoBehaviour
                     break;
 
                 case 2:
-                    //_cupObjs[2].gameObject.SetActive(false);
-                    //_cupObjs[3].gameObject.SetActive(true);
-                    //_cupObjs[3].localScale = Vector3.zero;
-                    //_cupObjs[3].DOScale(Vector3.one, _easeInterval).SetEase(_ease);
-                    //_gameUi.AddParts_Upgrade_Button.gameObject.SetActive(false);
+
                     break;
 
             }
@@ -590,14 +599,14 @@ public class StageManager : MonoBehaviour
             //ShowRvRailPanel(_machineGroup[_parts_upgrade_level + 1]._machineNum);
             float _size1 = _machineList[_parts_upgrade_level + 1].transform.lossyScale.x;
             //Debug.Log("_size :" + _size1);
-            _machineList[_parts_upgrade_level + 1].transform.localScale = Vector3.zero;
-            _machineList[_parts_upgrade_level + 1].transform.DOScale(Vector3.one * _size1, _easeInterval).SetEase(_ease);
+            //_machineList[_parts_upgrade_level + 1].transform.localScale = Vector3.zero;
+            //_machineList[_parts_upgrade_level + 1].transform.DOScale(Vector3.one * _size1, _easeInterval).SetEase(_ease);
 
             _mapObjs[_parts_upgrade_level].SetActive(true);
             float _size2 = _mapObjs[_parts_upgrade_level].transform.lossyScale.x;
 
-            _mapObjs[_parts_upgrade_level].transform.localScale = Vector3.zero;
-            _mapObjs[_parts_upgrade_level].transform.DOScale(Vector3.one * _size2, _easeInterval).SetEase(_ease);
+            //_mapObjs[_parts_upgrade_level].transform.localScale = Vector3.zero;
+            //_mapObjs[_parts_upgrade_level].transform.DOScale(Vector3.one * _size2, _easeInterval).SetEase(_ease);
             _cam.GetComponent<Camera>().DOOrthoSize(50f, _easeInterval * 0.5f);
 
             DOTween.Sequence().AppendInterval(_easeInterval + 3f).AppendCallback(() =>
@@ -611,7 +620,23 @@ public class StageManager : MonoBehaviour
         }
 
 
+
+        if (_parts_upgrade_level < _land_machineGroup[0].GetLength(0))
+        {
+
+            _landManagers[0]._cup.NextPos();
+        }
+        else
+        {
+
+            _landManagers[1]._cup.NextPos();
+            _cupObjs[0].GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+            _cupObjs[0].GetChild(0).GetChild(0).GetChild(1).gameObject.SetActive(true);
+        }
+
         _parts_upgrade_level++;
+
+
         if (_parts_upgrade_level >= _machineList.Count - 1)
             _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(false);
 

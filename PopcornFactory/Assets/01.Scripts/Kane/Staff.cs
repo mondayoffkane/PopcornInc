@@ -145,15 +145,15 @@ public class Staff : MonoBehaviour
                             switch (_productStack.Count)
                             {
                                 case 0:
-                                    _product.transform.DOLocalJump(new Vector3(-0.3f, 0f, 1f), 1f, 1, _moveInterval);
+                                    _product.transform.DOLocalJump(new Vector3(-0.5f, 0f, 1f), 1f, 1, _moveInterval);
                                     break;
 
                                 case 1:
-                                    _product.transform.DOLocalJump(new Vector3(0.3f, 0f, 1f), 1f, 1, _moveInterval);
+                                    _product.transform.DOLocalJump(new Vector3(0.5f, 0f, 1f), 1f, 1, _moveInterval);
                                     break;
 
                                 case 2:
-                                    _product.transform.DOLocalJump(new Vector3(0f, 0.5f, 1f), 1f, 1, _moveInterval);
+                                    _product.transform.DOLocalJump(new Vector3(0f, 0.75f, 1f), 1f, 1, _moveInterval);
                                     break;
 
                             }

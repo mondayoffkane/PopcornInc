@@ -13,6 +13,7 @@ public class Cup : MonoBehaviour
 
     [SerializeField] Transform _popcornCup;
     [SerializeField] GameObject _posObj;
+    [SerializeField] Canvas _canvas;
 
 
 
@@ -34,6 +35,13 @@ public class Cup : MonoBehaviour
     public Material _beltMat;
 
     float _z;
+
+    public int _cupPosNum = 0;
+    public Transform[] _cupPos;
+    public bool isfirst = false;
+
+    [Required]
+    public Transform[] StartEndPos = new Transform[3];
     // ================================
 
 
@@ -43,11 +51,15 @@ public class Cup : MonoBehaviour
 
         _popcornCup = transform.Find("PopcornCup");
         _posObj = transform.Find("Pos").gameObject;
+        _canvas = transform.Find("Canvas").GetComponent<Canvas>();
 
-        _GuageText = transform.Find("Canvas").Find("Panel").Find("GuageText").GetComponent<Text>();
-        _GuageImg = transform.Find("Canvas").Find("Panel").Find("Guage").Find("GuageImg").GetComponent<Image>();
+        _GuageText = _canvas.transform.Find("Panel").Find("GuageText").GetComponent<Text>();
+        _GuageImg = _canvas.transform.Find("Panel").Find("Guage").Find("GuageImg").GetComponent<Image>();
+
+        _canvas.gameObject.SetActive(false);
 
         SetPopcornPos();
+        //NextPos();
     }
 
 
@@ -101,27 +113,62 @@ public class Cup : MonoBehaviour
             _z = transform.localPosition.z;
 
             DOTween.Sequence()
-                .Append(transform.DOLocalMoveZ(_z - 15, 1f).SetEase(Ease.Linear))
+                //.Append(transform.DOLocalMoveZ(_z - 15, 1f).SetEase(Ease.Linear))
+                .Append(transform.DOMove(StartEndPos[2].position, 1f).SetEase(Ease.Linear))
                 .Join(_beltMat.DOOffset(new Vector2(0f, -2f), 1f))
                 .AppendCallback(() =>
                 {
                     _currentCount = 0;
                     SetPopcornPos();
-                    transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, _z + 15f);
+                    //transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, _z + 15f);
+                    transform.position = StartEndPos[0].position;
 
                 })
-                .Append(transform.DOLocalMoveZ(_z, 1f).SetEase(Ease.Linear))
+                //.Append(transform.DOLocalMoveZ(_z, 1f).SetEase(Ease.Linear))
+                .Append(transform.DOMove(StartEndPos[1].position, 1f).SetEase(Ease.Linear))
             .Join(_beltMat.DOOffset(new Vector2(0f, -4f), 1f))
             .OnComplete(() => isMoveCup = true);
 
         }
 
-
-
-
         // add fuunc
     }
 
+    [Button]
+    public void NextPos()
+    {
+
+
+        if (_cupPosNum < _cupPos.Length)
+            transform.position = _cupPos[_cupPosNum].position;
+
+        if (isfirst)
+        {
+            if (_cupPosNum == _cupPos.Length - 2)
+            {
+                isMoveCup = true;
+                _canvas.gameObject.SetActive(true);
+                _currentCount = 0;
+                SetPopcornPos();
+
+            }
+        }
+        else
+        {
+
+
+            if (_cupPosNum == _cupPos.Length - 1)
+            {
+                isMoveCup = true;
+                _canvas.gameObject.SetActive(true);
+                _currentCount = 0;
+                SetPopcornPos();
+
+            }
+        }
+
+        _cupPosNum++;
+    }
 
 
 }

@@ -93,6 +93,9 @@ public class Machine : MonoBehaviour
 
     public void Init()
     {
+        CreateDataTable();
+        CreateDataTable2();
+
         _x = _table.GetComponent<BoxCollider>().bounds.size.x * 0.5f;
         _z = _table.GetComponent<BoxCollider>().bounds.size.z * 0.5f;
         StartCoroutine(Cor_Update());
@@ -170,8 +173,8 @@ public class Machine : MonoBehaviour
                             _corn.DOLocalJump(new Vector3(Random.Range(-_x, _x), 0f, Random.Range(-_z, _z)), _jumpPower, 1, 1f)
                                 .SetEase(Ease.Linear).OnComplete(() => _table._productList.Add(_corn.GetComponent<Product>()));
 
+                            _currentCount--;
                         }
-                        _currentCount--;
                     }
                 }
 
@@ -218,7 +221,7 @@ public class Machine : MonoBehaviour
     public void CreateDataTable2()
     {
 
-        _scrollUpgrade1_Price = new double[9];
+        _scrollUpgrade1_Price = new double[10];
 
         for (int i = 0; i < _scrollUpgrade1_Price.Length; i++)
         {
@@ -232,7 +235,7 @@ public class Machine : MonoBehaviour
             }
         }
 
-        _scrollUpgrade2_Price = new double[9];
+        _scrollUpgrade2_Price = new double[10];
         for (int i = 0; i < _scrollUpgrade2_Price.Length; i++)
         {
             if (i == 0)

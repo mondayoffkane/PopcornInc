@@ -30,7 +30,8 @@ public class LandManager : MonoBehaviour
     [FoldoutGroup("UI_Description_2")] public int _staff_speed_level;
     [FoldoutGroup("UI_Description_2")] public int _staff_max_level = 100;
 
-
+    [Required]
+    public Cup _cup;
 
     // Serializefield
     [SerializeField] List<Staff> _staffList = new List<Staff>();
@@ -58,7 +59,7 @@ public class LandManager : MonoBehaviour
             }
         }
 
-        _staffSpeed_Upgrade_Price = new double[9];
+        _staffSpeed_Upgrade_Price = new double[10];
         for (int i = 0; i < _staffSpeed_Upgrade_Price.Length; i++)
         {
             if (i == 0)
