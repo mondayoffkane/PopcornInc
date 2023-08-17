@@ -57,7 +57,7 @@ public class Cup : MonoBehaviour
         _GuageImg = _canvas.transform.Find("Panel").Find("Guage").Find("GuageImg").GetComponent<Image>();
 
         _canvas.gameObject.SetActive(false);
-
+        //isMoveCup = false;
         SetPopcornPos();
         //NextPos();
     }
@@ -88,7 +88,9 @@ public class Cup : MonoBehaviour
     public void SetPopcornPos()
     {
         _value = (float)((float)_currentCount / (float)_MaxCount);
+        if (_GuageText == null) _GuageText = _canvas.transform.Find("Panel").Find("GuageText").GetComponent<Text>();
         _GuageText.text = $"{_value * 100f}%";
+        if (_GuageImg == null) _GuageImg = _canvas.transform.Find("Panel").Find("Guage").Find("GuageImg").GetComponent<Image>();
         _GuageImg.rectTransform.offsetMin = new Vector2(16.5f, 17f);
         _GuageImg.rectTransform.offsetMax = new Vector2(-16.5f, -317f + 300f * _value);
 
@@ -147,6 +149,7 @@ public class Cup : MonoBehaviour
             if (_cupPosNum == _cupPos.Length - 2)
             {
                 isMoveCup = true;
+                if (_canvas == null) _canvas = transform.Find("Canvas").GetComponent<Canvas>();
                 _canvas.gameObject.SetActive(true);
                 _currentCount = 0;
                 SetPopcornPos();

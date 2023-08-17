@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using DG.Tweening;
+using System.IO;
+using System;
 
 
 public class LandManager : MonoBehaviour
@@ -55,7 +57,7 @@ public class LandManager : MonoBehaviour
             }
             else
             {
-                _staffHire_Upgrade_Price[i] = _staffHire_Upgrade_Price[i - 1] * _scrollUpgrade1_scope;
+                _staffHire_Upgrade_Price[i] = Math.Truncate( _staffHire_Upgrade_Price[i - 1] * _scrollUpgrade1_scope + 1);
             }
         }
 
@@ -68,7 +70,7 @@ public class LandManager : MonoBehaviour
             }
             else
             {
-                _staffSpeed_Upgrade_Price[i] = _staffSpeed_Upgrade_Price[i - 1] * _scrollUpgrade2_scope;
+                _staffSpeed_Upgrade_Price[i] = Math.Truncate(_staffSpeed_Upgrade_Price[i - 1] * _scrollUpgrade2_scope);
             }
         }
     }

@@ -5,6 +5,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
 
+
 public class Machine : MonoBehaviour
 {
     public int _level;
@@ -15,6 +16,12 @@ public class Machine : MonoBehaviour
     [FoldoutGroup("UI_Description_1")] public Sprite _upgrade2_sprite;
     [FoldoutGroup("UI_Description_1")] public string _upgrade2_name = "Speed";
     [FoldoutGroup("UI_Description_1")] public string _upgrade2_explain = "Speed Up";
+    [FoldoutGroup("UI_Description_1")] public double _upgradeBase = 1d, _productBase = 1d;
+    [FoldoutGroup("UI_Description_1")] public double _upgradeScope = 0.5d, _productScope = 0.5d;
+    [FoldoutGroup("UI_Description_1")] public int _maxLevel = 150;
+    [FoldoutGroup("UI_Description_1")] public double[] _upgradePrice;
+    [FoldoutGroup("UI_Description_1")] public double[] _productPrice;
+
 
     [FoldoutGroup("UI_Description_2")] public double _scrollUpgrade1_base = 500;
     [FoldoutGroup("UI_Description_2")] public double _scrollUpgrade2_base = 700;
@@ -42,11 +49,8 @@ public class Machine : MonoBehaviour
     public Machine _nextMachine;
     public Cup _cup;
 
-    public double _upgradeBase = 1d, _productBase = 1d;
-    public double _upgradeScope = 0.5d, _productScope = 0.5d;
-    public int _maxLevel = 150;
-    public double[] _upgradePrice;
-    public double[] _productPrice;
+
+
 
 
 
@@ -102,6 +106,8 @@ public class Machine : MonoBehaviour
 
         _gamemanager = Managers.Game;
         LoadData();
+
+
     }
 
 
@@ -198,7 +204,7 @@ public class Machine : MonoBehaviour
             }
             else
             {
-                _upgradePrice[i] = _upgradePrice[i - 1] + _upgradeScope * i + 1;
+                _upgradePrice[i] = System.Math.Truncate(_upgradeBase * _upgradeScope * i + i);
             }
         }
 
@@ -211,7 +217,7 @@ public class Machine : MonoBehaviour
             }
             else
             {
-                _productPrice[i] = _productBase + _productPrice[i - 1] * 0.5d + _productScope * i + 0.5d;
+                _productPrice[i] = System.Math.Truncate(_productBase * (i + 1));
             }
         }
 
@@ -231,7 +237,7 @@ public class Machine : MonoBehaviour
             }
             else
             {
-                _scrollUpgrade1_Price[i] = _scrollUpgrade1_Price[i - 1] * _scrollUpgrade1_scope;
+                _scrollUpgrade1_Price[i] = System.Math.Truncate(_scrollUpgrade1_Price[i - 1] * _scrollUpgrade1_scope);
             }
         }
 
@@ -244,7 +250,7 @@ public class Machine : MonoBehaviour
             }
             else
             {
-                _scrollUpgrade2_Price[i] = _scrollUpgrade2_Price[i - 1] * _scrollUpgrade2_scope;
+                _scrollUpgrade2_Price[i] = System.Math.Truncate(_scrollUpgrade2_Price[i - 1] * _scrollUpgrade2_scope);
             }
         }
 
@@ -303,43 +309,11 @@ public class Machine : MonoBehaviour
             _level++;
 
 
-            //if (_level >= _maxLevel - 1)
-            //{
-            //    RailOnOff(true);
-            //_gamemanager._stageManager.FullUpgrade();
-            //}
-            // add gem
             if ((_level + 1) % 10 == 0)
             {
                 _gamemanager.CalcGem(1);
             }
 
-            //switch (_maxLevel)
-            //{
-            //    case int n when (n < 26):
-            //        if (_level % 20 == 0 && isRail == false)
-            //            _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
-            //        break;
-
-            //    case int n when (n > 25 && n < 51):
-            //        if (_level % 25 == 0 && isRail == false)
-            //            _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
-            //        break;
-
-            //    case int n when (n > 50 && n < 101):
-            //        if (_level % 30 == 0 && isRail == false)
-            //            _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
-            //        break;
-
-            //    case int n when (n > 100 && n < 151):
-            //        if (_level % 50 == 0 && isRail == false)
-            //            _gamemanager._stageManager.ShowRvRailPanel(_machineNum);
-            //        break;
-
-            //    default:
-
-            //        break;
-            //}
 
 
             for (int i = 0; i < _table._productList.Count; i++)
@@ -397,12 +371,6 @@ public class Machine : MonoBehaviour
         _priceScopeLevel = _data.PriceScope_Level;
         _spawnLevel = _data.Spawn_Level;
 
-        //if (_level >= _maxLevel - 1)
-        //{
-
-        //RailOnOff(true);
-        //_gamemanager._stageManager.FullUpgrade();
-        //}
     }
 
 

@@ -256,7 +256,9 @@ public class CameraMove : MonoBehaviour
                     }
                     else if (hit.collider.tag == "WorkerBox")
                     {
-                        _stageManager.AddStaff(false, hit.transform.gameObject);
+                 
+                            int _landNum = hit.transform.GetComponent<WorkerBox>()._landNum;
+                        _StageManager._landManagers[_landNum].AddStaff(hit.transform.gameObject);
                     }
                 }}
             }
