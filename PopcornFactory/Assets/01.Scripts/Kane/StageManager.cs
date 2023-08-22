@@ -16,6 +16,7 @@ public class StageManager : MonoBehaviour
     public GameManager _gameManager;
     NavMeshSurface _navmeshsurface;
 
+
     // ======================
     public Canvas _canvas;
 
@@ -58,7 +59,7 @@ public class StageManager : MonoBehaviour
     [SerializeField] Transform _targetMachine_Trans;
     EventTrigger _eventTrigger;
 
-    CameraMove _cam;
+    public CameraMove _cam;
     //Transform _partsbutton_Trans;
 
     public Vector3[] _popupOffset = new Vector3[5];
@@ -73,7 +74,10 @@ public class StageManager : MonoBehaviour
     [SerializeField] int _fullUpg_count = 0;
     [SerializeField] int _rvRailNum = -1;
     [SerializeField] bool isFirst = true;
-    [SerializeField] int _playTime = 0;
+    public int _playTime = 0;
+
+    public int _IsCount = 0;
+    public int _RvCount = 0;
     /// RV /========================================
 
     public bool isRvDouble = false;
@@ -84,6 +88,7 @@ public class StageManager : MonoBehaviour
     public float Init_IS_term = 180f;
     //public bool isMoreWorker = false;
     public float _bigmoney_term = 20f;
+    public float _bigmoney_Showterm = 30f;
     public float _maxTerm = 50f;
     public bool isBigMoney = false;
     // ====================== =================================
@@ -97,6 +102,12 @@ public class StageManager : MonoBehaviour
         _gameUi = Managers.GameUI;
 
         //EventTracker.TryStage(_stageLevel);
+        //EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "IsCount", "0" } });
+        //EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "RvCount", "0" } });
+
+        EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "AdsCount", "IsCount_0" } });
+        EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "AdsCount", "RvCount_0" } });
+
         _navmeshsurface = GetComponent<NavMeshSurface>();
 
 
@@ -214,6 +225,17 @@ public class StageManager : MonoBehaviour
         eventTrigger.triggers.Add(entry_PointerUp);
 
 
+        StartCoroutine(Cor_PlaytimeCheck());
+
+        IEnumerator Cor_PlaytimeCheck()
+        {
+            WaitForSeconds _term = new WaitForSeconds(1f);
+            while (true)
+            {
+                yield return _term;
+                _playTime++;
+            }
+        }
 
 
         StartCoroutine(Cor_Interstial());
@@ -230,21 +252,33 @@ public class StageManager : MonoBehaviour
 
         IEnumerator Cor_Interstial()
         {
-            yield return new WaitForSeconds(60f);
+            if (_parts_upgrade_level < 1)
+            {
+                yield return new WaitForSeconds(Init_IS_term);
+            }
+            else
+            {
+                yield return new WaitForSeconds(60f);
+            }
 
 
             WaitForSeconds _s60 = new WaitForSeconds(60f);
             WaitForSeconds _s1 = new WaitForSeconds(1f);
             while (true)
             {
+
                 if (AdsManager.ShowInterstitial() == true)
                 {
+                    _IsCount++;
+                    //EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "IsCount", $"{_IsCount}" } });
+                    EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "AdsCount", $"IsCount_{_IsCount}" } });
                     yield return _s60;
                 }
                 else
                 {
                     yield return _s1;
                 }
+
             }
 
         }
@@ -283,14 +317,29 @@ public class StageManager : MonoBehaviour
 
         if (isBigMoney == false)
         {
-            _bigmoney_term -= Time.deltaTime;
-            if (_bigmoney_term <= 0)
+            if (_parts_upgrade_level > 0)
             {
-                _bigmoney_term = _maxTerm;
-                isBigMoney = true;
-                BigMoneyOnOff(true);
+                _bigmoney_term -= Time.deltaTime;
+                if (_bigmoney_term <= 0 && upgradeCount < 2)
+                {
+                    _bigmoney_term = _maxTerm;
+                    isBigMoney = true;
+                    BigMoneyOnOff(true);
+                    EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", "BigMoney" } });
+                }
             }
         }
+        else
+        {
+            _bigmoney_Showterm -= Time.deltaTime;
+            if (_bigmoney_Showterm <= 0)
+            {
+                _bigmoney_Showterm = _maxTerm;
+                isBigMoney = false;
+                BigMoneyOnOff(false);
+            }
+        }
+
 
     }
 
@@ -448,6 +497,15 @@ public class StageManager : MonoBehaviour
         }
 
         _parts_upgrade_level++;
+        //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"AddLand_Level", $"{_parts_upgrade_level}" } });
+        EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Land_Upgrade_Level", $"AddLand_Level_{_parts_upgrade_level}" } });
+
+
+        //EventTracker.LogCustomEvent("AddLand", new Dictionary<string, string> { { $"AddLand_Level_{_parts_upgrade_level}_Time", $"{_playTime}s" } });
+        EventTracker.LogCustomEvent("AddLand", new Dictionary<string, string> { { $"Land_Upgrade_Level", $"AddLevel_{_parts_upgrade_level}_{_playTime}s" } });
+
+
+
 
 
         if (_parts_upgrade_level >= _machineList.Count - 1)
@@ -549,26 +607,22 @@ public class StageManager : MonoBehaviour
             _gameUi.UpgradeCountText.transform.parent.GetChild(1).gameObject.SetActive(false);
             _gameUi.UpgradeCountText.text = $"-";
 
-            //if (_bigmoney_term <= 0f)
-            //{
-            //    isBigMoney = true;
-            //    _bigmoney_term = 20f;
-            //    BigMoneyOnOff(true);
-            //}
-            if (_bigmoney_term <= 0f)
-            {
-                _gameUi.BigMoneyButton.gameObject.SetActive(true);
-                _gameUi.BigMoneyButton.transform.DOLocalMoveX(0, 1f).SetEase(Ease.Linear);
-                _gameUi.BigMoneyButton.transform.GetChild(0).GetComponent<Text>().text = $"{"+"}{Managers.ToCurrencyString(bigMoney * 5d)}";
-            }
         }
+
+        else if (upgradeCount < 2 && _parts_upgrade_level > 0 && _bigmoney_term <= 0f)
+        {
+            _gameUi.BigMoneyButton.gameObject.SetActive(true);
+            _gameUi.BigMoneyButton.transform.DOLocalMoveX(0, 1f).SetEase(Ease.Linear);
+            _gameUi.BigMoneyButton.transform.GetChild(0).GetComponent<Text>().text = $"{"+"}{Managers.ToCurrencyString(bigMoney * 5d)}";
+        }
+
         else
         {
             _gameUi.UpgradeCountText.transform.parent.GetChild(1).gameObject.SetActive(true);
             _gameUi.UpgradeCountText.text = $"{upgradeCount} Upgrades";
-            _gameUi.BigMoneyButton.transform.DOLocalMoveX(380, 1f).SetEase(Ease.Linear);
-            isBigMoney = false;
-            _bigmoney_term = _maxTerm;
+            //_gameUi.BigMoneyButton.transform.DOLocalMoveX(380, 1f).SetEase(Ease.Linear);
+            //isBigMoney = false;
+
         }
 
 
@@ -614,7 +668,13 @@ public class StageManager : MonoBehaviour
     {
         if (!isRvDouble)
         {
-            MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType_1", "Doble_Money" } });
+            MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Doble_Money" } });
+
+            _RvCount++;
+            //EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "RvCount", $"{_RvCount}" } });
+            EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "AdsCount", $"RvCount_{_RvCount}" } });
+
+
             DOTween.Sequence().AppendCallback(() =>
             {
                 isRvDouble = true;
@@ -635,13 +695,19 @@ public class StageManager : MonoBehaviour
                     _gameUi.RV_Income_Double.transform.GetChild(1).gameObject.SetActive(false);
                 });
 
+
+
         }
     }
 
     public void RV_BigMoney()
     {
         isBigMoney = false;
-        MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType_1", "Big_Money" } });
+        MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Big_Money" } });
+        _RvCount++;
+        //EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "RvCount", $"{_RvCount}" } });
+        EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "AdsCount", $"RvCount_{_RvCount}" } });
+
         _gameManager.AddMoney(bigMoney * 5d);
         _gameUi.BigMoneyButton.gameObject.SetActive(false);
 
@@ -653,7 +719,7 @@ public class StageManager : MonoBehaviour
     {
         //int _num = _parts_upgrade_level;
         _num = _rvRailNum;
-        MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType_2", "Auto_Rail" } });
+        MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Auto_Rail" } });
         _gameUi.RvRail_Panel.SetActive(false);
         DOTween.Sequence().AppendCallback(() => { _machineList[_num].RailOnOff(true); })
             .AppendInterval(30f)
@@ -662,7 +728,7 @@ public class StageManager : MonoBehaviour
 
     public void RV_Worker()
     {
-        MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType_2", "More Worker" } });
+        MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "More Worker" } });
         _gameUi.RvWorker_Panel.SetActive(false);
 
         for (int i = 0; i < _landManagers.Count; i++)
@@ -701,7 +767,7 @@ public class StageManager : MonoBehaviour
     public void RV_Skin()
     {
 
-        MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType_1", "Skin" } });
+        MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Skin" } });
     }
 
 
@@ -718,7 +784,7 @@ public class StageManager : MonoBehaviour
 
             _gameUi.BigMoneyButton.transform.DOLocalMoveX(380, 1f).SetEase(Ease.Linear);
             isBigMoney = false;
-            _bigmoney_term = _maxTerm;
+
         }
 
 

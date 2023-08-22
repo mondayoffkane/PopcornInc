@@ -12,7 +12,8 @@ namespace Adverty.PlatformSpecific
 
         public string GetSystemLocale()
         {
-            return _Utils_GetSystemLocale();
+            //return _Utils_GetSystemLocale();
+            return null;
         }
 #else
         public string GetSystemLocale()

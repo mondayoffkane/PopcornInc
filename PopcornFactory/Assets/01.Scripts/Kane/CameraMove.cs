@@ -145,6 +145,7 @@ public class CameraMove : MonoBehaviour
                     }
                     else if (hit.collider.tag == "WorkerBox")
                     {
+                        Managers.Sound.Play("Effect_9");
                         int _landNum = hit.transform.GetComponent<WorkerBox>()._landNum;
                         _StageManager._landManagers[_landNum].AddStaff(hit.transform.gameObject);
                         //_stageManager.AddStaff(false, hit.transform.gameObject);

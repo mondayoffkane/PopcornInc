@@ -2696,7 +2696,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57219548}
   m_LocalRotation: {x: -0, y: 0.2588191, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 32.7, y: 2.76, z: -11}
+  m_LocalPosition: {x: 40.120003, y: 3.98, z: -7.290002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7828,7 +7828,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 146758071}
   m_LocalRotation: {x: -0, y: 0.99047446, z: -0, w: 0.13769647}
-  m_LocalPosition: {x: 37.25471, y: 4.24, z: 13.230789}
+  m_LocalPosition: {x: 42.58, y: 4.24, z: 22.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7864,7 +7864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _level: 0
-  _name: Cocoa Tree
+  _name: Cacao Tree
   _upgrade1_sprite: {fileID: 21300000, guid: e223410ae31d84d99becf64506be0d1a, type: 3}
   _upgrade1_name: Income
   _upgrade1_explain: Income Up
@@ -7873,340 +7873,340 @@ MonoBehaviour:
   _upgrade2_explain: Speed Up
   _upgradeBase: 12
   _productBase: 4
-  _upgradeScope: 1.7
-  _productScope: 1.1
+  _upgradeScope: 1.12
+  _productScope: 1.3
   _maxLevel: 150
   _upgradePrice:
   - 12
-  - 31
-  - 69
-  - 126
-  - 202
-  - 297
-  - 411
-  - 544
-  - 696
-  - 867
-  - 1057
-  - 1266
-  - 1494
-  - 1741
-  - 2007
-  - 2292
-  - 2596
-  - 2919
-  - 3261
-  - 3622
-  - 4002
-  - 4401
-  - 4819
-  - 5256
-  - 5712
-  - 6187
-  - 6681
-  - 7194
-  - 7726
-  - 8277
-  - 8847
-  - 9436
-  - 10044
-  - 10671
-  - 11317
-  - 11982
-  - 12666
-  - 13369
-  - 14091
-  - 14832
-  - 15592
-  - 16371
-  - 17169
-  - 17986
-  - 18822
-  - 19677
-  - 20551
-  - 21444
-  - 22356
-  - 23287
-  - 24237
-  - 25206
-  - 26194
-  - 27201
-  - 28227
-  - 29272
-  - 30336
-  - 31419
-  - 32521
-  - 33642
-  - 34782
-  - 35941
-  - 37119
-  - 38316
-  - 39532
-  - 40767
-  - 42021
-  - 43294
-  - 44586
-  - 45897
-  - 47227
-  - 48576
-  - 49944
-  - 51331
-  - 52737
-  - 54162
-  - 55606
-  - 57069
-  - 58551
-  - 60052
-  - 61572
-  - 63111
-  - 64669
-  - 66246
-  - 67842
-  - 69457
-  - 71091
-  - 72744
-  - 74416
-  - 76107
-  - 77817
-  - 79546
-  - 81294
-  - 83061
-  - 84847
-  - 86652
-  - 88476
-  - 90319
-  - 92181
-  - 94062
-  - 95962
-  - 97881
-  - 99819
-  - 101776
-  - 103752
-  - 105747
-  - 107761
-  - 109794
-  - 111846
-  - 113917
-  - 116007
-  - 118116
-  - 120244
-  - 122391
-  - 124557
-  - 126742
-  - 128946
-  - 131169
-  - 133411
-  - 135672
-  - 137952
-  - 140251
-  - 142569
-  - 144906
-  - 147262
-  - 149637
-  - 152031
-  - 154444
-  - 156876
-  - 159327
-  - 161797
-  - 164286
-  - 166794
-  - 169321
-  - 171867
-  - 174432
-  - 177016
-  - 179619
-  - 182241
-  - 184882
-  - 187542
-  - 190221
-  - 192919
-  - 195636
-  - 198372
-  - 201127
-  - 203901
-  - 206694
-  - 209506
-  - 212337
+  - 14
+  - 28
+  - 42
+  - 57
+  - 71
+  - 85
+  - 100
+  - 114
+  - 128
+  - 143
+  - 157
+  - 171
+  - 185
+  - 200
+  - 214
+  - 228
+  - 243
+  - 257
+  - 271
+  - 286
+  - 300
+  - 315
+  - 329
+  - 343
+  - 358
+  - 372
+  - 387
+  - 401
+  - 416
+  - 430
+  - 445
+  - 459
+  - 474
+  - 488
+  - 503
+  - 518
+  - 533
+  - 547
+  - 562
+  - 577
+  - 592
+  - 607
+  - 622
+  - 638
+  - 653
+  - 668
+  - 684
+  - 700
+  - 716
+  - 732
+  - 748
+  - 764
+  - 781
+  - 798
+  - 815
+  - 833
+  - 850
+  - 869
+  - 887
+  - 906
+  - 926
+  - 946
+  - 967
+  - 989
+  - 1011
+  - 1034
+  - 1058
+  - 1083
+  - 1110
+  - 1137
+  - 1166
+  - 1197
+  - 1229
+  - 1263
+  - 1299
+  - 1338
+  - 1379
+  - 1423
+  - 1470
+  - 1521
+  - 1576
+  - 1634
+  - 1698
+  - 1767
+  - 1841
+  - 1922
+  - 2010
+  - 2106
+  - 2210
+  - 2324
+  - 2449
+  - 2585
+  - 2734
+  - 2898
+  - 3077
+  - 3274
+  - 3490
+  - 3727
+  - 3988
+  - 4276
+  - 4592
+  - 4940
+  - 5324
+  - 5747
+  - 6213
+  - 6727
+  - 7294
+  - 7920
+  - 8610
+  - 9372
+  - 10213
+  - 11143
+  - 12169
+  - 13302
+  - 14554
+  - 15937
+  - 17465
+  - 19153
+  - 21019
+  - 23082
+  - 25361
+  - 27881
+  - 30666
+  - 33745
+  - 37148
+  - 40911
+  - 45072
+  - 49671
+  - 54757
+  - 60381
+  - 66599
+  - 73474
+  - 81077
+  - 89485
+  - 98782
+  - 109062
+  - 120432
+  - 133004
+  - 146909
+  - 162285
+  - 179290
+  - 198095
+  - 218893
+  - 241894
+  - 267331
+  - 295463
+  - 326575
+  - 360984
+  - 399039
   _productPrice:
   - 4
-  - 8
-  - 12
-  - 16
+  - 10
+  - 15
   - 20
-  - 24
-  - 28
-  - 32
+  - 26
+  - 31
   - 36
-  - 40
-  - 44
-  - 48
+  - 41
+  - 46
   - 52
-  - 56
-  - 60
-  - 64
-  - 68
+  - 57
+  - 62
+  - 67
   - 72
-  - 76
-  - 80
-  - 84
+  - 78
+  - 83
   - 88
-  - 92
-  - 96
-  - 100
+  - 93
+  - 98
   - 104
-  - 108
-  - 112
-  - 116
-  - 120
+  - 109
+  - 114
+  - 119
   - 124
-  - 128
-  - 132
-  - 136
+  - 130
+  - 135
   - 140
-  - 144
-  - 148
-  - 152
+  - 145
+  - 150
   - 156
-  - 160
-  - 164
-  - 168
-  - 172
+  - 161
+  - 166
+  - 171
   - 176
-  - 180
-  - 184
-  - 188
+  - 182
+  - 187
   - 192
-  - 196
-  - 200
-  - 204
+  - 197
+  - 202
   - 208
-  - 212
-  - 216
-  - 220
-  - 224
+  - 213
+  - 218
+  - 223
   - 228
-  - 232
-  - 236
-  - 240
+  - 234
+  - 239
   - 244
-  - 248
-  - 252
-  - 256
+  - 249
+  - 254
   - 260
-  - 264
-  - 268
-  - 272
-  - 276
+  - 265
+  - 270
+  - 275
   - 280
-  - 284
-  - 288
-  - 292
+  - 286
+  - 291
   - 296
-  - 300
-  - 304
-  - 308
+  - 301
+  - 306
   - 312
-  - 316
-  - 320
-  - 324
-  - 328
+  - 317
+  - 322
+  - 327
   - 332
-  - 336
-  - 340
-  - 344
+  - 338
+  - 343
   - 348
-  - 352
-  - 356
-  - 360
+  - 353
+  - 358
   - 364
-  - 368
-  - 372
-  - 376
-  - 380
+  - 369
+  - 374
+  - 379
   - 384
-  - 388
-  - 392
-  - 396
+  - 390
+  - 395
   - 400
-  - 404
-  - 408
-  - 412
+  - 405
+  - 410
   - 416
-  - 420
-  - 424
-  - 428
-  - 432
+  - 421
+  - 426
+  - 431
   - 436
-  - 440
-  - 444
-  - 448
+  - 442
+  - 447
   - 452
-  - 456
-  - 460
-  - 464
+  - 457
+  - 462
   - 468
-  - 472
-  - 476
-  - 480
-  - 484
+  - 473
+  - 478
+  - 483
   - 488
-  - 492
-  - 496
-  - 500
+  - 494
+  - 499
   - 504
-  - 508
-  - 512
-  - 516
+  - 509
+  - 514
   - 520
-  - 524
-  - 528
-  - 532
-  - 536
+  - 525
+  - 530
+  - 535
   - 540
-  - 544
-  - 548
-  - 552
+  - 546
+  - 551
   - 556
-  - 560
-  - 564
-  - 568
+  - 561
+  - 566
   - 572
-  - 576
-  - 580
-  - 584
-  - 588
+  - 577
+  - 582
+  - 587
   - 592
-  - 596
-  - 600
+  - 598
+  - 603
+  - 608
+  - 613
+  - 618
+  - 624
+  - 629
+  - 634
+  - 639
+  - 644
+  - 650
+  - 655
+  - 660
+  - 665
+  - 670
+  - 676
+  - 681
+  - 686
+  - 691
+  - 696
+  - 702
+  - 707
+  - 712
+  - 717
+  - 722
+  - 728
+  - 733
+  - 738
+  - 743
+  - 748
+  - 754
+  - 759
+  - 764
+  - 769
+  - 774
+  - 780
   _scrollUpgrade1_base: 110
   _scrollUpgrade2_base: 220
-  _scrollUpgrade1_scope: 2.1
-  _scrollUpgrade2_scope: 2.1
+  _scrollUpgrade1_scope: 3
+  _scrollUpgrade2_scope: 3
   _scrollUpgrade1_Price:
   - 110
-  - 231
-  - 485
-  - 1018
-  - 2137
-  - 4487
-  - 9422
-  - 19786
-  - 41550
-  - 87255
+  - 363
+  - 1188
+  - 3861
+  - 12474
+  - 40095
+  - 128304
+  - 408969
+  - 1299078
+  - 4113747
   _scrollUpgrade2_Price:
   - 220
-  - 462
-  - 970
-  - 2037
-  - 4277
-  - 8981
-  - 18860
-  - 39606
-  - 83172
-  - 174661
+  - 726
+  - 2376
+  - 7722
+  - 24948
+  - 80190
+  - 256608
+  - 817938
+  - 2598156
+  - 8227494
   _priceScopeLevel: 0
   _spawnLevel: 0
-  _machineNum: 0
+  _machineNum: 3
   _productMesh: {fileID: -1619637868301017920, guid: 845640f2252034d23bf1be8fa0212a65,
     type: 3}
   _productMat: {fileID: 2100000, guid: 428c1b446a4524717ab4fdc70410d42b, type: 2}
@@ -13650,7 +13650,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247876153}
   m_LocalRotation: {x: -0, y: 0.86602515, z: -0, w: 0.50000054}
-  m_LocalPosition: {x: 7.01, y: 11.31, z: 28.68}
+  m_LocalPosition: {x: 7.029001, y: 11.31, z: 26.199373}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15627,7 +15627,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286152914}
   m_LocalRotation: {x: -0, y: 0.86602515, z: -0, w: 0.50000054}
-  m_LocalPosition: {x: 8.890999, y: 11.31, z: 30.790627}
+  m_LocalPosition: {x: 8.91, y: 11.31, z: 28.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18017,7 +18017,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 329739321}
   m_LocalRotation: {x: -0, y: 0.2588191, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 39.029995, y: 2.76, z: -10.459998}
+  m_LocalPosition: {x: 46.449997, y: 3.98, z: -6.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36907,337 +36907,337 @@ MonoBehaviour:
   _upgrade2_explain: Speed Up
   _upgradeBase: 9
   _productBase: 3
-  _upgradeScope: 1
-  _productScope: 1.5
+  _upgradeScope: 1.12
+  _productScope: 1.3
   _maxLevel: 150
   _upgradePrice:
   - 9
-  - 10
-  - 20
-  - 30
-  - 40
-  - 50
-  - 60
-  - 70
-  - 80
-  - 90
-  - 100
-  - 110
-  - 120
-  - 130
-  - 140
-  - 150
-  - 160
-  - 170
-  - 180
-  - 190
+  - 11
+  - 22
+  - 33
+  - 44
+  - 55
+  - 66
+  - 77
+  - 88
+  - 99
+  - 111
+  - 122
+  - 133
+  - 144
+  - 155
+  - 166
+  - 177
+  - 188
   - 200
-  - 210
-  - 220
-  - 230
-  - 240
-  - 250
-  - 260
-  - 270
-  - 280
-  - 290
-  - 300
-  - 310
-  - 320
-  - 330
-  - 340
-  - 350
-  - 360
-  - 370
+  - 211
+  - 222
+  - 233
+  - 244
+  - 256
+  - 267
+  - 278
+  - 289
+  - 301
+  - 312
+  - 323
+  - 335
+  - 346
+  - 357
+  - 369
   - 380
-  - 390
-  - 400
-  - 410
-  - 420
-  - 430
-  - 440
-  - 450
-  - 460
-  - 470
-  - 480
-  - 490
+  - 392
+  - 404
+  - 415
+  - 427
+  - 439
+  - 451
+  - 463
+  - 475
+  - 488
   - 500
-  - 510
-  - 520
-  - 530
-  - 540
-  - 550
-  - 560
-  - 570
+  - 513
+  - 526
+  - 539
+  - 552
+  - 566
   - 580
-  - 590
-  - 600
-  - 610
-  - 620
-  - 630
-  - 640
-  - 650
-  - 660
-  - 670
-  - 680
-  - 690
-  - 700
-  - 710
-  - 720
-  - 730
-  - 740
-  - 750
-  - 760
-  - 770
-  - 780
-  - 790
-  - 800
-  - 810
-  - 820
-  - 830
-  - 840
-  - 850
-  - 860
-  - 870
-  - 880
+  - 594
+  - 608
+  - 623
+  - 639
+  - 655
+  - 671
+  - 689
+  - 707
+  - 725
+  - 745
+  - 766
+  - 788
+  - 811
+  - 836
+  - 862
   - 890
-  - 900
-  - 910
   - 920
-  - 930
-  - 940
-  - 950
-  - 960
-  - 970
-  - 980
-  - 990
-  - 1000
-  - 1010
-  - 1020
-  - 1030
-  - 1040
-  - 1050
-  - 1060
-  - 1070
-  - 1080
-  - 1090
-  - 1100
-  - 1110
-  - 1120
-  - 1130
-  - 1140
-  - 1150
-  - 1160
-  - 1170
-  - 1180
-  - 1190
-  - 1200
-  - 1210
-  - 1220
-  - 1230
-  - 1240
-  - 1250
-  - 1260
-  - 1270
-  - 1280
-  - 1290
-  - 1300
-  - 1310
-  - 1320
-  - 1330
-  - 1340
-  - 1350
-  - 1360
-  - 1370
-  - 1380
-  - 1390
-  - 1400
-  - 1410
-  - 1420
-  - 1430
-  - 1440
-  - 1450
-  - 1460
-  - 1470
-  - 1480
-  - 1490
+  - 953
+  - 988
+  - 1026
+  - 1067
+  - 1112
+  - 1161
+  - 1214
+  - 1273
+  - 1337
+  - 1407
+  - 1485
+  - 1571
+  - 1665
+  - 1770
+  - 1886
+  - 2014
+  - 2156
+  - 2315
+  - 2491
+  - 2686
+  - 2904
+  - 3147
+  - 3417
+  - 3718
+  - 4055
+  - 4430
+  - 4849
+  - 5317
+  - 5840
+  - 6425
+  - 7078
+  - 7808
+  - 8625
+  - 9538
+  - 10559
+  - 11702
+  - 12980
+  - 14410
+  - 16011
+  - 17803
+  - 19808
+  - 22052
+  - 24565
+  - 27378
+  - 30527
+  - 34052
+  - 37999
+  - 42419
+  - 47367
+  - 52908
+  - 59112
+  - 66060
+  - 73840
+  - 82553
+  - 92309
+  - 103235
+  - 115471
+  - 129174
+  - 144520
+  - 161706
+  - 180953
+  - 202508
+  - 226649
+  - 253685
+  - 283964
+  - 317875
+  - 355855
+  - 398390
+  - 446029
+  - 499382
+  - 559137
+  - 626062
+  - 701015
+  - 784962
+  - 878981
+  - 984281
+  - 1102216
+  - 1234302
+  - 1382236
+  - 1547921
+  - 1733488
+  - 1941321
   _productPrice:
   - 3
-  - 6
-  - 9
-  - 12
+  - 7
+  - 11
   - 15
-  - 18
-  - 21
-  - 24
+  - 19
+  - 23
   - 27
-  - 30
-  - 33
-  - 36
+  - 31
+  - 35
   - 39
   - 42
-  - 45
-  - 48
-  - 51
+  - 46
+  - 50
   - 54
-  - 57
-  - 60
-  - 63
+  - 58
+  - 62
   - 66
-  - 69
-  - 72
-  - 75
+  - 70
+  - 74
   - 78
   - 81
-  - 84
-  - 87
-  - 90
+  - 85
+  - 89
   - 93
-  - 96
-  - 99
-  - 102
+  - 97
+  - 101
   - 105
-  - 108
-  - 111
-  - 114
+  - 109
+  - 113
   - 117
   - 120
-  - 123
-  - 126
-  - 129
+  - 124
+  - 128
   - 132
-  - 135
-  - 138
-  - 141
+  - 136
+  - 140
   - 144
-  - 147
-  - 150
-  - 153
+  - 148
+  - 152
   - 156
   - 159
-  - 162
-  - 165
-  - 168
+  - 163
+  - 167
   - 171
-  - 174
-  - 177
-  - 180
+  - 175
+  - 179
   - 183
-  - 186
-  - 189
-  - 192
+  - 187
+  - 191
   - 195
   - 198
-  - 201
-  - 204
-  - 207
+  - 202
+  - 206
   - 210
-  - 213
-  - 216
-  - 219
+  - 214
+  - 218
   - 222
-  - 225
-  - 228
-  - 231
+  - 226
+  - 230
   - 234
   - 237
-  - 240
-  - 243
-  - 246
+  - 241
+  - 245
   - 249
-  - 252
-  - 255
-  - 258
+  - 253
+  - 257
   - 261
-  - 264
-  - 267
-  - 270
+  - 265
+  - 269
   - 273
   - 276
-  - 279
-  - 282
-  - 285
+  - 280
+  - 284
   - 288
-  - 291
-  - 294
-  - 297
+  - 292
+  - 296
   - 300
-  - 303
-  - 306
-  - 309
+  - 304
+  - 308
   - 312
   - 315
-  - 318
-  - 321
-  - 324
+  - 319
+  - 323
   - 327
-  - 330
-  - 333
-  - 336
+  - 331
+  - 335
   - 339
-  - 342
-  - 345
-  - 348
+  - 343
+  - 347
   - 351
   - 354
-  - 357
-  - 360
-  - 363
+  - 358
+  - 362
   - 366
-  - 369
-  - 372
-  - 375
+  - 370
+  - 374
   - 378
-  - 381
-  - 384
-  - 387
+  - 382
+  - 386
   - 390
   - 393
-  - 396
-  - 399
-  - 402
+  - 397
+  - 401
   - 405
-  - 408
-  - 411
-  - 414
+  - 409
+  - 413
   - 417
-  - 420
-  - 423
-  - 426
+  - 421
+  - 425
   - 429
   - 432
-  - 435
-  - 438
-  - 441
+  - 436
+  - 440
   - 444
-  - 447
-  - 450
+  - 448
+  - 452
+  - 456
+  - 460
+  - 464
+  - 468
+  - 471
+  - 475
+  - 479
+  - 483
+  - 487
+  - 491
+  - 495
+  - 499
+  - 503
+  - 507
+  - 510
+  - 514
+  - 518
+  - 522
+  - 526
+  - 530
+  - 534
+  - 538
+  - 542
+  - 546
+  - 549
+  - 553
+  - 557
+  - 561
+  - 565
+  - 569
+  - 573
+  - 577
+  - 581
+  - 585
   _scrollUpgrade1_base: 90
   _scrollUpgrade2_base: 180
-  _scrollUpgrade1_scope: 2.1
-  _scrollUpgrade2_scope: 2.1
+  _scrollUpgrade1_scope: 3
+  _scrollUpgrade2_scope: 3
   _scrollUpgrade1_Price:
   - 90
-  - 189
-  - 396
-  - 831
-  - 1745
-  - 3664
-  - 7694
-  - 16157
-  - 33929
-  - 71250
+  - 297
+  - 972
+  - 3159
+  - 10206
+  - 32805
+  - 104976
+  - 334611
+  - 1062882
+  - 3365793
   _scrollUpgrade2_Price:
   - 180
-  - 378
-  - 793
-  - 1665
-  - 3496
-  - 7341
-  - 15416
-  - 32373
-  - 67983
-  - 142764
+  - 594
+  - 1944
+  - 6318
+  - 20412
+  - 65610
+  - 209952
+  - 669222
+  - 2125764
+  - 6731586
   _priceScopeLevel: 0
   _spawnLevel: 0
   _machineNum: 2
@@ -49706,337 +49706,337 @@ MonoBehaviour:
   _upgrade2_explain: Speed Up
   _upgradeBase: 6
   _productBase: 2
-  _upgradeScope: 1.5
-  _productScope: 1.1
+  _upgradeScope: 1.12
+  _productScope: 1.3
   _maxLevel: 150
   _upgradePrice:
   - 6
-  - 10
-  - 20
+  - 7
+  - 15
+  - 23
   - 30
-  - 40
-  - 50
-  - 60
-  - 70
-  - 80
-  - 90
+  - 38
+  - 46
+  - 54
+  - 61
+  - 69
+  - 77
+  - 85
+  - 92
   - 100
-  - 110
-  - 120
-  - 130
-  - 140
-  - 150
-  - 160
+  - 108
+  - 116
+  - 123
+  - 131
+  - 139
+  - 147
+  - 154
+  - 162
   - 170
-  - 180
-  - 190
-  - 200
-  - 210
-  - 220
-  - 230
-  - 240
-  - 250
-  - 260
-  - 270
-  - 280
-  - 290
-  - 300
-  - 310
-  - 320
-  - 330
-  - 340
-  - 350
-  - 360
-  - 370
-  - 380
-  - 390
-  - 400
-  - 410
-  - 420
-  - 430
-  - 440
-  - 450
-  - 460
-  - 470
-  - 480
+  - 178
+  - 186
+  - 194
+  - 201
+  - 209
+  - 217
+  - 225
+  - 233
+  - 241
+  - 249
+  - 257
+  - 265
+  - 273
+  - 281
+  - 289
+  - 297
+  - 306
+  - 314
+  - 322
+  - 331
+  - 339
+  - 348
+  - 357
+  - 366
+  - 375
+  - 384
+  - 393
+  - 403
+  - 413
+  - 423
+  - 433
+  - 444
+  - 455
+  - 466
+  - 478
   - 490
-  - 500
-  - 510
-  - 520
-  - 530
-  - 540
-  - 550
-  - 560
-  - 570
-  - 580
-  - 590
-  - 600
-  - 610
-  - 620
-  - 630
-  - 640
-  - 650
-  - 660
-  - 670
-  - 680
-  - 690
-  - 700
-  - 710
-  - 720
-  - 730
-  - 740
-  - 750
-  - 760
-  - 770
-  - 780
-  - 790
-  - 800
-  - 810
-  - 820
-  - 830
-  - 840
-  - 850
-  - 860
-  - 870
-  - 880
-  - 890
-  - 900
-  - 910
-  - 920
-  - 930
-  - 940
-  - 950
-  - 960
-  - 970
-  - 980
-  - 990
-  - 1000
-  - 1010
-  - 1020
-  - 1030
-  - 1040
-  - 1050
-  - 1060
-  - 1070
-  - 1080
-  - 1090
-  - 1100
-  - 1110
-  - 1120
-  - 1130
-  - 1140
-  - 1150
-  - 1160
-  - 1170
-  - 1180
-  - 1190
-  - 1200
-  - 1210
-  - 1220
-  - 1230
-  - 1240
-  - 1250
-  - 1260
-  - 1270
-  - 1280
-  - 1290
-  - 1300
-  - 1310
-  - 1320
-  - 1330
-  - 1340
-  - 1350
-  - 1360
+  - 503
+  - 517
+  - 531
+  - 546
+  - 562
+  - 578
+  - 596
+  - 615
+  - 636
+  - 658
+  - 682
+  - 707
+  - 735
+  - 765
+  - 798
+  - 834
+  - 873
+  - 916
+  - 964
+  - 1016
+  - 1073
+  - 1137
+  - 1207
+  - 1284
   - 1370
-  - 1380
-  - 1390
-  - 1400
-  - 1410
-  - 1420
-  - 1430
-  - 1440
-  - 1450
-  - 1460
-  - 1470
-  - 1480
-  - 1490
+  - 1465
+  - 1571
+  - 1689
+  - 1820
+  - 1965
+  - 2127
+  - 2308
+  - 2509
+  - 2734
+  - 2984
+  - 3264
+  - 3576
+  - 3925
+  - 4315
+  - 4751
+  - 5238
+  - 5783
+  - 6392
+  - 7073
+  - 7835
+  - 8688
+  - 9642
+  - 10709
+  - 11904
+  - 13241
+  - 14738
+  - 16413
+  - 18289
+  - 20388
+  - 22739
+  - 25371
+  - 28317
+  - 31616
+  - 35311
+  - 39447
+  - 44080
+  - 49267
+  - 55075
+  - 61580
+  - 68864
+  - 77022
+  - 86158
+  - 96388
+  - 107846
+  - 120678
+  - 135048
+  - 151142
+  - 169167
+  - 189353
+  - 211961
+  - 237281
+  - 265638
+  - 297398
+  - 332967
+  - 372804
+  - 417421
+  - 467390
+  - 523355
+  - 586035
+  - 656235
+  - 734858
+  - 822916
+  - 921539
+  - 1031996
+  - 1155708
+  - 1294263
   _productPrice:
   - 2
-  - 4
-  - 6
-  - 8
+  - 5
+  - 7
   - 10
-  - 12
-  - 14
-  - 16
+  - 13
+  - 15
   - 18
   - 20
-  - 22
-  - 24
+  - 23
   - 26
   - 28
-  - 30
-  - 32
-  - 34
+  - 31
+  - 33
   - 36
-  - 38
-  - 40
-  - 42
+  - 39
+  - 41
   - 44
   - 46
-  - 48
-  - 50
+  - 49
   - 52
   - 54
-  - 56
-  - 58
-  - 60
+  - 57
+  - 59
   - 62
-  - 64
-  - 66
-  - 68
+  - 65
+  - 67
   - 70
   - 72
-  - 74
-  - 76
+  - 75
   - 78
   - 80
-  - 82
-  - 84
-  - 86
+  - 83
+  - 85
   - 88
-  - 90
-  - 92
-  - 94
+  - 91
+  - 93
   - 96
   - 98
-  - 100
-  - 102
+  - 101
   - 104
   - 106
-  - 108
-  - 110
-  - 112
+  - 109
+  - 111
   - 114
-  - 116
-  - 118
-  - 120
+  - 117
+  - 119
   - 122
   - 124
-  - 126
-  - 128
+  - 127
   - 130
   - 132
-  - 134
-  - 136
-  - 138
+  - 135
+  - 137
   - 140
-  - 142
-  - 144
-  - 146
+  - 143
+  - 145
   - 148
   - 150
-  - 152
-  - 154
+  - 153
   - 156
   - 158
-  - 160
-  - 162
-  - 164
+  - 161
+  - 163
   - 166
-  - 168
-  - 170
-  - 172
+  - 169
+  - 171
   - 174
   - 176
-  - 178
-  - 180
+  - 179
   - 182
   - 184
-  - 186
-  - 188
-  - 190
+  - 187
+  - 189
   - 192
-  - 194
-  - 196
-  - 198
+  - 195
+  - 197
   - 200
   - 202
-  - 204
-  - 206
+  - 205
   - 208
   - 210
-  - 212
-  - 214
-  - 216
+  - 213
+  - 215
   - 218
-  - 220
-  - 222
-  - 224
+  - 221
+  - 223
   - 226
   - 228
-  - 230
-  - 232
+  - 231
   - 234
   - 236
-  - 238
-  - 240
-  - 242
+  - 239
+  - 241
   - 244
-  - 246
-  - 248
-  - 250
+  - 247
+  - 249
   - 252
   - 254
-  - 256
-  - 258
+  - 257
   - 260
   - 262
-  - 264
-  - 266
-  - 268
+  - 265
+  - 267
   - 270
-  - 272
-  - 274
-  - 276
+  - 273
+  - 275
   - 278
   - 280
-  - 282
-  - 284
+  - 283
   - 286
   - 288
-  - 290
-  - 292
-  - 294
+  - 291
+  - 293
   - 296
-  - 298
-  - 300
+  - 299
+  - 301
+  - 304
+  - 306
+  - 309
+  - 312
+  - 314
+  - 317
+  - 319
+  - 322
+  - 325
+  - 327
+  - 330
+  - 332
+  - 335
+  - 338
+  - 340
+  - 343
+  - 345
+  - 348
+  - 351
+  - 353
+  - 356
+  - 358
+  - 361
+  - 364
+  - 366
+  - 369
+  - 371
+  - 374
+  - 377
+  - 379
+  - 382
+  - 384
+  - 387
+  - 390
   _scrollUpgrade1_base: 70
   _scrollUpgrade2_base: 140
-  _scrollUpgrade1_scope: 2.1
-  _scrollUpgrade2_scope: 2.1
+  _scrollUpgrade1_scope: 3
+  _scrollUpgrade2_scope: 3
   _scrollUpgrade1_Price:
   - 70
-  - 147
-  - 308
-  - 646
-  - 1356
-  - 2847
-  - 5978
-  - 12553
-  - 26361
-  - 55358
+  - 231
+  - 756
+  - 2457
+  - 7938
+  - 25515
+  - 81648
+  - 260253
+  - 826686
+  - 2617839
   _scrollUpgrade2_Price:
   - 140
-  - 294
-  - 617
-  - 1295
-  - 2719
-  - 5709
-  - 11988
-  - 25174
-  - 52865
-  - 111016
+  - 462
+  - 1512
+  - 4914
+  - 15876
+  - 51030
+  - 163296
+  - 520506
+  - 1653372
+  - 5235678
   _priceScopeLevel: 0
   _spawnLevel: 0
   _machineNum: 1
@@ -50217,7 +50217,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754685859}
   m_LocalRotation: {x: -0, y: 0.2588191, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 40.039997, y: 2.76, z: -13.639998}
+  m_LocalPosition: {x: 47.46, y: 3.98, z: -9.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -50699,6 +50699,7 @@ Transform:
   - {fileID: 1073515988}
   - {fileID: 780285010}
   - {fileID: 540885219}
+  - {fileID: 1397549619}
   m_Father: {fileID: 255807616}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -56078,7 +56079,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh38900
+  m_Name: pb_Mesh150310
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -62207,6 +62208,7 @@ MonoBehaviour:
   _popupButtons: []
   _popupPanel: {fileID: 0}
   _targetMachine_Trans: {fileID: 0}
+  _cam: {fileID: 0}
   _popupOffset:
   - {x: 5.06, y: 0, z: 1.75}
   - {x: 5.01, y: 0, z: 3.5}
@@ -62220,12 +62222,15 @@ MonoBehaviour:
   _rvRailNum: -1
   isFirst: 1
   _playTime: 0
+  _IsCount: 0
+  _RvCount: 0
   isRvDouble: 0
   intervalRvDouble: 0
   bigMoney: 0
   Init_IS_term: 180
-  _bigmoney_term: 20
-  _maxTerm: 60
+  _bigmoney_term: 40
+  _bigmoney_Showterm: 40
+  _maxTerm: 40
   isBigMoney: 0
 --- !u!4 &929146858
 Transform:
@@ -62574,7 +62579,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934714647}
   m_LocalRotation: {x: -0, y: 0.86602515, z: -0, w: 0.50000054}
-  m_LocalPosition: {x: 7.42, y: 11.31, z: 32.01}
+  m_LocalPosition: {x: 7.439001, y: 11.31, z: 29.529371}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -69117,7 +69122,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1073550238}
   m_LocalRotation: {x: -0, y: 0.2588191, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 32.53, y: 2.76, z: -7.4399977}
+  m_LocalPosition: {x: 39.95, y: 3.98, z: -3.7299995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74762,6 +74767,156 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed76c0972c5854fbda55d12a467907b4, type: 3}
+--- !u!1 &1159647362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1159647363}
+  - component: {fileID: 1159647368}
+  - component: {fileID: 1159647367}
+  - component: {fileID: 1159647366}
+  - component: {fileID: 1159647365}
+  - component: {fileID: 1159647364}
+  m_Layer: 0
+  m_Name: InPlayUnit(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1159647363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159647362}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 6.619999, z: -0.5}
+  m_LocalScale: {x: 8, y: 4.5, z: 8}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1344833039}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1159647364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159647362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 389622693, guid: 4316d2708ef03534092a3f674fd291fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impressionColor: {r: 0, g: 1, b: 0, a: 1}
+  bounceBackColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &1159647365
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159647362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2014849290, guid: 4316d2708ef03534092a3f674fd291fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1159647366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159647362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 653183863, guid: 4316d2708ef03534092a3f674fd291fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  configuration:
+    ViewData:
+      Size: 8
+      MatchWidthOrHeight: 0
+      Ratio: 2
+      DoubleSided: 1
+      bendSettings:
+        BuildState: 0
+        Radius: 0
+        ConcaveOrConvex: 0
+        Axis: 0
+        Bend: 0
+    SceneContext:
+      Graphics: 
+      Lighting: 0
+      Locations: 0
+      Setting: 0
+      Size: 4
+      Time: 0
+      Period: 0
+    Behavior:
+      AllowInteraction: 0
+      AllowAnimation: 1
+      LazyLoadDisabled: 0
+    shaderType: 0
+    renderType: 0
+--- !u!23 &1159647367
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159647362}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 97388d7eade52124180be62ef160022d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1159647368
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159647362}
+  m_Mesh: {fileID: 4300000, guid: 5c0482120999a0b4aa5d8886a2ff5599, type: 2}
 --- !u!1 &1162407324
 GameObject:
   m_ObjectHideFlags: 0
@@ -83635,6 +83790,106 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1343223159}
   m_Mesh: {fileID: -7850127801079395811, guid: 72c7e2b42acea438c87dbeae5971b82c, type: 3}
+--- !u!1001 &1344833038
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1773124273}
+    m_Modifications:
+    - target: {fileID: -9030791664393825424, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.709557
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 19.53
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -28.67229
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.49999887
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.86602604
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_Name
+      value: Piller
+      objectReference: {fileID: 0}
+    - target: {fileID: 1631292350754591337, guid: 49e7fb618808d49a68313bb259d0fc70,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ade8fca681f724cd89b5a568642f15ae, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 49e7fb618808d49a68313bb259d0fc70, type: 3}
+--- !u!4 &1344833039 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 49e7fb618808d49a68313bb259d0fc70,
+    type: 3}
+  m_PrefabInstance: {fileID: 1344833038}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1346208174
 GameObject:
   m_ObjectHideFlags: 0
@@ -84040,7 +84295,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1351677798}
   m_LocalRotation: {x: -0, y: 0.86602515, z: -0, w: 0.50000054}
-  m_LocalPosition: {x: 10.468843, y: 11.31, z: 33.043537}
+  m_LocalPosition: {x: 10.487844, y: 11.31, z: 30.562908}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -87828,6 +88083,156 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1397378996}
   m_Mesh: {fileID: -7907594614436192945, guid: 72c7e2b42acea438c87dbeae5971b82c, type: 3}
+--- !u!1 &1397549613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1397549619}
+  - component: {fileID: 1397549624}
+  - component: {fileID: 1397549623}
+  - component: {fileID: 1397549622}
+  - component: {fileID: 1397549621}
+  - component: {fileID: 1397549620}
+  m_Layer: 0
+  m_Name: InPlayIUnit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1397549619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397549613}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000002980232}
+  m_LocalPosition: {x: -0.489254, y: -5.82, z: 30.633818}
+  m_LocalScale: {x: 10, y: 5.625, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 762951153}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
+--- !u!114 &1397549620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397549613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 389622693, guid: 4316d2708ef03534092a3f674fd291fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impressionColor: {r: 0, g: 1, b: 0, a: 1}
+  bounceBackColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &1397549621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397549613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 653183863, guid: 4316d2708ef03534092a3f674fd291fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  configuration:
+    ViewData:
+      Size: 10
+      MatchWidthOrHeight: 0
+      Ratio: 2
+      DoubleSided: 1
+      bendSettings:
+        BuildState: 0
+        Radius: 0.31830987
+        ConcaveOrConvex: 0
+        Axis: 0
+        Bend: 0
+    SceneContext:
+      Graphics: 
+      Lighting: 0
+      Locations: 0
+      Setting: 0
+      Size: 0
+      Time: 0
+      Period: 0
+    Behavior:
+      AllowInteraction: 0
+      AllowAnimation: 1
+      LazyLoadDisabled: 0
+    shaderType: 0
+    renderType: 0
+--- !u!114 &1397549622
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397549613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2014849290, guid: 4316d2708ef03534092a3f674fd291fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!33 &1397549623
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397549613}
+  m_Mesh: {fileID: 4300000, guid: 32050b8d667bfcc4993b2d34303a1f9c, type: 2}
+--- !u!23 &1397549624
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397549613}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 97388d7eade52124180be62ef160022d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1397632673
 GameObject:
   m_ObjectHideFlags: 0
@@ -92124,7 +92529,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452810992}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.06, y: -0.25, z: -12.89}
+  m_LocalPosition: {x: -0.05, y: -0.25, z: -6.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -101525,225 +101930,125 @@ MonoBehaviour:
   _upgrade2_sprite: {fileID: 21300000, guid: fb18897620aa44511b09c793316569ed, type: 3}
   _upgrade2_name: Worker Speed
   _upgrade2_explain: Worker Speed Up
-  _scrollUpgrade1_base: 300
+  _scrollUpgrade1_base: 1000
   _scrollUpgrade2_base: 70000
-  _scrollUpgrade1_scope: 1.2
-  _scrollUpgrade2_scope: 1.4
+  _scrollUpgrade1_scope: 1.25
+  _scrollUpgrade2_scope: 1.2
   _staffHire_Upgrade_Price:
-  - 300
-  - 361
-  - 434
-  - 521
-  - 626
-  - 752
-  - 903
-  - 1084
-  - 1301
-  - 1562
-  - 1875
-  - 2251
-  - 2702
-  - 3243
-  - 3892
-  - 4671
-  - 5606
-  - 6728
-  - 8074
-  - 9689
-  - 11627
-  - 13953
-  - 16744
-  - 20093
-  - 24112
-  - 28935
-  - 34723
-  - 41668
-  - 50002
-  - 60003
-  - 72004
-  - 86405
-  - 103687
-  - 124425
-  - 149311
-  - 179174
-  - 215009
-  - 258011
-  - 309614
-  - 371537
-  - 445845
-  - 535015
-  - 642019
-  - 770423
-  - 924508
-  - 1109410
-  - 1331293
-  - 1597552
-  - 1917063
-  - 2300476
-  - 2760572
-  - 3312687
-  - 3975225
-  - 4770271
-  - 5724326
-  - 6869192
-  - 8243031
-  - 9891638
-  - 11869966
-  - 14243960
-  - 17092753
-  - 20511304
-  - 24613565
-  - 29536279
-  - 35443535
-  - 42532243
-  - 51038692
-  - 61246431
-  - 73495718
-  - 88194862
-  - 105833835
-  - 127000603
-  - 152400724
-  - 182880869
-  - 219457043
-  - 263348452
-  - 316018143
-  - 379221772
-  - 455066127
-  - 546079353
-  - 655295224
-  - 786354269
-  - 943625123
-  - 1132350148
-  - 1358820178
-  - 1630584214
-  - 1956701057
-  - 2348041269
-  - 2817649523
-  - 3381179428
-  - 4057415314
-  - 4868898377
-  - 5842678053
-  - 7011213664
-  - 8413456397
-  - 10096147677
-  - 12115377213
-  - 14538452656
-  - 17446143188
-  - 20935371826
-  - 25122446192
-  - 30146935431
-  - 36176322518
-  - 43411587022
-  - 52093904427
-  - 62512685313
-  - 75015222376
-  - 90018266852
-  - 108021920223
-  - 129626304268
-  - 155551565122
-  - 186661878147
-  - 223994253777
-  - 268793104533
-  - 322551725440
-  - 387062070529
-  - 464474484635
-  - 557369381563
-  - 668843257876
-  - 802611909452
-  - 963134291343
-  - 1155761149612
-  - 1386913379535
-  - 1664296055443
-  - 1997155266532
-  - 2396586319839
-  - 2875903583807
-  - 3451084300569
-  - 4141301160683
-  - 4969561392820
-  - 5963473671385
-  - 7156168405663
-  - 8587402086796
-  - 10304882504156
-  - 12365859004988
-  - 14839030805986
-  - 17806836967184
-  - 21368204360621
-  - 25641845232746
-  - 30770214279296
-  - 36924257135156
-  - 44309108562188
-  - 53170930274626
-  - 63805116329552
-  - 76566139595463
-  - 91879367514556
-  - 110255241017468
-  - 132306289220962
-  - 158767547065155
-  - 190521056478187
-  - 228625267773825
-  - 274350321328591
-  - 329220385594310
-  - 395064462713173
-  - 474077355255808
-  - 568892826306970
-  - 682671391568365
-  - 819205669882039
-  - 983046803858447
-  - 1179656164630137
-  - 1415587397556165
-  - 1698704877067399
-  - 2038445852480879
-  - 2446135022977055
-  - 2935362027572467
-  - 3522434433086961
-  - 4226921319704354
-  - 5072305583645226
-  - 6086766700374272
-  - 7304120040449127
-  - 8764944048538953
-  - 10517932858246744
-  - 12621519429896092
-  - 15145823315875312
-  - 18174987979050372
-  - 21809985574860444
-  - 26171982689832532
-  - 31406379227799036
-  - 37687655073358840
-  - 45225186088030610
-  - 54270223305636730
-  - 65124267966764070
-  - 78149121560116880
-  - 93778945872140260
-  - 1.125347350465683e+17
-  - 1.3504168205588195e+17
-  - 1.6205001846705834e+17
-  - 1.9446002216046998e+17
-  - 2.3335202659256397e+17
-  - 2.8002243191107674e+17
-  - 3.360269182932921e+17
-  - 4.032323019519505e+17
-  - 4.838787623423406e+17
-  - 5.806545148108087e+17
-  - 6.967854177729704e+17
-  - 8.361425013275644e+17
-  - 1.0033710015930772e+18
-  - 1.2040452019116925e+18
-  - 1.444854242294031e+18
-  - 1.7338250907528374e+18
+  - 1000
+  - 1251
+  - 1564
+  - 1956
+  - 2446
+  - 3058
+  - 3823
+  - 4779
+  - 5974
+  - 7468
+  - 9336
+  - 11671
+  - 14589
+  - 18237
+  - 22797
+  - 28497
+  - 35622
+  - 44528
+  - 55661
+  - 69577
+  - 86972
+  - 108716
+  - 135896
+  - 169871
+  - 212339
+  - 265424
+  - 331781
+  - 414727
+  - 518409
+  - 648012
+  - 810016
+  - 1012521
+  - 1265652
+  - 1582066
+  - 1977583
+  - 2471979
+  - 3089974
+  - 3862468
+  - 4828086
+  - 6035108
+  - 7543886
+  - 9429858
+  - 11787323
+  - 14734154
+  - 18417693
+  - 23022117
+  - 28777647
+  - 35972059
+  - 44965074
+  - 56206343
+  - 70257929
+  - 87822412
+  - 109778016
+  - 137222521
+  - 171528152
+  - 214410191
+  - 268012739
+  - 335015924
+  - 418769906
+  - 523462383
+  - 654327979
+  - 817909974
+  - 1022387468
+  - 1277984336
+  - 1597480421
+  - 1996850527
+  - 2496063159
+  - 3120078949
+  - 3900098687
+  - 4875123359
+  - 6093904199
+  - 7617380249
+  - 9521725312
+  - 11902156641
+  - 14877695802
+  - 18597119753
+  - 23246399692
+  - 29057999616
+  - 36322499521
+  - 45403124402
+  - 56753905503
+  - 70942381879
+  - 88677977349
+  - 110847471687
+  - 138559339609
+  - 173199174512
+  - 216498968141
+  - 270623710177
+  - 338279637722
+  - 422849547153
+  - 528561933942
+  - 660702417428
+  - 825878021786
+  - 1032347527233
+  - 1290434409042
+  - 1613043011303
+  - 2016303764129
+  - 2520379705162
+  - 3150474631453
+  - 3938093289317
   _staffSpeed_Upgrade_Price:
   - 70000
-  - 98000
-  - 137200
-  - 192080
-  - 268912
-  - 376476
-  - 527066
-  - 737892
-  - 1033048
-  - 1446267
+  - 84000
+  - 100800
+  - 120960
+  - 145152
+  - 174182
+  - 209018
+  - 250821
+  - 300985
+  - 361182
   _staff_hire_level: 0
   _staff_speed_level: 0
-  _staff_max_level: 200
+  _staff_max_level: 100
   _cup: {fileID: 1526807188}
   _staffList: []
 --- !u!114 &1594475077
@@ -102265,340 +102570,340 @@ MonoBehaviour:
   _upgrade2_explain: Speed Up
   _upgradeBase: 15
   _productBase: 5
-  _upgradeScope: 1.7
-  _productScope: 1.1
+  _upgradeScope: 1.12
+  _productScope: 1.3
   _maxLevel: 150
   _upgradePrice:
   - 15
-  - 38
-  - 85
-  - 155
+  - 17
+  - 35
+  - 53
+  - 71
+  - 89
+  - 107
+  - 124
+  - 142
+  - 160
+  - 178
+  - 196
+  - 214
+  - 232
   - 249
-  - 366
-  - 507
-  - 671
-  - 859
-  - 1070
-  - 1305
-  - 1563
-  - 1845
-  - 2150
-  - 2479
-  - 2831
-  - 3207
-  - 3606
-  - 4029
-  - 4475
-  - 4945
-  - 5438
-  - 5955
-  - 6495
-  - 7059
-  - 7646
-  - 8257
-  - 8891
-  - 9549
-  - 10230
-  - 10935
-  - 11663
-  - 12415
-  - 13190
-  - 13989
-  - 14811
-  - 15657
-  - 16526
-  - 17419
-  - 18335
-  - 19275
-  - 20238
-  - 21225
-  - 22235
-  - 23269
-  - 24326
-  - 25407
-  - 26511
-  - 27639
-  - 28790
-  - 29965
-  - 31163
-  - 32385
-  - 33630
-  - 34899
-  - 36191
-  - 37507
-  - 38846
-  - 40209
-  - 41595
-  - 43005
-  - 44438
-  - 45895
-  - 47375
-  - 48879
-  - 50406
-  - 51957
-  - 53531
-  - 55129
-  - 56750
-  - 58395
-  - 60063
-  - 61755
-  - 63470
-  - 65209
-  - 66971
-  - 68757
-  - 70566
-  - 72399
-  - 74255
-  - 76135
-  - 78038
-  - 79965
-  - 81915
-  - 83889
-  - 85886
-  - 87907
-  - 89951
-  - 92019
-  - 94110
-  - 96225
-  - 98363
-  - 100525
-  - 102710
-  - 104919
-  - 107151
-  - 109407
-  - 111686
-  - 113989
-  - 116315
-  - 118665
-  - 121038
-  - 123435
-  - 125855
-  - 128299
-  - 130766
-  - 133257
-  - 135771
-  - 138309
-  - 140870
-  - 143455
-  - 146063
-  - 148695
-  - 151350
-  - 154029
-  - 156731
-  - 159457
-  - 162206
-  - 164979
-  - 167775
-  - 170595
-  - 173438
-  - 176305
-  - 179195
-  - 182109
-  - 185046
-  - 188007
-  - 190991
-  - 193999
-  - 197030
-  - 200085
-  - 203163
-  - 206265
-  - 209390
-  - 212539
-  - 215711
-  - 218907
-  - 222126
-  - 225369
-  - 228635
-  - 231925
-  - 235238
-  - 238575
-  - 241935
-  - 245319
-  - 248726
-  - 252157
-  - 255611
-  - 259089
-  - 262590
+  - 267
+  - 285
+  - 303
+  - 321
+  - 339
+  - 357
+  - 375
+  - 393
+  - 411
+  - 429
+  - 447
+  - 465
+  - 483
+  - 501
+  - 520
+  - 538
+  - 556
+  - 575
+  - 593
+  - 612
+  - 630
+  - 649
+  - 668
+  - 687
+  - 706
+  - 725
+  - 745
+  - 765
+  - 785
+  - 805
+  - 825
+  - 846
+  - 867
+  - 888
+  - 910
+  - 933
+  - 956
+  - 979
+  - 1004
+  - 1029
+  - 1055
+  - 1082
+  - 1110
+  - 1139
+  - 1170
+  - 1202
+  - 1236
+  - 1272
+  - 1310
+  - 1351
+  - 1394
+  - 1440
+  - 1490
+  - 1543
+  - 1601
+  - 1664
+  - 1732
+  - 1806
+  - 1886
+  - 1975
+  - 2071
+  - 2178
+  - 2295
+  - 2423
+  - 2565
+  - 2722
+  - 2896
+  - 3088
+  - 3302
+  - 3538
+  - 3801
+  - 4094
+  - 4419
+  - 4782
+  - 5185
+  - 5635
+  - 6137
+  - 6697
+  - 7322
+  - 8020
+  - 8799
+  - 9670
+  - 10644
+  - 11731
+  - 12948
+  - 14308
+  - 15829
+  - 17531
+  - 19434
+  - 21564
+  - 23948
+  - 26615
+  - 29600
+  - 32942
+  - 36682
+  - 40869
+  - 45556
+  - 50803
+  - 56678
+  - 63256
+  - 70621
+  - 78868
+  - 88102
+  - 98442
+  - 110021
+  - 122988
+  - 137508
+  - 153768
+  - 171977
+  - 192370
+  - 215207
+  - 240783
+  - 269425
+  - 301503
+  - 337428
+  - 377662
+  - 422721
+  - 473186
+  - 529704
+  - 593002
+  - 663894
+  - 743291
+  - 832213
+  - 931804
+  - 1043344
+  - 1168266
+  - 1308176
+  - 1464874
+  - 1640374
+  - 1836931
+  - 2057073
+  - 2303630
+  - 2579771
+  - 2889048
+  - 3235435
   _productPrice:
   - 5
-  - 10
-  - 15
-  - 20
-  - 25
-  - 30
-  - 35
-  - 40
+  - 13
+  - 19
+  - 26
+  - 32
+  - 39
   - 45
-  - 50
-  - 55
-  - 60
+  - 52
+  - 58
   - 65
-  - 70
-  - 75
-  - 80
-  - 85
-  - 90
-  - 95
-  - 100
-  - 105
+  - 71
+  - 78
+  - 84
+  - 91
+  - 97
+  - 104
   - 110
-  - 115
-  - 120
-  - 125
+  - 117
+  - 123
   - 130
-  - 135
-  - 140
-  - 145
-  - 150
-  - 155
-  - 160
-  - 165
-  - 170
+  - 136
+  - 143
+  - 149
+  - 156
+  - 162
+  - 169
   - 175
-  - 180
-  - 185
-  - 190
+  - 182
+  - 188
   - 195
-  - 200
-  - 205
-  - 210
-  - 215
-  - 220
-  - 225
-  - 230
-  - 235
+  - 201
+  - 208
+  - 214
+  - 221
+  - 227
+  - 234
   - 240
-  - 245
-  - 250
-  - 255
+  - 247
+  - 253
   - 260
-  - 265
-  - 270
-  - 275
-  - 280
-  - 285
-  - 290
-  - 295
-  - 300
+  - 266
+  - 273
+  - 279
+  - 286
+  - 292
+  - 299
   - 305
-  - 310
-  - 315
-  - 320
+  - 312
+  - 318
   - 325
-  - 330
-  - 335
-  - 340
-  - 345
-  - 350
-  - 355
-  - 360
-  - 365
+  - 331
+  - 338
+  - 344
+  - 351
+  - 357
+  - 364
   - 370
-  - 375
-  - 380
-  - 385
+  - 377
+  - 383
   - 390
-  - 395
-  - 400
-  - 405
-  - 410
-  - 415
-  - 420
-  - 425
-  - 430
+  - 396
+  - 403
+  - 409
+  - 416
+  - 422
+  - 429
   - 435
-  - 440
-  - 445
-  - 450
+  - 442
+  - 448
   - 455
-  - 460
-  - 465
-  - 470
-  - 475
-  - 480
-  - 485
-  - 490
-  - 495
+  - 461
+  - 468
+  - 474
+  - 481
+  - 487
+  - 494
   - 500
-  - 505
-  - 510
-  - 515
+  - 507
+  - 513
   - 520
-  - 525
-  - 530
-  - 535
-  - 540
-  - 545
-  - 550
-  - 555
-  - 560
+  - 526
+  - 533
+  - 539
+  - 546
+  - 552
+  - 559
   - 565
-  - 570
-  - 575
-  - 580
+  - 572
+  - 578
   - 585
-  - 590
-  - 595
-  - 600
-  - 605
-  - 610
-  - 615
-  - 620
-  - 625
+  - 591
+  - 598
+  - 604
+  - 611
+  - 617
+  - 624
   - 630
-  - 635
-  - 640
-  - 645
+  - 637
+  - 643
   - 650
-  - 655
-  - 660
-  - 665
-  - 670
-  - 675
-  - 680
-  - 685
-  - 690
+  - 656
+  - 663
+  - 669
+  - 676
+  - 682
+  - 689
   - 695
-  - 700
-  - 705
-  - 710
+  - 702
+  - 708
   - 715
-  - 720
-  - 725
-  - 730
-  - 735
-  - 740
-  - 745
-  - 750
+  - 721
+  - 728
+  - 734
+  - 741
+  - 747
+  - 754
+  - 760
+  - 767
+  - 773
+  - 780
+  - 786
+  - 793
+  - 799
+  - 806
+  - 812
+  - 819
+  - 825
+  - 832
+  - 838
+  - 845
+  - 851
+  - 858
+  - 864
+  - 871
+  - 877
+  - 884
+  - 890
+  - 897
+  - 903
+  - 910
+  - 916
+  - 923
+  - 929
+  - 936
+  - 942
+  - 949
+  - 955
+  - 962
+  - 968
+  - 975
   _scrollUpgrade1_base: 230
   _scrollUpgrade2_base: 230
-  _scrollUpgrade1_scope: 2.1
-  _scrollUpgrade2_scope: 2.1
+  _scrollUpgrade1_scope: 3
+  _scrollUpgrade2_scope: 3
   _scrollUpgrade1_Price:
   - 230
-  - 483
-  - 1014
-  - 2129
-  - 4470
-  - 9387
-  - 19712
-  - 41395
-  - 86929
-  - 182550
+  - 759
+  - 2484
+  - 8073
+  - 26082
+  - 83835
+  - 268272
+  - 855117
+  - 2716254
+  - 8601471
   _scrollUpgrade2_Price:
   - 230
-  - 483
-  - 1014
-  - 2129
-  - 4470
-  - 9387
-  - 19712
-  - 41395
-  - 86929
-  - 182550
+  - 759
+  - 2484
+  - 8073
+  - 26082
+  - 83835
+  - 268272
+  - 855117
+  - 2716254
+  - 8601471
   _priceScopeLevel: 0
   _spawnLevel: 0
-  _machineNum: 1
+  _machineNum: 4
   _productMesh: {fileID: -1619637868301017920, guid: 845640f2252034d23bf1be8fa0212a65,
     type: 3}
   _productMat: {fileID: 2100000, guid: 428c1b446a4524717ab4fdc70410d42b, type: 2}
@@ -107398,7 +107703,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670489953}
   m_LocalRotation: {x: -0, y: 0.2588191, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 35.649998, y: 2.76, z: -8.949996}
+  m_LocalPosition: {x: 43.07, y: 3.98, z: -5.239998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -111675,7 +111980,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1739615911}
   m_LocalRotation: {x: -0, y: 0.86602515, z: -0, w: 0.50000054}
-  m_LocalPosition: {x: 4.479811, y: 11.31, z: 29.850224}
+  m_LocalPosition: {x: 4.498812, y: 11.31, z: 27.369596}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -113808,6 +114113,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 546559138}
+  - {fileID: 1344833039}
   m_Father: {fileID: 1462197753}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -115197,337 +115503,337 @@ MonoBehaviour:
   _upgrade2_explain: Speed Up
   _upgradeBase: 4
   _productBase: 1
-  _upgradeScope: 1.5
-  _productScope: 1.1
+  _upgradeScope: 1.12
+  _productScope: 1.3
   _maxLevel: 150
   _upgradePrice:
   - 4
-  - 7
-  - 14
+  - 5
+  - 11
+  - 16
   - 21
-  - 28
-  - 35
-  - 42
+  - 27
+  - 32
+  - 38
+  - 43
   - 49
-  - 56
-  - 63
-  - 70
-  - 77
-  - 84
-  - 91
+  - 54
+  - 60
+  - 65
+  - 71
+  - 76
+  - 82
+  - 87
+  - 93
   - 98
-  - 105
-  - 112
-  - 119
+  - 104
+  - 109
+  - 115
+  - 121
   - 126
-  - 133
-  - 140
-  - 147
+  - 132
+  - 137
+  - 143
+  - 148
   - 154
-  - 161
-  - 168
-  - 175
+  - 159
+  - 165
+  - 171
+  - 176
   - 182
-  - 189
-  - 196
-  - 203
-  - 210
+  - 188
+  - 193
+  - 199
+  - 205
+  - 211
   - 217
-  - 224
-  - 231
-  - 238
-  - 245
-  - 252
+  - 222
+  - 228
+  - 234
+  - 240
+  - 246
+  - 253
   - 259
-  - 266
-  - 273
-  - 280
-  - 287
-  - 294
-  - 301
-  - 308
-  - 315
-  - 322
+  - 265
+  - 272
+  - 278
+  - 285
+  - 292
+  - 299
+  - 306
+  - 314
+  - 321
   - 329
-  - 336
-  - 343
-  - 350
-  - 357
+  - 337
+  - 346
+  - 355
   - 364
-  - 371
-  - 378
-  - 385
-  - 392
-  - 399
-  - 406
-  - 413
-  - 420
-  - 427
-  - 434
-  - 441
-  - 448
-  - 455
-  - 462
-  - 469
-  - 476
-  - 483
-  - 490
-  - 497
-  - 504
-  - 511
-  - 518
-  - 525
-  - 532
-  - 539
-  - 546
-  - 553
-  - 560
-  - 567
-  - 574
-  - 581
-  - 588
-  - 595
-  - 602
-  - 609
-  - 616
-  - 623
-  - 630
-  - 637
-  - 644
-  - 651
-  - 658
-  - 665
-  - 672
-  - 679
-  - 686
-  - 693
-  - 700
-  - 707
-  - 714
-  - 721
-  - 728
-  - 735
+  - 374
+  - 384
+  - 395
+  - 407
+  - 419
+  - 432
+  - 446
+  - 461
+  - 477
+  - 495
+  - 513
+  - 534
+  - 556
+  - 580
+  - 607
+  - 636
+  - 668
+  - 703
   - 742
-  - 749
-  - 756
-  - 763
-  - 770
-  - 777
   - 784
-  - 791
-  - 798
-  - 805
-  - 812
-  - 819
-  - 826
-  - 833
-  - 840
-  - 847
-  - 854
-  - 861
-  - 868
-  - 875
-  - 882
-  - 889
-  - 896
-  - 903
-  - 910
-  - 917
-  - 924
-  - 931
-  - 938
-  - 945
-  - 952
-  - 959
-  - 966
-  - 973
-  - 980
-  - 987
-  - 994
-  - 1001
-  - 1008
-  - 1015
-  - 1022
-  - 1029
-  - 1036
-  - 1043
+  - 831
+  - 883
+  - 941
+  - 1005
+  - 1076
+  - 1154
+  - 1242
+  - 1339
+  - 1448
+  - 1568
+  - 1703
+  - 1853
+  - 2020
+  - 2207
+  - 2416
+  - 2649
+  - 2909
+  - 3200
+  - 3525
+  - 3888
+  - 4295
+  - 4749
+  - 5258
+  - 5826
+  - 6463
+  - 7175
+  - 7972
+  - 8863
+  - 9861
+  - 10979
+  - 12229
+  - 13629
+  - 15197
+  - 16952
+  - 18916
+  - 21116
+  - 23579
+  - 26337
+  - 29426
+  - 32884
+  - 36757
+  - 41094
+  - 45950
+  - 51389
+  - 57480
+  - 64301
+  - 71940
+  - 80494
+  - 90075
+  - 100805
+  - 112821
+  - 126279
+  - 141352
+  - 158232
+  - 177137
+  - 198310
+  - 222024
+  - 248582
+  - 278327
+  - 311640
+  - 348950
+  - 390737
+  - 437537
+  - 489953
+  - 548659
+  - 614408
+  - 688046
+  - 770521
+  - 862892
   _productPrice:
   - 1
   - 2
   - 3
-  - 4
   - 5
   - 6
   - 7
-  - 8
   - 9
   - 10
   - 11
-  - 12
   - 13
   - 14
   - 15
   - 16
-  - 17
   - 18
   - 19
   - 20
-  - 21
   - 22
   - 23
   - 24
-  - 25
   - 26
   - 27
   - 28
   - 29
-  - 30
   - 31
   - 32
   - 33
-  - 34
   - 35
   - 36
   - 37
-  - 38
   - 39
   - 40
   - 41
   - 42
-  - 43
   - 44
   - 45
   - 46
-  - 47
   - 48
   - 49
   - 50
-  - 51
   - 52
   - 53
   - 54
   - 55
-  - 56
   - 57
   - 58
   - 59
-  - 60
   - 61
   - 62
   - 63
-  - 64
   - 65
   - 66
   - 67
   - 68
-  - 69
   - 70
   - 71
   - 72
-  - 73
   - 74
   - 75
   - 76
-  - 77
   - 78
   - 79
   - 80
   - 81
-  - 82
   - 83
   - 84
   - 85
-  - 86
   - 87
   - 88
   - 89
-  - 90
   - 91
   - 92
   - 93
   - 94
-  - 95
   - 96
   - 97
   - 98
-  - 99
   - 100
   - 101
   - 102
-  - 103
   - 104
   - 105
   - 106
   - 107
-  - 108
   - 109
   - 110
   - 111
-  - 112
   - 113
   - 114
   - 115
-  - 116
   - 117
   - 118
   - 119
   - 120
-  - 121
   - 122
   - 123
   - 124
-  - 125
   - 126
   - 127
   - 128
-  - 129
   - 130
   - 131
   - 132
   - 133
-  - 134
   - 135
   - 136
   - 137
-  - 138
   - 139
   - 140
   - 141
-  - 142
   - 143
   - 144
   - 145
   - 146
-  - 147
   - 148
   - 149
   - 150
+  - 152
+  - 153
+  - 154
+  - 156
+  - 157
+  - 158
+  - 159
+  - 161
+  - 162
+  - 163
+  - 165
+  - 166
+  - 167
+  - 169
+  - 170
+  - 171
+  - 172
+  - 174
+  - 175
+  - 176
+  - 178
+  - 179
+  - 180
+  - 182
+  - 183
+  - 184
+  - 185
+  - 187
+  - 188
+  - 189
+  - 191
+  - 192
+  - 193
+  - 195
   _scrollUpgrade1_base: 50
   _scrollUpgrade2_base: 100
-  _scrollUpgrade1_scope: 2.1
-  _scrollUpgrade2_scope: 2.1
+  _scrollUpgrade1_scope: 3
+  _scrollUpgrade2_scope: 3
   _scrollUpgrade1_Price:
   - 50
-  - 105
-  - 220
-  - 462
-  - 970
-  - 2037
-  - 4277
-  - 8981
-  - 18860
-  - 39606
+  - 165
+  - 540
+  - 1755
+  - 5670
+  - 18225
+  - 58320
+  - 185895
+  - 590490
+  - 1869885
   _scrollUpgrade2_Price:
   - 100
-  - 210
-  - 441
-  - 926
-  - 1944
-  - 4082
-  - 8572
-  - 18001
-  - 37802
-  - 79384
+  - 330
+  - 1080
+  - 3510
+  - 11340
+  - 36450
+  - 116640
+  - 371790
+  - 1180980
+  - 3739770
   _priceScopeLevel: 0
   _spawnLevel: 0
   _machineNum: 0
@@ -120061,7 +120367,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1815869647}
   m_LocalRotation: {x: -0, y: 0.86602515, z: -0, w: 0.50000054}
-  m_LocalPosition: {x: 9.305635, y: 11.31, z: 35.60881}
+  m_LocalPosition: {x: 9.324636, y: 11.31, z: 33.128185}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -123437,7 +123743,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877384826}
   m_LocalRotation: {x: -0, y: 0.86602515, z: -0, w: 0.50000054}
-  m_LocalPosition: {x: 5.57, y: 11.31, z: 33.47}
+  m_LocalPosition: {x: 5.589001, y: 11.31, z: 30.989376}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -127506,209 +127812,109 @@ MonoBehaviour:
   _upgrade2_explain: Worker Speed Up
   _scrollUpgrade1_base: 2
   _scrollUpgrade2_base: 700
-  _scrollUpgrade1_scope: 1.2
+  _scrollUpgrade1_scope: 1.27
   _scrollUpgrade2_scope: 1.4
   _staffHire_Upgrade_Price:
   - 2
   - 3
   - 4
-  - 5
-  - 7
-  - 9
+  - 6
+  - 8
   - 11
   - 14
-  - 17
-  - 21
-  - 26
-  - 32
+  - 18
+  - 23
+  - 30
   - 39
-  - 47
-  - 57
-  - 69
-  - 83
-  - 100
-  - 121
-  - 146
-  - 176
-  - 212
-  - 255
-  - 307
-  - 369
-  - 443
-  - 532
-  - 639
-  - 767
-  - 921
-  - 1106
-  - 1328
-  - 1594
-  - 1913
-  - 2296
-  - 2756
-  - 3308
-  - 3970
-  - 4765
-  - 5719
-  - 6863
-  - 8236
-  - 9884
-  - 11861
-  - 14234
-  - 17081
-  - 20498
-  - 24598
-  - 29518
-  - 35422
-  - 42507
-  - 51009
-  - 61211
-  - 73454
-  - 88145
-  - 105775
-  - 126931
-  - 152318
-  - 182782
-  - 219339
-  - 263207
-  - 315849
-  - 379019
-  - 454823
-  - 545788
-  - 654946
-  - 785936
-  - 943124
-  - 1131749
-  - 1358099
-  - 1629719
-  - 1955663
-  - 2346796
-  - 2816156
-  - 3379388
-  - 4055266
-  - 4866320
-  - 5839585
-  - 7007503
-  - 8409004
-  - 10090805
-  - 12108967
-  - 14530761
-  - 17436914
-  - 20924297
-  - 25109157
-  - 30130989
-  - 36157187
-  - 43388625
-  - 52066351
-  - 62479622
-  - 74975547
-  - 89970657
-  - 107964789
-  - 129557747
-  - 155469297
-  - 186563157
-  - 223875789
-  - 268650947
-  - 322381137
-  - 386857365
-  - 464228839
-  - 557074607
-  - 668489529
-  - 802187435
-  - 962624923
-  - 1155149908
-  - 1386179890
-  - 1663415869
-  - 1996099043
-  - 2395318852
-  - 2874382623
-  - 3449259148
-  - 4139110978
-  - 4966933174
-  - 5960319809
-  - 7152383771
-  - 8582860526
-  - 10299432632
-  - 12359319159
-  - 14831182991
-  - 17797419590
-  - 21356903509
-  - 25628284211
-  - 30753941054
-  - 36904729265
-  - 44285675119
-  - 53142810143
-  - 63771372172
-  - 76525646607
-  - 91830775929
-  - 110196931115
-  - 132236317339
-  - 158683580807
-  - 190420296969
-  - 228504356363
-  - 274205227636
-  - 329046273164
-  - 394855527797
-  - 473826633357
-  - 568591960029
-  - 682310352035
-  - 818772422443
-  - 982526906932
-  - 1179032288319
-  - 1414838745983
-  - 1697806495180
-  - 2037367794217
-  - 2444841353061
-  - 2933809623674
-  - 3520571548409
-  - 4224685858091
-  - 5069623029710
-  - 6083547635653
-  - 7300257162784
-  - 8760308595341
-  - 10512370314410
-  - 12614844377293
-  - 15137813252752
-  - 18165375903303
-  - 21798451083964
-  - 26158141300757
-  - 31389769560909
-  - 37667723473091
-  - 45201268167710
-  - 54241521801253
-  - 65089826161504
-  - 78107791393805
-  - 93729349672567
-  - 112475219607081
-  - 134970263528498
-  - 161964316234198
-  - 194357179481038
-  - 233228615377246
-  - 279874338452696
-  - 335849206143236
-  - 403019047371884
-  - 483622856846261
-  - 580347428215514
-  - 696416913858617
-  - 835700296630341
-  - 1002840355956410
-  - 1203408427147693
-  - 1444090112577232
-  - 1732908135092679
-  - 2079489762111215
-  - 2495387714533459
-  - 2994465257440151
-  - 3593358308928182
-  - 4312029970713819
-  - 5174435964856584
-  - 6209323157827902
-  - 7451187789393483
-  - 8941425347272180
-  - 10729710416726616
-  - 12875652500071940
-  - 15450783000086328
-  - 18540939600103590
-  - 22249127520124308
-  - 26698953024149170
+  - 50
+  - 64
+  - 82
+  - 105
+  - 134
+  - 171
+  - 218
+  - 277
+  - 352
+  - 448
+  - 569
+  - 723
+  - 919
+  - 1168
+  - 1484
+  - 1885
+  - 2394
+  - 3041
+  - 3863
+  - 4907
+  - 6232
+  - 7915
+  - 10053
+  - 12768
+  - 16216
+  - 20595
+  - 26156
+  - 33219
+  - 42189
+  - 53581
+  - 68048
+  - 86421
+  - 109755
+  - 139389
+  - 177025
+  - 224822
+  - 285524
+  - 362616
+  - 460523
+  - 584865
+  - 742779
+  - 943330
+  - 1198030
+  - 1521499
+  - 1932304
+  - 2454027
+  - 3116615
+  - 3958102
+  - 5026790
+  - 6384024
+  - 8107711
+  - 10296793
+  - 13076928
+  - 16607699
+  - 21091778
+  - 26786559
+  - 34018930
+  - 43204042
+  - 54869134
+  - 69683801
+  - 88498428
+  - 112393004
+  - 142739116
+  - 181278678
+  - 230223922
+  - 292384381
+  - 371328164
+  - 471586769
+  - 598915197
+  - 760622301
+  - 965990323
+  - 1226807711
+  - 1558045793
+  - 1978718158
+  - 2512972061
+  - 3191474518
+  - 4053172638
+  - 5147529251
+  - 6537362149
+  - 8302449930
+  - 10544111412
+  - 13391021494
+  - 17006597298
+  - 21598378569
+  - 27429940783
+  - 34836024795
+  - 44241751490
+  - 56187024393
+  - 71357520980
   _staffSpeed_Upgrade_Price:
   - 700
   - 979
@@ -127722,7 +127928,7 @@ MonoBehaviour:
   - 14426
   _staff_hire_level: 0
   _staff_speed_level: 0
-  _staff_max_level: 200
+  _staff_max_level: 100
   _cup: {fileID: 1526807188}
   _staffList: []
 --- !u!1 &1946046183
@@ -130987,6 +131193,7 @@ GameObject:
   - component: {fileID: 1991404848}
   - component: {fileID: 1991404851}
   - component: {fileID: 1991404852}
+  - component: {fileID: 1991404853}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -131029,7 +131236,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 60
+  orthographic size: 45
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -131053,7 +131260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1991404846}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 9.97, y: 120.6, z: -190}
+  m_LocalPosition: {x: 7.84, y: 137.41, z: -190}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -131103,6 +131310,102 @@ Skybox:
   m_GameObject: {fileID: 1991404846}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: d85358062c96c4cf283f5492cbd03161, type: 2}
+--- !u!82 &1991404853
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991404846}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 2cc11443b83a941c69249b2d6fe2d7b3, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.7
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1991478823
 GameObject:
   m_ObjectHideFlags: 0
@@ -136205,7 +136508,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2095857567}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.67, y: 0.83, z: -11.17}
+  m_LocalPosition: {x: 0.34, y: 0.83, z: -4.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -137285,7 +137588,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2108956805}
   m_LocalRotation: {x: -0, y: 0.2588191, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 36.05, y: 2.76, z: -12.739997}
+  m_LocalPosition: {x: 43.47, y: 3.98, z: -9.029999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -139039,7 +139342,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149103150605}
   m_LocalRotation: {x: -0.033782538, y: 0.12607819, z: -0.25660455, w: 0.95766234}
-  m_LocalPosition: {x: 2.2399974, y: 2, z: -0.3399973}
+  m_LocalPosition: {x: 1.58, y: 2, z: -2.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

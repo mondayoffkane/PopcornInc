@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using MondayOFF;
 
 
 public class Cup : MonoBehaviour
@@ -171,7 +172,20 @@ public class Cup : MonoBehaviour
         }
 
         _cupPosNum++;
+
+
+
+
+
+
+    
+
+
     }
+
+
+
+
 
 
 }

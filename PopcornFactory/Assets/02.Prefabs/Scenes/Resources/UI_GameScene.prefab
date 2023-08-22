@@ -3003,7 +3003,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &58037819092988961
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3122,7 +3122,7 @@ MonoBehaviour:
   targetGO: {fileID: 0}
   tweenTargetIsTargetGO: 1
   delay: 0
-  duration: 3
+  duration: 2
   easeType: 6
   easeCurve:
     serializedVersion: 2
@@ -4553,19 +4553,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3354814798671899097}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2536491763559435309}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &5000936576598711576
 GameObject:
   m_ObjectHideFlags: 0
@@ -4650,7 +4638,7 @@ MonoBehaviour:
   targetGO: {fileID: 0}
   tweenTargetIsTargetGO: 1
   delay: 0
-  duration: 3
+  duration: 2
   easeType: 37
   easeCurve:
     serializedVersion: 2
@@ -5495,7 +5483,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30.3, y: 0}
+  m_AnchoredPosition: {x: 51.1, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8526250662239578487
@@ -6101,6 +6089,9 @@ MonoBehaviour:
   AddUpgrade_Button: {fileID: 0}
   RV_Income_Double: {fileID: 0}
   BigMoneyButton: {fileID: 0}
+  Setting_Button: {fileID: 0}
+  Scroll_Close_Button: {fileID: 0}
+  Close_Setting_Button: {fileID: 0}
   Money_Text: {fileID: 0}
   AddParts_Price_Text: {fileID: 0}
   Gem_Text: {fileID: 0}
@@ -7293,7 +7284,7 @@ GameObject:
   - component: {fileID: 1961453789372386895}
   - component: {fileID: 3482223991922090338}
   m_Layer: 5
-  m_Name: Close_Button
+  m_Name: Scroll_Close_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7400,19 +7391,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1961453789372386895}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7686296986951599157}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7954319485429611618
 GameObject:
   m_ObjectHideFlags: 0
@@ -7533,19 +7512,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5518270553925817232}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2536491763559435309}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7972359435953537474
 GameObject:
   m_ObjectHideFlags: 0
@@ -8693,6 +8660,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Upgrade_Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173570304531382231, guid: 79de80ac98ace415ba64048c6087ac2a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -111.3
       objectReference: {fileID: 0}
     - target: {fileID: 5126451889968090853, guid: 79de80ac98ace415ba64048c6087ac2a,
         type: 3}

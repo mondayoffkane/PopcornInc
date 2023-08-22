@@ -19,13 +19,16 @@ public class UI_GameScene : UI_Scene
     enum Buttons
     {
         AddParts_Upgrade_Button,
+        Setting_Button,
         AddUpgrade_Button,
         RV_Income_Double,
         BigMoneyButton,
         AddStaff_Upgrade_Button,
         Income_Upgrade_Button,
+        Close_Setting_Button,
         Sound_Button,
         Vibe_Button,
+        Scroll_Close_Button,
         NextStageButton,
     }
     enum GameObjects
@@ -44,11 +47,14 @@ public class UI_GameScene : UI_Scene
         //Income_Upgrade_Button        ,
         AddParts_Upgrade_Button,
         Sound_Button, Vibe_Button, AddUpgrade_Button, RV_Income_Double
-        , BigMoneyButton;
-        //, NextStageButton;
+        , BigMoneyButton
+        , Setting_Button
+        , Scroll_Close_Button
+        , Close_Setting_Button;
+    //, NextStageButton;
 
     public Text Money_Text
-       //, AddStaff_Price_Text
+        //, AddStaff_Price_Text
         //, Income_Price_Text
         , AddParts_Price_Text, Gem_Text, UpgradeCountText
         , RV_Income_TimeText;
@@ -84,7 +90,9 @@ public class UI_GameScene : UI_Scene
         RV_Income_Double = GetButton(Buttons.RV_Income_Double);
         BigMoneyButton = GetButton(Buttons.BigMoneyButton);
         //NextStageButton = GetButton(Buttons.NextStageButton);
-
+        Setting_Button = GetButton(Buttons.Setting_Button);
+        Scroll_Close_Button = GetButton(Buttons.Scroll_Close_Button);
+        Close_Setting_Button = GetButton(Buttons.Close_Setting_Button);
 
         Money_Text = GetText(Texts.Money_Text);
         //AddStaff_Price_Text = GetText(Texts.AddStaff_Price_Text);
@@ -116,6 +124,7 @@ public class UI_GameScene : UI_Scene
             Debug.Log(Managers.Data.UseSound);
             Sound_Button.transform.GetChild(1).gameObject.SetActive(Managers.Data.UseSound);
             Sound_Button.transform.GetChild(2).gameObject.SetActive(!Managers.Data.UseSound);
+            Managers.Game._stageManager._cam.GetComponent<AudioSource>().mute = !Managers.Data.UseSound;
 
         });
 
@@ -132,6 +141,10 @@ public class UI_GameScene : UI_Scene
             Scroll_Panel.SetActive(!Scroll_Panel.activeSelf);
             Managers.Game._stageManager.ScrollButtonCheck();
         });
+
+        Setting_Button.AddButtonEvent(() => Setting_Panel.SetActive(true));
+        Close_Setting_Button.AddButtonEvent(() => Setting_Panel.SetActive(false));
+        Scroll_Close_Button.AddButtonEvent(() => Scroll_Panel.SetActive(false));
 
 
 

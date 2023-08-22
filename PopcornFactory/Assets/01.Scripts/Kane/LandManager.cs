@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using DG.Tweening;
 using System.IO;
 using System;
+using MondayOFF;
 
 
 public class LandManager : MonoBehaviour
@@ -57,7 +58,7 @@ public class LandManager : MonoBehaviour
             }
             else
             {
-                _staffHire_Upgrade_Price[i] = Math.Truncate( _staffHire_Upgrade_Price[i - 1] * _scrollUpgrade1_scope + 1);
+                _staffHire_Upgrade_Price[i] = Math.Truncate(_staffHire_Upgrade_Price[i - 1] * _scrollUpgrade1_scope + 1);
             }
         }
 
@@ -143,6 +144,9 @@ public class LandManager : MonoBehaviour
 
         _staff_hire_level++;
 
+        //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Land_{_landNum}_Worker_level", $"{_staff_hire_level}" } });
+        EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Land_Upgrade_Level", $"Land_{_landNum}_Worker_level_{_staff_hire_level}" } });
+
         SaveData();
         _stagemanager.CheckButton();
     }
@@ -182,6 +186,10 @@ public class LandManager : MonoBehaviour
         }
 
         _staff_speed_level++;
+
+        //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Land_{_landNum}_Speed_level", $"{_staff_speed_level}" } });
+        EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Land_Upgrade_Level", $"Land_{_landNum}_Speed_level_{_staff_speed_level}" } });
+
         SaveData();
         _stagemanager.CheckButton();
 

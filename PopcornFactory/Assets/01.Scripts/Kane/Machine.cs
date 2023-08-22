@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
+using MondayOFF;
 
 
 public class Machine : MonoBehaviour
@@ -164,7 +165,7 @@ public class Machine : MonoBehaviour
                     {
                         for (int i = 0; i < (_level / 20) + 1; i++)
                         {
-                            Managers.Sound.Play("Effect_6");
+                            //Managers.Sound.Play("Effect_6");
                             Transform _corn = Managers.Pool.Pop(_popcorn_Pref, _table.transform).transform;
                             _corn.GetComponent<Product>().SetType(_machineNum, _productMesh, _productMat, _productPrice[_level] * (1 + _priceScope * _priceScopeLevel));
                             if (_spawnPos != null)
@@ -204,7 +205,10 @@ public class Machine : MonoBehaviour
             }
             else
             {
-                _upgradePrice[i] = System.Math.Truncate(_upgradeBase * _upgradeScope * i + i);
+                _upgradePrice[i] = System.Math.Truncate((_upgradeBase * _upgradeScope * i + i)
+                    + (_upgradeBase * System.Math.Pow(_upgradeScope, i)) * 0.01d);
+
+
             }
         }
 
@@ -217,7 +221,7 @@ public class Machine : MonoBehaviour
             }
             else
             {
-                _productPrice[i] = System.Math.Truncate(_productBase * (i + 1));
+                _productPrice[i] = System.Math.Truncate(_productBase * (i + 1) * _productScope);
             }
         }
 
@@ -237,7 +241,7 @@ public class Machine : MonoBehaviour
             }
             else
             {
-                _scrollUpgrade1_Price[i] = System.Math.Truncate(_scrollUpgrade1_Price[i - 1] * _scrollUpgrade1_scope);
+                _scrollUpgrade1_Price[i] = System.Math.Truncate((_scrollUpgrade1_Price[i - 1] * _scrollUpgrade1_scope) + (_scrollUpgrade1_base * System.Math.Pow(_scrollUpgrade1_scope, i) * 0.1d));
             }
         }
 
@@ -250,7 +254,7 @@ public class Machine : MonoBehaviour
             }
             else
             {
-                _scrollUpgrade2_Price[i] = System.Math.Truncate(_scrollUpgrade2_Price[i - 1] * _scrollUpgrade2_scope);
+                _scrollUpgrade2_Price[i] = System.Math.Truncate((_scrollUpgrade2_Price[i - 1] * _scrollUpgrade2_scope) + (_scrollUpgrade2_base * System.Math.Pow(_scrollUpgrade2_scope, i) * 0.1d));
             }
         }
 
@@ -307,6 +311,16 @@ public class Machine : MonoBehaviour
             _gamemanager.CalcMoney(-_upgradePrice[_level]);
 
             _level++;
+            //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_{_machineNum}_Level", $"{_level}" } });
+            //
+            EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_Upgrade_Level", $"Machine_{_machineNum}_{_level}" } });
+
+
+            if (_level % 10 == 0)
+            {
+                //MondayOFF.EventTracker.LogCustomEvent("MachineUpgradeTime", new Dictionary<string, string> { { $"Machine_{_machineNum}_Level_{_level}_Time", $"{_gamemanager._stageManager._playTime}s" } });
+                MondayOFF.EventTracker.LogCustomEvent("MachineUpgradeTime", new Dictionary<string, string> { { $"Machine_Upgrade_Time", $"Machine_{_machineNum}_{_level}_{_gamemanager._stageManager._playTime}s" } });
+            }
 
 
             if ((_level + 1) % 10 == 0)
@@ -336,11 +350,15 @@ public class Machine : MonoBehaviour
                 _gamemanager.CalcMoney(-_scrollUpgrade1_Price[_priceScopeLevel]);
                 _priceScopeLevel++;
 
+                //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_{_machineNum}_Income_Level", $"{_priceScopeLevel}" } });
+                EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_Upgrade_Level", $"Machine_{_machineNum}_Income_{_priceScopeLevel}" } });
                 break;
 
             case 1:
                 _gamemanager.CalcMoney(-_scrollUpgrade2_Price[_spawnLevel]);
                 _spawnLevel++;
+                //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_{_machineNum}_Speed_Level", $"{_spawnLevel}" } });
+                EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_Upgrade_Level", $"Machine_{_machineNum}Speed{_spawnLevel}" } });
                 break;
 
             default:
