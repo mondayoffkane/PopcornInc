@@ -27,6 +27,8 @@ public class StageManager : MonoBehaviour
 
     [FoldoutGroup("SetObjects_1")] public Transform[] _cupObjs;
 
+    [FoldoutGroup("SetObjects_1")] public GameObject[] _railObjs;
+
     [FoldoutGroup("SetObjects_1")][ShowInInspector] public List<GameObject> _mapObjs = new List<GameObject>();
     [FoldoutGroup("SetObjects_1")] public GameObject _landGroup; // 랜드 그룹
     [FoldoutGroup("SetObjects_1")] public List<LandManager> _landManagers = new List<LandManager>();
@@ -78,6 +80,7 @@ public class StageManager : MonoBehaviour
 
     public int _IsCount = 0;
     public int _RvCount = 0;
+    public Material _beltMat;
     /// RV /========================================
 
     public bool isRvDouble = false;
@@ -101,9 +104,7 @@ public class StageManager : MonoBehaviour
         if (_gameManager == null) _gameManager = Managers.Game;
         _gameUi = Managers.GameUI;
 
-        //EventTracker.TryStage(_stageLevel);
-        //EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "IsCount", "0" } });
-        //EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "RvCount", "0" } });
+
 
         EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "AdsCount", "IsCount_0" } });
         EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "AdsCount", "RvCount_0" } });
@@ -234,6 +235,7 @@ public class StageManager : MonoBehaviour
             {
                 yield return _term;
                 _playTime++;
+                SaveData();
             }
         }
 
@@ -368,8 +370,21 @@ public class StageManager : MonoBehaviour
         _machineList[0].Init();
 
 
+        foreach (Transform _cup in _cupObjs)
+        {
+            _cup.gameObject.SetActive(false);
+        }
+        _cupObjs[0].gameObject.SetActive(true);
 
 
+        foreach (GameObject _obj in _railObjs)
+        {
+            _obj.SetActive(false);
+        }
+        _beltMat.DOOffset(Vector2.zero, 0f);
+
+
+        DOTween.Sequence().Append(_beltMat.DOOffset(new Vector2(0f, -1f), 1f).SetLoops(-1, LoopType.Restart));
 
         for (int i = 0; i <= _parts_upgrade_level; i++)
         {
@@ -378,18 +393,7 @@ public class StageManager : MonoBehaviour
                 case 0:
 
                     break;
-
-
-                case 1:
-
-                    break;
-
-                case 2:
-
-                    break;
-
-                case 3:
-
+                default:
 
                     break;
 
@@ -404,17 +408,51 @@ public class StageManager : MonoBehaviour
             if (_parts_upgrade_level >= _machineList.Count - 1)
                 _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(false);
 
-            if (i < _land_machineGroup[0].GetLength(0))
-            {
 
-                _landManagers[0]._cup.NextPos();
-            }
-            else
+            switch (i)
             {
-                _landManagers[1]._cup.NextPos();
-                _cupObjs[0].GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
-                _cupObjs[0].GetChild(0).GetChild(0).GetChild(1).gameObject.SetActive(true);
+                case int n when n < _land_machineGroup[0].GetLength(0):
+                    _landManagers[0]._cup.NextPos();
+                    if (i == (_land_machineGroup[0].GetLength(0) - 1))
+                    {
+                        _landManagers[0]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                        _landManagers[0]._cup.isRail = true;
+                        RailOn(0);
+                    }
+                    break;
+
+                case int n when n < _land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0):
+                    if (_landManagers[1]._cup.gameObject.activeSelf == false)
+                    {
+                        _landManagers[1]._cup.gameObject.SetActive(true);
+                    }
+                    _landManagers[1]._cup.NextPos();
+
+                    if (i == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) - 1))
+                    {
+                        _landManagers[1]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                        _landManagers[1]._cup.isRail = true;
+                        RailOn(1);
+                    }
+                    break;
+
+                case int n when n < _land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) + _land_machineGroup[2].GetLength(0):
+                    if (_landManagers[2]._cup.gameObject.activeSelf == false)
+                    {
+                        _landManagers[2]._cup.gameObject.SetActive(true);
+                    }
+                    _landManagers[2]._cup.NextPos();
+
+                    if (i == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) + _land_machineGroup[2].GetLength(0) - 1))
+                    {
+                        _landManagers[2]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                        _landManagers[2]._cup.isRail = true;
+                        RailOn(2);
+                    }
+                    break;
+
             }
+
 
 
         }
@@ -432,6 +470,12 @@ public class StageManager : MonoBehaviour
         _navmeshsurface.RemoveData();
         _navmeshsurface.BuildNavMesh();
         SaveData();
+    }
+
+    public void RailOn(int _num)
+    {
+        _railObjs[_num].gameObject.SetActive(true);
+
     }
 
     //===========Upgrade Button Func ================
@@ -483,25 +527,57 @@ public class StageManager : MonoBehaviour
 
 
 
-        if (_parts_upgrade_level < _land_machineGroup[0].GetLength(0))
+        switch (_parts_upgrade_level)
         {
+            case int n when n < _land_machineGroup[0].GetLength(0) - 1:
+                _landManagers[0]._cup.NextPos();
+                if (_parts_upgrade_level == (_land_machineGroup[0].GetLength(0) - 2))
+                {
+                    _landManagers[0]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                    _landManagers[0]._cup.isRail = true;
+                    RailOn(0);
+                }
+                break;
 
-            _landManagers[0]._cup.NextPos();
-        }
-        else
-        {
+            case int n when n < _land_machineGroup[0].GetLength(0) - 1 + _land_machineGroup[1].GetLength(0):
+                if (_landManagers[1]._cup.gameObject.activeSelf == false)
+                {
+                    _landManagers[1]._cup.gameObject.SetActive(true);
+                }
+                _landManagers[1]._cup.NextPos();
+                if (_parts_upgrade_level == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) - 2))
+                {
+                    _landManagers[1]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                    _landManagers[1]._cup.isRail = true;
+                    RailOn(1);
+                }
+                break;
 
-            _landManagers[1]._cup.NextPos();
-            _cupObjs[0].GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
-            _cupObjs[0].GetChild(0).GetChild(0).GetChild(1).gameObject.SetActive(true);
+            case int n when n < _land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) + _land_machineGroup[2].GetLength(0) - 1:
+                if (_landManagers[2]._cup.gameObject.activeSelf == false)
+                {
+                    _landManagers[2]._cup.gameObject.SetActive(true);
+                }
+                _landManagers[2]._cup.NextPos();
+
+                if (_parts_upgrade_level == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) + _land_machineGroup[2].GetLength(0) - 2))
+                {
+                    _landManagers[2]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                    _landManagers[2]._cup.isRail = true;
+                    RailOn(2);
+                }
+                break;
+
         }
+
+
 
         _parts_upgrade_level++;
-        //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"AddLand_Level", $"{_parts_upgrade_level}" } });
+
         EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Land_Upgrade_Level", $"AddLand_Level_{_parts_upgrade_level}" } });
 
 
-        //EventTracker.LogCustomEvent("AddLand", new Dictionary<string, string> { { $"AddLand_Level_{_parts_upgrade_level}_Time", $"{_playTime}s" } });
+
         EventTracker.LogCustomEvent("AddLand", new Dictionary<string, string> { { $"Land_Upgrade_Level", $"AddLevel_{_parts_upgrade_level}_{_playTime}s" } });
 
 
@@ -523,12 +599,12 @@ public class StageManager : MonoBehaviour
     public void RemoveMesh()
     {
         _navmeshsurface.RemoveData();
-        //_navmeshsurface.BuildNavMesh();
+
     }
     [Button]
     public void RebuildMesh()
     {
-        //_navmeshsurface.RemoveData();
+
         _navmeshsurface.BuildNavMesh();
     }
     // -====================================================
@@ -537,7 +613,7 @@ public class StageManager : MonoBehaviour
     {
         DataManager.StageData _stagedata = new DataManager.StageData();
         _stagedata.Parts_Upgrade_Level = _parts_upgrade_level;
-
+        _stagedata.PlayTime = _playTime;
         _stagedata.isFirst = false;
 
         Managers.Data.SetStageData(_stagedata, _stageLevel);

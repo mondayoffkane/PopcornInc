@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
         _stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
         _FloatingText = Resources.Load<GameObject>("Floating");
 
+        _labotoryManager = GameObject.FindGameObjectWithTag("LabotoryManager").GetComponent<LabotoryManager>();
+
     }
     public void Clear()
     {
@@ -59,14 +61,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //public StageManager SpawnStage()
-    //{
-    //    _lastStageLevel = ES3.Load<int>("LastStageLevel", 0);
-    //    StageManager _loadstage = Instantiate(Resources.Load<GameObject>("Stage_" + _lastStageLevel.ToString())).GetComponent<StageManager>();
-    //    _loadstage._gameManager = this;
+    public LabotoryManager _labotoryManager;
 
-    //    return _loadstage;
-    //}
+
+   
 
     public void NextStage()
     {

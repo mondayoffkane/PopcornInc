@@ -15,6 +15,7 @@ TagManager:
   - WaveManager
   - Enemy
   - Popup_Canvas
+  - LabotoryManager
   layers:
   - Default
   - TransparentFX

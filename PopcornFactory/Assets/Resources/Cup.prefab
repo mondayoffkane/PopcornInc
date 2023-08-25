@@ -15453,7 +15453,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6572683346780059678
 Transform:
   m_ObjectHideFlags: 0
@@ -71035,27 +71035,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jumpPower: 10
   _popcornCup: {fileID: 0}
-  _posObj: {fileID: 0}
-  _canvas: {fileID: 0}
-  _currentCount: 0
-  _MaxCount: 100
-  _GuageText: {fileID: 0}
-  _GuageImg: {fileID: 0}
-  _cornObj: {fileID: 6572683346780059678}
-  _guageMin: 0
-  _guageMax: 0
-  _cornMin: 0
-  _cornMax: 0
-  _value: 0
-  isMoveCup: 0
-  _beltMat: {fileID: 2100000, guid: 41b7587abfffd4d968781ddd5a314b00, type: 2}
   _cupPosNum: 0
   _cupPos: []
   isfirst: 0
-  StartEndPos:
+  isRail: 0
+  _nodes:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _moveSpeed: 0
 --- !u!1 &5973077406956003174
 GameObject:
   m_ObjectHideFlags: 0
@@ -98860,7 +98854,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3146917187166188079
 RectTransform:
   m_ObjectHideFlags: 0
@@ -98925,7 +98919,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &7027636672212500931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98942,7 +98936,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1023
 --- !u!1 &8220516021930976718
 GameObject:
   m_ObjectHideFlags: 0

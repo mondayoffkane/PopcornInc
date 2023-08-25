@@ -9,133 +9,56 @@ using MondayOFF;
 
 public class Cup : MonoBehaviour
 {
-    //public List<Product> _productList = new List<Product>();
+
     public float _jumpPower = 10f;
 
     [SerializeField] Transform _popcornCup;
-    [SerializeField] GameObject _posObj;
-    [SerializeField] Canvas _canvas;
 
-
-
-    public int _currentCount = 0;
-    public int _MaxCount = 100;
-
-    [SerializeField] Text _GuageText;
-    [SerializeField] Image _GuageImg;
-
-    [SerializeField] Transform _cornObj;
-
-    public float _guageMin, _guageMax;
-    public float _cornMin, _cornMax;
-
-    [SerializeField] float _value;
-
-
-    public bool isMoveCup = false;
-    public Material _beltMat;
-
-    float _z;
 
     public int _cupPosNum = 0;
     public Transform[] _cupPos;
     public bool isfirst = false;
 
-    [Required]
-    public Transform[] StartEndPos = new Transform[3];
-    // ================================
-
-
+    public bool isRail = false;
+    public Transform[] _nodes;
+    public float _moveSpeed = 0.5f;
+    LabotoryManager _labotoryManager;
     private void Start()
     {
         transform.GetChild(1).gameObject.SetActive(false);
 
         _popcornCup = transform.Find("PopcornCup");
-        _posObj = transform.Find("Pos").gameObject;
-        _canvas = transform.Find("Canvas").GetComponent<Canvas>();
 
-        _GuageText = _canvas.transform.Find("Panel").Find("GuageText").GetComponent<Text>();
-        _GuageImg = _canvas.transform.Find("Panel").Find("Guage").Find("GuageImg").GetComponent<Image>();
-
-        _canvas.gameObject.SetActive(false);
-        //isMoveCup = false;
-        SetPopcornPos();
-        //NextPos();
+        _labotoryManager = Managers.Game._labotoryManager;
     }
 
 
     public void PushProduct(Transform _trans, float _moveInterval = 0.5f)
     {
-        _trans.SetParent(transform);
-        _trans.DOLocalJump(_popcornCup.localPosition, _jumpPower, 1, _moveInterval).SetEase(Ease.Linear)
-            .OnComplete(() =>
-            {
-                //_productList.Add(_trans.GetComponent<Product>());
-                if (isMoveCup)
-                    _currentCount++;
-                Managers.Pool.Push(_trans.GetComponent<Poolable>());
-            });
-
-        Managers.Game.CalcMoney(_trans.GetComponent<Product>()._price);
-        //Managers.Game.Money += _trans.GetComponent<Product>()._price;
-
-        Managers.Game.PopText(_trans.GetComponent<Product>()._price, transform);
-
-        if (isMoveCup)
-            SetPopcornPos();
-    }
-
-    [Button]
-    public void SetPopcornPos()
-    {
-        _value = (float)((float)_currentCount / (float)_MaxCount);
-        if (_GuageText == null) _GuageText = _canvas.transform.Find("Panel").Find("GuageText").GetComponent<Text>();
-        _GuageText.text = $"{_value * 100f}%";
-        if (_GuageImg == null) _GuageImg = _canvas.transform.Find("Panel").Find("Guage").Find("GuageImg").GetComponent<Image>();
-        _GuageImg.rectTransform.offsetMin = new Vector2(16.5f, 17f);
-        _GuageImg.rectTransform.offsetMax = new Vector2(-16.5f, -317f + 300f * _value);
-
-        _cornObj.DOLocalMoveY((-8f + 9f * _value), 0.2f).SetEase(Ease.Linear);
-        _cornObj.DOScale(Vector3.one * (0.5f + 0.5f * _value), 0.2f).SetEase(Ease.Linear);
-
-        if (_currentCount >= _MaxCount)
+        if (isRail == false)
         {
-            SellProducts();
-        }
-    }
-
-
-    [Button]
-    public void SellProducts()
-    {
-        if (isMoveCup)
-        {
-            isMoveCup = false;
-            _beltMat.DOOffset(Vector2.zero, 0f);
-
-            _z = transform.localPosition.z;
-
-            DOTween.Sequence()
-                //.Append(transform.DOLocalMoveZ(_z - 15, 1f).SetEase(Ease.Linear))
-                .Append(transform.DOMove(StartEndPos[2].position, 1f).SetEase(Ease.Linear))
-                .Join(_beltMat.DOOffset(new Vector2(0f, -2f), 1f))
-                .AppendCallback(() =>
+            _trans.SetParent(transform);
+            _trans.DOLocalJump(_popcornCup.localPosition, _jumpPower, 1, _moveInterval).SetEase(Ease.Linear)
+                .OnComplete(() =>
                 {
-                    _currentCount = 0;
-                    SetPopcornPos();
-                    //transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, _z + 15f);
-                    transform.position = StartEndPos[0].position;
 
-                })
-                //.Append(transform.DOLocalMoveZ(_z, 1f).SetEase(Ease.Linear))
-                .Append(transform.DOMove(StartEndPos[1].position, 1f).SetEase(Ease.Linear))
-            .Join(_beltMat.DOOffset(new Vector2(0f, -4f), 1f))
-            .OnComplete(() => isMoveCup = true);
+                    Managers.Pool.Push(_trans.GetComponent<Poolable>());
+                });
 
+            Managers.Game.CalcMoney(_trans.GetComponent<Product>()._price);
+
+            Managers.Game.PopText(_trans.GetComponent<Product>()._price, transform);
+        }
+        else
+        {
+            NextNode(_trans, 0);
+            Managers.Game.CalcMoney(_trans.GetComponent<Product>()._price);
+            Managers.Game.PopText(_trans.GetComponent<Product>()._price, transform);
         }
 
-        // add fuunc
+
     }
+
 
     [Button]
     public void NextPos()
@@ -145,47 +68,41 @@ public class Cup : MonoBehaviour
         if (_cupPosNum < _cupPos.Length)
             transform.position = _cupPos[_cupPosNum].position;
 
-        if (isfirst)
-        {
-            if (_cupPosNum == _cupPos.Length - 2)
-            {
-                isMoveCup = true;
-                if (_canvas == null) _canvas = transform.Find("Canvas").GetComponent<Canvas>();
-                _canvas.gameObject.SetActive(true);
-                _currentCount = 0;
-                SetPopcornPos();
-
-            }
-        }
-        else
-        {
-
-
-            if (_cupPosNum == _cupPos.Length - 1)
-            {
-                isMoveCup = true;
-                _canvas.gameObject.SetActive(true);
-                _currentCount = 0;
-                SetPopcornPos();
-
-            }
-        }
-
         _cupPosNum++;
-
-
-
-
-
-
-    
 
 
     }
 
+    public void NextNode(Transform _obj, int _num = 0)
+    {
+        StartCoroutine(Cor_NextNode());
+        IEnumerator Cor_NextNode()
+        {
 
+            for (int i = 0; i < _nodes.Length; i++)
+            {
+                //switch (_num)
+                //{
+                //    case 1:
+                //        _obj.DOMove(_nodes[i].transform.position + _nodes[i].transform.right * -1f + _nodes[i].transform.forward * Random.Range(-0.3f, 0.3f), _moveSpeed).SetEase(Ease.Linear);
+                //        break;
 
+                //    case 2:
+                //        _obj.DOMove(_nodes[i].transform.position + _nodes[i].transform.right * 1f + _nodes[i].transform.forward * Random.Range(-0.3f, 0.3f), _moveSpeed).SetEase(Ease.Linear);
+                //        break;
 
+                //    default:
+                _obj.DOMove(_nodes[i].transform.position, _moveSpeed).SetEase(Ease.Linear);
+
+                //        break;
+                //}
+                //_obj.DORotateQuaternion(_nodes[i].transform.rotation, _moveSpeed).SetEase(Ease.Linear);
+                yield return new WaitForSeconds(_moveSpeed);
+            }
+
+            _labotoryManager.PushProduct(_obj);
+        }
+    }
 
 
 }
