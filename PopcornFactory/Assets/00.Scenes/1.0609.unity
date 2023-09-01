@@ -173,7 +173,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f3b1ed769c742758f78d96f0e7506f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _productList: []
+  _jumpPower: 10
+  _popcornCup: {fileID: 0}
+  _cupPosNum: 0
+  _cupPos: []
+  isfirst: 0
+  isRail: 0
+  _nodes: []
+  _moveSpeed: 0.5
 --- !u!1001 &82254325
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1028,7 +1035,6 @@ GameObject:
   m_Component:
   - component: {fileID: 847828972}
   - component: {fileID: 847828971}
-  - component: {fileID: 847828969}
   m_Layer: 0
   m_Name: UI Camera
   m_TagString: Untagged
@@ -1036,39 +1042,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &847828969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 847828968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 1
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
 --- !u!20 &847828971
 Camera:
   m_ObjectHideFlags: 0
@@ -1456,13 +1429,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da9149adc1b004ec193e942c0ccc4e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameManager: {fileID: 0}
+  _canvas: {fileID: 0}
+  _stageLevel: 0
+  _spawnPosGroup: []
+  _cupObjs: []
+  _railObjs: []
+  _mapObjs: []
+  _landGroup: {fileID: 0}
+  _landManagers: []
+  _machineGroup: []
   _machineList:
   - {fileID: 368389497}
   - {fileID: 1582824885}
   - {fileID: 606986212}
-  _cupObj: {fileID: 1813537}
-  _staff_Pref: {fileID: 4962727750787065006, guid: 46204bf8950fb465787eda7692bfc7f3,
-    type: 3}
+  _addParts_Upgrade_Price: []
+  _parts_upgrade_level: 0
+  _scrollUpgrades_Price: []
+  _ease:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _easeInterval: 0.75
+  _MachineUpgrade_Price: []
+  _popupButtons: []
+  _popupPanel: {fileID: 0}
+  _targetMachine_Trans: {fileID: 0}
+  _cam: {fileID: 0}
+  _popupOffset:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  _addPartsButtonPos: {x: 0, y: 0, z: 0}
+  _staffList: []
+  upgradeCount: 0
+  _fullUpg_count: 0
+  _rvRailNum: -1
+  isFirst: 1
+  _playTime: 0
+  _IsCount: 0
+  _RvCount: 0
+  _beltMat: {fileID: 0}
+  isRvDouble: 0
+  intervalRvDouble: 0
+  bigMoney: 0
+  Init_IS_term: 180
+  _bigmoney_term: 20
+  _bigmoney_Showterm: 30
+  _maxTerm: 50
+  isBigMoney: 0
+  _noAds: 0
 --- !u!4 &1109720488
 Transform:
   m_ObjectHideFlags: 0
@@ -2794,9 +2814,24 @@ MonoBehaviour:
   _limitPos: {x: -20, y: 20, z: 0, w: 60}
   _startXY: {x: 0, y: 0}
   _endXY: {x: 0, y: 0}
-  _sense: 0.05
+  _viewLimit: {x: 30, y: 60}
+  returnSpeed: 50
+  _moveSense: 0.05
+  _wheelSense: 10
+  _zoomSense: 0.05
   _x: 0
   _y: 0
+  _zoom_startDistance: 0
+  _zoom_currentDistance: 0
+  _distance: 0
+  _startSize: 0
+  _testStartPos: {x: 0, y: 0}
+  _testCurrentPos: {x: 0, y: 0}
+  _targetDistance: 150
+  _lookdistance: 50
+  _lookOffset: {x: 0, y: 10, z: 0}
+  isClick: 0
+  _beltMat: {fileID: 0}
 --- !u!1 &2013905694
 GameObject:
   m_ObjectHideFlags: 0

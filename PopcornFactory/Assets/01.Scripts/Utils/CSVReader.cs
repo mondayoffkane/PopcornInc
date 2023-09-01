@@ -13,7 +13,8 @@ public class CSVReader
     public static List<Dictionary<string, object>> Read(string file)
     {
         var list = new List<Dictionary<string, object>>();
-        TextAsset data = Managers.Resource.Load<TextAsset>(file);
+        //TextAsset data = Managers.Resource.Load<TextAsset>(file);
+        TextAsset data = Resources.Load<TextAsset>(file);
 
         var lines = Regex.Split(data.text, LINE_SPLIT_RE);
 
@@ -54,7 +55,8 @@ public class CSVReader
     public static Dictionary<string, Dictionary<string, object>> ReadDic(string file)
     {
         var list = new Dictionary<string, Dictionary<string, object>>();
-        TextAsset data = Managers.Resource.Load<TextAsset>(file);
+        //TextAsset data = Managers.Resource.Load<TextAsset>(file);
+        TextAsset data = Resources.Load<TextAsset>(file);
 
         var lines = Regex.Split(data.text, LINE_SPLIT_RE);
 

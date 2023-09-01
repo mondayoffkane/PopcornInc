@@ -7,6 +7,8 @@ using static Product;
 
 public class Staff : MonoBehaviour
 {
+    public int _pickCount = 1;
+
     public Stack<Product> _productStack = new Stack<Product>();
     public Transform _target;
     public float _minDis = 1f;
@@ -84,18 +86,6 @@ public class Staff : MonoBehaviour
     private void Update()
     {
 
-        //if (Input.GetKeyDown(KeyCode.Alpha1))
-        //{
-        //    _agent.areaMask = 0;
-        //}
-        //else if (Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-        //    _agent.areaMask = 1;
-        //}
-        //else if (Input.GetKeyDown(KeyCode.Alpha3))
-        //{
-        //    _agent.areaMask++;
-        //}
 
 
         switch (_staffState)
@@ -130,7 +120,7 @@ public class Staff : MonoBehaviour
 
             case StaffState.PickUp:
 
-                if (_productStack.Count < 3)
+                if (_productStack.Count < _pickCount)
                 {
                     _current_pickInterval += Time.deltaTime;
                     if (_current_pickInterval >= _pickInterval)
@@ -142,7 +132,7 @@ public class Staff : MonoBehaviour
                             _target.GetComponent<Table>()._productList.RemoveAt(0);
 
                             _product.transform.SetParent(transform);
-                            switch (_productStack.Count)
+                            switch (_productStack.Count % 3)
                             {
                                 case 0:
                                     _product.transform.DOLocalJump(new Vector3(-0.5f, 0f, 1f), 1f, 1, _moveInterval);
@@ -186,62 +176,10 @@ public class Staff : MonoBehaviour
                                 }
 
 
-                                //switch (_productNum)
-                                //{
-                                //    case ProductType.BaseCorn:
-                                //        if (_stageManager._cupObjs[0].gameObject.activeSelf == false)
-                                //        {
-                                //            _target = _stageManager._machineList[1]._table.transform;
-
-                                //        }
-                                //        else
-                                //        {
-                                //            _target = _stageManager._cupObjs[0].transform;
-                                //            _cup = _target.GetComponent<Cup>();
-
-                                //        }
-                                //        break;
-
-                                //    case ProductType.KernelCorn:
-                                //        if (_stageManager._cupObjs[1].gameObject.activeSelf == false)
-                                //        {
-                                //            _target = _stageManager._machineList[2]._table.transform;
-
-                                //        }
-                                //        else
-                                //        {
-                                //            _target = _stageManager._cupObjs[1].transform;
-                                //            _cup = _target.GetComponent<Cup>();
-
-                                //        }
-                                //        break;
-
-                                //    case ProductType.MixCorn:
-                                //        if (_stageManager._cupObjs[2].gameObject.activeSelf == false)
-                                //        {
-                                //            _target = _stageManager._machineList[3]._table.transform;
-
-                                //        }
-                                //        else
-                                //        {
-                                //            _target = _stageManager._cupObjs[2].transform;
-                                //            _cup = _target.GetComponent<Cup>();
-
-                                //        }
-                                //        break;
-
-
-                                //    case ProductType.PopCorn_base:
-
-                                //        _target = _stageManager._cupObjs[_stageManager._cupObjs.Length - 1].transform;
-                                //        _cup = _target.GetComponent<Cup>();
-
-                                //        break;
-                                //}
 
                                 SetDest(_target);
                                 _staffState = StaffState.Move;
-                                //Debug.Log("Stage is Move");
+
                             }
                             else
                             {
@@ -274,64 +212,10 @@ public class Staff : MonoBehaviour
                     }
 
 
-                    //_productType = _productStack.Peek()._productType;
-
-                    //switch (_productType)
-                    //{
-                    //    case ProductType.BaseCorn:
-                    //        if (_stageManager._cupObjs[0].gameObject.activeSelf == false)
-                    //        {
-                    //            _target = _stageManager._machineList[1]._table.transform;
-
-                    //        }
-                    //        else
-                    //        {
-                    //            _target = _stageManager._cupObjs[0].transform;
-                    //            _cup = _target.GetComponent<Cup>();
-
-                    //        }
-                    //        break;
-
-                    //    case ProductType.KernelCorn:
-                    //        if (_stageManager._cupObjs[1].gameObject.activeSelf == false)
-                    //        {
-                    //            _target = _stageManager._machineList[2]._table.transform;
-
-                    //        }
-                    //        else
-                    //        {
-                    //            _target = _stageManager._cupObjs[1].transform;
-                    //            _cup = _target.GetComponent<Cup>();
-
-                    //        }
-                    //        break;
-
-                    //    case ProductType.MixCorn:
-                    //        if (_stageManager._cupObjs[2].gameObject.activeSelf == false)
-                    //        {
-                    //            _target = _stageManager._machineList[3]._table.transform;
-
-                    //        }
-                    //        else
-                    //        {
-                    //            _target = _stageManager._cupObjs[2].transform;
-                    //            _cup = _target.GetComponent<Cup>();
-
-                    //        }
-                    //        break;
-
-
-                    //    case ProductType.PopCorn_base:
-
-                    //        _target = _stageManager._cupObjs[_stageManager._cupObjs.Length - 1].transform;
-                    //        _cup = _target.GetComponent<Cup>();
-
-                    //        break;
-                    //}
 
                     SetDest(_target);
                     _staffState = StaffState.Move;
-                    //Debug.Log("Stage is Move");
+
                 }
                 break;
 
@@ -373,8 +257,6 @@ public class Staff : MonoBehaviour
 
                 break;
         }
-
-
     }
 
     public void FindWork()

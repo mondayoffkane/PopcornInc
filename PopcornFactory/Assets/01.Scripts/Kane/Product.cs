@@ -14,10 +14,22 @@ public class Product : MonoBehaviour
     MeshFilter _meshFilter;
     Renderer _renderer;
 
+    public enum ProductType
+    {
+        //    _none,
+        Popcorn,
+        Choco,
+        StrawBerry,
+        ChocoStrawberry
+    }
+    public ProductType _productType;
+
+
+
 
 
     // =================================
-    public void SetType(int _num, Mesh _mesh, Material _mat, double _pricevalue)
+    public void SetType(int _num, Mesh _mesh, Material _mat, double _pricevalue, ProductType _type = ProductType.Popcorn)
     {
 
         _productNum = _num;
@@ -32,6 +44,7 @@ public class Product : MonoBehaviour
 
         _price = _pricevalue;
 
+        _productType = _type;
 
     }
 

@@ -16,6 +16,8 @@ TagManager:
   - Enemy
   - Popup_Canvas
   - LabotoryManager
+  - UiCamera
+  - Lab_Product
   layers:
   - Default
   - TransparentFX

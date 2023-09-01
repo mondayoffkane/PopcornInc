@@ -44,7 +44,7 @@ public class LandManager : MonoBehaviour
     bool isMoreWorker = false;
 
 
-    [Button]
+    //[Button]
     public void CreateDataTable2()
     {
 
@@ -91,10 +91,33 @@ public class LandManager : MonoBehaviour
     {
         LoadData();
         _stagemanager = Managers.Game._stageManager;
-        CreateDataTable2();
+
+        ReadDataTable();
+
+        //CreateDataTable2();
 
         Land_Setting();
     }
+
+    [Button]
+    public void ReadDataTable()
+    {
+        List<Dictionary<string, object>> data = CSVReader.Read("UpgradeLand - Worker");
+
+        _staff_max_level = data.Count ;
+        _staffHire_Upgrade_Price = new double[_staff_max_level];
+
+        for (int i = 0; i < _staff_max_level; i++)
+        {
+            _staffHire_Upgrade_Price[i] = double.Parse(data[i][_landNum + "_Price"].ToString());
+        }
+
+        _staffSpeed_Upgrade_Price = new double[1];
+        _staffSpeed_Upgrade_Price[0] = double.Parse(data[_landNum]["Speed_Up_Price"].ToString());
+
+
+    }
+
 
     void Land_Setting()
     {
@@ -103,6 +126,7 @@ public class LandManager : MonoBehaviour
         {
             Transform _trans = Managers.Pool.Pop(_staff_Pref, transform).transform;
             _trans.position = _spawnPosGroup[i % _spawnPosGroup.Length].position;  ///new Vector3(10f, 0.5f, 20f);
+
             _trans.GetComponent<Staff>().SetTrans(_trans.position);
             _staffList.Add(_trans.GetComponent<Staff>());
             _trans.GetComponent<Staff>()._speed = 5f + (float)_staff_speed_level * 0.5f;
@@ -182,7 +206,7 @@ public class LandManager : MonoBehaviour
 
         for (int i = 0; i < _staffList.Count; i++)
         {
-            _staffList[i]._speed = 5f + (float)_staff_speed_level * 0.5f;
+            _staffList[i]._speed = 5f + (float)_staff_speed_level * 5f;
         }
 
         _staff_speed_level++;

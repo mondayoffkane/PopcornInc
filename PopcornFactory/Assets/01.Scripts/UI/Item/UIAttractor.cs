@@ -22,6 +22,7 @@ public class UIAttractor : UI_Base
 
         Init();
     }
+
     public override void Init()
     {
         uIParticleAttractor = GetObject(GameObjects.TargetImage).GetComponent<UIParticleAttractor>();

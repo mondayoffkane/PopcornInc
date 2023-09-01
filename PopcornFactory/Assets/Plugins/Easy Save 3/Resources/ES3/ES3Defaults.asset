@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings:
     _location: 1
-    path: SaveFile.es3
+    path: PopcornInc_1.es3
     encryptionType: 0
     compressionType: 0
     encryptionPassword: password

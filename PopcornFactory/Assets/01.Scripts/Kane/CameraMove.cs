@@ -65,7 +65,7 @@ public class CameraMove : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            Managers.Game.CalcMoney(1000);
+            Managers.Game.CalcMoney(100000);
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -151,6 +151,13 @@ public class CameraMove : MonoBehaviour
                         //_stageManager.AddStaff(false, hit.transform.gameObject);
 
                     }
+                    else if (hit.collider.tag == "LabotoryManager")
+                    {
+                        Managers.GameUI.Laboratory_Panel.SetActive(true);
+                        LookTarget(hit.transform);
+                        isClick = false;
+                    }
+
                 }
             }
         }
@@ -257,9 +264,15 @@ public class CameraMove : MonoBehaviour
                     }
                     else if (hit.collider.tag == "WorkerBox")
                     {
-                 
+                    Managers.Sound.Play("Effect_9");
                             int _landNum = hit.transform.GetComponent<WorkerBox>()._landNum;
                         _StageManager._landManagers[_landNum].AddStaff(hit.transform.gameObject);
+                    }
+                      else if (hit.collider.tag == "LabotoryManager")
+                    {
+                           Managers.GameUI.Laboratory_Panel.SetActive(true);
+                        LookTarget(hit.transform);
+                        isClick = false;
                     }
                 }}
             }

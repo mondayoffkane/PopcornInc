@@ -33,8 +33,9 @@ public class UIManager
                 //}
                 //else
                 //{
-                //    //있으면 넣기
-                //    _uiCamera = cameraData.cameraStack[0];
+                //있으면 넣기
+                //_uiCamera = cameraData.cameraStack[0];
+                //_uiCamera = GameObject.FindGameObjectWithTag("UiCamera").GetComponent<Camera>();
                 //}
             }
             return _uiCamera;

@@ -5035,6 +5035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39cb6ce04413e46e69959283b5cba0ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pickCount: 3
   _target: {fileID: 0}
   _minDis: 2
   _pickInterval: 0.5
@@ -5187,7 +5188,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9660cd25799aa422aa7e917dd399c1d0, type: 2}
+  - {fileID: 2100000, guid: 469f43e0e05cd4008a62ba0246184084, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

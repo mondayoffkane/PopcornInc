@@ -30,6 +30,11 @@ public class Cup : MonoBehaviour
         _popcornCup = transform.Find("PopcornCup");
 
         _labotoryManager = Managers.Game._labotoryManager;
+
+        foreach (Transform _node in _nodes)
+        {
+            _node.GetComponent<Renderer>().enabled = false;
+        }
     }
 
 
@@ -51,7 +56,7 @@ public class Cup : MonoBehaviour
         }
         else
         {
-            NextNode(_trans, 0);
+            NextNode(_trans, Random.Range(0, 3));
             Managers.Game.CalcMoney(_trans.GetComponent<Product>()._price);
             Managers.Game.PopText(_trans.GetComponent<Product>()._price, transform);
         }
@@ -75,32 +80,34 @@ public class Cup : MonoBehaviour
 
     public void NextNode(Transform _obj, int _num = 0)
     {
+        _obj.SetParent(_labotoryManager.transform);
         StartCoroutine(Cor_NextNode());
         IEnumerator Cor_NextNode()
         {
 
             for (int i = 0; i < _nodes.Length; i++)
             {
-                //switch (_num)
-                //{
-                //    case 1:
-                //        _obj.DOMove(_nodes[i].transform.position + _nodes[i].transform.right * -1f + _nodes[i].transform.forward * Random.Range(-0.3f, 0.3f), _moveSpeed).SetEase(Ease.Linear);
-                //        break;
+                if (i > 4) _num = 3;
+                switch (_num)
+                {
+                    case 1:
+                        _obj.DOMove(_nodes[i].transform.position + _nodes[i].transform.right * -1f + _nodes[i].transform.forward * Random.Range(-0.3f, 0.3f), _moveSpeed).SetEase(Ease.Linear);
+                        break;
 
-                //    case 2:
-                //        _obj.DOMove(_nodes[i].transform.position + _nodes[i].transform.right * 1f + _nodes[i].transform.forward * Random.Range(-0.3f, 0.3f), _moveSpeed).SetEase(Ease.Linear);
-                //        break;
+                    case 2:
+                        _obj.DOMove(_nodes[i].transform.position + _nodes[i].transform.right * 1f + _nodes[i].transform.forward * Random.Range(-0.3f, 0.3f), _moveSpeed).SetEase(Ease.Linear);
+                        break;
 
-                //    default:
-                _obj.DOMove(_nodes[i].transform.position, _moveSpeed).SetEase(Ease.Linear);
+                    default:
+                        _obj.DOMove(_nodes[i].transform.position, _moveSpeed).SetEase(Ease.Linear);
 
-                //        break;
-                //}
+                        break;
+                }
                 //_obj.DORotateQuaternion(_nodes[i].transform.rotation, _moveSpeed).SetEase(Ease.Linear);
                 yield return new WaitForSeconds(_moveSpeed);
             }
 
-            _labotoryManager.PushProduct(_obj);
+            _labotoryManager.PushProduct(_obj, 0.5f, _obj.GetComponent<Product>()._productType);
         }
     }
 

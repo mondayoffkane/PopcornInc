@@ -34,6 +34,7 @@ public class Machine : MonoBehaviour
     [FoldoutGroup("UI_Description_2")] public int _spawnLevel;
 
     public int _machineNum = 0;
+    public int _productNum = 0;
     public Mesh _productMesh;
     public Material _productMat;
 
@@ -43,14 +44,17 @@ public class Machine : MonoBehaviour
 
     public Table _table;
 
-    public bool isRail = false;
-    public Transform _railGroup;
+    //public bool isRail = false;
+    //public Transform _railGroup;
     public float _moveSpeed = 0.5f;
-    public float _railJumpPower = 0f;
+    //public float _railJumpPower = 0f;
     public Machine _nextMachine;
     public Cup _cup;
 
+    public GameObject[] _addShapeObj;
 
+
+    public Product.ProductType _productType;
 
 
 
@@ -98,8 +102,11 @@ public class Machine : MonoBehaviour
 
     public void Init()
     {
-        CreateDataTable();
-        CreateDataTable2();
+        ReadDataTable();
+        _maxLevel = _upgradePrice.Length;
+
+        //CreateDataTable();
+        //CreateDataTable2();
 
         _x = _table.GetComponent<BoxCollider>().bounds.size.x * 0.5f;
         _z = _table.GetComponent<BoxCollider>().bounds.size.z * 0.5f;
@@ -109,6 +116,30 @@ public class Machine : MonoBehaviour
         LoadData();
 
 
+        if (_addShapeObj.Length > 0)
+        {
+            foreach (GameObject _obj in _addShapeObj)
+            {
+                _obj.SetActive(false);
+            }
+            _addShapeObj[0].SetActive(true);
+
+
+            if ((_level + 1) >= 25)
+            {
+                _addShapeObj[0].SetActive(false);
+                _addShapeObj[1].SetActive(true);
+            }
+
+            if ((_level + 1) >= 50)
+            {
+                _addShapeObj[1].SetActive(false);
+                _addShapeObj[2].SetActive(true);
+            }
+        }
+
+
+        //Debug.Log(transform.name + transform.hierarchyCount);
     }
 
 
@@ -135,55 +166,38 @@ public class Machine : MonoBehaviour
         //WaitForSeconds _term = new WaitForSeconds(_interval);
         while (true)
         {
-            _interval = 1f - (0.05f * _spawnLevel);
+            _interval = 1f - (0.5f * _spawnLevel);
             yield return new WaitForSeconds(_interval);
 
             if (isAutoSpawn || _currentCount > 0)
             {
-                //Debug.Log(transform.name);
-                if (isRail)
+
+                if (_table._productList.Count < max_count)
                 {
-                    for (int i = 0; i < 3; i++)
+                    //Debug.Log((_level / 20) + 1);
+                    //for (int i = 0; i < (_level / 20) + 1; i++)
+                    //{
+
+                    Transform _corn = Managers.Pool.Pop(_popcorn_Pref, _table.transform).transform;
+
+                    _corn.GetComponent<Product>().SetType(_productNum, _productMesh, _productMat, (_productPrice[_level] * (1 + _priceScope * (_priceScopeLevel * 3d)) * 0.34d), _productType);
+                    if (_spawnPos != null)
                     {
-                        Transform _corn = Managers.Pool.Pop(_popcorn_Pref, _table.transform).transform;
-                        _corn.GetComponent<Product>().SetType(_machineNum, _productMesh, _productMat, _productPrice[_level] * (1 + _priceScope * _priceScopeLevel));
-                        if (_spawnPos != null)
-                        {
-                            _corn.position = _spawnPos.position;
-                        }
-                        else
-                        {
-                            _corn.position = transform.position;
-                        }
-                        NextNode(_corn, i);
+                        _corn.position = _spawnPos.position;
+                    }
+                    else
+                    {
+                        _corn.position = transform.position;
+                    }
+
+                    _corn.DOLocalJump(new Vector3(Random.Range(-_x, _x), 0f, Random.Range(-_z, _z)), _jumpPower, 1, 1f)
+                        .SetEase(Ease.Linear).OnComplete(() => _table._productList.Add(_corn.GetComponent<Product>()));
+
+                    if (!isAutoSpawn)
                         _currentCount--;
-                    }
+                    //}
                 }
-                else
-                {
-                    if (_table._productList.Count < max_count)
-                    {
-                        for (int i = 0; i < (_level / 20) + 1; i++)
-                        {
-                            //Managers.Sound.Play("Effect_6");
-                            Transform _corn = Managers.Pool.Pop(_popcorn_Pref, _table.transform).transform;
-                            _corn.GetComponent<Product>().SetType(_machineNum, _productMesh, _productMat, _productPrice[_level] * (1 + _priceScope * _priceScopeLevel));
-                            if (_spawnPos != null)
-                            {
-                                _corn.position = _spawnPos.position;
-                            }
-                            else
-                            {
-                                _corn.position = transform.position;
-                            }
-
-                            _corn.DOLocalJump(new Vector3(Random.Range(-_x, _x), 0f, Random.Range(-_z, _z)), _jumpPower, 1, 1f)
-                                .SetEase(Ease.Linear).OnComplete(() => _table._productList.Add(_corn.GetComponent<Product>()));
-
-                            _currentCount--;
-                        }
-                    }
-                }
+                //}
 
             }
 
@@ -192,6 +206,40 @@ public class Machine : MonoBehaviour
 
 
     [Button]
+    public void ReadDataTable()
+    {
+        List<Dictionary<string, object>> data = CSVReader.Read("Upgrade - Machine");
+
+        _upgradePrice = new double[data.Count];
+        _productPrice = new double[data.Count];
+
+
+
+        for (int i = 0; i < data.Count; i++)
+        {
+            _upgradePrice[i] = double.Parse(data[i][_machineNum + "_Upgrade_Price"].ToString());
+            _productPrice[i] = double.Parse(data[i][_machineNum + "_Price"].ToString());
+        }
+
+
+        _scrollUpgrade1_Price = new double[1];
+        _scrollUpgrade2_Price = new double[1];
+
+        _upgrade1_name = data[_machineNum]["Upgrade_1_Name"].ToString();
+        _upgrade1_explain = data[_machineNum]["Upgrade_1_Explain"].ToString();
+        _scrollUpgrade1_Price[0] = double.Parse(data[_machineNum]["Upgrade_1_Price"].ToString());
+
+        _upgrade2_name = data[_machineNum]["Upgrade_2_Name"].ToString();
+        _upgrade2_explain = data[_machineNum]["Upgrade_2_Explain"].ToString();
+        _scrollUpgrade2_Price[0] = double.Parse(data[_machineNum]["Upgrade_2_Price"].ToString());
+
+        //_
+
+
+
+    }
+
+    //[Button]
     public void CreateDataTable()
     {
 
@@ -227,11 +275,11 @@ public class Machine : MonoBehaviour
 
     }
 
-    [Button]
+    //[Button]
     public void CreateDataTable2()
     {
 
-        _scrollUpgrade1_Price = new double[10];
+        _scrollUpgrade1_Price = new double[1];
 
         for (int i = 0; i < _scrollUpgrade1_Price.Length; i++)
         {
@@ -282,7 +330,7 @@ public class Machine : MonoBehaviour
 
         _levelText.text = $"Level  {(_level + 1).ToString()}";
         _productText.text = $"{_name}";
-        _product_PriceText.text = $"{Managers.ToCurrencyString(_productPrice[_level] * (1 + _priceScope * _priceScopeLevel))}";
+        _product_PriceText.text = $"{Managers.ToCurrencyString(_productPrice[_level] * (1 + _priceScope * (_priceScopeLevel * 3d)))}";
         _intervalText.text = $"{_interval}s";
 
         _upgrade_PriceText.text = _level < (_maxLevel - 1)
@@ -311,14 +359,13 @@ public class Machine : MonoBehaviour
             _gamemanager.CalcMoney(-_upgradePrice[_level]);
 
             _level++;
-            //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_{_machineNum}_Level", $"{_level}" } });
-            //
+
             EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_Upgrade_Level", $"Machine_{_machineNum}_{_level}" } });
 
 
             if (_level % 10 == 0)
             {
-                //MondayOFF.EventTracker.LogCustomEvent("MachineUpgradeTime", new Dictionary<string, string> { { $"Machine_{_machineNum}_Level_{_level}_Time", $"{_gamemanager._stageManager._playTime}s" } });
+
                 MondayOFF.EventTracker.LogCustomEvent("MachineUpgradeTime", new Dictionary<string, string> { { $"Machine_Upgrade_Time", $"Machine_{_machineNum}_{_level}_{_gamemanager._stageManager._playTime}s" } });
             }
 
@@ -328,11 +375,30 @@ public class Machine : MonoBehaviour
                 _gamemanager.CalcGem(1);
             }
 
+            if (_addShapeObj != null)
+            {
+                //foreach (GameObject _obj in _addShapeObj)
+                //{
+                //    _obj.SetActive(false);
+                //}
+
+                if ((_level + 1) == 25)
+                {
+                    _addShapeObj[0].SetActive(false);
+                    _addShapeObj[1].SetActive(true);
+                }
+
+                if ((_level + 1) == 50)
+                {
+                    _addShapeObj[1].SetActive(false);
+                    _addShapeObj[2].SetActive(true);
+                }
+            }
 
 
             for (int i = 0; i < _table._productList.Count; i++)
             {
-                _table._productList[i]._price = _productPrice[_level];
+                _table._productList[i]._price = _productPrice[_level] * 0.34d;
             }
 
             CheckPrice(_panel);
@@ -394,80 +460,80 @@ public class Machine : MonoBehaviour
 
 
 
-    public void NextNode(Transform _obj, int _num = 0)
-    {
-        StartCoroutine(Cor_NextNode());
-        IEnumerator Cor_NextNode()
-        {
+    //public void NextNode(Transform _obj, int _num = 0)
+    //{
+    //    StartCoroutine(Cor_NextNode());
+    //    IEnumerator Cor_NextNode()
+    //    {
 
-            switch (_num)
-            {
-                case 1:
-                    _obj.DOJump(_railGroup.GetChild(0).position + _railGroup.GetChild(0).right * -1f + _railGroup.GetChild(0).forward * Random.Range(-0.3f, 0.3f), _railJumpPower, 1, _moveSpeed).SetEase(Ease.Linear);
-                    break;
+    //        switch (_num)
+    //        {
+    //            case 1:
+    //                _obj.DOJump(_railGroup.GetChild(0).position + _railGroup.GetChild(0).right * -1f + _railGroup.GetChild(0).forward * Random.Range(-0.3f, 0.3f), _railJumpPower, 1, _moveSpeed).SetEase(Ease.Linear);
+    //                break;
 
-                case 2:
-                    _obj.DOJump(_railGroup.GetChild(0).position + _railGroup.GetChild(0).right * 1f + _railGroup.GetChild(0).forward * Random.Range(-0.3f, 0.3f), _railJumpPower, 1, _moveSpeed).SetEase(Ease.Linear);
-                    break;
+    //            case 2:
+    //                _obj.DOJump(_railGroup.GetChild(0).position + _railGroup.GetChild(0).right * 1f + _railGroup.GetChild(0).forward * Random.Range(-0.3f, 0.3f), _railJumpPower, 1, _moveSpeed).SetEase(Ease.Linear);
+    //                break;
 
-                default:
-                    _obj.DOJump(_railGroup.GetChild(0).position, _railJumpPower, 1, _moveSpeed).SetEase(Ease.Linear);
+    //            default:
+    //                _obj.DOJump(_railGroup.GetChild(0).position, _railJumpPower, 1, _moveSpeed).SetEase(Ease.Linear);
 
-                    break;
-            }
-            yield return new WaitForSeconds(_moveSpeed);
+    //                break;
+    //        }
+    //        yield return new WaitForSeconds(_moveSpeed);
 
-            for (int i = 1; i < _railGroup.childCount; i++)
-            {
-                switch (_num)
-                {
-                    case 1:
-                        _obj.DOMove(_railGroup.GetChild(i).position + _railGroup.GetChild(i).right * -1f + _railGroup.GetChild(i).forward * Random.Range(-0.3f, 0.3f), _moveSpeed).SetEase(Ease.Linear);
-                        break;
+    //        for (int i = 1; i < _railGroup.childCount; i++)
+    //        {
+    //            switch (_num)
+    //            {
+    //                case 1:
+    //                    _obj.DOMove(_railGroup.GetChild(i).position + _railGroup.GetChild(i).right * -1f + _railGroup.GetChild(i).forward * Random.Range(-0.3f, 0.3f), _moveSpeed).SetEase(Ease.Linear);
+    //                    break;
 
-                    case 2:
-                        _obj.DOMove(_railGroup.GetChild(i).position + _railGroup.GetChild(i).right * 1f + _railGroup.GetChild(i).forward * Random.Range(-0.3f, 0.3f), _moveSpeed).SetEase(Ease.Linear);
-                        break;
+    //                case 2:
+    //                    _obj.DOMove(_railGroup.GetChild(i).position + _railGroup.GetChild(i).right * 1f + _railGroup.GetChild(i).forward * Random.Range(-0.3f, 0.3f), _moveSpeed).SetEase(Ease.Linear);
+    //                    break;
 
-                    default:
-                        _obj.DOMove(_railGroup.GetChild(i).position, _moveSpeed).SetEase(Ease.Linear);
+    //                default:
+    //                    _obj.DOMove(_railGroup.GetChild(i).position, _moveSpeed).SetEase(Ease.Linear);
 
-                        break;
-                }
-                _obj.DORotateQuaternion(_railGroup.GetChild(i).rotation, _moveSpeed).SetEase(Ease.Linear);
-                yield return new WaitForSeconds(_moveSpeed);
-            }
+    //                    break;
+    //            }
+    //            _obj.DORotateQuaternion(_railGroup.GetChild(i).rotation, _moveSpeed).SetEase(Ease.Linear);
+    //            yield return new WaitForSeconds(_moveSpeed);
+    //        }
 
-            _table._productList.Remove(_obj.GetComponent<Product>());
-            if (_nextMachine != null && _nextMachine.gameObject.activeSelf == true)
-            {
-                _nextMachine._table.PushProduct(_obj, _moveSpeed, true);
-            }
-            else
-            {
-                _cup.PushProduct(_obj);
-            }
-        }
-    }
+    //        _table._productList.Remove(_obj.GetComponent<Product>());
+    //        if (_nextMachine != null && _nextMachine.gameObject.activeSelf == true)
+    //        {
+    //            _nextMachine._table.PushProduct(_obj, _moveSpeed, true);
+    //        }
+    //        else
+    //        {
+    //            _cup.PushProduct(_obj);
+    //        }
+    //    }
+    //}
 
-    [Button]
-    public void RailOnOff(bool isOn)
-    {
-        isRail = isOn;
-        _railGroup.gameObject.SetActive(isRail);
-        if (isOn)
-        {
-            int _cnt = _table._productList.Count;
-            for (int i = 0; i < _cnt; i++)
-            {
-                Product _product = _table._productList[0];
-                _table._productList.RemoveAt(0);
-                Managers.Pool.Push(_product.GetComponent<Poolable>());
-            }
+    //[Button]
+    //public void RailOnOff(bool isOn)
+    //{
+    //    isRail = isOn;
+    //    _railGroup.gameObject.SetActive(isRail);
+    //    if (isOn)
+    //    {
+    //        int _cnt = _table._productList.Count;
+    //        for (int i = 0; i < _cnt; i++)
+    //        {
+    //            Product _product = _table._productList[0];
+    //            _table._productList.RemoveAt(0);
+    //            Managers.Pool.Push(_product.GetComponent<Poolable>());
+    //        }
 
-        }
+    //    }
 
-    }
+    //}
 
     //public void RvRail(float _term = 1f)
     //{

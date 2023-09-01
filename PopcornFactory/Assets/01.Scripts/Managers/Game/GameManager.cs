@@ -64,21 +64,21 @@ public class GameManager : MonoBehaviour
     public LabotoryManager _labotoryManager;
 
 
-   
 
-    public void NextStage()
-    {
 
-        Destroy(_stageManager.gameObject);
+    //public void NextStage()
+    //{
 
-        _lastStageLevel++;
-        Money = 0;
+    //    Destroy(_stageManager.gameObject);
 
-        ES3.Save<int>("LastStageLevel", _lastStageLevel);
-        ES3.Save<double>("Money", Money);
+    //    _lastStageLevel++;
+    //    Money = 0;
 
-        //_stageManager = SpawnStage();
-    }
+    //    ES3.Save<int>("LastStageLevel", _lastStageLevel);
+    //    ES3.Save<double>("Money", Money);
+
+    //    //_stageManager = SpawnStage();
+    //}
 
     public int _lastStageLevel;
 
@@ -129,9 +129,9 @@ public class GameManager : MonoBehaviour
         _value *= _double;
 
         Transform _floatingText = Managers.Pool.Pop(_FloatingText, _trans).GetComponent<Transform>();
-        _floatingText.localPosition = new Vector3(0f, 3f, 0f);
+        _floatingText.localPosition = new Vector3(0f, 4f, 0f);
         _floatingText.GetComponentInChildren<Text>().text = $"{Managers.ToCurrencyString(_value)}";
-        _floatingText.DOLocalMoveY(6f, 1f).SetEase(Ease.Linear)
+        _floatingText.DOLocalMoveY(7f, 1f).SetEase(Ease.OutCirc)
             .OnComplete(() => Managers.Pool.Push(_floatingText.GetComponent<Poolable>()));
     }
 
