@@ -43,7 +43,7 @@ public class CameraMove : MonoBehaviour
         }
     }
 
-    bool isFix = false;
+    public bool isFix = false;
     public float _lookdistance = 50f;
     public Vector3 _lookOffset = new Vector3(0f, 10f, 0f);
     public bool isClick = false;
@@ -65,7 +65,7 @@ public class CameraMove : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            Managers.Game.CalcMoney(100000);
+            Managers.Game.CalcMoney(100000000);
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -130,11 +130,12 @@ public class CameraMove : MonoBehaviour
             touchPos = Camera.main.ScreenToWorldPoint(touchPosToVector3);
             ray = Camera.main.ScreenPointToRay(touchPosToVector3);
 
-            if (!EventSystem.current.IsPointerOverGameObject())// ui가 아닌곳을 눌렀을때 ui 끄기
+            if (!EventSystem.current.IsPointerOverGameObject())// 
             {
                 if (Physics.Raycast(ray, out hit, 1000))
                 {
                     Debug.DrawLine(ray.origin, hit.point, Color.red, 1.5f);
+
 
 
                     if (hit.collider.tag == "Upgrade_Obj")
@@ -142,6 +143,12 @@ public class CameraMove : MonoBehaviour
 
                         _stageManager.SelecteTarget(hit.transform);
                         isClick = false;
+                        if (TutorialManager._instance._tutorialLevel == 4)
+                        {
+
+                            TutorialManager._instance.Tutorial_Comple();
+                            TutorialManager._instance.Tutorial(false);
+                        }
                     }
                     else if (hit.collider.tag == "WorkerBox")
                     {
@@ -151,11 +158,25 @@ public class CameraMove : MonoBehaviour
                         //_stageManager.AddStaff(false, hit.transform.gameObject);
 
                     }
+                    else if (hit.collider.tag == "WorkerBox_Init")
+                    {
+                        Managers.Sound.Play("Effect_9");
+                        int _landNum = hit.transform.GetComponent<WorkerBox>()._landNum;
+                        _StageManager._landManagers[_landNum].AddStaff(hit.transform.gameObject);
+                        TutorialManager._instance.Tutorial_Comple();
+
+                    }
                     else if (hit.collider.tag == "LabotoryManager")
                     {
+                        _StageManager.OffPopup();
                         Managers.GameUI.Laboratory_Panel.SetActive(true);
+
                         LookTarget(hit.transform);
                         isClick = false;
+                        if (TutorialManager._instance._tutorialLevel == 8)
+                        {
+                            TutorialManager._instance.Tutorial_Comple();
+                        }
                     }
 
                 }
@@ -256,23 +277,45 @@ public class CameraMove : MonoBehaviour
                     Debug.DrawLine(ray.origin, hit.point, Color.red, 1.5f);
 
                     //Debug.Log(hit.collider.tag);
-                    if (hit.collider.tag == "Upgrade_Obj")
+                     if (hit.collider.tag == "Upgrade_Obj")
                     {
-                        //Debug.Log("Hit Obj");
+
                         _stageManager.SelecteTarget(hit.transform);
                         isClick = false;
+                        if (TutorialManager._instance._tutorialLevel == 4)
+                        {
+      
+                            TutorialManager._instance.Tutorial_Comple();
+                            TutorialManager._instance.Tutorial(false);
+                        }
                     }
                     else if (hit.collider.tag == "WorkerBox")
                     {
-                    Managers.Sound.Play("Effect_9");
-                            int _landNum = hit.transform.GetComponent<WorkerBox>()._landNum;
+                        Managers.Sound.Play("Effect_9");
+                        int _landNum = hit.transform.GetComponent<WorkerBox>()._landNum;
                         _StageManager._landManagers[_landNum].AddStaff(hit.transform.gameObject);
+                        //_stageManager.AddStaff(false, hit.transform.gameObject);
+
                     }
-                      else if (hit.collider.tag == "LabotoryManager")
+                    else if (hit.collider.tag == "WorkerBox_Init")
                     {
-                           Managers.GameUI.Laboratory_Panel.SetActive(true);
+                        Managers.Sound.Play("Effect_9");
+                        int _landNum = hit.transform.GetComponent<WorkerBox>()._landNum;
+                        _StageManager._landManagers[_landNum].AddStaff(hit.transform.gameObject);
+                        TutorialManager._instance.Tutorial_Comple();
+
+                    }
+                    else if (hit.collider.tag == "LabotoryManager")
+                    {
+                        _StageManager.OffPopup();
+                        Managers.GameUI.Laboratory_Panel.SetActive(true);
+
                         LookTarget(hit.transform);
                         isClick = false;
+                        if (TutorialManager._instance._tutorialLevel == 8)
+                        {
+                            TutorialManager._instance.Tutorial_Comple();
+                        }
                     }
                 }}
             }

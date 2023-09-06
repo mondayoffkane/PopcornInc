@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -5221934414019828535}
   m_Layer: 0
   m_Name: WorkerBox_Init
-  m_TagString: WorkerBox
+  m_TagString: WorkerBox_Init
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ae829803e414e068ed83e79bf2c269, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _landNum: 0
 --- !u!1 &3391702791129798091
 GameObject:
   m_ObjectHideFlags: 0

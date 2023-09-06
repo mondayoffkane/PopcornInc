@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc0ba1b5ef6b4a6b9dd53d7eadfea16, type: 3}
   m_Name: AppLovinSettings
   m_EditorClassIdentifier: 
-  qualityServiceEnabled: 0
+  qualityServiceEnabled: 1
   sdkKey: -uBAP4IJbzlOMFq-KJUwdvW8bwGdhtGgmRr9V8T65CUSSIQocwhFqCNP7e2pVITFkJPERuLW5q-X7PJlJ_-7CM
   setAttributionReportEndpoint: 0
   consentFlowEnabled: 0

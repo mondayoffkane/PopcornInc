@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class UI_GameScene : UI_Scene
 {
+    enum Images
+    {
+        Mask,
+    }
     enum Texts
     {
         Money_Text,
@@ -23,6 +27,7 @@ public class UI_GameScene : UI_Scene
         AddUpgrade_Button,
         RV_Income_Double,
         BigMoneyButton,
+        Recipe_Button,
         NoAds_Button,
         AddStaff_Upgrade_Button,
         Income_Upgrade_Button,
@@ -49,6 +54,7 @@ public class UI_GameScene : UI_Scene
         Laboratory_Panel,
         Laboratory_Content,
         Recipe_Panel,
+        Recipe_Content,
     }
 
 
@@ -66,6 +72,8 @@ public class UI_GameScene : UI_Scene
         , NoAds_Button
         , Restore_Button
         , Laboratory_Close_Button
+        , Recipe_Button
+        , Recipe_Close_Button
                 ;
     //, NextStageButton;
 
@@ -82,8 +90,11 @@ public class UI_GameScene : UI_Scene
         , NoAds_Panel
      , Laboratory_Panel,
         Laboratory_Content
+        , Recipe_Panel
+        , Recipe_Content
         ;
 
+    public Image Mask;
 
     public GameObject[] ScrollUpgrades;
 
@@ -95,6 +106,7 @@ public class UI_GameScene : UI_Scene
     {
         Bind<UnityEngine.UI.Text>(typeof(Texts));
         Bind<UnityEngine.UI.Button>(typeof(Buttons));
+        Bind<UnityEngine.UI.Image>(typeof(Images));
         Bind<GameObject>(typeof(GameObjects));
 
         base.Init();
@@ -120,6 +132,8 @@ public class UI_GameScene : UI_Scene
         NoAds_Button = GetButton(Buttons.NoAds_Button);
         Restore_Button = GetButton(Buttons.Restore_Button);
         Laboratory_Close_Button = GetButton(Buttons.Laboratory_Close_Button);
+        Recipe_Button = GetButton(Buttons.Recipe_Button);
+        Recipe_Close_Button = GetButton(Buttons.Recipe_Close_Button);
 
 
         Money_Text = GetText(Texts.Money_Text);
@@ -144,11 +158,23 @@ public class UI_GameScene : UI_Scene
         NoAds_Panel = GetObject(GameObjects.NoAds_Panel);
         Laboratory_Panel = GetObject(GameObjects.Laboratory_Panel);
         Laboratory_Content = GetObject(GameObjects.Laboratory_Content);
+        Recipe_Panel = GetObject(GameObjects.Recipe_Panel);
+        Recipe_Content = GetObject(GameObjects.Recipe_Content);
 
 
+        Mask = GetImage(Images.Mask);
         // ======================================
+        Mask.alphaHitTestMinimumThreshold = 0.5f;
 
-        AddParts_Upgrade_Button.AddButtonEvent(() => Managers.Game._stageManager.AddParts());
+
+        AddParts_Upgrade_Button.AddButtonEvent(() =>
+        {
+            Managers.Game._stageManager.AddParts();
+            if (TutorialManager._instance._tutorialLevel == 6)
+            {
+                TutorialManager._instance.Tutorial_Comple();
+            }
+        });
 
         Sound_Button.AddButtonEvent(() =>
         {
@@ -172,14 +198,44 @@ public class UI_GameScene : UI_Scene
         {
             Scroll_Panel.SetActive(!Scroll_Panel.activeSelf);
             Managers.Game._stageManager.ScrollButtonCheck();
+            if (TutorialManager._instance._tutorialLevel == 1)
+            {
+                TutorialManager._instance.Tutorial_Comple();
+                TutorialManager._instance.Tutorial(false);
+            }
         });
 
-        Setting_Button.AddButtonEvent(() => Setting_Panel.SetActive(true));
+        Setting_Button.AddButtonEvent(() =>
+        {
+            OffPopup();
+            Setting_Panel.SetActive(true);
+            //Managers.UI.ShowPopupUI<UI_PopupSetting>();
+        });
         Close_Setting_Button.AddButtonEvent(() => Setting_Panel.SetActive(false));
-        Scroll_Close_Button.AddButtonEvent(() => Scroll_Panel.SetActive(false));
+        Scroll_Close_Button.AddButtonEvent(() =>
+        {
+            if (TutorialManager._instance._tutorialLevel == 3)
+            {
+                TutorialManager._instance.Tutorial_Comple();
+                //TutorialManager._instance.Tutorial(false);
+            }
+            Scroll_Panel.SetActive(false);
+        });
 
 
         Laboratory_Close_Button.AddButtonEvent(() => Laboratory_Panel.SetActive(false));
+        Recipe_Button.AddButtonEvent(() =>
+        {
+            OffPopup();
+            Recipe_Panel.SetActive(!Recipe_Panel.activeSelf);
+            if (TutorialManager._instance._tutorialLevel == 7)
+            {
+                TutorialManager._instance.Tutorial_Comple();
+            }
+
+        });
+        Recipe_Close_Button.AddButtonEvent(() => Recipe_Panel.SetActive(false));
+
 
         // == Inapp , No Ads ===========================
         NoAds_Button.AddButtonEvent(() => NoAds_Panel.SetActive(true));
@@ -191,6 +247,7 @@ public class UI_GameScene : UI_Scene
         NoAds.OnNoAds += () => Debug.Log("No Ads 구매 완료 ");
         NoAds.OnNoAds += () =>
         {
+
             NoAds_Panel.SetActive(false);
             NoAds_Button.gameObject.SetActive(false);
             Managers.Game._stageManager._noAds = 1;
@@ -236,6 +293,17 @@ public class UI_GameScene : UI_Scene
         Managers.Game._labotoryManager.ResourceValue(1, value);
     }
 
+
+    public void OffPopup()
+    {
+        Setting_Panel.SetActive(false);
+        Scroll_Panel.SetActive(false);
+        Laboratory_Panel.SetActive(false);
+        NoAds_Panel.SetActive(false);
+        Recipe_Panel.SetActive(false);
+        Upgrade_Panel.SetActive(false);
+
+    }
 
 
 } /// ========= end Set buttons

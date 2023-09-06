@@ -61,13 +61,13 @@ dependencies {
     implementation 'com.applovin.mediation:hyprmx-adapter:6.2.0.2' // Assets/MaxSdk/Mediation/HyprMX/Editor/Dependencies.xml:4
     implementation 'com.applovin.mediation:inmobi-adapter:10.1.4.3' // Assets/MaxSdk/Mediation/InMobi/Editor/Dependencies.xml:4
     implementation 'com.applovin.mediation:ironsource-adapter:7.4.0.0.1' // Assets/MaxSdk/Mediation/IronSource/Editor/Dependencies.xml:8
-    implementation 'com.applovin.mediation:mintegral-adapter:16.4.91.0' // Assets/MaxSdk/Mediation/Mintegral/Editor/Dependencies.xml:8
+    implementation 'com.applovin.mediation:mintegral-adapter:16.4.61.0' // Assets/MaxSdk/Mediation/Mintegral/Editor/Dependencies.xml:8
     implementation 'com.applovin.mediation:mobilefuse-adapter:1.6.0.0' // Assets/MaxSdk/Mediation/MobileFuse/Editor/Dependencies.xml:4
-    implementation 'com.applovin.mediation:tapjoy-adapter:13.1.2.0' // Assets/MaxSdk/Mediation/Tapjoy/Editor/Dependencies.xml:8
+    implementation 'com.applovin.mediation:tapjoy-adapter:13.0.1.0' // Assets/MaxSdk/Mediation/Tapjoy/Editor/Dependencies.xml:8
     implementation 'com.applovin.mediation:unityads-adapter:4.8.0.0' // Assets/MaxSdk/Mediation/UnityAds/Editor/Dependencies.xml:4
     implementation 'com.applovin.mediation:verve-adapter:2.19.0.0' // Assets/MaxSdk/Mediation/Verve/Editor/Dependencies.xml:4
     implementation 'com.applovin.mediation:vungle-adapter:6.12.1.1' // Assets/MaxSdk/Mediation/Vungle/Editor/Dependencies.xml:4
-    implementation 'com.applovin:applovin-sdk:11.11.2' // Assets/MaxSdk/AppLovin/Editor/Dependencies.xml:4
+    implementation 'com.applovin:applovin-sdk:11.10.1' // Assets/MaxSdk/AppLovin/Editor/Dependencies.xml:4
     implementation 'com.facebook.android:facebook-applinks:[15.1,16)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:6
     implementation 'com.facebook.android:facebook-core:[15.1,16)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:5
     implementation 'com.facebook.android:facebook-gamingservices:[15.1,16)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:9

@@ -17,23 +17,5 @@ public class PoolPush : MonoBehaviour
 
 
 
-    [Button]
-    public void TestCsvPrint()
-    {
 
-        //int _exp = 0;
-        //List<Dictionary<string, object>> _list = CSVReader.Read("Testfile");
-        List<Dictionary<string, object>> data = CSVReader.Read("Testfile");
-
-
-
-        for (var i = 0; i < data.Count; i++)
-        {
-            Debug.Log("index " + (i).ToString() + " : " + data[i]["num"] + " " + data[i]["value"]);
-        }
-
-        //_exp = (int)data[0]["attack"];
-        //Debug.Log(_exp);
-        //Debug.Log(data);
-    }
 }

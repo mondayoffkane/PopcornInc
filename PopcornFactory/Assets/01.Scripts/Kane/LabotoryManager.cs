@@ -29,6 +29,9 @@ public class LabotoryManager : MonoBehaviour
 
     UI_GameScene _gameUi;
 
+    public GameObject[] _recipe = new GameObject[4];
+    public bool[] _recipeNum = new bool[4];
+
     private void OnEnable()
     {
         if (_lab_Product == null) _lab_Product = Resources.Load<GameObject>("Lab_Product").gameObject;
@@ -43,6 +46,26 @@ public class LabotoryManager : MonoBehaviour
         _spawnPos.GetComponent<Renderer>().enabled = false;
         // add Load Data
         // Recipe
+        int _index = 0;
+        for (int i = 0; i < _gameUi.Recipe_Content.transform.childCount; i++)
+        {
+            for (int j = 0; j < _gameUi.Recipe_Content.transform.GetChild(i).childCount; j++)
+            {
+                _recipe[_index] = _gameUi.Recipe_Content.transform.GetChild(i).GetChild(j).gameObject;
+                _recipe[_index].SetActive(false);
+                _index++;
+            }
+        }
+
+        LoadRecipe();
+        _gameUi.Recipe_Button.gameObject.SetActive(false);
+        if (_recipeNum[0]) _gameUi.Recipe_Button.gameObject.SetActive(true);
+
+        for (int i = 0; i < _recipeNum.Length; i++)
+        {
+
+            if (_recipeNum[i]) _recipe[i].SetActive(true);
+        }
 
 
     }
@@ -55,6 +78,7 @@ public class LabotoryManager : MonoBehaviour
         }
 
         StartCoroutine(Cor_Spawn());
+
     }
 
 
@@ -91,8 +115,8 @@ public class LabotoryManager : MonoBehaviour
             yield return new WaitForSeconds(_spawnInterval); //_term;
             if (isSpawn)
             {
-
-                if (_productType_Count[0] > 0 && _productType_Count[1] > _resourceList[0] && _productType_Count[2] > _resourceList[1])
+                Debug.Log("Cor spawn");
+                if (_productType_Count[0] > 0 && _productType_Count[1] >= _resourceList[0] && _productType_Count[2] >= _resourceList[1])
                 {
                     _productType_Count[0] -= 1;
                     _productType_Count[1] -= _resourceList[0];
@@ -102,18 +126,53 @@ public class LabotoryManager : MonoBehaviour
                     if (_resourceList[0] == 0 && _resourceList[1] == 0) // basic
                     {
                         _matNum = 0;
+
+                        if (_recipeNum[0] == false)
+                        {
+                            SaveRecipe(0);
+                            _gameUi.Recipe_Button.gameObject.SetActive(true);
+                            if(TutorialManager._instance._tutorialLevel == 7)
+                            {
+                                TutorialManager._instance.Tutorial();
+                            }
+
+                        }
                     }
-                    else if (_resourceList[0] >= 1 && _resourceList[1] == 0) // choco
+                    else if (_resourceList[0] == 1 && _resourceList[1] == 0) // choco
                     {
-                        _matNum = 1;
+
+
+                        _matNum = Random.Range(0, 2) == 0 ? 0 : 1;
+                        if (_matNum == 1) _productType_Count[1] -= 1;
+                        SaveRecipe(1);
                     }
-                    else if (_resourceList[0] == 0 && _resourceList[1] >= 1) // strawberry
+                    else if (_resourceList[0] == 2 && _resourceList[1] == 0) // choco
+                    {
+
+                        _matNum = 1; // Random.Range(0, 2) == 0 ? 0 : 1;
+                        _productType_Count[1] -= 1;
+                        SaveRecipe(1);
+                    }
+                    else if (_resourceList[0] == 0 && _resourceList[1] == 1) // strawberry
+                    {
+                        //_matNum = 2;
+                        _matNum = Random.Range(0, 2) == 0 ? 0 : 2;
+                        if (_matNum == 2) _productType_Count[2] -= 1;
+                        SaveRecipe(2);
+                    }
+                    else if (_resourceList[0] == 0 && _resourceList[1] == 2) // strawberry
                     {
                         _matNum = 2;
+                        //_matNum = Random.Range(0, 2) == 0 ? 0 : 2;
+                        _productType_Count[_matNum] -= 1;
+                        SaveRecipe(2);
                     }
                     else if (_resourceList[0] == 1 && _resourceList[1] == 1) // half
                     {
-                        _matNum = 3;
+                        //_matNum = 3;
+                        _matNum = Random.Range(0, 3);
+                        if (_matNum != 0) _productType_Count[_matNum] -= 1;
+                        SaveRecipe(3);
                     }
 
                     Transform _trans = Managers.Pool.Pop(_lab_Product, transform).transform;
@@ -132,32 +191,28 @@ public class LabotoryManager : MonoBehaviour
 
     }
 
+    public void SaveRecipe(int _num)
+    {
+        //for (int i = 0; i < _recipeNum.Length; i++)
+        //{
+        _recipeNum[_num] = true;
+        ES3.Save("Recipe_" + _num, _recipeNum[_num]);
+        _recipe[_num].SetActive(true);
+        //}
+    }
+    public void LoadRecipe()
+    {
+        for (int i = 0; i < _recipeNum.Length; i++)
+        {
+            _recipeNum[i] = ES3.Load("Recipe_" + i, false);
+
+        }
+    }
+
+
     public void ResourceValue(int _num, float _value)
     {
-        //int _count = 0;
-        //for (int i = 0; i < _resourceList.Length; i++)
-        //{
-        //    if (i != _num)
-        //        _count += _resourceList[i];
-        //}
-        //if ((_count + _value) > 2)
-        //{
-        //    _count += (int)_value;
-        //    for (int j = _count - 2; j >= 0; j--)
-        //    {
-        //        if (j != _num && _count > 2)
-        //        {
-        //            _resourceList[j]--;
-        //            _laboratory_list[j].transform.Find("Slider").GetComponent<Slider>().value = _resourceList[j];
-        //            _laboratory_list[j].transform.Find("Ratio_Test").GetComponent<Text>().text = $"{50 * _resourceList[j]} %";
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //}
 
-        //_resourceList[_num] = (int)_value;
 
         if ((int)_value != 2)
         {

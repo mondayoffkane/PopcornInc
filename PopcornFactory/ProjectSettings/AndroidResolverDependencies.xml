@@ -21,13 +21,13 @@
     <package>com.applovin.mediation:hyprmx-adapter:6.2.0.2</package>
     <package>com.applovin.mediation:inmobi-adapter:10.1.4.3</package>
     <package>com.applovin.mediation:ironsource-adapter:7.4.0.0.1</package>
-    <package>com.applovin.mediation:mintegral-adapter:16.4.91.0</package>
+    <package>com.applovin.mediation:mintegral-adapter:16.4.61.0</package>
     <package>com.applovin.mediation:mobilefuse-adapter:1.6.0.0</package>
-    <package>com.applovin.mediation:tapjoy-adapter:13.1.2.0</package>
+    <package>com.applovin.mediation:tapjoy-adapter:13.0.1.0</package>
     <package>com.applovin.mediation:unityads-adapter:4.8.0.0</package>
     <package>com.applovin.mediation:verve-adapter:2.19.0.0</package>
     <package>com.applovin.mediation:vungle-adapter:6.12.1.1</package>
-    <package>com.applovin:applovin-sdk:11.11.2</package>
+    <package>com.applovin:applovin-sdk:11.10.1</package>
     <package>com.facebook.android:facebook-applinks:[15.1,16)</package>
     <package>com.facebook.android:facebook-core:[15.1,16)</package>
     <package>com.facebook.android:facebook-gamingservices:[15.1,16)</package>

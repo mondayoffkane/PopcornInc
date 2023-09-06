@@ -104,7 +104,7 @@ public class LandManager : MonoBehaviour
     {
         List<Dictionary<string, object>> data = CSVReader.Read("UpgradeLand - Worker");
 
-        _staff_max_level = data.Count ;
+        _staff_max_level = data.Count;
         _staffHire_Upgrade_Price = new double[_staff_max_level];
 
         for (int i = 0; i < _staff_max_level; i++)
@@ -133,8 +133,14 @@ public class LandManager : MonoBehaviour
             _trans.GetComponent<Staff>()._landNum = _landNum;
 
             _stagemanager.CheckButton();
+
+
         }
 
+        if (_staff_hire_level > 1)
+        {
+            if (ES3.Load<int>("_tutorialLevel", 0) == 0) TutorialManager._instance.Tutorial_Comple();
+        }
 
         if (_staff_hire_level == 0 && _landNum == 0)
         {
@@ -144,7 +150,8 @@ public class LandManager : MonoBehaviour
             _workerbox.DOScale(Vector3.one, 1f);
 
             _staff_hire_level++;
-
+            TutorialManager._instance.Tutorial();
+            Debug.Log("Tutorial");
             SaveData();
         }
 

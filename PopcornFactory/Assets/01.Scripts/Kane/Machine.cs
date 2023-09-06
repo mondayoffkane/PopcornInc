@@ -356,11 +356,15 @@ public class Machine : MonoBehaviour
     {
         if (_gamemanager.Money >= _upgradePrice[_level] && (_level < _maxLevel - 1))
         {
+            if (TutorialManager._instance._tutorialLevel == 5)
+            {
+                TutorialManager._instance.Tutorial_Comple();
+            }
             _gamemanager.CalcMoney(-_upgradePrice[_level]);
 
             _level++;
 
-            EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_Upgrade_Level", $"Machine_{_machineNum}_{_level}" } });
+            EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"MachineUpgradeLevel", $"Machine_{_machineNum}_{_level}" } });
 
 
             if (_level % 10 == 0)

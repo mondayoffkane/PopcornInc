@@ -18,6 +18,7 @@ TagManager:
   - LabotoryManager
   - UiCamera
   - Lab_Product
+  - WorkerBox_Init
   layers:
   - Default
   - TransparentFX
