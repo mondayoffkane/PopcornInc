@@ -118,199 +118,202 @@ public class JoyStickController : MonoBehaviour
             MoveObjectRig.position += newDir * Time.deltaTime * _curSpeed;
         }
 
-
-        switch (joyStickMethod)
+        if (Managers.Game._stageManager.isCinema)
         {
-            case JoyStickMethod.DoNotUse:
-                return;
-            case JoyStickMethod.Fixed:
-                if (Input.GetMouseButtonDown(0))
-                {
-                    // if (CheckButtonClick()) return;
 
-                    _joystickImage.enabled = true;
-                    _joystickHandleImage.enabled = true;
-
-                    _joystick.anchoredPosition = Input.mousePosition * 2688f / Screen.height;
-                    _joystickHandle.anchoredPosition = Vector2.zero;
-                    _oriPos = _joystick.anchoredPosition;
-
-                    DownAction?.Invoke();
-                }
-                else if (Input.GetMouseButton(0) && !isButtonClick)
-                {
-                    _joystickHandle.anchoredPosition = Input.mousePosition * 2688f / Screen.height - _oriPos;
-                    if (_joystickHandle.anchoredPosition.magnitude > JoyStickBound)
+            switch (joyStickMethod)
+            {
+                case JoyStickMethod.DoNotUse:
+                    return;
+                case JoyStickMethod.Fixed:
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        _joystickHandle.anchoredPosition = _joystickHandle.anchoredPosition.normalized * JoyStickBound;
-                    }
+                        // if (CheckButtonClick()) return;
 
-                    if (_joystickHandle.anchoredPosition.magnitude < Threshold) return;
+                        _joystickImage.enabled = true;
+                        _joystickHandleImage.enabled = true;
 
-                    JoystickMoveAction?.Invoke(_joystickHandle.anchoredPosition);
-
-                    Vector3 dir = new Vector3(_joystickHandle.anchoredPosition.x, 0, _joystickHandle.anchoredPosition.y);
-
-                    if (MoveObjectRig != null)
-                    {
-                        Move(dir);
-                    }
-                }
-                else if (Input.GetMouseButtonUp(0) && !isButtonClick)
-                {
-                    _joystickImage.enabled = false;
-                    _joystickHandleImage.enabled = false;
-                    UpAction?.Invoke();
-                }
-                break;
-            case JoyStickMethod.HardFixed:
-                if (Input.GetMouseButtonDown(0))
-                {
-                    // if (CheckButtonClick()) return;
-
-                    DownAction?.Invoke();
-                }
-                else if (Input.GetMouseButton(0) && !isButtonClick)
-                {
-                    _joystickHandle.anchoredPosition = (Vector2)(Input.mousePosition * 2688f / Screen.height) - _joystick.anchoredPosition;
-                    if (_joystickHandle.anchoredPosition.magnitude > JoyStickBound)
-                    {
-                        _joystickHandle.anchoredPosition = _joystickHandle.anchoredPosition.normalized * JoyStickBound;
-                    }
-                    if (_joystickHandle.anchoredPosition.magnitude < Threshold) return;
-
-                    JoystickMoveAction?.Invoke(_joystickHandle.anchoredPosition);
-
-                    Vector3 dir = new Vector3(_joystickHandle.anchoredPosition.x, 0, _joystickHandle.anchoredPosition.y);
-                    if (MoveObjectRig != null)
-                    {
-                        Move(dir);
-                    }
-                }
-                else if (Input.GetMouseButtonUp(0) && !isButtonClick)
-                {
-                    _joystickHandle.anchoredPosition = Vector2.zero;
-
-                    UpAction?.Invoke();
-                }
-                break;
-            case JoyStickMethod.Follow:
-                if (Input.GetMouseButtonDown(0))
-                {
-                    // if (CheckButtonClick()) return;
-
-                    _joystickImage.enabled = true;
-                    _joystickHandleImage.enabled = true;
-
-                    _joystick.anchoredPosition = Input.mousePosition * 2688f / Screen.height;
-                    _joystickHandle.anchoredPosition = Vector2.zero;
-                    _oriPos = _joystick.anchoredPosition;
-
-                    DownAction?.Invoke();
-                }
-                else if (Input.GetMouseButton(0) && !isButtonClick)
-                {
-                    _joystickHandle.anchoredPosition = Input.mousePosition * 2688f / Screen.height - _oriPos;
-                    if (_joystickHandle.anchoredPosition.magnitude > JoyStickBound)
-                    {
-                        _joystick.anchoredPosition = (Vector2)_oriPos + _joystickHandle.anchoredPosition - JoyStickBound * _joystickHandle.anchoredPosition.normalized;
-                        _joystickHandle.anchoredPosition = _joystickHandle.anchoredPosition.normalized * JoyStickBound;
+                        _joystick.anchoredPosition = Input.mousePosition * 2688f / Screen.height;
+                        _joystickHandle.anchoredPosition = Vector2.zero;
                         _oriPos = _joystick.anchoredPosition;
+
+                        DownAction?.Invoke();
                     }
-                    if (_joystickHandle.anchoredPosition.magnitude < Threshold) return;
-
-                    JoystickMoveAction?.Invoke(_joystickHandle.anchoredPosition);
-
-                    Vector3 dir = new Vector3(_joystickHandle.anchoredPosition.x, 0, _joystickHandle.anchoredPosition.y);
-                    if (MoveObjectRig != null)
+                    else if (Input.GetMouseButton(0) && !isButtonClick)
                     {
-                        Move(dir);
+                        _joystickHandle.anchoredPosition = Input.mousePosition * 2688f / Screen.height - _oriPos;
+                        if (_joystickHandle.anchoredPosition.magnitude > JoyStickBound)
+                        {
+                            _joystickHandle.anchoredPosition = _joystickHandle.anchoredPosition.normalized * JoyStickBound;
+                        }
+
+                        if (_joystickHandle.anchoredPosition.magnitude < Threshold) return;
+
+                        JoystickMoveAction?.Invoke(_joystickHandle.anchoredPosition);
+
+                        Vector3 dir = new Vector3(_joystickHandle.anchoredPosition.x, 0, _joystickHandle.anchoredPosition.y);
+
+                        if (MoveObjectRig != null)
+                        {
+                            Move(dir);
+                        }
                     }
-                }
-                else if (Input.GetMouseButtonUp(0) && !isButtonClick)
-                {
-                    _joystickImage.enabled = false;
-                    _joystickHandleImage.enabled = false;
-                    UpAction?.Invoke();
-                }
-                break;
-            case JoyStickMethod.SlowFollow:
-                if (Input.GetMouseButtonDown(0))
-                {
-                    // if (CheckButtonClick()) return;
-
-                    _joystickImage.enabled = true;
-                    _joystickHandleImage.enabled = true;
-
-                    _joystick.anchoredPosition = Input.mousePosition * 2688f / Screen.height;
-                    _joystickHandle.anchoredPosition = Vector2.zero;
-                    _oriPos = _joystick.anchoredPosition;
-
-                    DownAction?.Invoke();
-                }
-                else if (Input.GetMouseButton(0) && !isButtonClick)
-                {
-                    _joystickHandle.anchoredPosition = Input.mousePosition * 2688f / Screen.height - _oriPos;
-                    if (_joystickHandle.anchoredPosition.magnitude > JoyStickBound)
+                    else if (Input.GetMouseButtonUp(0) && !isButtonClick)
                     {
-                        _joystick.anchoredPosition = Vector3.Lerp(_joystick.anchoredPosition, (Vector2)_oriPos + _joystickHandle.anchoredPosition - JoyStickBound * _joystickHandle.anchoredPosition.normalized, Time.deltaTime);
+                        _joystickImage.enabled = false;
+                        _joystickHandleImage.enabled = false;
+                        UpAction?.Invoke();
+                    }
+                    break;
+                case JoyStickMethod.HardFixed:
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        // if (CheckButtonClick()) return;
+
+                        DownAction?.Invoke();
+                    }
+                    else if (Input.GetMouseButton(0) && !isButtonClick)
+                    {
+                        _joystickHandle.anchoredPosition = (Vector2)(Input.mousePosition * 2688f / Screen.height) - _joystick.anchoredPosition;
+                        if (_joystickHandle.anchoredPosition.magnitude > JoyStickBound)
+                        {
+                            _joystickHandle.anchoredPosition = _joystickHandle.anchoredPosition.normalized * JoyStickBound;
+                        }
+                        if (_joystickHandle.anchoredPosition.magnitude < Threshold) return;
+
+                        JoystickMoveAction?.Invoke(_joystickHandle.anchoredPosition);
+
+                        Vector3 dir = new Vector3(_joystickHandle.anchoredPosition.x, 0, _joystickHandle.anchoredPosition.y);
+                        if (MoveObjectRig != null)
+                        {
+                            Move(dir);
+                        }
+                    }
+                    else if (Input.GetMouseButtonUp(0) && !isButtonClick)
+                    {
+                        _joystickHandle.anchoredPosition = Vector2.zero;
+
+                        UpAction?.Invoke();
+                    }
+                    break;
+                case JoyStickMethod.Follow:
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        // if (CheckButtonClick()) return;
+
+                        _joystickImage.enabled = true;
+                        _joystickHandleImage.enabled = true;
+
+                        _joystick.anchoredPosition = Input.mousePosition * 2688f / Screen.height;
+                        _joystickHandle.anchoredPosition = Vector2.zero;
                         _oriPos = _joystick.anchoredPosition;
+
+                        DownAction?.Invoke();
                     }
-                    if (_joystickHandle.anchoredPosition.magnitude < Threshold) return;
-
-                    JoystickMoveAction?.Invoke(_joystickHandle.anchoredPosition);
-
-                    Vector3 dir = new Vector3(_joystickHandle.anchoredPosition.x, 0, _joystickHandle.anchoredPosition.y);
-                    if (MoveObjectRig != null)
+                    else if (Input.GetMouseButton(0) && !isButtonClick)
                     {
-                        Move(dir);
+                        _joystickHandle.anchoredPosition = Input.mousePosition * 2688f / Screen.height - _oriPos;
+                        if (_joystickHandle.anchoredPosition.magnitude > JoyStickBound)
+                        {
+                            _joystick.anchoredPosition = (Vector2)_oriPos + _joystickHandle.anchoredPosition - JoyStickBound * _joystickHandle.anchoredPosition.normalized;
+                            _joystickHandle.anchoredPosition = _joystickHandle.anchoredPosition.normalized * JoyStickBound;
+                            _oriPos = _joystick.anchoredPosition;
+                        }
+                        if (_joystickHandle.anchoredPosition.magnitude < Threshold) return;
+
+                        JoystickMoveAction?.Invoke(_joystickHandle.anchoredPosition);
+
+                        Vector3 dir = new Vector3(_joystickHandle.anchoredPosition.x, 0, _joystickHandle.anchoredPosition.y);
+                        if (MoveObjectRig != null)
+                        {
+                            Move(dir);
+                        }
                     }
-                }
-                else if (Input.GetMouseButtonUp(0) && !isButtonClick)
-                {
-                    _joystickImage.enabled = false;
-                    _joystickHandleImage.enabled = false;
-                    UpAction?.Invoke();
-                }
-                break;
-            case JoyStickMethod.RunningGame:
-                if (MoveObjectRig == null) return;
+                    else if (Input.GetMouseButtonUp(0) && !isButtonClick)
+                    {
+                        _joystickImage.enabled = false;
+                        _joystickHandleImage.enabled = false;
+                        UpAction?.Invoke();
+                    }
+                    break;
+                case JoyStickMethod.SlowFollow:
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        // if (CheckButtonClick()) return;
 
-                if (Input.GetMouseButtonDown(0))
-                {
-                    // if (CheckButtonClick()) return;
+                        _joystickImage.enabled = true;
+                        _joystickHandleImage.enabled = true;
 
-                    _oriXPos = Input.mousePosition.x;
-                    _oriPos = MoveObjectRig.position;
-                    DownAction?.Invoke();
-                }
-                else if (Input.GetMouseButton(0) && !isButtonClick)
-                {
-                    float _curXPos = Input.mousePosition.x;
+                        _joystick.anchoredPosition = Input.mousePosition * 2688f / Screen.height;
+                        _joystickHandle.anchoredPosition = Vector2.zero;
+                        _oriPos = _joystick.anchoredPosition;
 
-                    float nextXPos = Mathf.Clamp(_oriPos.x + (_curXPos - _oriXPos) / _canvasRect.rect.width * X_Sensitivity, -XBound, XBound);
+                        DownAction?.Invoke();
+                    }
+                    else if (Input.GetMouseButton(0) && !isButtonClick)
+                    {
+                        _joystickHandle.anchoredPosition = Input.mousePosition * 2688f / Screen.height - _oriPos;
+                        if (_joystickHandle.anchoredPosition.magnitude > JoyStickBound)
+                        {
+                            _joystick.anchoredPosition = Vector3.Lerp(_joystick.anchoredPosition, (Vector2)_oriPos + _joystickHandle.anchoredPosition - JoyStickBound * _joystickHandle.anchoredPosition.normalized, Time.deltaTime);
+                            _oriPos = _joystick.anchoredPosition;
+                        }
+                        if (_joystickHandle.anchoredPosition.magnitude < Threshold) return;
 
-                    Vector3 nextPos = new Vector3(nextXPos, MoveObjectRig.position.y, MoveObjectRig.position.z);
+                        JoystickMoveAction?.Invoke(_joystickHandle.anchoredPosition);
 
-                    MoveObjectRig.position = Vector3.Lerp(MoveObjectRig.position, nextPos, Time.deltaTime * X_Acceletor);
+                        Vector3 dir = new Vector3(_joystickHandle.anchoredPosition.x, 0, _joystickHandle.anchoredPosition.y);
+                        if (MoveObjectRig != null)
+                        {
+                            Move(dir);
+                        }
+                    }
+                    else if (Input.GetMouseButtonUp(0) && !isButtonClick)
+                    {
+                        _joystickImage.enabled = false;
+                        _joystickHandleImage.enabled = false;
+                        UpAction?.Invoke();
+                    }
+                    break;
+                case JoyStickMethod.RunningGame:
+                    if (MoveObjectRig == null) return;
 
-                    if (!AutoRun)
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        // if (CheckButtonClick()) return;
+
+                        _oriXPos = Input.mousePosition.x;
+                        _oriPos = MoveObjectRig.position;
+                        DownAction?.Invoke();
+                    }
+                    else if (Input.GetMouseButton(0) && !isButtonClick)
+                    {
+                        float _curXPos = Input.mousePosition.x;
+
+                        float nextXPos = Mathf.Clamp(_oriPos.x + (_curXPos - _oriXPos) / _canvasRect.rect.width * X_Sensitivity, -XBound, XBound);
+
+                        Vector3 nextPos = new Vector3(nextXPos, MoveObjectRig.position.y, MoveObjectRig.position.z);
+
+                        MoveObjectRig.position = Vector3.Lerp(MoveObjectRig.position, nextPos, Time.deltaTime * X_Acceletor);
+
+                        if (!AutoRun)
+                        {
+                            MoveObjectRig.MovePosition(MoveObjectRig.position + Vector3.forward * Speed * Time.deltaTime);
+                        }
+                        JoystickMoveAction?.Invoke(_joystickHandle.anchoredPosition);
+                    }
+                    else if (Input.GetMouseButtonUp(0) && !isButtonClick)
+                    {
+                        _joystickImage.enabled = false;
+                        _joystickHandleImage.enabled = false;
+                        UpAction?.Invoke();
+                    }
+                    if (AutoRun)
                     {
                         MoveObjectRig.MovePosition(MoveObjectRig.position + Vector3.forward * Speed * Time.deltaTime);
                     }
-                    JoystickMoveAction?.Invoke(_joystickHandle.anchoredPosition);
-                }
-                else if (Input.GetMouseButtonUp(0) && !isButtonClick)
-                {
-                    _joystickImage.enabled = false;
-                    _joystickHandleImage.enabled = false;
-                    UpAction?.Invoke();
-                }
-                if (AutoRun)
-                {
-                    MoveObjectRig.MovePosition(MoveObjectRig.position + Vector3.forward * Speed * Time.deltaTime);
-                }
-                break;
+                    break;
+            }
         }
     }
 

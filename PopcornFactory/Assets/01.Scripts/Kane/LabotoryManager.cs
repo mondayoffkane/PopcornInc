@@ -131,7 +131,7 @@ public class LabotoryManager : MonoBehaviour
                         {
                             SaveRecipe(0);
                             _gameUi.Recipe_Button.gameObject.SetActive(true);
-                            if(TutorialManager._instance._tutorialLevel == 7)
+                            if (TutorialManager._instance._tutorialLevel == 7)
                             {
                                 TutorialManager._instance.Tutorial();
                             }
@@ -195,10 +195,14 @@ public class LabotoryManager : MonoBehaviour
     {
         //for (int i = 0; i < _recipeNum.Length; i++)
         //{
-        _recipeNum[_num] = true;
-        ES3.Save("Recipe_" + _num, _recipeNum[_num]);
-        _recipe[_num].SetActive(true);
-        //}
+        if (_recipeNum[_num] == false)
+        {            
+            _recipeNum[_num] = true;
+            ES3.Save("Recipe_" + _num, _recipeNum[_num]);
+            _recipe[_num].SetActive(true);
+            _gameUi.Recipe_Button.transform.GetChild(0).gameObject.SetActive(true);
+            //}
+        }
     }
     public void LoadRecipe()
     {

@@ -175,7 +175,7 @@ public class LandManager : MonoBehaviour
 
         _staff_hire_level++;
 
-        //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Land_{_landNum}_Worker_level", $"{_staff_hire_level}" } });
+      
         EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Land_Upgrade_Level", $"Land_{_landNum}_Worker_level_{_staff_hire_level}" } });
 
         SaveData();
@@ -218,7 +218,7 @@ public class LandManager : MonoBehaviour
 
         _staff_speed_level++;
 
-        //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Land_{_landNum}_Speed_level", $"{_staff_speed_level}" } });
+        
         EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Land_Upgrade_Level", $"Land_{_landNum}_Speed_level_{_staff_speed_level}" } });
 
         SaveData();

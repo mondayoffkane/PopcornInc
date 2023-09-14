@@ -110,7 +110,7 @@ public class CameraMove : MonoBehaviour
         }
 
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !_stageManager.isCinema)
         {
             _startXY = new Vector2(Input.mousePosition.x /*0f*/, Input.mousePosition.y);
             _endXY = _startXY;
@@ -183,7 +183,7 @@ public class CameraMove : MonoBehaviour
             }
         }
 
-        else if (Input.GetMouseButton(0) && !isFix)
+        else if (Input.GetMouseButton(0) && !isFix && !_stageManager.isCinema)
         {
             if (EventSystem.current.IsPointerOverGameObject()) // ui 터치시 화면 이동 안하도÷
             {
@@ -209,7 +209,7 @@ public class CameraMove : MonoBehaviour
             }
         }
 
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0) && !_stageManager.isCinema)
         {
             isClick = false;
             _startXY = Vector2.zero;
@@ -217,7 +217,7 @@ public class CameraMove : MonoBehaviour
 
         }
 
-        if (isClick == false)
+        if (isClick == false && !_stageManager.isCinema)
         {
             if (transform.localPosition.x < _limitPos.x)
             {
@@ -245,7 +245,7 @@ public class CameraMove : MonoBehaviour
 #if !UNITY_EDITOR
 
 
-        if (Input.touchCount > 0 && Input.touchCount < 2)
+        if (Input.touchCount > 0 && Input.touchCount < 2 && !_stageManager.isCinema)
         {
             _startSize = _cam.orthographicSize;
             Touch _touch = Input.GetTouch(0);
@@ -319,7 +319,7 @@ public class CameraMove : MonoBehaviour
                     }
                 }}
             }
-            else if ((_touch.phase == TouchPhase.Moved || _touch.phase == TouchPhase.Stationary) && !isFix)
+            else if ((_touch.phase == TouchPhase.Moved || _touch.phase == TouchPhase.Stationary) && !isFix && !_stageManager.isCinema)
             {
                 if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                 {
@@ -345,7 +345,7 @@ public class CameraMove : MonoBehaviour
                 }
             }
 
-            else if (_touch.phase == TouchPhase.Ended)
+            else if (_touch.phase == TouchPhase.Ended && !_stageManager.isCinema)
             {
                 isClick = false;
                 _startXY = Vector2.zero;
@@ -356,7 +356,7 @@ public class CameraMove : MonoBehaviour
 
         }
 
-        if (isClick == false)
+        if (isClick == false && !_stageManager.isCinema)
         {
             if (transform.localPosition.x < _limitPos.x)
             {
@@ -377,7 +377,7 @@ public class CameraMove : MonoBehaviour
         }
 
 
-        if (Input.touchCount == 2) //손가락 2개가 눌렸을 때
+        if (Input.touchCount == 2 && !_stageManager.isCinema) //손가락 2개가 눌렸을 때
         {
             Touch touchZero = Input.GetTouch(0); //첫번째 손가락 터치를 저장
             Touch touchOne = Input.GetTouch(1); //두번째 손가락 터치를 저장

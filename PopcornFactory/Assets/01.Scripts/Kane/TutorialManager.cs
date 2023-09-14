@@ -76,6 +76,11 @@ public class TutorialManager : MonoBehaviour
     public void Tutorial_Comple()
     {
         isFix = false;
+        if (_mask == null)
+        {
+            _mask = Managers.GameUI.Mask;
+            _arrow = _mask.transform.GetChild(0).GetComponent<Image>();
+        }
         _mask.enabled = false;
         _arrow.gameObject.SetActive(false);
 

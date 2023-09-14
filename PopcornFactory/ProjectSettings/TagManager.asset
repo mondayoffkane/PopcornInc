@@ -19,6 +19,7 @@ TagManager:
   - UiCamera
   - Lab_Product
   - WorkerBox_Init
+  - CinemaCam
   layers:
   - Default
   - TransparentFX

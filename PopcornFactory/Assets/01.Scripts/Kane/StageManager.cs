@@ -61,7 +61,8 @@ public class StageManager : MonoBehaviour
     public Transform _targetMachine_Trans;
     EventTrigger _eventTrigger;
 
-    public CameraMove _cam;
+    public CameraMove _islandCam;
+    public Camera _cinemaCam;
     //Transform _partsbutton_Trans;
 
     public Vector3[] _popupOffset = new Vector3[5];
@@ -84,6 +85,7 @@ public class StageManager : MonoBehaviour
 
     public Transform _labButton;
     public Vector3 _labButton_offset;
+    public bool isCinema = false;
     /// RV /========================================
 
     public bool isRvDouble = false;
@@ -139,7 +141,7 @@ public class StageManager : MonoBehaviour
         _parts_upgrade_level = _data.Parts_Upgrade_Level;
         _playTime = _data.PlayTime;
 
-
+        _gameManager.CalcGem(0);
 
         _land_machineGroup = new Machine[_machineGroup.Length][];
         for (int i = 0; i < _machineGroup.Length; i++)
@@ -179,8 +181,8 @@ public class StageManager : MonoBehaviour
         AddScrollContent();
 
         SetTrans();
-        _cam = Camera.main.transform.GetComponent<CameraMove>();
-
+        _islandCam = Camera.main.transform.GetComponent<CameraMove>();
+        _cinemaCam = GameObject.FindGameObjectWithTag("CinemaCam").GetComponent<Camera>();
 
         // check stage settings , objects.. etc..
         _popupButtons = new GameObject[_machineList.Count];
@@ -280,7 +282,7 @@ public class StageManager : MonoBehaviour
                 if (AdsManager.ShowInterstitial() == true && _noAds == 0)
                 {
                     _IsCount++;
-                    //EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "IsCount", $"{_IsCount}" } });
+
                     EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "AdsCount", $"IsCount_{_IsCount}" } });
                     yield return _s60;
                 }
@@ -299,7 +301,7 @@ public class StageManager : MonoBehaviour
     {
         _targetMachine_Trans.GetComponent<Machine>().isPress = true;
         _targetMachine_Trans.GetComponent<Machine>().UpgradeMachine();
-        _cam.GetComponent<CameraMove>().isClick = false;
+        _islandCam.isClick = false;
     }
 
     void OnPointerUp(PointerEventData data)
@@ -310,49 +312,53 @@ public class StageManager : MonoBehaviour
 
     private void Update()
     {
-
-        for (int i = 0; i < _machineList.Count; i++)
+        if (!isCinema)
         {
-            _popupButtons[i].transform.position = Camera.main.WorldToScreenPoint(_machineList[i].transform.position + _popupOffset[i]);
-
-        }
-
-        _labButton.transform.position = Camera.main.WorldToScreenPoint(_gameManager._labotoryManager.transform.position + _labButton_offset);
 
 
-        if (_popupPanel.gameObject.activeSelf)
-        {
-            _popupPanel.position = Camera.main.WorldToScreenPoint(_targetMachine_Trans.position + Vector3.up * 20f);
-        }
-
-        _gameUi.RV_Income_TimeText.text = $" {"Income X2"} \n {(intervalRvDouble / 60).ToString("F0") + ":" + (intervalRvDouble % 60).ToString("F0")}";
-
-        if (isBigMoney == false)
-        {
-            if (_parts_upgrade_level > 0)
+            for (int i = 0; i < _machineList.Count; i++)
             {
-                _bigmoney_term -= Time.deltaTime;
-                if (_bigmoney_term <= 0 && upgradeCount < 2)
+
+                _popupButtons[i].transform.position = Camera.main.WorldToScreenPoint(_machineList[i].transform.position + _popupOffset[i]);
+
+            }
+
+            _labButton.transform.position = Camera.main.WorldToScreenPoint(_gameManager._labotoryManager.transform.position + _labButton_offset);
+
+
+            if (_popupPanel.gameObject.activeSelf)
+            {
+                _popupPanel.position = Camera.main.WorldToScreenPoint(_targetMachine_Trans.position + Vector3.up * 20f);
+            }
+
+            _gameUi.RV_Income_TimeText.text = $" {"Income X2"} \n {(intervalRvDouble / 60).ToString("F0") + ":" + (intervalRvDouble % 60).ToString("F0")}";
+
+            if (isBigMoney == false)
+            {
+                if (_parts_upgrade_level > 0)
                 {
-                    _bigmoney_term = _maxTerm;
-                    isBigMoney = true;
-                    BigMoneyOnOff(true);
-                    EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", "BigMoney" } });
+                    _bigmoney_term -= Time.deltaTime;
+                    if (_bigmoney_term <= 0 && upgradeCount < 2)
+                    {
+                        _bigmoney_term = _maxTerm;
+                        isBigMoney = true;
+                        BigMoneyOnOff(true);
+                        EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", "BigMoney" } });
+                    }
                 }
             }
-        }
-        else
-        {
-            _bigmoney_Showterm -= Time.deltaTime;
-            if (_bigmoney_Showterm <= 0)
+            else
             {
-                _bigmoney_Showterm = _maxTerm;
-                isBigMoney = false;
-                BigMoneyOnOff(false);
+                _bigmoney_Showterm -= Time.deltaTime;
+                if (_bigmoney_Showterm <= 0)
+                {
+                    _bigmoney_Showterm = _maxTerm;
+                    isBigMoney = false;
+                    BigMoneyOnOff(false);
+                }
             }
+
         }
-
-
     }
 
     public void SetTrans()
@@ -540,7 +546,7 @@ public class StageManager : MonoBehaviour
             float _size2 = _mapObjs[_parts_upgrade_level].transform.lossyScale.x;
 
 
-            _cam.GetComponent<Camera>().DOOrthoSize(50f, _easeInterval * 0.5f);
+            _islandCam.GetComponent<Camera>().DOOrthoSize(50f, _easeInterval * 0.5f);
 
             DOTween.Sequence().AppendInterval(_easeInterval + 3f).AppendCallback(() =>
             {
@@ -571,7 +577,7 @@ public class StageManager : MonoBehaviour
                 if (_landManagers[1]._cup.gameObject.activeSelf == false)
                 {
                     _landManagers[1]._cup.gameObject.SetActive(true);
-                    _cam.GetComponent<Camera>().DOOrthoSize(75f, 0.5f);
+                    _islandCam.GetComponent<Camera>().DOOrthoSize(75f, 0.5f);
                 }
                 _landManagers[1]._cup.NextPos();
                 if (_parts_upgrade_level == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) - 2))
@@ -587,8 +593,8 @@ public class StageManager : MonoBehaviour
                     IEnumerator Cor_Tuto()
                     {
                         yield return new WaitForSeconds(1f);
-                        _cam.LookTarget(_gameManager._labotoryManager.transform);
-                        _cam.GetComponent<Camera>().DOOrthoSize(45f, 0.5f);
+                        _islandCam.LookTarget(_gameManager._labotoryManager.transform);
+                        _islandCam.GetComponent<Camera>().DOOrthoSize(45f, 0.5f);
                         yield return new WaitForSeconds(0.5f);
                         TutorialManager._instance.Tutorial();
                     }
@@ -632,7 +638,7 @@ public class StageManager : MonoBehaviour
             _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(false);
 
 
-        _cam.LookTarget(_machineList[_parts_upgrade_level].transform);
+        _islandCam.LookTarget(_machineList[_parts_upgrade_level].transform);
 
 
         SaveData();
@@ -704,17 +710,17 @@ public class StageManager : MonoBehaviour
                 _popupButtons[i].SetActive(
                 (_gameManager.Money >= _machineList[i]._upgradePrice[_machineList[i]._level])
                 && _machineList[i].gameObject.activeSelf
-                && (_machineList[i]._level < _machineList[i]._maxLevel - 1));
+                && (_machineList[i]._level < _machineList[i]._maxLevel - 1) && !isCinema);
 
             }
 
             if (_popupButtons[0].activeSelf && TutorialManager._instance._tutorialLevel == 4)
             {
                 DOTween.Sequence()
-.Append(_cam.transform.DOMove(new Vector3(4.2f, 144.4f, -190f), 0.5f).SetEase(Ease.Linear))
-.Append(_cam.GetComponent<Camera>().DOOrthoSize(45f, 0.5f))
-      .AppendCallback(() => { _cam.isFix = true; })
-.OnComplete(() => _cam.isFix = false);
+.Append(_islandCam.transform.DOMove(new Vector3(4.2f, 144.4f, -190f), 0.5f).SetEase(Ease.Linear))
+.Append(_islandCam.GetComponent<Camera>().DOOrthoSize(45f, 0.5f))
+      .AppendCallback(() => { _islandCam.isFix = true; })
+.OnComplete(() => _islandCam.isFix = false);
                 TutorialManager._instance.Tutorial();
             }
 
@@ -779,7 +785,7 @@ public class StageManager : MonoBehaviour
         _targetMachine_Trans.GetComponent<Machine>().CheckPrice(_popupPanel);
         _popupPanel.position = Camera.main.WorldToScreenPoint(_targetMachine_Trans.position + Vector3.up * 20f);
         _popupPanel.gameObject.SetActive(true);
-        _cam.LookTarget(_targetMachine_Trans);
+        _islandCam.LookTarget(_targetMachine_Trans);
     }
 
 
@@ -805,10 +811,10 @@ public class StageManager : MonoBehaviour
     {
         if (!isRvDouble)
         {
-            MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Doble_Money" } });
+            EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Doble_Money" } });
 
             _RvCount++;
-            //EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "RvCount", $"{_RvCount}" } });
+
             EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "AdsCount", $"RvCount_{_RvCount}" } });
 
 
@@ -840,9 +846,9 @@ public class StageManager : MonoBehaviour
     public void RV_BigMoney()
     {
         isBigMoney = false;
-        MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Big_Money" } });
+        EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Big_Money" } });
         _RvCount++;
-        //EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "RvCount", $"{_RvCount}" } });
+
         EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "AdsCount", $"RvCount_{_RvCount}" } });
 
         _gameManager.AddMoney(bigMoney * 5d);
@@ -856,7 +862,7 @@ public class StageManager : MonoBehaviour
     //{
     //    //int _num = _parts_upgrade_level;
     //    _num = _rvRailNum;
-    //    MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Auto_Rail" } });
+
     //    _gameUi.RvRail_Panel.SetActive(false);
     //    DOTween.Sequence().AppendCallback(() => { _machineList[_num].RailOnOff(true); })
     //        .AppendInterval(30f)
@@ -865,7 +871,7 @@ public class StageManager : MonoBehaviour
 
     //public void RV_Worker()
     //{
-    //    MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "More Worker" } });
+
     //    _gameUi.RvWorker_Panel.SetActive(false);
 
     //    for (int i = 0; i < _landManagers.Count; i++)
@@ -904,7 +910,7 @@ public class StageManager : MonoBehaviour
     public void RV_Skin()
     {
 
-        MondayOFF.EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Skin" } });
+        EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Skin" } });
     }
 
 
@@ -1294,8 +1300,7 @@ public class StageManager : MonoBehaviour
     //        _rvRailNum = _num;
     //        _gameUi.RvRail_Panel.SetActive(true);
     //    });
-    //    MondayOFF.EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", "Rv_Rail" } });
-
+    //   
 
     //}
 
@@ -1309,12 +1314,32 @@ public class StageManager : MonoBehaviour
     //        _gameUi.RvWorker_Panel.SetActive(true);
 
     //    });
-    //    MondayOFF.EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", "Rv_Worker" } });
+
 
 
     //}
 
+    public void isCinemaOn(bool isOn)
+    {
+        isCinema = isOn;
+        _islandCam.GetComponent<Camera>().enabled = !isCinema;
+        _cinemaCam.enabled = isCinema;
 
+        AdsManager.ChangeAdvertyCamera(isOn ? _cinemaCam : _islandCam.GetComponent<Camera>());
+        if (isOn)
+            Popup_Off(true);
+    }
+
+    public void Popup_Off(bool isOn)
+    {
+
+        for (int i = 0; i < _machineList.Count; i++)
+        {
+            _popupButtons[i].SetActive(!isOn);
+
+        }
+
+    }
 
 
 }

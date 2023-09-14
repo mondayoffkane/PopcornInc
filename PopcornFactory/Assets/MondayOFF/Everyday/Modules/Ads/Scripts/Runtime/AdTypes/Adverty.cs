@@ -8,14 +8,14 @@ namespace MondayOFF
     {
         internal Adverty(in Camera mainCamera)
         {
-            Debug.Log("test adverty 1");
+
             EverydayLogger.Info("Initializing Adverty");
             UserData userData = new UserData(AgeSegment.Unknown, Gender.Unknown);
-            Debug.Log("test adverty 2");
+            Debug.Log("Test1");
             AdvertySDK.Init(EverydaySettings.AdSettings.advertyApiKey, AdvertySettings.Mode.Mobile, !AdsManager.HAS_USER_CONSENT, userData);
-            Debug.Log("test adverty 3");
+            Debug.Log("Test2");
             AdvertySettings.SetMainCamera(mainCamera);
-            Debug.Log("test adverty 4");
+
             // AdvertySettings.SandboxMode = false;
         }
 

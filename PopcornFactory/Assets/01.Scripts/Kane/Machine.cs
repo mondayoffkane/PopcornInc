@@ -61,7 +61,7 @@ public class Machine : MonoBehaviour
 
 
 
-    Transform _panel;
+    [SerializeField] Transform _panel;
     GameObject _popupButton;
     Text _levelText, _productText, _product_PriceText, _intervalText, _upgrade_PriceText;
     Button _upgradeButton;
@@ -316,7 +316,7 @@ public class Machine : MonoBehaviour
         if (_panel == null)
         {
             _panel = _Panel; //transform.Find("Canvas").transform;
-            //_popupButton = _panel.transform.Find("PopUp_Button").gameObject;
+
             _levelText = _panel.Find("LevelText").GetComponent<Text>();
             _productText = _panel.Find("ProductText").GetComponent<Text>();
             _product_PriceText = _panel.Find("Product_PriceText").GetComponent<Text>();
@@ -327,6 +327,7 @@ public class Machine : MonoBehaviour
 
 
         }
+        //_panel.Find("Double").gameObject.SetActive(false);
 
         _levelText.text = $"Level  {(_level + 1).ToString()}";
         _productText.text = $"{_name}";
@@ -336,7 +337,28 @@ public class Machine : MonoBehaviour
         _upgrade_PriceText.text = _level < (_maxLevel - 1)
             ? $"{Managers.ToCurrencyString(_upgradePrice[_level])}" : "Max";
 
-        _guageImg.fillAmount = ((_level + 1) % 10) * 0.1f; //== 0 ? 1f : ((_level + 1) % 10) * 0.1f;
+        //_guageImg.fillAmount = ((_level + 1) % 10) * 0.1f; //== 0 ? 1f : ((_level + 1) % 10) * 0.1f;
+
+        switch ((_level + 1))
+        {
+            case int n when n <= 10:
+                _guageImg.fillAmount = ((float)(_level + 1) / 10f);// * 0.1f;
+                break;
+
+            case int n when n > 10 && n <= 25:
+                _guageImg.fillAmount = ((float)(_level + 1 - 10) / 15f);// * 0.1f;
+                break;
+
+            case int n when n > 25 && n <= 50:
+                _guageImg.fillAmount = ((float)(_level + 1 - 25) / 25f);// * 0.1f;
+                break;
+
+            case int n when n > 50 && n <= 100:
+                _guageImg.fillAmount = ((float)(_level + 1 - 50) / 50f);// * 0.1f;
+                break;
+        }
+
+
         if (_level >= _maxLevel - 1)
             _guageImg.fillAmount = 1f; //== 0 ? 1f : ((_level + 1) % 10) * 0.1f;
 
@@ -364,13 +386,13 @@ public class Machine : MonoBehaviour
 
             _level++;
 
-            EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"MachineUpgradeLevel", $"Machine_{_machineNum}_{_level}" } });
+            EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_Upgrade_Level", $"Machine_{_machineNum}_{_level}" } });
 
 
             if (_level % 10 == 0)
             {
 
-                MondayOFF.EventTracker.LogCustomEvent("MachineUpgradeTime", new Dictionary<string, string> { { $"Machine_Upgrade_Time", $"Machine_{_machineNum}_{_level}_{_gamemanager._stageManager._playTime}s" } });
+                EventTracker.LogCustomEvent("MachineUpgradeTime", new Dictionary<string, string> { { $"Machine_Upgrade_Time", $"Machine_{_machineNum}_{_level}_{_gamemanager._stageManager._playTime}s" } });
             }
 
 
@@ -379,12 +401,26 @@ public class Machine : MonoBehaviour
                 _gamemanager.CalcGem(1);
             }
 
-            if (_addShapeObj != null)
+            switch ((_level + 1))
             {
-                //foreach (GameObject _obj in _addShapeObj)
-                //{
-                //    _obj.SetActive(false);
-                //}
+                case 10:
+                case 25:
+                case 50:
+                case 100:
+                    DOTween.Sequence().AppendCallback(() =>
+                    {
+                        _panel.Find("Double").localScale = Vector3.zero;
+
+                    }).AppendCallback(() => _panel.Find("Double").DOScale(Vector3.one, 0.5f).SetEase(Ease.InOutCirc))
+                    .AppendInterval(1.5f)
+                    .AppendCallback(() => _panel.Find("Double").DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutCirc));
+
+                    break;
+            }
+
+            if (_addShapeObj.Length > 0)
+            {
+
 
                 if ((_level + 1) == 25)
                 {
@@ -397,6 +433,10 @@ public class Machine : MonoBehaviour
                     _addShapeObj[1].SetActive(false);
                     _addShapeObj[2].SetActive(true);
                 }
+
+
+
+
             }
 
 
@@ -420,14 +460,13 @@ public class Machine : MonoBehaviour
                 _gamemanager.CalcMoney(-_scrollUpgrade1_Price[_priceScopeLevel]);
                 _priceScopeLevel++;
 
-                //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_{_machineNum}_Income_Level", $"{_priceScopeLevel}" } });
                 EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_Upgrade_Level", $"Machine_{_machineNum}_Income_{_priceScopeLevel}" } });
                 break;
 
             case 1:
                 _gamemanager.CalcMoney(-_scrollUpgrade2_Price[_spawnLevel]);
                 _spawnLevel++;
-                //EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_{_machineNum}_Speed_Level", $"{_spawnLevel}" } });
+
                 EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_Upgrade_Level", $"Machine_{_machineNum}Speed{_spawnLevel}" } });
                 break;
 

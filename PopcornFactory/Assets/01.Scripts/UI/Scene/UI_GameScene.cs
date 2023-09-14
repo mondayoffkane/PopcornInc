@@ -14,20 +14,22 @@ public class UI_GameScene : UI_Scene
     {
         Money_Text,
         Gem_Text,
+        AddParts_Price_Text,
         RV_Income_TimeText,
         UpgradeCountText,
-        AddParts_Price_Text,
         AddStaff_Price_Text,
         Income_Price_Text,
     }
     enum Buttons
     {
-        AddParts_Upgrade_Button,
         Setting_Button,
+        AddParts_Upgrade_Button,
         AddUpgrade_Button,
         RV_Income_Double,
         BigMoneyButton,
         Recipe_Button,
+        Cinema_Button,
+        Island_Button,
         NoAds_Button,
         AddStaff_Upgrade_Button,
         Income_Upgrade_Button,
@@ -44,6 +46,8 @@ public class UI_GameScene : UI_Scene
     }
     enum GameObjects
     {
+        IslandUi_Group,
+        CinemaUI_Group,
         Upgrade_Panel,
         Setting_Panel,
         Scroll_Panel,
@@ -74,6 +78,8 @@ public class UI_GameScene : UI_Scene
         , Laboratory_Close_Button
         , Recipe_Button
         , Recipe_Close_Button
+        , Cinema_Button
+        , Island_Button
                 ;
     //, NextStageButton;
 
@@ -92,6 +98,8 @@ public class UI_GameScene : UI_Scene
         Laboratory_Content
         , Recipe_Panel
         , Recipe_Content
+        , IslandUi_Group
+        , CinemaUI_Group
         ;
 
     public Image Mask;
@@ -134,6 +142,8 @@ public class UI_GameScene : UI_Scene
         Laboratory_Close_Button = GetButton(Buttons.Laboratory_Close_Button);
         Recipe_Button = GetButton(Buttons.Recipe_Button);
         Recipe_Close_Button = GetButton(Buttons.Recipe_Close_Button);
+        Cinema_Button = GetButton(Buttons.Cinema_Button);
+        Island_Button = GetButton(Buttons.Island_Button);
 
 
         Money_Text = GetText(Texts.Money_Text);
@@ -160,6 +170,9 @@ public class UI_GameScene : UI_Scene
         Laboratory_Content = GetObject(GameObjects.Laboratory_Content);
         Recipe_Panel = GetObject(GameObjects.Recipe_Panel);
         Recipe_Content = GetObject(GameObjects.Recipe_Content);
+        IslandUi_Group = GetObject(GameObjects.IslandUi_Group);
+        CinemaUI_Group = GetObject(GameObjects.CinemaUI_Group);
+
 
 
         Mask = GetImage(Images.Mask);
@@ -182,7 +195,7 @@ public class UI_GameScene : UI_Scene
             Debug.Log(Managers.Data.UseSound);
             Sound_Button.transform.GetChild(1).gameObject.SetActive(Managers.Data.UseSound);
             Sound_Button.transform.GetChild(2).gameObject.SetActive(!Managers.Data.UseSound);
-            Managers.Game._stageManager._cam.GetComponent<AudioSource>().mute = !Managers.Data.UseSound;
+            Managers.Game._stageManager._islandCam.GetComponent<AudioSource>().mute = !Managers.Data.UseSound;
 
         });
 
@@ -228,6 +241,7 @@ public class UI_GameScene : UI_Scene
         {
             OffPopup();
             Recipe_Panel.SetActive(!Recipe_Panel.activeSelf);
+            Recipe_Button.transform.GetChild(0).gameObject.SetActive(false);
             if (TutorialManager._instance._tutorialLevel == 7)
             {
                 TutorialManager._instance.Tutorial_Comple();
@@ -236,9 +250,25 @@ public class UI_GameScene : UI_Scene
         });
         Recipe_Close_Button.AddButtonEvent(() => Recipe_Panel.SetActive(false));
 
+        Cinema_Button.AddButtonEvent(() =>
+        {
+            OffPopup();
+            IslandUi_Group.SetActive(false);
+            CinemaUI_Group.SetActive(true);
+            Managers.Game._stageManager.isCinemaOn(true);
+        });
+
+        Island_Button.AddButtonEvent(() =>
+        {
+            OffPopup();
+            IslandUi_Group.SetActive(true);
+            CinemaUI_Group.SetActive(false);
+            Managers.Game._stageManager.isCinemaOn(false);
+            
+        });
 
         // == Inapp , No Ads ===========================
-        NoAds_Button.AddButtonEvent(() => NoAds_Panel.SetActive(true));
+        NoAds_Button.AddButtonEvent(() => { OffPopup(); NoAds_Panel.SetActive(true); });
         NoAds_Purchase_Button.AddButtonEvent(() =>
         {
             MondayOFF.NoAds.Purchase();
