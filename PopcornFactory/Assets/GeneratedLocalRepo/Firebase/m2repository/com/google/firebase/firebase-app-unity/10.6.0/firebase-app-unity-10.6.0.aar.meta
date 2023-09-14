@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: 05ebfe2b7410a40c180bdafe0c52c013
+<<<<<<< HEAD
 labels:
 - gpsr
+=======
+>>>>>>> DDUI
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -16,7 +19,11 @@ PluginImporter:
   - first:
       Android: Android
     second:
+<<<<<<< HEAD
       enabled: 0
+=======
+      enabled: 1
+>>>>>>> DDUI
       settings: {}
   - first:
       Any: 

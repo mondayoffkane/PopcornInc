@@ -53,6 +53,7 @@ dependencies {
     implementation 'com.android.support:support-v4:25.3.1' // Facebook.Unity.Editor.AndroidSupportLibraryResolver.addSupportLibraryDependency
     implementation 'com.applovin.mediation:adcolony-adapter:4.8.0.4' // Assets/MaxSdk/Mediation/AdColony/Editor/Dependencies.xml:4
     implementation 'com.applovin.mediation:amazon-tam-adapter:9.+@aar' // Assets/Amazon/Scripts/Mediations/AppLovinMediation/Editor/Dependencies.xml:4
+<<<<<<< HEAD
     implementation 'com.applovin.mediation:bytedance-adapter:5.4.0.8.0' // Assets/MaxSdk/Mediation/ByteDance/Editor/Dependencies.xml:8
     implementation 'com.applovin.mediation:facebook-adapter:[6.15.0.0]' // Assets/MaxSdk/Mediation/Facebook/Editor/Dependencies.xml:8
     implementation 'com.applovin.mediation:fyber-adapter:8.2.3.3' // Assets/MaxSdk/Mediation/Fyber/Editor/Dependencies.xml:4
@@ -66,6 +67,21 @@ dependencies {
     implementation 'com.applovin.mediation:tapjoy-adapter:13.0.1.0' // Assets/MaxSdk/Mediation/Tapjoy/Editor/Dependencies.xml:8
     implementation 'com.applovin.mediation:unityads-adapter:4.8.0.0' // Assets/MaxSdk/Mediation/UnityAds/Editor/Dependencies.xml:4
     implementation 'com.applovin.mediation:verve-adapter:2.19.0.0' // Assets/MaxSdk/Mediation/Verve/Editor/Dependencies.xml:4
+=======
+    implementation 'com.applovin.mediation:bytedance-adapter:5.3.0.4.0' // Assets/MaxSdk/Mediation/ByteDance/Editor/Dependencies.xml:8
+    implementation 'com.applovin.mediation:facebook-adapter:[6.14.0.0]' // Assets/MaxSdk/Mediation/Facebook/Editor/Dependencies.xml:8
+    implementation 'com.applovin.mediation:fyber-adapter:8.2.3.3' // Assets/MaxSdk/Mediation/Fyber/Editor/Dependencies.xml:4
+    implementation 'com.applovin.mediation:google-adapter:[22.2.0.0]' // Assets/MaxSdk/Mediation/Google/Editor/Dependencies.xml:5
+    implementation 'com.applovin.mediation:google-ad-manager-adapter:[22.2.0.0]' // Assets/MaxSdk/Mediation/GoogleAdManager/Editor/Dependencies.xml:5
+    implementation 'com.applovin.mediation:hyprmx-adapter:6.2.0.1' // Assets/MaxSdk/Mediation/HyprMX/Editor/Dependencies.xml:4
+    implementation 'com.applovin.mediation:inmobi-adapter:10.1.4.1' // Assets/MaxSdk/Mediation/InMobi/Editor/Dependencies.xml:4
+    implementation 'com.applovin.mediation:ironsource-adapter:7.3.1.1.0' // Assets/MaxSdk/Mediation/IronSource/Editor/Dependencies.xml:8
+    implementation 'com.applovin.mediation:mintegral-adapter:16.4.71.0' // Assets/MaxSdk/Mediation/Mintegral/Editor/Dependencies.xml:8
+    implementation 'com.applovin.mediation:mobilefuse-adapter:1.5.2.0' // Assets/MaxSdk/Mediation/MobileFuse/Editor/Dependencies.xml:4
+    implementation 'com.applovin.mediation:tapjoy-adapter:13.1.1.0' // Assets/MaxSdk/Mediation/Tapjoy/Editor/Dependencies.xml:8
+    implementation 'com.applovin.mediation:unityads-adapter:4.8.0.0' // Assets/MaxSdk/Mediation/UnityAds/Editor/Dependencies.xml:4
+    implementation 'com.applovin.mediation:verve-adapter:2.18.1.1' // Assets/MaxSdk/Mediation/Verve/Editor/Dependencies.xml:4
+>>>>>>> DDUI
     implementation 'com.applovin.mediation:vungle-adapter:6.12.1.1' // Assets/MaxSdk/Mediation/Vungle/Editor/Dependencies.xml:4
     implementation 'com.applovin:applovin-sdk:11.10.1' // Assets/MaxSdk/AppLovin/Editor/Dependencies.xml:4
     implementation 'com.facebook.android:facebook-applinks:[15.1,16)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:6
