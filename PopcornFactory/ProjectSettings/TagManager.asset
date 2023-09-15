@@ -20,6 +20,7 @@ TagManager:
   - Lab_Product
   - WorkerBox_Init
   - CinemaCam
+  - CinemaMachine
   layers:
   - Default
   - TransparentFX

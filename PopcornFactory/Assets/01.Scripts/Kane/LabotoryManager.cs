@@ -115,7 +115,7 @@ public class LabotoryManager : MonoBehaviour
             yield return new WaitForSeconds(_spawnInterval); //_term;
             if (isSpawn)
             {
-                Debug.Log("Cor spawn");
+                //Debug.Log("Cor spawn");
                 if (_productType_Count[0] > 0 && _productType_Count[1] >= _resourceList[0] && _productType_Count[2] >= _resourceList[1])
                 {
                     _productType_Count[0] -= 1;
@@ -196,7 +196,7 @@ public class LabotoryManager : MonoBehaviour
         //for (int i = 0; i < _recipeNum.Length; i++)
         //{
         if (_recipeNum[_num] == false)
-        {            
+        {
             _recipeNum[_num] = true;
             ES3.Save("Recipe_" + _num, _recipeNum[_num]);
             _recipe[_num].SetActive(true);

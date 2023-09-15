@@ -61,6 +61,8 @@ public class CameraMove : MonoBehaviour
         _beltMat.DOOffset(new Vector2(0f, -1f), 1f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
     }
 
+#if UNITY_EDITOR
+
     void Update()
     {
         if (Input.GetKey(KeyCode.Q))
@@ -89,12 +91,15 @@ public class CameraMove : MonoBehaviour
         {
             Camera.main.orthographicSize -= 0.1f;
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+        }
 
 
 
 
 
-#if UNITY_EDITOR
 
 
         float _val = Input.GetAxis("Mouse ScrollWheel") * _wheelSense;

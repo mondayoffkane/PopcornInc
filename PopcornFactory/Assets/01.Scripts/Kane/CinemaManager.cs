@@ -1,18 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
 public class CinemaManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public Transform _waitingPos;
+
+
+
+    [TitleGroup("Customer")] public List<Customer> _customerList;
+
+
+    private void Start()
     {
-        
+        if (_waitingPos == null) _waitingPos = transform.Find("WatingPos");
+
+        _customerList = new List<Customer>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    private void Update()
     {
-        
+
+        //_customerList.co
+
+
+
     }
+
+
+
+
+
+
 }

@@ -13,7 +13,6 @@
     <package>com.android.support:support-v4:25.3.1</package>
     <package>com.applovin.mediation:adcolony-adapter:4.8.0.4</package>
     <package>com.applovin.mediation:amazon-tam-adapter:9.+@aar</package>
-<<<<<<< HEAD
     <package>com.applovin.mediation:bytedance-adapter:5.4.0.8.0</package>
     <package>com.applovin.mediation:facebook-adapter:[6.15.0.0]</package>
     <package>com.applovin.mediation:fyber-adapter:8.2.3.3</package>
@@ -25,19 +24,6 @@
     <package>com.applovin.mediation:mintegral-adapter:16.4.61.0</package>
     <package>com.applovin.mediation:mobilefuse-adapter:1.6.0.0</package>
     <package>com.applovin.mediation:tapjoy-adapter:13.0.1.0</package>
-=======
-    <package>com.applovin.mediation:bytedance-adapter:5.3.0.4.0</package>
-    <package>com.applovin.mediation:facebook-adapter:[6.14.0.0]</package>
-    <package>com.applovin.mediation:fyber-adapter:8.2.3.3</package>
-    <package>com.applovin.mediation:google-adapter:[22.2.0.0]</package>
-    <package>com.applovin.mediation:google-ad-manager-adapter:[22.2.0.0]</package>
-    <package>com.applovin.mediation:hyprmx-adapter:6.2.0.1</package>
-    <package>com.applovin.mediation:inmobi-adapter:10.1.4.1</package>
-    <package>com.applovin.mediation:ironsource-adapter:7.3.1.1.0</package>
-    <package>com.applovin.mediation:mintegral-adapter:16.4.71.0</package>
-    <package>com.applovin.mediation:mobilefuse-adapter:1.5.2.0</package>
-    <package>com.applovin.mediation:tapjoy-adapter:13.1.1.0</package>
->>>>>>> DDUI
     <package>com.applovin.mediation:unityads-adapter:4.8.0.0</package>
     <package>com.applovin.mediation:verve-adapter:2.19.0.0</package>
     <package>com.applovin.mediation:vungle-adapter:6.12.1.1</package>
@@ -63,8 +49,7 @@
     <package>com.squareup.picasso:picasso:2.71828</package>
   </packages>
   <files>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/10.6.0/firebase-analytics-unity-10.6.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/10.6.0/firebase-analytics-unity-10.6.0.pom</file>
+    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-app-unity/10.6.0/firebase-app-unity-10.6.0.pom</file>
   </files>
   <settings>
     <setting name="androidAbis" value="arm64-v8a,armeabi-v7a" />
