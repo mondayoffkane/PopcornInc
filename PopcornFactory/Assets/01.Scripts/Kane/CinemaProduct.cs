@@ -7,7 +7,6 @@ public class CinemaProduct : MonoBehaviour
 
     public enum CinemaProductType
     {
-
         Popcorn,
         Choco,
         Berry

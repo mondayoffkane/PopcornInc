@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [TitleGroup("Product")] public float _moveSpeed = 1f;
     [TitleGroup("Product")] public Transform _stackPos;
     [TitleGroup("Product")] public int _maxCount = 5;
+    [TitleGroup("Product")] public float _pickInterval = 0.5f;
     public bool isReady = true;
     [SerializeField] float _stackY = 0.5f;
 
@@ -62,12 +63,27 @@ public class Player : MonoBehaviour
 
                 CinemaMachine _machine = other.GetComponent<CinemaMachine>();
                 if (_machine._productStack.Count > 0 && _productStack.Count < _maxCount && isReady)
+                {
                     PushProduct(_machine._productStack.Pop());
-
+                    _animator.SetBool("Pick", true);
+                }
 
 
                 break;
 
+            case "Counter":
+                Debug.Log("Cor Counter");
+                Counter _counter = other.GetComponent<Counter>();
+                if (_productStack.Count > 0 && isReady)
+                {
+                    int _num = (int)_productStack.Peek()._cinemaProductType;
+
+                    _counter.PushProduct(PopProduct());
+                    DOTween.Sequence(isReady = false).AppendInterval(_pickInterval).OnComplete(() => isReady = true);
+
+                }
+
+                break;
 
 
             default:
@@ -98,8 +114,17 @@ public class Player : MonoBehaviour
 
     }
 
-    void PopProduct(Transform _trans)
+    CinemaProduct PopProduct()
     {
+
+        CinemaProduct _product = _productStack.Pop();
+
+        if (_productStack.Count < 1)
+        {
+            _animator.SetBool("Pick", false);
+        }
+
+        return _product;
 
     }
 }

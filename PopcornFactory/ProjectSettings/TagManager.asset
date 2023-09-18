@@ -21,6 +21,7 @@ TagManager:
   - WorkerBox_Init
   - CinemaCam
   - CinemaMachine
+  - Counter
   layers:
   - Default
   - TransparentFX
