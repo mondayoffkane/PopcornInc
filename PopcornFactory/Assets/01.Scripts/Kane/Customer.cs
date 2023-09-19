@@ -38,7 +38,7 @@ public class Customer : MonoBehaviour
     //public GameObject _panel;
     //public GameObject _chargePanel;
     //public Text _countText;
-
+    public Room _room;
 
     public enum State
     {
@@ -72,7 +72,7 @@ public class Customer : MonoBehaviour
         _animator.SetBool("Walk", true);
         _animator.SetBool("Pick", false);
 
-
+        _room = null;
     }
 
     public void SetDest(Vector3 _destiny)
@@ -87,10 +87,11 @@ public class Customer : MonoBehaviour
     {
         if ((_agent.remainingDistance < _minDist) && isArrive == false)
         {
+            isArrive = true;
             switch (CustomerState)
             {
                 case State.Init:
-                    isArrive = true;
+                    //isArrive = true;
 
 
                     _animator.SetBool("Walk", false);
@@ -101,7 +102,7 @@ public class Customer : MonoBehaviour
                     break;
 
                 case State.Wait:
-                    isArrive = true;
+                    //isArrive = true;
                     _animator.SetBool("Walk", false);
                     break;
 
@@ -123,37 +124,38 @@ public class Customer : MonoBehaviour
                     }
                     _animator.SetBool("Walk", false);
                     _animator.SetBool("Pick", false);
-                    _animator.SetBool("Charge", true);
-                    //_chargingTable.ChargeobjectOnOff(true);
-                    //transform.rotation = _chargingTable.customerPos.rotation;
+                    //_animator.SetBool("Charge", true);
 
-                    //_chargePanel.SetAc6tive(true);
+
+
                     CustomerState = State.Seat;
+                    _room.SeatCustomer();
                     break;
 
                 case State.Seat:
-                    if (_productStack.Count > 0)
-                    {
 
-                        Current_ChargingTime += Time.deltaTime;
-                        if (Current_ChargingTime >= /*Total_ChargingTime*/ _chargInterval)
-                        {
-                            //_chargingTable.SpawnMoney();
-                            Current_ChargingTime = 0;
-                            _productStack.Pop().gameObject.SetActive(false);
-                        }
-                    }
-                    else
-                    {
-                        isArrive = true;
-                     
-                        _animator.SetBool("Walk", true);
-                        _animator.SetBool("Charge", false);
-                     
-                        DOTween.Sequence().AppendInterval(0.5f).OnComplete(() =>
-                        CustomerState = State.Exit);
-                  
-                    }
+                    //if (_productStack.Count > 0)
+                    //{
+
+                    //    Current_ChargingTime += Time.deltaTime;
+                    //    if (Current_ChargingTime >= /*Total_ChargingTime*/ _chargInterval)
+                    //    {
+                    //        //_chargingTable.SpawnMoney();
+                    //        Current_ChargingTime = 0;
+                    //        _productStack.Pop().gameObject.SetActive(false);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    isArrive = true;
+
+                    //    _animator.SetBool("Walk", true);
+                    //    _animator.SetBool("Charge", false);
+
+                    //    DOTween.Sequence().AppendInterval(0.5f).OnComplete(() =>
+                    //    CustomerState = State.Exit);
+
+                    //}
                     break;
 
                 case State.Exit:
@@ -172,7 +174,7 @@ public class Customer : MonoBehaviour
     public void PushProduct(CinemaProduct _product, float _interval = 0.5f)
     {
         _animator.SetBool("Pick", true);
-        DOTween.Kill(_product);
+        DOTween.Kill(_product.transform);
         Stack_Interval = _product.GetComponent<MeshFilter>().sharedMesh.bounds.size.y;
         _product.transform.SetParent(StackPos);
         OrderCount--;
@@ -182,13 +184,26 @@ public class Customer : MonoBehaviour
                                          {
                                              _productStack.Push(_product);
 
-
                                              _product.transform.localEulerAngles = Vector3.zero;
 
 
                                          });
     }
 
+    public void SetExit()
+    {
+        _animator.SetBool("Pick", false);
+
+        isArrive = false;
+        SetDest(_cinemaManager._doors[1].position);
+        Managers.Pool.Push(_productStack.Pop().GetComponent<Poolable>());
+
+
+        CustomerState = State.Exit;
+
+
+
+    }
 
 
 

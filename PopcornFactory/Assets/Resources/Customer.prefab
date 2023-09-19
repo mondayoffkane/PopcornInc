@@ -993,16 +993,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minDist: 0.5
-  StageManager: {fileID: 0}
+  _cinemaManager: {fileID: 0}
   isArrive: 0
   _agent: {fileID: 0}
   Current_ChargingTime: 0
+  _productType: 0
   OrderCount: 5
   StackPos: {fileID: 0}
   _chargInterval: 2
   Stack_Interval: 0.2
   BaseUp_Interval: 0.5
   Init_StackPointPos: {x: 0, y: 0, z: 0}
+  _room: {fileID: 0}
   CustomerState: 0
   _animator: {fileID: 0}
 --- !u!195 &461327447520938438
@@ -1015,7 +1017,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 8
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

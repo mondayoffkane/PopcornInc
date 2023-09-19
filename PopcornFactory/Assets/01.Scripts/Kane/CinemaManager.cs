@@ -37,11 +37,11 @@ public class CinemaManager : MonoBehaviour
     [TitleGroup("Counter")] public Text _orderText;
 
 
+    public Transform[] _doors = new Transform[2];
 
     /// =============
     [Header("Serialized")]
     Transform _customerGroup;
-    Transform[] _doors = new Transform[2];
     [SerializeField] int _loopCount = 0;
 
     // ================
@@ -87,11 +87,10 @@ public class CinemaManager : MonoBehaviour
                 AddCustomer();
             }
 
-            if (_customerList[0].CustomerState == Customer.State.Wait)
+            if (_customerList[0].CustomerState == Customer.State.Wait && _customerList[0].isArrive)
             {
                 _customerList[0].CustomerState = Customer.State.Order;
                 _counter._customer = _customerList[0];
-                OrderOnOff(true, 0, 1); // 
 
             }
 
@@ -113,34 +112,21 @@ public class CinemaManager : MonoBehaviour
 
     }
 
-    void OrderOnOff(bool isOn, int _type = 0, int _count = 0)
-    {
-        if (isOn)
-        {
-            //_orderPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.Linear);
-            // add 
-            //_orderImg = 
-        }
-        else
-        {
-            //_orderPanel.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.Linear);
-        }
-
-    }
 
 
-    public void FindCinema()
+    public bool FindCinema()
     {
 
         if (_loopCount >= _roomList.Count)
-            return;
+            return false;
 
         if (_roomList[_roomNum].isReady)
         {
-            _customerList[0].SetDest(_roomList[_roomNum].Seat());
-            _customerList[0].CustomerState = Customer.State.Move;
+            Customer _customer = _customerList[0];
+            _customer.SetDest(_roomList[_roomNum].EmptySeat(_customer));
+            _customer.CustomerState = Customer.State.Move;
+            _customer._room = _roomList[_roomNum];
             _customerList.RemoveAt(0);
-
 
             int _count = _customerList.Count;
             for (int i = 0; i < _count; i++)
@@ -148,13 +134,16 @@ public class CinemaManager : MonoBehaviour
                 _customerList[i].SetDest(_waitingPos.position + new Vector3(0f, 0f, _watingTerm) * i);
                 _customerList[i].CustomerState = Customer.State.Wait;
             }
+
+            _loopCount = 0;
+            return true;
         }
         else
         {
             _roomNum++;
             if (_roomNum >= _roomList.Count) _roomNum = 0;
             _loopCount++;
-            FindCinema();
+            return FindCinema();
         }
 
 

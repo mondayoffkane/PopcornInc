@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [TitleGroup("Product")] public int _maxCount = 5;
     [TitleGroup("Product")] public float _pickInterval = 0.5f;
     public bool isReady = true;
-    [SerializeField] float _stackY = 0.5f;
+    //[SerializeField] float _stackY = 0.5f;
 
     //public Vector3 _offset;
 
@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
                 break;
 
             case "Counter":
-                Debug.Log("Cor Counter");
+                //Debug.Log("Cor Counter");
                 Counter _counter = other.GetComponent<Counter>();
                 if (_productStack.Count > 0 && isReady)
                 {

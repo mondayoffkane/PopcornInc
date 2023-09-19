@@ -4,8 +4,11 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Counter : MonoBehaviour
+public class Counter : UnlockObj
 {
+    public double[] _unlockPrices;
+
+
     [TitleGroup("Product")] public float _jumpPower = 10f;
     [TitleGroup("Product")] public float _moveSpeed = 0.2f;
     [TitleGroup("Product")] public Transform _stackPos;
@@ -24,7 +27,10 @@ public class Counter : MonoBehaviour
 
     CinemaManager _cinemaManager;
 
-    // ============================
+    public GameObject _staff;
+    //public GameObject _playerZone;
+
+    // ===========================================
     void Start()
     {
         _productStacks = new Stack<CinemaProduct>[3];
@@ -34,6 +40,10 @@ public class Counter : MonoBehaviour
         }
 
         if (_cinemaManager == null) _cinemaManager = transform.parent.GetComponent<CinemaManager>();
+
+        _staff.SetActive(false);
+
+        // add load data
 
         StartCoroutine(Cor_Update());
     }
@@ -51,14 +61,19 @@ public class Counter : MonoBehaviour
                     if (_customer.CustomerState == Customer.State.Order && _customer.OrderCount > 0 && _productStacks[_customer._productType].Count > 0)
                     {
                         _customer.PushProduct(_productStacks[_customer._productType].Pop());
+
                     }
                 }
                 yield return new WaitForSeconds(0.5f);
 
                 if (_customer.OrderCount <= 0)
                 {
-                    _cinemaManager.FindCinema();
 
+                    if (_cinemaManager.FindCinema())
+                    {
+                        _customer = null;
+
+                    }
                 }
             }
             else
@@ -104,6 +119,13 @@ public class Counter : MonoBehaviour
 
             });
 
+    }
+
+    public void Unlock()
+    {
+        isStaff = true;
+        _staff.SetActive(true);
+        //_playerZone.SetActive(false);
     }
 
 

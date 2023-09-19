@@ -16,7 +16,7 @@ public class Cannon : MonoBehaviour
     public float _range = 20f;
     //================= private =====================================
     [SerializeField] Transform _target;
-    float _currentInterval = 0f;
+    //float _currentInterval = 0f;
     WaveManager _waveManager;
     // =======================================================
 

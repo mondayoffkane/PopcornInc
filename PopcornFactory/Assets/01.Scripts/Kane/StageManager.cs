@@ -74,8 +74,8 @@ public class StageManager : MonoBehaviour
 
     UI_GameScene _gameUi;
     bool isEnd = true;
-    [SerializeField] int _fullUpg_count = 0;
-    [SerializeField] int _rvRailNum = -1;
+    //[SerializeField] int _fullUpg_count = 0;
+    //[SerializeField] int _rvRailNum = -1;
     [SerializeField] bool isFirst = true;
     public int _playTime = 0;
 
