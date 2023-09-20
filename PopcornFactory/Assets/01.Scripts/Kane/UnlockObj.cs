@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class UnlockObj : MonoBehaviour
 {
 
-    public UnityEvent _testEvent;
+    [HideInInspector] public UnityEvent _testEvent;
 
 
     public void CallFunc()

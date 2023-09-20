@@ -40,6 +40,7 @@ public class Customer : MonoBehaviour
     //public Text _countText;
     public Room _room;
 
+
     public enum State
     {
         Init,
@@ -59,8 +60,13 @@ public class Customer : MonoBehaviour
     }
 
 
+
     public void SetInit(CinemaManager _cinemamanager, int _type, int _count)
     {
+        isArrive = false;
+        _productStack.Clear();
+
+
         if (_agent == null) _agent = GetComponent<NavMeshAgent>();
         _cinemaManager = _cinemamanager;
         CustomerState = State.Init;
@@ -77,15 +83,21 @@ public class Customer : MonoBehaviour
 
     public void SetDest(Vector3 _destiny)
     {
-
+        //_agent.velocity = _agent.transform.forward * _agent.speed;
         _animator.SetBool("Walk", true);
         _agent.destination = _destiny;
         isArrive = false;
+        //_agent.ResetPath();
+
+        if (CustomerState == State.Wait)
+            transform.DORotate(new Vector3(0f, 180f, 0f), 0.4f).SetEase(Ease.Linear);
     }
 
     private void Update()
     {
-        if ((_agent.remainingDistance < _minDist) && isArrive == false)
+
+
+        if ((_agent.remainingDistance <= _minDist) && (_agent.remainingDistance != 0f) && isArrive == false)
         {
             isArrive = true;
             switch (CustomerState)
@@ -95,18 +107,20 @@ public class Customer : MonoBehaviour
 
 
                     _animator.SetBool("Walk", false);
-                    //transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                    transform.DORotate(new Vector3(0f, 180f, 0f), 1f).SetEase(Ease.Linear);
+
+                    transform.DORotate(new Vector3(0f, 180f, 0f), 0.4f).SetEase(Ease.Linear);
 
                     CustomerState = State.Wait;
+                    //Debug.Log(_agent.remainingDistance);
                     break;
 
                 case State.Wait:
-                    //isArrive = true;
+
                     _animator.SetBool("Walk", false);
                     break;
 
                 case State.Order:
+
                     _animator.SetBool("Walk", false);
                     break;
 

@@ -75,12 +75,12 @@ public class JoyStickController : MonoBehaviour
         AddDownEvent(() =>
         {
             isMouseDown = true;
-            _playeranimator.SetBool("Walk", true);
+            //_playeranimator.SetBool("Walk", true);
         });
         AddUpEvent(() =>
         {
             isMouseDown = false;
-            _playeranimator.SetBool("Walk", false);
+            //_playeranimator.SetBool("Walk", false);
         });
 
         switch (joyStickMethod)
@@ -143,7 +143,7 @@ public class JoyStickController : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         // if (CheckButtonClick()) return;
-
+                        _playeranimator.SetBool("Walk", true);
                         _joystickImage.enabled = true;
                         _joystickHandleImage.enabled = true;
 
@@ -174,6 +174,7 @@ public class JoyStickController : MonoBehaviour
                     }
                     else if (Input.GetMouseButtonUp(0) && !isButtonClick)
                     {
+                        _playeranimator.SetBool("Walk", false);
                         _joystickImage.enabled = false;
                         _joystickHandleImage.enabled = false;
                         UpAction?.Invoke();

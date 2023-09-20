@@ -90,6 +90,7 @@ public class CinemaManager : MonoBehaviour
             if (_customerList[0].CustomerState == Customer.State.Wait && _customerList[0].isArrive)
             {
                 _customerList[0].CustomerState = Customer.State.Order;
+                _customerList[0].transform.DORotate(new Vector3(0f, 180f, 0f), 1f).SetEase(Ease.Linear);
                 _counter._customer = _customerList[0];
 
             }
@@ -118,7 +119,10 @@ public class CinemaManager : MonoBehaviour
     {
 
         if (_loopCount >= _roomList.Count)
+        {
+            _loopCount = 0;
             return false;
+        }
 
         if (_roomList[_roomNum].isReady)
         {
@@ -132,7 +136,8 @@ public class CinemaManager : MonoBehaviour
             for (int i = 0; i < _count; i++)
             {
                 _customerList[i].SetDest(_waitingPos.position + new Vector3(0f, 0f, _watingTerm) * i);
-                _customerList[i].CustomerState = Customer.State.Wait;
+                //if (_customerList[i].CustomerState == Customer.State.Init)
+                //    _customerList[i].CustomerState = Customer.State.Wait;
             }
 
             _loopCount = 0;

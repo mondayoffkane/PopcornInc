@@ -46,6 +46,9 @@ public class Counter : UnlockObj
         // add load data
 
         StartCoroutine(Cor_Update());
+
+        _testEvent.AddListener(() => Unlock());
+
     }
 
 

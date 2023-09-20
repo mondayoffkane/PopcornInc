@@ -22,6 +22,7 @@ public class Room : UnlockObj
     public GameObject _screen;
 
 
+    public bool isOpen = false;
 
     // ================================
     private void Start()
@@ -33,6 +34,27 @@ public class Room : UnlockObj
 
         if (_seats == null)
             SetSeat();
+
+        _testEvent.AddListener(() => Unlock());
+
+
+        LoadData();
+
+    }
+
+    void LoadData()
+    {
+        isOpen = ES3.Load<bool>("isOpen", false);
+        if (isOpen)
+        {
+            isReady = true;
+            transform.localScale = Vector3.one;
+        }
+        else
+        {
+            isReady = false;
+            transform.localScale = Vector3.zero;
+        }
     }
 
     [Button]
@@ -45,6 +67,9 @@ public class Room : UnlockObj
             _seats[i] = transform.GetChild(i);
         }
     }
+
+
+
 
     //public bool isEmpty()
     //{
@@ -98,6 +123,11 @@ public class Room : UnlockObj
 
     }
 
+    public void Unlock()
+    {
+        transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InOutCirc);
+        isReady = true;
+    }
 
 
 }
