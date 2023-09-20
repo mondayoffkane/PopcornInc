@@ -128,7 +128,8 @@ public class Customer : MonoBehaviour
                     int _count = StackPos.childCount;
 
                     // delete
-                    transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                    transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                    transform.DORotate(Vector3.zero, 0.3f).SetEase(Ease.Linear);
                     for (int i = 0; i < _count; i++)
                     {
                         Transform _obj = StackPos.GetChild(0);

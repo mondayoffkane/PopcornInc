@@ -7,10 +7,10 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.2138236A" = "joysti"
+	"last_search.2138236A" = "cup_sp"
 	"OpenInspectorPreview.2138236A" = "0"
 	"currentGroup.2138236A" = "asset"
-	"last_search.F8949528" = "joysti"
+	"last_search.F8949528" = "cup_sp"
 	"OpenInspectorPreview.F8949528" = "0"
 	"currentGroup.F8949528" = "all"
 }

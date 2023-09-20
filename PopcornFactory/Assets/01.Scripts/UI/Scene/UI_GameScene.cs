@@ -264,7 +264,7 @@ public class UI_GameScene : UI_Scene
             IslandUi_Group.SetActive(true);
             CinemaUI_Group.SetActive(false);
             Managers.Game._stageManager.isCinemaOn(false);
-            
+
         });
 
         // == Inapp , No Ads ===========================
@@ -316,11 +316,11 @@ public class UI_GameScene : UI_Scene
 
     void ValueChange0(float value)
     {
-        Managers.Game._labotoryManager.ResourceValue(0, value);
+        //Managers.Game._labotoryManager.ResourceValue(0, value);
     }
     void ValueChange1(float value)
     {
-        Managers.Game._labotoryManager.ResourceValue(1, value);
+        //Managers.Game._labotoryManager.ResourceValue(1, value);
     }
 
 

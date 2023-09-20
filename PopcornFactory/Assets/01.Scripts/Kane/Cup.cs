@@ -22,14 +22,14 @@ public class Cup : MonoBehaviour
     public bool isRail = false;
     public Transform[] _nodes;
     public float _moveSpeed = 0.5f;
-    LabotoryManager _labotoryManager;
+    //LabotoryManager _labotoryManager;
     private void Start()
     {
         transform.GetChild(1).gameObject.SetActive(false);
 
         _popcornCup = transform.Find("PopcornCup");
 
-        _labotoryManager = Managers.Game._labotoryManager;
+        //_labotoryManager = Managers.Game._labotoryManager;
 
         foreach (Transform _node in _nodes)
         {
@@ -68,11 +68,13 @@ public class Cup : MonoBehaviour
     [Button]
     public void NextPos()
     {
+        Debug.Log("NextPos");
 
-
-        if (_cupPosNum < _cupPos.Length)
+        if (_cupPosNum <= _cupPos.Length)
             transform.position = _cupPos[_cupPosNum].position;
 
+
+        Debug.Log(_cupPosNum);
         _cupPosNum++;
 
 
@@ -80,7 +82,7 @@ public class Cup : MonoBehaviour
 
     public void NextNode(Transform _obj, int _num = 0)
     {
-        _obj.SetParent(_labotoryManager.transform);
+        //_obj.SetParent(_labotoryManager.transform);
         StartCoroutine(Cor_NextNode());
         IEnumerator Cor_NextNode()
         {
@@ -107,7 +109,9 @@ public class Cup : MonoBehaviour
                 yield return new WaitForSeconds(_moveSpeed);
             }
 
-            _labotoryManager.PushProduct(_obj, 0.5f, _obj.GetComponent<Product>()._productType);
+            //_labotoryManager.PushProduct(_obj, 0.5f, _obj.GetComponent<Product>()._productType);
+            _obj.DOJump(transform.GetChild(0).position, _jumpPower, 1, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
+            Managers.Pool.Push(_obj.GetComponent<Poolable>()));
         }
     }
 

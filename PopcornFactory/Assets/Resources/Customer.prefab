@@ -1005,7 +1005,6 @@ MonoBehaviour:
   BaseUp_Interval: 0.5
   Init_StackPointPos: {x: 0, y: 0, z: 0}
   _room: {fileID: 0}
-  _distance: 0
   CustomerState: 0
   _animator: {fileID: 0}
 --- !u!195 &461327447520938438
@@ -1018,7 +1017,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 360

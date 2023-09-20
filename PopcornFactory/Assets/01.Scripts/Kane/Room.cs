@@ -7,6 +7,7 @@ using Sirenix.OdinInspector;
 
 public class Room : UnlockObj
 {
+    public bool alwaysOpen = false;
     public bool isReady = true;
 
 
@@ -23,6 +24,7 @@ public class Room : UnlockObj
 
 
     public bool isOpen = false;
+    public GameObject _offObj;
 
     // ================================
     private void Start()
@@ -44,7 +46,14 @@ public class Room : UnlockObj
 
     void LoadData()
     {
-        isOpen = ES3.Load<bool>("isOpen", false);
+        if (alwaysOpen)
+        {
+            isOpen = true;
+            //ES3.Save<bool>("isOpen", isOpen);
+        }
+
+
+        //isOpen = ES3.Load<bool>("isOpen", false);
         if (isOpen)
         {
             isReady = true;
@@ -125,8 +134,9 @@ public class Room : UnlockObj
 
     public void Unlock()
     {
-        transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InOutCirc);
+        transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
         isReady = true;
+        _offObj.SetActive(false);
     }
 
 

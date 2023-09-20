@@ -83,7 +83,7 @@ public class StageManager : MonoBehaviour
     public int _RvCount = 0;
     public Material _beltMat;
 
-    public Transform _labButton;
+    //public Transform _labButton;
     public Vector3 _labButton_offset;
     public bool isCinema = false;
     /// RV /========================================
@@ -174,9 +174,9 @@ public class StageManager : MonoBehaviour
             _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(true);
 
 
-        _labButton = Managers.Pool.Pop(Resources.Load<GameObject>("Lab_Button"), _canvas.transform).transform;
-        _labButton.position = Camera.main.WorldToScreenPoint(_gameManager._labotoryManager.transform.position + _labButton_offset);
-        _labButton.gameObject.SetActive(false);
+        //_labButton = Managers.Pool.Pop(Resources.Load<GameObject>("Lab_Button"), _canvas.transform).transform;
+        //_labButton.position = Camera.main.WorldToScreenPoint(_gameManager._labotoryManager.transform.position + _labButton_offset);
+        //_labButton.gameObject.SetActive(false);
 
         AddScrollContent();
 
@@ -323,7 +323,7 @@ public class StageManager : MonoBehaviour
 
             }
 
-            _labButton.transform.position = Camera.main.WorldToScreenPoint(_gameManager._labotoryManager.transform.position + _labButton_offset);
+            //_labButton.transform.position = Camera.main.WorldToScreenPoint(_gameManager._labotoryManager.transform.position + _labButton_offset);
 
 
             if (_popupPanel.gameObject.activeSelf)
@@ -431,7 +431,7 @@ public class StageManager : MonoBehaviour
                     _landManagers[0]._cup.NextPos();
                     if (i == (_land_machineGroup[0].GetLength(0) - 1))
                     {
-                        _landManagers[0]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                        //_landManagers[0]._cup.transform.GetChild(0).gameObject.SetActive(false);
                         _landManagers[0]._cup.isRail = true;
                         RailOn(0);
                     }
@@ -446,7 +446,7 @@ public class StageManager : MonoBehaviour
 
                     if (i == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) - 1))
                     {
-                        _landManagers[1]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                        //_landManagers[1]._cup.transform.GetChild(0).gameObject.SetActive(false);
                         _landManagers[1]._cup.isRail = true;
                         RailOn(1);
                     }
@@ -461,7 +461,7 @@ public class StageManager : MonoBehaviour
 
                     if (i == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) + _land_machineGroup[2].GetLength(0) - 1))
                     {
-                        _landManagers[2]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                        //_landManagers[2]._cup.transform.GetChild(0).gameObject.SetActive(false);
                         _landManagers[2]._cup.isRail = true;
                         RailOn(2);
                     }
@@ -491,22 +491,22 @@ public class StageManager : MonoBehaviour
     public void RailOn(int _num)
     {
         _railObjs[_num].gameObject.SetActive(true);
-        switch (_num)
-        {
-            case 0:
-                _gameManager._labotoryManager.Init();
-                break;
+        //switch (_num)
+        //{
+        //    case 0:
+        //        //_gameManager._labotoryManager.Init();
+        //        break;
 
-            case 1:
-                _gameManager._labotoryManager._laboratory_list[0].SetActive(true);
-                _labButton.gameObject.SetActive(true);
-                break;
+        //    case 1:
+        //        //_gameManager._labotoryManager._laboratory_list[0].SetActive(true);
+        //        //_labButton.gameObject.SetActive(true);
+        //        break;
 
-            case 2:
-                _gameManager._labotoryManager._laboratory_list[1].SetActive(true);
+        //    case 2:
+        //        //_gameManager._labotoryManager._laboratory_list[1].SetActive(true);
 
-                break;
-        }
+        //        break;
+        //}
 
     }
 
@@ -566,7 +566,7 @@ public class StageManager : MonoBehaviour
                 _landManagers[0]._cup.NextPos();
                 if (_parts_upgrade_level == (_land_machineGroup[0].GetLength(0) - 2))
                 {
-                    _landManagers[0]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                    //_landManagers[0]._cup.transform.GetChild(0).gameObject.SetActive(false);
                     _landManagers[0]._cup.isRail = true;
                     RailOn(0);
 
@@ -582,22 +582,22 @@ public class StageManager : MonoBehaviour
                 _landManagers[1]._cup.NextPos();
                 if (_parts_upgrade_level == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) - 2))
                 {
-                    _landManagers[1]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                    //_landManagers[1]._cup.transform.GetChild(0).gameObject.SetActive(false);
                     _landManagers[1]._cup.isRail = true;
                     RailOn(1);
-                    if (TutorialManager._instance._tutorialLevel == 8)
-                    {
-                        StartCoroutine(Cor_Tuto());
-                    }
+                    //if (TutorialManager._instance._tutorialLevel == 8)
+                    //{
+                    //    StartCoroutine(Cor_Tuto());
+                    //}
 
-                    IEnumerator Cor_Tuto()
-                    {
-                        yield return new WaitForSeconds(1f);
-                        _islandCam.LookTarget(_gameManager._labotoryManager.transform);
-                        _islandCam.GetComponent<Camera>().DOOrthoSize(45f, 0.5f);
-                        yield return new WaitForSeconds(0.5f);
-                        TutorialManager._instance.Tutorial();
-                    }
+                    //IEnumerator Cor_Tuto()
+                    //{
+                    //    yield return new WaitForSeconds(1f);
+                    //    _islandCam.LookTarget(_gameManager._labotoryManager.transform);
+                    //    _islandCam.GetComponent<Camera>().DOOrthoSize(45f, 0.5f);
+                    //    yield return new WaitForSeconds(0.5f);
+                    //    TutorialManager._instance.Tutorial();
+                    //}
 
                 }
                 break;
@@ -611,7 +611,7 @@ public class StageManager : MonoBehaviour
 
                 if (_parts_upgrade_level == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) + _land_machineGroup[2].GetLength(0) - 2))
                 {
-                    _landManagers[2]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                    //_landManagers[2]._cup.transform.GetChild(0).gameObject.SetActive(false);
                     _landManagers[2]._cup.isRail = true;
                     RailOn(2);
 

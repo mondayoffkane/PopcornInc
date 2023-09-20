@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [TitleGroup("Product")] public int _maxCount = 5;
     [TitleGroup("Product")] public float _pickInterval = 0.5f;
     public bool isReady = true;
-    //[SerializeField] float _stackY = 0.5f;
+    [SerializeField] float _stackY = 0.5f;
 
     //public Vector3 _offset;
 
@@ -99,11 +99,12 @@ public class Player : MonoBehaviour
     {
         DOTween.Kill(_product.transform);
 
+        _stackY = _product.GetComponent<MeshFilter>().sharedMesh.bounds.size.y;
 
         _productStack.Push(_product);
         _product.transform.SetParent(_stackPos);
         isReady = false;
-        _product.transform.DOLocalJump(Vector3.up * _productStack.Count, _jumpPower, 1, _moveSpeed)
+        _product.transform.DOLocalJump(Vector3.up * (_productStack.Count - 1) * _stackY, _jumpPower, 1, _moveSpeed)
             .OnComplete(() =>
             {
                 isReady = true;

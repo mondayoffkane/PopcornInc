@@ -15,7 +15,7 @@ public class CinemaMachine : MonoBehaviour
     [TitleGroup("Product")] public Transform _stackPos;
     [TitleGroup("Product")] public int _maxCount = 5;
 
-    [SerializeField] float _stackY;
+    [SerializeField] float _stackTerm;
 
 
     public Stack<CinemaProduct> _productStack;
@@ -24,7 +24,7 @@ public class CinemaMachine : MonoBehaviour
     {
 
         _productStack = new Stack<CinemaProduct>();
-        _stackY = _cinemaProduct.GetComponent<MeshFilter>().sharedMesh.bounds.size.y;
+        _stackTerm = _cinemaProduct.GetComponent<MeshFilter>().sharedMesh.bounds.size.z;
 
         if (_stackPos == null) _stackPos = transform.Find("StackPos");
         _stackPos.GetComponent<Renderer>().enabled = false;
@@ -52,7 +52,12 @@ public class CinemaMachine : MonoBehaviour
             _product.Init(_productType);
             _productStack.Push(_product);
             _product.transform.position = transform.position;
-            _product.transform.DOJump(_stackPos.position + new Vector3(0f, _productStack.Count * _stackY, 0f), _jumpPower, 1, _moveSpeed).SetEase(Ease.Linear);
+            _product.transform.SetParent(_stackPos);
+            //_product.transform.DOJump(_stackPos.position + new Vector3(0f, _productStack.Count * _stackTerm, 0f), _jumpPower, 1, _moveSpeed).SetEase(Ease.Linear);
+            _product.transform.DOJump(_stackPos.position + new Vector3(0f, 0f, -(_productStack.Count - 1) * _stackTerm - 0.3f), _jumpPower, 1, _moveSpeed).SetEase(Ease.Linear);
+
+            _product.transform.DOLocalJump(Vector3.right * (_productStack.Count - 1) * _stackTerm, _jumpPower, 1, _moveSpeed).SetEase(Ease.Linear);
+
 
         }
     }
