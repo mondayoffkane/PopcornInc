@@ -35,6 +35,10 @@ public class CinemaManager : MonoBehaviour
     [TitleGroup("Counter")] public GameObject _orderPanel;
     [TitleGroup("Counter")] public Image _orderImg;
     [TitleGroup("Counter")] public Text _orderText;
+    [TitleGroup("Counter")] public List<CounterStaff> _counterStaffList;
+
+
+    [TitleGroup("Cleaner")] public List<CleanerStaff> _cleanerStaffList;
 
 
     public Transform[] _doors = new Transform[2];
@@ -57,6 +61,9 @@ public class CinemaManager : MonoBehaviour
         _customerList = new List<Customer>();
         _customerGroup = new GameObject().transform;
         _customerGroup.name = "CustomerGroup";
+
+        _counterStaffList = new List<CounterStaff>();
+        _cleanerStaffList = new List<CleanerStaff>();
 
         //_orderPanel = transform.Find("OrderPanel").gameObject;
         //_orderImg = _orderPanel.transform.Find("OrderImg").GetComponent<Image>();
@@ -150,6 +157,22 @@ public class CinemaManager : MonoBehaviour
             _loopCount++;
             return FindCinema();
         }
+
+
+    }
+
+    public void AddCounterStaff()
+    {
+        CounterStaff _staff = Managers.Pool.Pop(Resources.Load<GameObject>("Counter_Staff")).GetComponent<CounterStaff>();
+        _staff.SetInit(this, CinemaStaff.CinemaStaffType.Counter, _counter.transform.position);
+        _counterStaffList.Add(_staff);
+    }
+
+    public void AddCleanerStaff()
+    {
+        CleanerStaff _staff = Managers.Pool.Pop(Resources.Load<GameObject>("Cleaner_Staff")).GetComponent<CleanerStaff>();
+        _staff.SetInit(this, CinemaStaff.CinemaStaffType.Cleaner, _counter.transform.position + new Vector3(10f, 0f, 10f));
+        _cleanerStaffList.Add(_staff);
 
 
     }

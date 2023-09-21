@@ -15,7 +15,7 @@ public class Customer : MonoBehaviour
     public bool isArrive = false;
 
     public NavMeshAgent _agent;
-    //public float Total_ChargingTime = 10f;
+
     public float Current_ChargingTime = 0f;
 
 
@@ -24,8 +24,6 @@ public class Customer : MonoBehaviour
 
     public Transform StackPos;
 
-    // ==== values
-    public float _chargInterval = 2f;
     public float Stack_Interval = 0.2f;
 
     public float BaseUp_Interval = 0.5f;
@@ -35,9 +33,6 @@ public class Customer : MonoBehaviour
 
     [SerializeField] Vector3 Init_StackPointPos;
 
-    //public GameObject _panel;
-    //public GameObject _chargePanel;
-    //public Text _countText;
     public Room _room;
 
 
@@ -193,7 +188,7 @@ public class Customer : MonoBehaviour
         Stack_Interval = _product.GetComponent<MeshFilter>().sharedMesh.bounds.size.y;
         _product.transform.SetParent(StackPos);
         OrderCount--;
-        _product.transform.DOLocalJump(Vector3.up * (_productStack.Count * Stack_Interval), 1, 1, _interval).SetEase(Ease.Linear)
+        _product.transform.DOLocalJump(Vector3.up * (_productStack.Count * Stack_Interval), 10, 1, _interval).SetEase(Ease.Linear)
                                          .Join(_product.transform.DOLocalRotate(new Vector3(-90f, 0f, 0f), _interval).SetEase(Ease.Linear))
                                          .OnComplete(() =>
                                          {

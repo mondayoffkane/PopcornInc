@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         _FloatingText = Resources.Load<GameObject>("Floating");
 
         //_labotoryManager = GameObject.FindGameObjectWithTag("LabotoryManager").GetComponent<LabotoryManager>();
-
+        _cinemaManager = GameObject.FindGameObjectWithTag("CinemaManager").GetComponent<CinemaManager>();
     }
     public void Clear()
     {
@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public CinemaManager _cinemaManager;
     //public LabotoryManager _labotoryManager;
 
 

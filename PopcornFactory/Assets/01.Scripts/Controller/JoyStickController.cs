@@ -49,8 +49,8 @@ public class JoyStickController : MonoBehaviour
 
     [HideInInspector]
     public bool CanMove = false;
-    private bool isButtonClick = false;
     private bool isMouseDown = false;
+    private bool isButtonClick = false;
 
     public System.Action DownAction;
     public System.Action<Vector2> JoystickMoveAction;
@@ -118,6 +118,20 @@ public class JoyStickController : MonoBehaviour
         MoveObjectRig.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            _playeranimator.SetBool("Walk", true);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            _playeranimator.SetBool("Walk", false);
+        }
+    }
+
+
     private void FixedUpdate()
     {
         if (!CanMove) return;
@@ -143,7 +157,7 @@ public class JoyStickController : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         // if (CheckButtonClick()) return;
-                        _playeranimator.SetBool("Walk", true);
+                        //_playeranimator.SetBool("Walk", true);
                         _joystickImage.enabled = true;
                         _joystickHandleImage.enabled = true;
 
@@ -174,7 +188,7 @@ public class JoyStickController : MonoBehaviour
                     }
                     else if (Input.GetMouseButtonUp(0) && !isButtonClick)
                     {
-                        _playeranimator.SetBool("Walk", false);
+                        //_playeranimator.SetBool("Walk", false);
                         _joystickImage.enabled = false;
                         _joystickHandleImage.enabled = false;
                         UpAction?.Invoke();

@@ -22,14 +22,14 @@ public class Cup : MonoBehaviour
     public bool isRail = false;
     public Transform[] _nodes;
     public float _moveSpeed = 0.5f;
+
+
     //LabotoryManager _labotoryManager;
     private void Start()
     {
         transform.GetChild(1).gameObject.SetActive(false);
 
         _popcornCup = transform.Find("PopcornCup");
-
-        //_labotoryManager = Managers.Game._labotoryManager;
 
         foreach (Transform _node in _nodes)
         {
@@ -46,7 +46,6 @@ public class Cup : MonoBehaviour
             _trans.DOLocalJump(_popcornCup.localPosition, _jumpPower, 1, _moveInterval).SetEase(Ease.Linear)
                 .OnComplete(() =>
                 {
-
                     Managers.Pool.Push(_trans.GetComponent<Poolable>());
                 });
 
@@ -68,13 +67,10 @@ public class Cup : MonoBehaviour
     [Button]
     public void NextPos()
     {
-        Debug.Log("NextPos");
 
         if (_cupPosNum <= _cupPos.Length)
             transform.position = _cupPos[_cupPosNum].position;
 
-
-        Debug.Log(_cupPosNum);
         _cupPosNum++;
 
 
@@ -82,38 +78,18 @@ public class Cup : MonoBehaviour
 
     public void NextNode(Transform _obj, int _num = 0)
     {
-        //_obj.SetParent(_labotoryManager.transform);
-        StartCoroutine(Cor_NextNode());
-        IEnumerator Cor_NextNode()
-        {
-
-            for (int i = 0; i < _nodes.Length; i++)
+        DOTween.Sequence().Append(_obj.DOJump(_nodes[0].transform.position + _nodes[0].transform.right * Random.Range(-1f, 1f) + _nodes[0].transform.forward * Random.Range(-0.3f, 0.3f), _jumpPower, 1, 0.5f).SetEase(Ease.Linear))
+            .Append(_obj.DOMove(_nodes[1].transform.position, _moveSpeed).SetEase(Ease.Linear))
+            .OnComplete(() => _obj.DOJump(_cupPos[_cupPos.Length - 1].position, _jumpPower, 1, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
             {
-                if (i > 4) _num = 3;
-                switch (_num)
-                {
-                    case 1:
-                        _obj.DOMove(_nodes[i].transform.position + _nodes[i].transform.right * -1f + _nodes[i].transform.forward * Random.Range(-0.3f, 0.3f), _moveSpeed).SetEase(Ease.Linear);
-                        break;
+                Managers.Pool.Push(_obj.GetComponent<Poolable>());
+                Managers.Game._stageManager.SaveRecipe((int)_obj.GetComponent<Product>()._productType);
+            }));
 
-                    case 2:
-                        _obj.DOMove(_nodes[i].transform.position + _nodes[i].transform.right * 1f + _nodes[i].transform.forward * Random.Range(-0.3f, 0.3f), _moveSpeed).SetEase(Ease.Linear);
-                        break;
-
-                    default:
-                        _obj.DOMove(_nodes[i].transform.position, _moveSpeed).SetEase(Ease.Linear);
-
-                        break;
-                }
-                //_obj.DORotateQuaternion(_nodes[i].transform.rotation, _moveSpeed).SetEase(Ease.Linear);
-                yield return new WaitForSeconds(_moveSpeed);
-            }
-
-            //_labotoryManager.PushProduct(_obj, 0.5f, _obj.GetComponent<Product>()._productType);
-            _obj.DOJump(transform.GetChild(0).position, _jumpPower, 1, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
-            Managers.Pool.Push(_obj.GetComponent<Poolable>()));
-        }
     }
+
+
+
 
 
 }

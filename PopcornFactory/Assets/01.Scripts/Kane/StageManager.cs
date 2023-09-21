@@ -101,6 +101,10 @@ public class StageManager : MonoBehaviour
     public bool isBigMoney = false;
     // ====================== =================================
 
+
+    GameObject[] _recipe = new GameObject[4];
+    bool[] _recipeNum = new bool[4];
+
     public int _noAds = 0;
 
     private void Start()
@@ -295,6 +299,28 @@ public class StageManager : MonoBehaviour
 
         }
 
+        int _index = 0;
+        for (int i = 0; i < _gameUi.Recipe_Content.transform.childCount; i++)
+        {
+            for (int j = 0; j < _gameUi.Recipe_Content.transform.GetChild(i).childCount; j++)
+            {
+                _recipe[_index] = _gameUi.Recipe_Content.transform.GetChild(i).GetChild(j).gameObject;
+                _recipe[_index].SetActive(false);
+                _index++;
+            }
+        }
+
+        LoadRecipe();
+        _gameUi.Recipe_Button.gameObject.SetActive(false);
+        if (_recipeNum[0]) _gameUi.Recipe_Button.gameObject.SetActive(true);
+
+        for (int i = 0; i < _recipeNum.Length; i++)
+        {
+
+            if (_recipeNum[i]) _recipe[i].SetActive(true);
+        }
+
+
     }
 
     void OnPointerDown(PointerEventData data)
@@ -431,7 +457,7 @@ public class StageManager : MonoBehaviour
                     _landManagers[0]._cup.NextPos();
                     if (i == (_land_machineGroup[0].GetLength(0) - 1))
                     {
-                        //_landManagers[0]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                        _landManagers[0]._cup.transform.GetChild(0).gameObject.SetActive(false);
                         _landManagers[0]._cup.isRail = true;
                         RailOn(0);
                     }
@@ -446,7 +472,7 @@ public class StageManager : MonoBehaviour
 
                     if (i == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) - 1))
                     {
-                        //_landManagers[1]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                        _landManagers[1]._cup.transform.GetChild(0).gameObject.SetActive(false);
                         _landManagers[1]._cup.isRail = true;
                         RailOn(1);
                     }
@@ -461,7 +487,7 @@ public class StageManager : MonoBehaviour
 
                     if (i == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) + _land_machineGroup[2].GetLength(0) - 1))
                     {
-                        //_landManagers[2]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                        _landManagers[2]._cup.transform.GetChild(0).gameObject.SetActive(false);
                         _landManagers[2]._cup.isRail = true;
                         RailOn(2);
                     }
@@ -1339,6 +1365,28 @@ public class StageManager : MonoBehaviour
 
         }
 
+    }
+
+
+    public void SaveRecipe(int _num)
+    {
+
+        if (_recipeNum[_num] == false)
+        {
+            _recipeNum[_num] = true;
+            ES3.Save("Recipe_" + _num, _recipeNum[_num]);
+            _recipe[_num].SetActive(true);
+            _gameUi.Recipe_Button.transform.GetChild(0).gameObject.SetActive(true);
+
+        }
+    }
+    public void LoadRecipe()
+    {
+        for (int i = 0; i < _recipeNum.Length; i++)
+        {
+            _recipeNum[i] = ES3.Load("Recipe_" + i, false);
+
+        }
     }
 
 

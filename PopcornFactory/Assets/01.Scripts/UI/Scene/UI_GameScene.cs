@@ -106,7 +106,7 @@ public class UI_GameScene : UI_Scene
 
     public GameObject[] ScrollUpgrades;
 
-    public GameObject[] Laboratory_list;
+    //public GameObject[] Laboratory_list;
 
     // =============================================
 
@@ -291,37 +291,13 @@ public class UI_GameScene : UI_Scene
 
         RV_Income_Double.AddButtonEvent(() => AdsManager.ShowRewarded(() => Managers.Game._stageManager.RV_Income_Double()));
         BigMoneyButton.AddButtonEvent(() => AdsManager.ShowRewarded(() => Managers.Game._stageManager.RV_BigMoney()));
-        //RvRail_Panel.transform.Find("Claim_Button").GetComponent<Button>().AddButtonEvent(() => AdsManager.ShowRewarded(() => Managers.Game._stageManager.RV_Rail()));
-        //RvWorker_Panel.transform.Find("Claim_Button").GetComponent<Button>().AddButtonEvent(() => AdsManager.ShowRewarded(() => Managers.Game._stageManager.RV_Worker()));
-
-        // ========Laboratory
-        Laboratory_list = new GameObject[Laboratory_Content.transform.childCount];
-        for (int i = 0; i < /*Laboratory_list.Length*/2; i++)
-        {
-            Laboratory_list[i] = Laboratory_Content.transform.GetChild(i).gameObject;
-            Laboratory_list[i].transform.Find("Slider").GetComponent<Slider>().value = 0;
-            Laboratory_list[i].transform.Find("Ratio_Text").GetComponent<Text>().text = "0 %";
-        }
-
-        Laboratory_list[0].transform.Find("Slider").GetComponent<Slider>().onValueChanged
-                .AddListener(ValueChange0);
-        Laboratory_list[1].transform.Find("Slider").GetComponent<Slider>().onValueChanged
-                .AddListener(ValueChange1);
-
 
 
 
     }
 
 
-    void ValueChange0(float value)
-    {
-        //Managers.Game._labotoryManager.ResourceValue(0, value);
-    }
-    void ValueChange1(float value)
-    {
-        //Managers.Game._labotoryManager.ResourceValue(1, value);
-    }
+
 
 
     public void OffPopup()

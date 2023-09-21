@@ -15,6 +15,7 @@ public class CinemaMachine : MonoBehaviour
     [TitleGroup("Product")] public Transform _stackPos;
     [TitleGroup("Product")] public int _maxCount = 5;
 
+    public Transform _checkZone;
     [SerializeField] float _stackTerm;
 
 

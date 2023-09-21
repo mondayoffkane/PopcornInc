@@ -7,6 +7,14 @@ using Sirenix.OdinInspector;
 
 public class InteractArea : MonoBehaviour
 {
+    public enum OpenType
+    {
+        Unlock,
+        CounterStaff,
+        CleanerStaff
+    }
+    public OpenType _openType;
+
     public Transform _target;
 
     public double _unlockPrice;
@@ -84,7 +92,21 @@ public class InteractArea : MonoBehaviour
                         _currentPrice = 0;
                         isPlayerIn = false;
 
-                        _target.GetComponent<UnlockObj>().CallFunc();
+
+                        switch (_openType)
+                        {
+                            case OpenType.Unlock:
+                                _target.GetComponent<EventObject>().CallUnlock();
+
+                                break;
+                            case OpenType.CounterStaff:
+                                Managers.Game._cinemaManager.AddCounterStaff();
+                                break;
+
+                            case OpenType.CleanerStaff:
+                                Managers.Game._cinemaManager.AddCleanerStaff();
+                                break;
+                        }
 
                         gameObject.SetActive(false);
 

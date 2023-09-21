@@ -40,7 +40,7 @@ public class LabotoryManager : MonoBehaviour
 
         if (_gameUi == null) _gameUi = Managers.GameUI;
 
-        _laboratory_list = _gameUi.Laboratory_list;
+        
         _resourceList = new int[_laboratory_list.Length];
 
         _spawnPos.GetComponent<Renderer>().enabled = false;

@@ -4,7 +4,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Counter : UnlockObj
+public class Counter : EventObject
 {
     public double[] _unlockPrices;
 
@@ -47,7 +47,7 @@ public class Counter : UnlockObj
 
         StartCoroutine(Cor_Update());
 
-        _testEvent.AddListener(() => Unlock());
+        _unlockEvent.AddListener(() => Unlock());
 
     }
 
@@ -63,7 +63,7 @@ public class Counter : UnlockObj
 
                     if (_customer.CustomerState == Customer.State.Order && _customer.OrderCount > 0 && _productStacks[_customer._productType].Count > 0)
                     {
-                        _customer.PushProduct(_productStacks[_customer._productType].Pop());
+                        PopProduct();
 
                     }
                 }
@@ -86,6 +86,12 @@ public class Counter : UnlockObj
         }
     }
 
+
+    public void PopProduct()
+    {
+        if ((_customer != null) && _customer._productStack.Count < 1)
+            _customer.PushProduct(_productStacks[_customer._productType].Pop());
+    }
 
 
     public void OnTriggerEnter(Collider other)
