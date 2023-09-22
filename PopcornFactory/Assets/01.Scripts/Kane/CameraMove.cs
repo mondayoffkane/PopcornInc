@@ -61,10 +61,10 @@ public class CameraMove : MonoBehaviour
         _beltMat.DOOffset(new Vector2(0f, -1f), 1f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
     }
 
-#if UNITY_EDITOR
 
     void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetKey(KeyCode.Q))
         {
             Managers.Game.CalcMoney(100000000);
@@ -244,10 +244,7 @@ public class CameraMove : MonoBehaviour
         }
 
 
-
-#endif
-
-#if !UNITY_EDITOR
+#elif !UNITY_EDITOR
 
 
         if (Input.touchCount > 0 && Input.touchCount < 2 && !_stageManager.isCinema)

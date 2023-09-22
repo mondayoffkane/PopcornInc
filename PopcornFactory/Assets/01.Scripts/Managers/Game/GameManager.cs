@@ -85,6 +85,10 @@ public class GameManager : MonoBehaviour
 
     public double Money = 0f;
     public int Gem = 0;
+
+    public double CinemaMoney = 0f;
+
+
     public GameObject _FloatingText;
 
     public void AddMoney(double _value)
@@ -92,26 +96,61 @@ public class GameManager : MonoBehaviour
         Money += _value;
         Managers.GameUI.Money_Text.text = $"{Managers.ToCurrencyString(Money, 2)}";
 
-        ES3.Save<double>("Money", Managers.Game.Money);
+        ES3.Save<double>("Money", Money);
         _stageManager.CheckButton();
     }
 
-    public void CalcMoney(double _value)
+    public void AddCinemaMoney(double _value)
     {
-        if (_value > 0)
-        {
-            double _double = _stageManager.isRvDouble ? 2d : 1d;
-            Money += _value * _double;
-        }
-        else
-        {
-            Money += _value;
-        }
+        CinemaMoney += _value;
+        Managers.GameUI.CinemaMoney_Text.text = $"{Managers.ToCurrencyString(CinemaMoney, 2)}";
 
-
-        Managers.GameUI.Money_Text.text = $"{Managers.ToCurrencyString(Money, 2)}";
-        ES3.Save<double>("Money", Managers.Game.Money);
+        ES3.Save<double>("CinemaMoney", CinemaMoney);
         _stageManager.CheckButton();
+    }
+
+
+
+    public void CalcMoney(double _value, int _moneyType = 0)
+    {
+        switch (_moneyType)
+        {
+            case 0:
+
+                if (_value > 0)
+                {
+                    double _double = _stageManager.isRvDouble ? 2d : 1d;
+                    Money += _value * _double;
+                }
+                else
+                {
+                    Money += _value;
+                }
+
+                Managers.GameUI.Money_Text.text = $"{Managers.ToCurrencyString(Money, 2)}";
+                ES3.Save<double>("Money", Money);
+                _stageManager.CheckButton();
+                break;
+
+            case 1:
+                if (_value > 0)
+                {
+                    double _double = _cinemaManager.isRvDouble ? 2d : 1d;
+                    CinemaMoney += _value * _double;
+                }
+                else
+                {
+                    CinemaMoney += _value;
+                }
+
+                Managers.GameUI.CinemaMoney_Text.text = $"{Managers.ToCurrencyString(CinemaMoney, 2)}";
+                ES3.Save<double>("CinemaMoney", CinemaMoney);
+
+
+                break;
+
+        }
+
 
 
     }

@@ -85,6 +85,20 @@ public class Player : MonoBehaviour
 
                 break;
 
+            case "TrashCan":
+
+                if (_productStack.Count > 0)
+                {
+                    int _count = _productStack.Count;
+                    for (int i = 0; i < _count; i++)
+                    {
+                        Transform _trans = _productStack.Pop().transform;
+                        _trans.SetParent(other.transform);
+                        _trans.DOLocalJump(Vector3.zero, 5f, 1, 0.5f).SetEase(Ease.Linear).OnComplete(() => Managers.Pool.Push(_trans.GetComponent<Poolable>()));
+                    }
+                }
+
+                break;
 
             default:
 

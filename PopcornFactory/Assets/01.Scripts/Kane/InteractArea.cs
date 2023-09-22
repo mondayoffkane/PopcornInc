@@ -66,9 +66,9 @@ public class InteractArea : MonoBehaviour
             yield return Time.deltaTime;
             if (isPlayerIn)
             {
-                if (Managers.Game.Money >= _unlockPrice * Time.deltaTime)
+                if (Managers.Game.CinemaMoney >= _unlockPrice * Time.deltaTime)
                 {
-                    Managers.Game.CalcMoney(-_unlockPrice * Time.deltaTime);
+                    Managers.Game.CalcMoney(-_unlockPrice * Time.deltaTime,1);
                     _currentPrice -= _unlockPrice * Time.deltaTime;
 
                     Transform _momey = Managers.Pool.Pop(_money_Pref).transform;

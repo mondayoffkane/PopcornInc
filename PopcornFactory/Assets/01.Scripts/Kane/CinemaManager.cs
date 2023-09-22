@@ -48,7 +48,16 @@ public class CinemaManager : MonoBehaviour
     Transform _customerGroup;
     [SerializeField] int _loopCount = 0;
 
-    // ================
+    // ======== RV ======== =============================================
+    public bool isRvDouble = false;
+
+
+
+
+
+
+    // ================ =============================================
+
 
     private void Start()
     {
@@ -102,7 +111,7 @@ public class CinemaManager : MonoBehaviour
 
             }
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
         }
 
     }
@@ -117,6 +126,14 @@ public class CinemaManager : MonoBehaviour
 
         _customer.SetDest(_waitingPos.position + new Vector3(0f, 0f, _watingTerm) * (_customerList.Count - 1));
 
+
+
+        int _count = _customerList.Count;
+        for (int i = 0; i < _count; i++)
+        {
+            _customerList[i].SetDest(_waitingPos.position + new Vector3(0f, 0f, _watingTerm) * i);
+
+        }
 
     }
 
@@ -139,13 +156,7 @@ public class CinemaManager : MonoBehaviour
             _customer._room = _roomList[_roomNum];
             _customerList.RemoveAt(0);
 
-            int _count = _customerList.Count;
-            for (int i = 0; i < _count; i++)
-            {
-                _customerList[i].SetDest(_waitingPos.position + new Vector3(0f, 0f, _watingTerm) * i);
-                //if (_customerList[i].CustomerState == Customer.State.Init)
-                //    _customerList[i].CustomerState = Customer.State.Wait;
-            }
+
 
             _loopCount = 0;
             return true;

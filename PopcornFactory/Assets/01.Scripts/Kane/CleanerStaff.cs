@@ -11,6 +11,9 @@ public class CleanerStaff : CinemaStaff
 
 
 
+
+
+
     private void Start()
     {
 
@@ -44,6 +47,7 @@ public class CleanerStaff : CinemaStaff
 
             case CinemaStaffState.Cleaning:
                 _currentTerm += Time.deltaTime;
+                _target.GetComponent<CleanObject>().Cleaning();
                 if (_currentTerm >= _maxTerm)
                 {
                     _target.GetComponent<CleanObject>().RoomClear(true);

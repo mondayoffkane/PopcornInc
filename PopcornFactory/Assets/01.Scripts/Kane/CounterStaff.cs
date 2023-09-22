@@ -10,11 +10,12 @@ public class CounterStaff : CinemaStaff
     public float _currentTerm = 0f;
     public float _maxTerm = 1f;
 
+    Counter _counter;
 
-
-    private void Start()
+    public override void SetInit(CinemaManager _cinemamanager, CinemaStaffType _stafftype, Vector3 _waitpos)
     {
-
+        base.SetInit(_cinemamanager, _stafftype, _waitpos);
+        _counter = _cinemamanager._counter;
     }
 
     private void Update()
@@ -44,7 +45,6 @@ public class CounterStaff : CinemaStaff
                 break;
 
 
-
             case CinemaStaffState.Pick:
                 _currentTerm += Time.deltaTime;
                 if (_currentTerm >= _maxTerm && _productStack.Count < 1)
@@ -56,15 +56,16 @@ public class CounterStaff : CinemaStaff
                     SetDest(_waitPos);
 
                     _currentTerm = 0f;
-                    _target = _cinemaManager._counter.transform;
+                    _target = _counter.transform;
                 }
                 break;
+
 
             case CinemaStaffState.PickMove:
                 if (_agent.remainingDistance <= _minDist)
                 {
-                    _cinemaManager._counter.PushProduct(_productStack.Pop());
-                    _cinemaManager._counter.PopProduct();
+                    _counter.PushProduct(_productStack.Pop());
+                    _counter.PopProduct();
 
                     _animator.SetBool("Pick", false);
 
@@ -81,13 +82,25 @@ public class CounterStaff : CinemaStaff
 
     void CheckOrder()
     {
-        if (_cinemaManager._counter._customer != null)
+        if (_counter._customer != null)
         {
 
-            SetDest(_cinemaManager._cinemaMachines[_cinemaManager._counter._customer._productType]._checkZone.position);
-            _target = _cinemaManager._cinemaMachines[_cinemaManager._counter._customer._productType].transform;
-            _staffState = CinemaStaffState.Move;
+            if (_counter._productStacks[_counter._customer._productType].Count > 0)
+            {
 
+                _counter.PopProduct();
+                _staffState = CinemaStaffState.Wait;
+                _target = null;
+            }
+            else
+            {
+
+
+                SetDest(_cinemaManager._cinemaMachines[_counter._customer._productType]._checkZone.position);
+                _target = _cinemaManager._cinemaMachines[_counter._customer._productType].transform;
+                _staffState = CinemaStaffState.Move;
+
+            }
 
         }
     }

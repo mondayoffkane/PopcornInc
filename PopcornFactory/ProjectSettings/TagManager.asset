@@ -23,6 +23,7 @@ TagManager:
   - CinemaMachine
   - Counter
   - CinemaManager
+  - TrashCan
   layers:
   - Default
   - TransparentFX

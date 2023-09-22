@@ -4,7 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using DG.Tweening;
 using UnityEngine.AI;
-using static UnityEditor.Recorder.OutputPath;
+//using static UnityEditor.Recorder.OutputPath;
 
 
 public class CinemaStaff : MonoBehaviour
@@ -54,7 +54,7 @@ public class CinemaStaff : MonoBehaviour
     //    Init_StackPointPos = StackPos.transform.localPosition;
     //}
 
-    public void SetInit(CinemaManager _cinemamanager, CinemaStaffType _stafftype, Vector3 _waitpos)
+    public virtual void SetInit(CinemaManager _cinemamanager, CinemaStaffType _stafftype, Vector3 _waitpos)
     {
         StackPos = transform.Find("StackPos");
         Init_StackPointPos = StackPos.transform.localPosition;

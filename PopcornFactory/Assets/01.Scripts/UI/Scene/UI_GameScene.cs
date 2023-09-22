@@ -12,11 +12,12 @@ public class UI_GameScene : UI_Scene
     }
     enum Texts
     {
-        Money_Text,
         Gem_Text,
         AddParts_Price_Text,
         RV_Income_TimeText,
         UpgradeCountText,
+        Money_Text,
+        CinemaMoney_Text,
         AddStaff_Price_Text,
         Income_Price_Text,
     }
@@ -87,7 +88,9 @@ public class UI_GameScene : UI_Scene
         //, AddStaff_Price_Text
         //, Income_Price_Text
         , AddParts_Price_Text, Gem_Text, UpgradeCountText
-        , RV_Income_TimeText;
+        , RV_Income_TimeText
+        , CinemaMoney_Text
+        ;
 
     public GameObject Setting_Panel, Scroll_Panel
                 , Upgrade_Panel
@@ -153,7 +156,7 @@ public class UI_GameScene : UI_Scene
         Gem_Text = GetText(Texts.Gem_Text);
         UpgradeCountText = GetText(Texts.UpgradeCountText);
         RV_Income_TimeText = GetText(Texts.RV_Income_TimeText);
-
+        CinemaMoney_Text = GetText(Texts.CinemaMoney_Text);
 
 
         Setting_Panel = GetObject(GameObjects.Setting_Panel);

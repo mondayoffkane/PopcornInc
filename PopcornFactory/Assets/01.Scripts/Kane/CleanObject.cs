@@ -18,36 +18,41 @@ public class CleanObject : MonoBehaviour
 
     public Transform[] _objs;
 
+    public GameObject _uiGroup;
 
     /// =============================================
 
     private void Start()
     {
         //RoomClear(true);
-        _circleGuage.gameObject.SetActive(false);
+        _uiGroup = transform.Find("Canvas").gameObject;
+        _uiGroup.SetActive(false);
         _circleGuage.fillAmount = 0f;
+        GetComponent<Renderer>().enabled = false;
     }
 
 
     public void RoomClear(bool _isClean)
     {
         isClean = _isClean;
-        _circleGuage.gameObject.SetActive(!isClean);
+        _uiGroup.SetActive(!isClean);
 
         if (_isClean)
         {
             foreach (Transform _trans in _objs)
             {
-                _trans.transform.DORotate(Vector3.zero, 0.5f);
+                _trans.transform.DORotate(Vector3.up * 180f, 0.5f);
             }
             _room.ClearObj( /*num */);
+            _uiGroup.SetActive(false);
         }
         else
         {
             foreach (Transform _trans in _objs)
             {
-                _trans.transform.DORotate(Vector3.up * Random.Range(-180f, 180f), 0.5f);
+                _trans.transform.DORotate(Vector3.up * Random.Range(90f, 270f), 0.5f);
             }
+            _uiGroup.SetActive(true);
         }
 
         _circleGuage.fillAmount = (_currentTerm / _maxTerm);
@@ -58,7 +63,6 @@ public class CleanObject : MonoBehaviour
         if (other.CompareTag("Player") || other.CompareTag("Staff"))
         {
 
-            _circleGuage.gameObject.SetActive(true);
         }
     }
 
@@ -66,21 +70,26 @@ public class CleanObject : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("Staff"))
         {
-            if (isClean == false)
-            {
-
-                _currentTerm += Time.deltaTime;
-                _circleGuage.fillAmount = (_currentTerm / _maxTerm);
-                if (_currentTerm >= _maxTerm)
-                {
-
-                    _currentTerm = 0;
-                    RoomClear(true);
-
-                }
-            }
+            Cleaning();
         }
 
+    }
+
+    public void Cleaning()
+    {
+        if (isClean == false)
+        {
+
+            _currentTerm += Time.deltaTime;
+            _circleGuage.fillAmount = (_currentTerm / _maxTerm);
+            if (_currentTerm >= _maxTerm)
+            {
+
+                _currentTerm = 0;
+                RoomClear(true);
+
+            }
+        }
     }
 
 

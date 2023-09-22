@@ -68,6 +68,8 @@ public class DataManager
         Managers.Game.Money = ES3.Load<double>("Money", 0);
         _stageData = ES3.Load<StageData>("StageData" + _stageLevel.ToString(), new StageData());
         Managers.Game.Gem = ES3.Load<int>("Gem", 0);
+        Managers.Game.CinemaMoney = ES3.Load<double>("CinemaMoney", 0);
+
 
         return _stageData;
 
@@ -78,6 +80,7 @@ public class DataManager
         ES3.Save<double>("Money", Managers.Game.Money);
         ES3.Save<int>("Gem", Managers.Game.Gem);
         ES3.Save<int>("Stage_" + _stageLevel.ToString(), _stagedata.PlayTime);
+        ES3.Save<double>("CinemaMoney", Managers.Game.CinemaMoney);
 
     }
     // =====================================

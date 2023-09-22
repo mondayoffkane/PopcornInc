@@ -28,7 +28,15 @@ public class Counter : EventObject
     CinemaManager _cinemaManager;
 
     public GameObject _staff;
+    public float _stackY;
     //public GameObject _playerZone;
+
+    [TitleGroup("Money")][SerializeField] GameObject _moneyPref;
+    [TitleGroup("Money")] public Transform _moneyStackPos;
+    [TitleGroup("Money")]
+    [SerializeField] Vector3 _stackInterval = Vector3.zero;
+    [TitleGroup("Money")] public Stack<Transform> _moneyStack;
+    [TitleGroup("Money")] int _width = 3, _height = 5;
 
     // ===========================================
     void Start()
@@ -48,7 +56,13 @@ public class Counter : EventObject
         StartCoroutine(Cor_Update());
 
         _unlockEvent.AddListener(() => Unlock());
+        _moneyPref = Resources.Load<GameObject>("Money_Pref");
 
+        _stackInterval = _moneyPref.GetComponent<MeshFilter>().sharedMesh.bounds.size;
+        _moneyStack = new Stack<Transform>();
+        if (_moneyStackPos == null) _moneyStackPos = transform.Find("MoneyStackPos");
+
+        if (_moneyStackPos.GetComponent<MoneyZone>() == null) _moneyStackPos.gameObject.AddComponent<MoneyZone>();
     }
 
 
@@ -75,7 +89,7 @@ public class Counter : EventObject
                     if (_cinemaManager.FindCinema())
                     {
                         _customer = null;
-
+                        _moneyStackPos.GetComponent<MoneyZone>().PopMoney();
                     }
                 }
             }
@@ -90,7 +104,10 @@ public class Counter : EventObject
     public void PopProduct()
     {
         if ((_customer != null) && _customer._productStack.Count < 1)
+        {
             _customer.PushProduct(_productStacks[_customer._productType].Pop());
+            //_customer = null;
+        }
     }
 
 
@@ -118,13 +135,11 @@ public class Counter : EventObject
 
         _productStacks[_num].Push(_product);
         _product.transform.SetParent(_stackPoses[_num]);
-
-        _product.transform.DOLocalJump(Vector3.up * _productStacks[_num].Count, _jumpPower, 1, _moveSpeed)
+        _stackY = _product.GetComponent<MeshFilter>().sharedMesh.bounds.size.y;
+        _product.transform.DOLocalJump(Vector3.up * (_productStacks[_num].Count - 1) * _stackY, _jumpPower, 1, _moveSpeed)
             .OnComplete(() =>
             {
-
                 _product.transform.localEulerAngles = Vector3.zero;
-
 
             });
 
@@ -137,7 +152,7 @@ public class Counter : EventObject
         //_playerZone.SetActive(false);
     }
 
-
+    
 
 
 }

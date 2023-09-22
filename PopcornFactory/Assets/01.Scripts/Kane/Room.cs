@@ -7,7 +7,16 @@ using Sirenix.OdinInspector;
 
 public class Room : EventObject
 {
+
+    public Transform _screenObj;
+    //public Material
+
+
+
     public bool alwaysOpen = false;
+
+
+
     public bool isReady = true;
 
     [SerializeField] Transform _seatGroup;
@@ -86,11 +95,11 @@ public class Room : EventObject
     [Button]
     public void SetSeat()
     {
-        _seats = new Transform[transform.childCount];
+        _seats = new Transform[_seatGroup.childCount];
 
-        for (int i = 0; i < _seats.Length - 1; i++)
+        for (int i = 0; i < _seats.Length; i++)
         {
-            _seats[i] = transform.GetChild(i);
+            _seats[i] = _seatGroup.GetChild(i);
         }
     }
 
@@ -142,7 +151,7 @@ public class Room : EventObject
 
     public void Unlock()
     {
-        transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
+        transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.Linear);
         _isUnlock = true;
         isReady = true;
         _offObj.SetActive(false);

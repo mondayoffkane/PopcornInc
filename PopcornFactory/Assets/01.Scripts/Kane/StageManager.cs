@@ -357,7 +357,11 @@ public class StageManager : MonoBehaviour
                 _popupPanel.position = Camera.main.WorldToScreenPoint(_targetMachine_Trans.position + Vector3.up * 20f);
             }
 
-            _gameUi.RV_Income_TimeText.text = $" {"Income X2"} \n {(intervalRvDouble / 60).ToString("F0") + ":" + (intervalRvDouble % 60).ToString("F0")}";
+            _gameUi.RV_Income_TimeText.text = $" {MathF.Truncate(intervalRvDouble / 60f).ToString("F0") + " : " + (intervalRvDouble % 60).ToString("F0")}";
+            //Debug.Log((intervalRvDouble / 60f));
+
+
+
 
             if (isBigMoney == false)
             {
@@ -509,6 +513,7 @@ public class StageManager : MonoBehaviour
 
 
         _gameManager.CalcMoney(0);
+        _gameManager.CalcMoney(0, 1);
         _navmeshsurface.RemoveData();
         _navmeshsurface.BuildNavMesh();
         SaveData();
@@ -850,8 +855,8 @@ public class StageManager : MonoBehaviour
                 DOTween.To(() => 300f, x => intervalRvDouble = x, 0, 300f).SetEase(Ease.Linear);
 
                 _gameUi.RV_Income_Double.interactable = false;
-                _gameUi.RV_Income_Double.transform.GetChild(0).gameObject.SetActive(false);
-                _gameUi.RV_Income_Double.transform.GetChild(1).gameObject.SetActive(true);
+
+                _gameUi.RV_Income_Double.transform.GetChild(0).gameObject.SetActive(true);
 
             })
                 .AppendInterval(300f).
@@ -860,8 +865,7 @@ public class StageManager : MonoBehaviour
                     isRvDouble = false;
                     intervalRvDouble = 300f;
                     _gameUi.RV_Income_Double.interactable = true;
-                    _gameUi.RV_Income_Double.transform.GetChild(0).gameObject.SetActive(true);
-                    _gameUi.RV_Income_Double.transform.GetChild(1).gameObject.SetActive(false);
+                    _gameUi.RV_Income_Double.transform.GetChild(0).gameObject.SetActive(false);
                 });
 
 
