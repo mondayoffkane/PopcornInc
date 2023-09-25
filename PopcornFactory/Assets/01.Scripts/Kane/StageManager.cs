@@ -178,9 +178,7 @@ public class StageManager : MonoBehaviour
             _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(true);
 
 
-        //_labButton = Managers.Pool.Pop(Resources.Load<GameObject>("Lab_Button"), _canvas.transform).transform;
-        //_labButton.position = Camera.main.WorldToScreenPoint(_gameManager._labotoryManager.transform.position + _labButton_offset);
-        //_labButton.gameObject.SetActive(false);
+     
 
         AddScrollContent();
 

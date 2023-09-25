@@ -95,20 +95,20 @@ public class Customer : MonoBehaviour
 
         isArrive = false;
 
-        PrintPos();
+        //PrintPos();
 
         if (CustomerState == State.Wait)
             transform.DORotate(new Vector3(0f, 180f, 0f), 0.4f).SetEase(Ease.Linear);
     }
 
-    [Button]
-    public void PrintPos()
-    {
-        Debug.Log("Transform pos :" + transform.position);
-        Debug.Log("Destiny : " + _agent.destination);
-        Debug.Log("Distance : " + _distance);
-        Debug.Log("Remain Distnace :" + _agent.remainingDistance);
-    }
+    //[Button]
+    //public void PrintPos()
+    //{
+    //    Debug.Log("Transform pos :" + transform.position);
+    //    Debug.Log("Destiny : " + _agent.destination);
+    //    Debug.Log("Distance : " + _distance);
+    //    Debug.Log("Remain Distnace :" + _agent.remainingDistance);
+    //}
 
     private void Update()
     {
@@ -126,7 +126,7 @@ public class Customer : MonoBehaviour
                     case State.Init:
                         //isArrive = true;
 
-                        Debug.Log(_agent.remainingDistance);
+                        //Debug.Log(_agent.remainingDistance);
 
                         _animator.SetBool("Walk", false);
 

@@ -21,6 +21,8 @@ public class CinemaMachine : MonoBehaviour
 
     public Stack<CinemaProduct> _productStack;
 
+    StageManager _stageManager;
+
     void Start()
     {
 
@@ -30,7 +32,10 @@ public class CinemaMachine : MonoBehaviour
         if (_stackPos == null) _stackPos = transform.Find("StackPos");
         _stackPos.GetComponent<Renderer>().enabled = false;
         StartCoroutine(Cor_Update());
+
+    
     }
+
 
 
     IEnumerator Cor_Update()

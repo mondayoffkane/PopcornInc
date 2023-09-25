@@ -12,7 +12,7 @@ public class MoneyZone : MonoBehaviour
     [TitleGroup("Money")]
     [SerializeField] Vector3 _stackInterval = Vector3.zero;
     [TitleGroup("Money")] public Stack<Transform> _moneyStack;
-    [TitleGroup("Money")] int _width = 3, _height = 4;
+    [TitleGroup("Money")] public int _width = 3, _height = 3;
 
 
 
@@ -25,17 +25,19 @@ public class MoneyZone : MonoBehaviour
 
         if (transform.GetComponent<Collider>() == null)
             transform.gameObject.AddComponent<BoxCollider>().isTrigger = true;
+
+        transform.GetComponent<BoxCollider>().size = new Vector3(5.5f, 0f, 3f);
     }
 
     [Button]
-    public void PopMoney(int _count = 3)
+    public void PopMoney(Transform _spawnTrans, int _count = 4)
     {
 
 
         for (int i = 0; i < _count; i++)
         {
             Transform _money = Managers.Pool.Pop(_moneyPref, transform).GetComponent<Transform>();
-            _money.position = transform.position;
+            _money.position = _spawnTrans.position;
             _money.transform.rotation = Quaternion.Euler(Vector3.zero);
             _moneyStack.Push(_money);
             _money.DOJump(transform.position

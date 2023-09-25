@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Counter : EventObject
 {
@@ -31,12 +32,20 @@ public class Counter : EventObject
     public float _stackY;
     //public GameObject _playerZone;
 
-    [TitleGroup("Money")][SerializeField] GameObject _moneyPref;
+    //[TitleGroup("Money")][SerializeField] GameObject _moneyPref;
     [TitleGroup("Money")] public Transform _moneyStackPos;
-    [TitleGroup("Money")]
-    [SerializeField] Vector3 _stackInterval = Vector3.zero;
-    [TitleGroup("Money")] public Stack<Transform> _moneyStack;
-    [TitleGroup("Money")] int _width = 3, _height = 5;
+    //[TitleGroup("Money")]
+    //[SerializeField] Vector3 _stackInterval = Vector3.zero;
+    //[TitleGroup("Money")] public Stack<Transform> _moneyStack;
+    //[TitleGroup("Money")] int _width = 3, _height = 5;
+
+
+
+    [TitleGroup("Order UI")] public GameObject _orderPanel;
+    [TitleGroup("Order UI")] public Sprite[] _sprites;
+    [TitleGroup("Order UI")] public Text _text;
+
+    [SerializeField] public Image _orderImg;
 
     // ===========================================
     void Start()
@@ -56,13 +65,15 @@ public class Counter : EventObject
         StartCoroutine(Cor_Update());
 
         _unlockEvent.AddListener(() => Unlock());
-        _moneyPref = Resources.Load<GameObject>("Money_Pref");
+        //_moneyPref = Resources.Load<GameObject>("Money_Pref");
 
-        _stackInterval = _moneyPref.GetComponent<MeshFilter>().sharedMesh.bounds.size;
-        _moneyStack = new Stack<Transform>();
+        //_stackInterval = _moneyPref.GetComponent<MeshFilter>().sharedMesh.bounds.size;
+        //_moneyStack = new Stack<Transform>();
         if (_moneyStackPos == null) _moneyStackPos = transform.Find("MoneyStackPos");
 
         if (_moneyStackPos.GetComponent<MoneyZone>() == null) _moneyStackPos.gameObject.AddComponent<MoneyZone>();
+
+        Order(false);
     }
 
 
@@ -89,7 +100,7 @@ public class Counter : EventObject
                     if (_cinemaManager.FindCinema())
                     {
                         _customer = null;
-                        _moneyStackPos.GetComponent<MoneyZone>().PopMoney();
+                        _moneyStackPos.GetComponent<MoneyZone>().PopMoney(transform);
                     }
                 }
             }
@@ -103,7 +114,7 @@ public class Counter : EventObject
 
     public void PopProduct()
     {
-        if ((_customer != null) && _customer._productStack.Count < 1)
+        if ((_customer != null) && _customer._productStack.Count < 1 && _productStacks[_customer._productType].Count > 0)
         {
             _customer.PushProduct(_productStacks[_customer._productType].Pop());
             //_customer = null;
@@ -152,7 +163,23 @@ public class Counter : EventObject
         //_playerZone.SetActive(false);
     }
 
-    
+
+    public void Order(bool isBool)
+    {
+
+        if (isBool)
+        {
+            _orderPanel.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutCubic);
+            _orderImg.sprite = _sprites[_customer._productType];
+            _text.text = $"X {_customer.OrderCount}";
+        }
+        else
+        {
+            _orderPanel.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.Linear);
+        }
+
+    }
+
 
 
 }

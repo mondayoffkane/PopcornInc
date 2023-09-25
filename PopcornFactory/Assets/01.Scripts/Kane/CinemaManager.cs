@@ -58,6 +58,7 @@ public class CinemaManager : MonoBehaviour
 
     // ================ =============================================
 
+    StageManager _stageManager;
 
     private void Start()
     {
@@ -87,9 +88,19 @@ public class CinemaManager : MonoBehaviour
             _roomList.Add(_roomGroup.GetChild(i).GetComponent<Room>());
         }
 
+        _stageManager = Managers.Game._stageManager;
+
+
+        LoadData();
 
         StartCoroutine(Cor_Update());
     }
+
+    public void LoadData()
+    {
+
+    }
+
 
 
     IEnumerator Cor_Update()
@@ -109,6 +120,7 @@ public class CinemaManager : MonoBehaviour
                 _customerList[0].transform.DORotate(new Vector3(0f, 180f, 0f), 1f).SetEase(Ease.Linear);
                 _counter._customer = _customerList[0];
 
+                _counter.Order(true);
             }
 
             yield return new WaitForSeconds(2f);
@@ -121,7 +133,24 @@ public class CinemaManager : MonoBehaviour
         Customer _customer = Managers.Pool.Pop(_customerPref, _customerGroup.transform).GetComponent<Customer>();
         _customerList.Add(_customer);
         // need to modify
-        _customer.SetInit(this, 0, 1);
+
+        int _type = 0;
+        switch (_stageManager._parts_upgrade_level)
+        {
+            case int n when n < 3:
+                _type = 0;
+                break;
+
+            case int n when n > 2 && n < 5:
+                _type = 1;
+                break;
+
+            case int n when n > 4:
+                _type = 2;
+                break;
+        }
+
+        _customer.SetInit(this, Random.Range(0, _type + 1), 1);
         _customer.GetComponent<NavMeshAgent>().Warp(_doors[0].position);
 
         _customer.SetDest(_waitingPos.position + new Vector3(0f, 0f, _watingTerm) * (_customerList.Count - 1));
@@ -159,6 +188,7 @@ public class CinemaManager : MonoBehaviour
 
 
             _loopCount = 0;
+            _counter.Order(false);
             return true;
         }
         else

@@ -9,13 +9,8 @@ public class Room : EventObject
 {
 
     public Transform _screenObj;
-    //public Material
-
-
 
     public bool alwaysOpen = false;
-
-
 
     public bool isReady = true;
 
@@ -31,7 +26,6 @@ public class Room : EventObject
 
     public GameObject _screen;
 
-
     public bool _isUnlock = false;
     public GameObject _offObj;
 
@@ -40,7 +34,30 @@ public class Room : EventObject
     [SerializeField] int _cleanObjectCount;
     [SerializeField] int _cleanCount = 0;
 
-    // ================================
+    // ===============================================================
+
+    //[TitleGroup("Room Meshes")] public Material[] _WallMats;
+    //[TitleGroup("Room Meshes")] public Material[] _FloorMats;
+
+    [TitleGroup("Room Meshes")] public Mesh[] _SeatMeshes;
+    //[TitleGroup("Room Meshes")] public Mesh[] _ScreenMeshes;
+    //[TitleGroup("Room Meshes")] public Mesh[] _LightMeshes;
+    //[TitleGroup("Room Meshes")] public Mesh[] _CarpetMeshes;
+
+
+    //[TitleGroup("Room Meshes")] public MeshFilter _ScreenMesh;
+    //[TitleGroup("Room Meshes")] public MeshFilter _LightMesh;
+    //[TitleGroup("Room Meshes")] public MeshFilter _FloorMesh;
+    //[TitleGroup("Room Meshes")] public MeshFilter _CarpetMesh;
+
+
+    public GameObject[] _roomGroups;
+
+
+
+
+
+    // ================================ ===============================
     private void Start()
     {
         _customerList = new List<Customer>();
@@ -66,6 +83,11 @@ public class Room : EventObject
         {
             _cleanObjects[i] = _cleanGroup.GetChild(i).GetComponent<CleanObject>();
             _cleanObjects[i]._room = this;
+        }
+
+        for (int i = 0; i < _roomGroups.Length; i++)
+        {
+            _roomGroups[i].SetActive(false);
         }
 
     }
@@ -145,7 +167,7 @@ public class Room : EventObject
             _obj.RoomClear(false);
         }
 
-        //isReady = true;
+        isReady = false;
 
     }
 
@@ -169,6 +191,41 @@ public class Room : EventObject
 
 
     }
+
+    [Button]
+    public void RoomUpgrade(int _num)
+    {
+        //Material[] _materials = GetComponent<Renderer>().sharedMaterials;
+
+        //_materials[1] = _WallMats[1];
+
+        //GetComponent<Renderer>().sharedMaterials = _materials;
+
+
+        //_ScreenMesh.sharedMesh = _ScreenMeshes[1];
+        //_LightMesh.sharedMesh = _LightMeshes[1];
+        //_FloorMesh.sharedMesh = _FloorMeshes[1];
+
+
+        for (int i = 0; i < _seats.Length; i++)
+        {
+            _seats[i].GetComponent<MeshFilter>().sharedMesh = _SeatMeshes[_num];
+        }
+
+
+        for (int i = 0; i < _roomGroups.Length; i++)
+        {
+            _roomGroups[i].SetActive(false);
+        }
+
+        _roomGroups[_num].SetActive(true);
+
+
+
+
+
+    }
+
 
 
 }

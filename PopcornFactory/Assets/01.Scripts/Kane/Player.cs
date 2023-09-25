@@ -98,6 +98,11 @@ public class Player : MonoBehaviour
                     }
                 }
 
+                if (_productStack.Count < 1)
+                {
+                    _animator.SetBool("Pick", false);
+                }
+
                 break;
 
             default:

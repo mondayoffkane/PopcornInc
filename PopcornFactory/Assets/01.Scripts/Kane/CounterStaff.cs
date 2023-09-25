@@ -91,8 +91,9 @@ public class CounterStaff : CinemaStaff
                 _counter.PopProduct();
                 _staffState = CinemaStaffState.Wait;
                 _target = null;
+
             }
-            else
+            else if (_counter._customer._productStack.Count < 1)
             {
 
 
