@@ -6,6 +6,8 @@ using Sirenix.OdinInspector;
 
 public class CinemaMachine : MonoBehaviour
 {
+    
+
 
     [TitleGroup("Product")] public GameObject _cinemaProduct;
     [TitleGroup("Product")] public CinemaProduct.CinemaProductType _productType;
@@ -23,6 +25,10 @@ public class CinemaMachine : MonoBehaviour
 
     StageManager _stageManager;
 
+
+    /// <summary>
+    ///  ================================================
+    /// </summary>
     void Start()
     {
 
@@ -33,7 +39,7 @@ public class CinemaMachine : MonoBehaviour
         _stackPos.GetComponent<Renderer>().enabled = false;
         StartCoroutine(Cor_Update());
 
-    
+
     }
 
 

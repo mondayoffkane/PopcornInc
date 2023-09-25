@@ -150,8 +150,9 @@ public class LandManager : MonoBehaviour
             _workerbox.DOScale(Vector3.one, 1f);
 
             _staff_hire_level++;
-            TutorialManager._instance.Tutorial();
-            Debug.Log("Tutorial");
+
+            if (TutorialManager._instance != null) TutorialManager._instance.Tutorial();
+
             SaveData();
         }
 

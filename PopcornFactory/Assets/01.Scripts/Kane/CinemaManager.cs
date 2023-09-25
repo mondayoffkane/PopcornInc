@@ -9,6 +9,11 @@ using DG.Tweening;
 
 public class CinemaManager : MonoBehaviour
 {
+    public JoyStickController _joystick;
+
+    [TitleGroup("Interact_Group")] public InteractArea[] _interactAreas;
+    [TitleGroup("Interact_Group")] public int _interactLevel = 0;
+
     [TitleGroup("Machine")] public CinemaMachine[] _cinemaMachines;
 
 
@@ -43,6 +48,13 @@ public class CinemaManager : MonoBehaviour
 
     public Transform[] _doors = new Transform[2];
 
+
+
+    public Room _upgradeTarget;
+
+    public Player _player;
+
+
     /// =============
     [Header("Serialized")]
     Transform _customerGroup;
@@ -51,7 +63,7 @@ public class CinemaManager : MonoBehaviour
     // ======== RV ======== =============================================
     public bool isRvDouble = false;
 
-
+    public int _cinemaRvNum = 0;
 
 
 
@@ -62,6 +74,8 @@ public class CinemaManager : MonoBehaviour
 
     private void Start()
     {
+        if (_player == null) _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
         if (_waitingPos == null) _waitingPos = transform.Find("WatingPos");
         if (_counter == null) _counter = transform.Find("Cinema_Counter").GetComponent<Counter>();
 
@@ -86,6 +100,7 @@ public class CinemaManager : MonoBehaviour
         for (int i = 0; i < _roomGroup.childCount; i++)
         {
             _roomList.Add(_roomGroup.GetChild(i).GetComponent<Room>());
+            _roomGroup.GetChild(i).GetComponent<Room>().LoadData();
         }
 
         _stageManager = Managers.Game._stageManager;
@@ -93,14 +108,37 @@ public class CinemaManager : MonoBehaviour
 
         LoadData();
 
+        foreach (InteractArea _area in _interactAreas)
+        {
+            _area.gameObject.SetActive(false);
+        }
+        if (_interactLevel < _interactAreas.Length)
+            _interactAreas[_interactLevel].gameObject.SetActive(true);
+
+
         StartCoroutine(Cor_Update());
     }
 
     public void LoadData()
     {
+        _interactLevel = ES3.Load<int>("_interactLevel", 0);
+
+
 
     }
 
+    public void SaveData()
+    {
+        ES3.Save<int>("_interactLevel", _interactLevel);
+    }
+
+    public void NextInteract()
+    {
+        _interactLevel++;
+        ES3.Save<int>("_interactLevel", _interactLevel);
+        if (_interactLevel < _interactAreas.Length)
+            _interactAreas[_interactLevel].gameObject.SetActive(true);
+    }
 
 
     IEnumerator Cor_Update()
@@ -168,6 +206,7 @@ public class CinemaManager : MonoBehaviour
 
 
 
+
     public bool FindCinema()
     {
 
@@ -219,6 +258,34 @@ public class CinemaManager : MonoBehaviour
     }
 
 
+    public void RoomUpgrade(int _num)
+    {
+        _upgradeTarget.RoomChange(_num, true);
 
+    }
+
+    public void CinemaRv()
+    {
+        switch (_cinemaRvNum)
+        {
+            case 0:
+                _joystick.Speed = 12f;
+                DOTween.Sequence().AppendInterval(30f)
+                   .AppendCallback(() => _joystick.Speed = 8f);
+
+
+                break;
+
+            case 1:
+                Managers.Game.CalcMoney(1000, 1);
+                break;
+
+            case 2:
+                _player._maxCount += 3;
+                DOTween.Sequence().AppendInterval(30f)
+                    .AppendCallback(() => _player._maxCount = 1);
+                break;
+        }
+    }
 
 }

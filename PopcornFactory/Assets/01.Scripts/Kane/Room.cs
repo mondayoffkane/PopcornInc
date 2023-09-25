@@ -8,9 +8,14 @@ using Sirenix.OdinInspector;
 public class Room : EventObject
 {
 
-    public Transform _screenObj;
 
-    public bool alwaysOpen = false;
+
+    public int _roomNumber = 0;
+
+    public Transform _baseGroup;
+
+
+    //public bool alwaysOpen = false;
 
     public bool isReady = true;
 
@@ -27,34 +32,23 @@ public class Room : EventObject
     public GameObject _screen;
 
     public bool _isUnlock = false;
-    public GameObject _offObj;
+    public GameObject[] _onObjs;
+    public GameObject[] _offObjs;
 
     public Transform _cleanGroup;
     public CleanObject[] _cleanObjects;
     [SerializeField] int _cleanObjectCount;
     [SerializeField] int _cleanCount = 0;
 
+    public int _upgradeLevel = 0;
+
     // ===============================================================
 
-    //[TitleGroup("Room Meshes")] public Material[] _WallMats;
-    //[TitleGroup("Room Meshes")] public Material[] _FloorMats;
+
 
     [TitleGroup("Room Meshes")] public Mesh[] _SeatMeshes;
-    //[TitleGroup("Room Meshes")] public Mesh[] _ScreenMeshes;
-    //[TitleGroup("Room Meshes")] public Mesh[] _LightMeshes;
-    //[TitleGroup("Room Meshes")] public Mesh[] _CarpetMeshes;
-
-
-    //[TitleGroup("Room Meshes")] public MeshFilter _ScreenMesh;
-    //[TitleGroup("Room Meshes")] public MeshFilter _LightMesh;
-    //[TitleGroup("Room Meshes")] public MeshFilter _FloorMesh;
-    //[TitleGroup("Room Meshes")] public MeshFilter _CarpetMesh;
-
 
     public GameObject[] _roomGroups;
-
-
-
 
 
     // ================================ ===============================
@@ -62,20 +56,33 @@ public class Room : EventObject
     {
         _customerList = new List<Customer>();
 
-        if (_screen == null) _screen = transform.Find("Canvas").Find("Screen").gameObject;
+        if (_baseGroup == null) _baseGroup = transform.GetChild(0);
+
+
+        if (_screen == null) _screen = _baseGroup.transform.Find("Canvas").Find("Screen").gameObject;
         _screen.SetActive(false);
 
-        _seatGroup = transform.Find("SeatGroup");
-        _cleanGroup = transform.Find("CleanGroup");
+        _seatGroup = _baseGroup.transform.Find("SeatGroup");
+        _cleanGroup = _baseGroup.transform.Find("CleanGroup");
 
 
         if (_seats == null)
             SetSeat();
 
-        _unlockEvent.AddListener(() => Unlock());
+        _unlockEvent.AddListener(() =>
+        {
+            Unlock(true);
+            //_upgradeLevel++;
+            //ES3.Save<int>("Room_" + _roomNumber, _upgradeLevel);
+        });
 
 
-        LoadData();
+        _baseGroup.gameObject.SetActive(false);
+        for (int i = 0; i < _roomGroups.Length; i++)
+        {
+            _roomGroups[i].SetActive(false);
+        }
+
         _cleanObjectCount = _cleanGroup.childCount;
         _cleanObjects = new CleanObject[_cleanObjectCount];
 
@@ -85,33 +92,44 @@ public class Room : EventObject
             _cleanObjects[i]._room = this;
         }
 
-        for (int i = 0; i < _roomGroups.Length; i++)
-        {
-            _roomGroups[i].SetActive(false);
-        }
+
+        LoadData();
+
 
     }
 
-    void LoadData()
+    public void LoadData()
     {
-        if (alwaysOpen)
-        {
-            _isUnlock = true;
-            //ES3.Save<bool>("isOpen", isOpen);
-        }
+
+        _upgradeLevel = ES3.Load<int>("Room_" + _roomNumber, 0);
+        _isUnlock = ES3.Load<bool>($"Room_{_roomNumber}_isUnlock", false);
+
+        //if (alwaysOpen)
+        //{
+        //    _isUnlock = true;
+        //    if (_upgradeLevel < 1)
+        //        _upgradeLevel = 1;
+        //}
 
 
-        //isOpen = ES3.Load<bool>("isOpen", false);
+
+
         if (_isUnlock)
         {
             isReady = true;
-            transform.localScale = Vector3.one;
+
+            Unlock(false);
+
         }
         else
         {
             isReady = false;
-            transform.localScale = Vector3.zero;
+
         }
+
+
+
+
     }
 
     [Button]
@@ -171,13 +189,63 @@ public class Room : EventObject
 
     }
 
-    public void Unlock()
+    public void Unlock(bool isLevelUp)
     {
+
         transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.Linear);
-        _isUnlock = true;
-        isReady = true;
-        _offObj.SetActive(false);
+
+        if (_upgradeLevel < 3)
+        {
+            if (_onObjs.Length > 0)
+            {
+                for (int i = 0; i < _onObjs.Length; i++)
+                {
+                    _onObjs[i].SetActive(true);
+                }
+            }
+        }
+
+
+        if (_offObjs.Length > 0)
+        {
+            for (int i = 0; i < _offObjs.Length; i++)
+            {
+                _offObjs[i].SetActive(false);
+            }
+
+        }
+
+
+
+        _baseGroup.gameObject.SetActive(true);
+        if (isLevelUp)
+        {
+            _upgradeLevel++;
+            ES3.Save<int>("Room_" + _roomNumber, _upgradeLevel);
+
+            // add show room upgrade panel
+
+            Managers.Game._cinemaManager._upgradeTarget = this;
+
+            if (_upgradeLevel == 2)
+                Managers.GameUI.RoomUpgrade_Panel.SetActive(true);
+        }
+
+        RoomChange(_upgradeLevel - 1);
+        if (_isUnlock == false)
+        {
+            _isUnlock = true;
+
+            ES3.Save<bool>($"Room_{_roomNumber}_isUnlock", _isUnlock);
+            isReady = true;
+
+        }
+
+
+
     }
+
+
 
     public void ClearObj(int _num = 0)
     {
@@ -193,23 +261,15 @@ public class Room : EventObject
     }
 
     [Button]
-    public void RoomUpgrade(int _num)
+    public void RoomChange(int _num, bool isfix = false)
     {
-        //Material[] _materials = GetComponent<Renderer>().sharedMaterials;
-
-        //_materials[1] = _WallMats[1];
-
-        //GetComponent<Renderer>().sharedMaterials = _materials;
-
-
-        //_ScreenMesh.sharedMesh = _ScreenMeshes[1];
-        //_LightMesh.sharedMesh = _LightMeshes[1];
-        //_FloorMesh.sharedMesh = _FloorMeshes[1];
+        if (_num < 0) _num = 0;
 
 
         for (int i = 0; i < _seats.Length; i++)
         {
-            _seats[i].GetComponent<MeshFilter>().sharedMesh = _SeatMeshes[_num];
+            if (_num < _SeatMeshes.Length)
+                _seats[i].GetComponent<MeshFilter>().sharedMesh = _SeatMeshes[_num];
         }
 
 
@@ -220,9 +280,11 @@ public class Room : EventObject
 
         _roomGroups[_num].SetActive(true);
 
-
-
-
+        if (isfix)
+        {
+            _upgradeLevel = _num + 1;
+            ES3.Save<int>("Room_" + _roomNumber, _upgradeLevel);
+        }
 
     }
 

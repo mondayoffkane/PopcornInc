@@ -7,6 +7,12 @@ using Sirenix.OdinInspector;
 
 public class InteractArea : MonoBehaviour
 {
+    public bool isFirstOpen = false;
+    public bool isOpen = false;
+    public int _num = 0;
+
+    public int _unlockLevel = 0;
+
     public enum OpenType
     {
         Unlock,
@@ -17,7 +23,7 @@ public class InteractArea : MonoBehaviour
 
     public Transform _target;
 
-    public double _unlockPrice;
+    public double[] _unlockPrice = new double[2];
     public double _currentPrice;
     public GameObject _money_Pref;
 
@@ -35,15 +41,14 @@ public class InteractArea : MonoBehaviour
 
     // ==============================================================
 
-    private void Start()
+    private void OnEnable()
     {
 
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         GetComponent<Renderer>().enabled = false;
 
-        // add load data
 
-        _currentPrice = _unlockPrice;
+        _currentPrice = _unlockPrice[_unlockLevel];
 
 
         if (_priceText == null) _priceText = transform.Find("Canvas").Find("PriceText").GetComponent<Text>();
@@ -51,10 +56,30 @@ public class InteractArea : MonoBehaviour
 
 
         _priceText.text = $"{Managers.ToCurrencyString(_currentPrice)}";
-        _fillImg.fillAmount = (float)((_unlockPrice - _currentPrice) / _unlockPrice);
+        _fillImg.fillAmount = (float)((_unlockPrice[_unlockLevel] - _currentPrice) / _unlockPrice[_unlockLevel]);
+
 
         StartCoroutine(Cor_Update());
+
+
+
+
     }
+
+
+
+    public void OnObj()
+    {
+        _currentPrice = _unlockPrice[_unlockLevel];
+        _priceText.text = $"{Managers.ToCurrencyString(_currentPrice)}";
+        _fillImg.fillAmount = (float)((_unlockPrice[_unlockLevel] - _currentPrice) / _unlockPrice[_unlockLevel]);
+
+        isOpen = true;
+
+        //ES3.Save<bool>("Interact_isOpen" + _num, isOpen);
+        //SaveData();
+    }
+
 
 
 
@@ -66,14 +91,14 @@ public class InteractArea : MonoBehaviour
             yield return Time.deltaTime;
             if (isPlayerIn)
             {
-                if (Managers.Game.CinemaMoney >= _unlockPrice * Time.deltaTime)
+                if (Managers.Game.CinemaMoney >= _unlockPrice[_unlockLevel] * Time.deltaTime)
                 {
-                    Managers.Game.CalcMoney(-_unlockPrice * Time.deltaTime,1);
-                    _currentPrice -= _unlockPrice * Time.deltaTime;
+                    Managers.Game.CalcMoney(-_unlockPrice[_unlockLevel] * Time.deltaTime, 1);
+                    _currentPrice -= _unlockPrice[_unlockLevel] * Time.deltaTime;
 
                     Transform _momey = Managers.Pool.Pop(_money_Pref).transform;
                     _priceText.text = $"{Managers.ToCurrencyString(_currentPrice)}";
-                    _fillImg.fillAmount = (float)((_unlockPrice - _currentPrice) / _unlockPrice);
+                    _fillImg.fillAmount = (float)((_unlockPrice[_unlockLevel] - _currentPrice) / _unlockPrice[_unlockLevel]);
 
 
                     _momey.SetParent(_player.transform);
@@ -108,7 +133,14 @@ public class InteractArea : MonoBehaviour
                                 break;
                         }
 
+                        _unlockLevel++;
+                        Managers.Game._cinemaManager.NextInteract();
+                        //NextObjOn();
+
+
                         gameObject.SetActive(false);
+
+                        break;
 
                     }
                 }
@@ -128,6 +160,20 @@ public class InteractArea : MonoBehaviour
         isPlayerIn = false;
     }
 
+    //public void NextObjOn()
+    //{
+    //    if (_unlockLevel < _nextOpenObjs.Length)
+    //    {
+    //        Debug.Log("On" + _nextOpenObjs[_unlockLevel].name);
+    //        _nextOpenObjs[_unlockLevel].SetActive(true);
+    //        _nextOpenObjs[_unlockLevel].GetComponent<InteractArea>().OnObj();
+    //        _unlockLevel++;
+    //    }
+    //    isOpen = false;
+    //    isFirstOpen = false;
+    //    ES3.Save<bool>("Interact_isOpen_isfirst" + _num, isFirstOpen);
+    //    SaveData();
+    //}
 
 
 

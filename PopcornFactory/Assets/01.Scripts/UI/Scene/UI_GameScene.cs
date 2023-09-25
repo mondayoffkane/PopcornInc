@@ -44,6 +44,9 @@ public class UI_GameScene : UI_Scene
         NoAds_Close_Button,
         Laboratory_Close_Button,
         Recipe_Close_Button,
+        BaseRoom_Button,
+        PremiumRoom_Button,
+        CinemaRv_Accept_Button,
     }
     enum GameObjects
     {
@@ -60,6 +63,8 @@ public class UI_GameScene : UI_Scene
         Laboratory_Content,
         Recipe_Panel,
         Recipe_Content,
+        RoomUpgrade_Panel,
+        CInemaRvPanel,
     }
 
 
@@ -81,6 +86,9 @@ public class UI_GameScene : UI_Scene
         , Recipe_Close_Button
         , Cinema_Button
         , Island_Button
+        , BaseRoom_Button
+        , PremiumRoom_Button
+        , CinemaRv_Accept_Button
                 ;
     //, NextStageButton;
 
@@ -103,6 +111,8 @@ public class UI_GameScene : UI_Scene
         , Recipe_Content
         , IslandUi_Group
         , CinemaUI_Group
+        , RoomUpgrade_Panel
+        , CInemaRvPanel
         ;
 
     public Image Mask;
@@ -148,6 +158,11 @@ public class UI_GameScene : UI_Scene
         Cinema_Button = GetButton(Buttons.Cinema_Button);
         Island_Button = GetButton(Buttons.Island_Button);
 
+        BaseRoom_Button = GetButton(Buttons.BaseRoom_Button);
+        PremiumRoom_Button = GetButton(Buttons.PremiumRoom_Button);
+        CinemaRv_Accept_Button = GetButton(Buttons.CinemaRv_Accept_Button);
+
+
 
         Money_Text = GetText(Texts.Money_Text);
         //AddStaff_Price_Text = GetText(Texts.AddStaff_Price_Text);
@@ -175,7 +190,8 @@ public class UI_GameScene : UI_Scene
         Recipe_Content = GetObject(GameObjects.Recipe_Content);
         IslandUi_Group = GetObject(GameObjects.IslandUi_Group);
         CinemaUI_Group = GetObject(GameObjects.CinemaUI_Group);
-
+        RoomUpgrade_Panel = GetObject(GameObjects.RoomUpgrade_Panel);
+        CInemaRvPanel = GetObject(GameObjects.CInemaRvPanel);
 
 
         Mask = GetImage(Images.Mask);
@@ -297,7 +313,24 @@ public class UI_GameScene : UI_Scene
 
 
 
-    }
+        BaseRoom_Button.AddButtonEvent(() =>
+        {
+            Managers.Game._cinemaManager.RoomUpgrade(1);
+            RoomUpgrade_Panel.SetActive(false);
+        });
+        PremiumRoom_Button.AddButtonEvent(() =>
+        {
+            Managers.Game._cinemaManager.RoomUpgrade(2);
+            RoomUpgrade_Panel.SetActive(false);
+        });
+        CinemaRv_Accept_Button.AddButtonEvent(() =>
+        {
+            Managers.Game._cinemaManager.CinemaRv();
+            CInemaRvPanel.SetActive(false);
+        });
+
+
+    }/// ========= end Set buttons
 
 
 
@@ -315,7 +348,21 @@ public class UI_GameScene : UI_Scene
     }
 
 
-} /// ========= end Set buttons
+    public void ShowCinemaRvPanel(int _num)
+    {
+        CInemaRvPanel.SetActive(true);
+        CInemaRvPanel.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+        CInemaRvPanel.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+        CInemaRvPanel.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+
+        CInemaRvPanel.transform.GetChild(0).GetChild(_num).gameObject.SetActive(true);
+
+
+    }
+
+
+
+} 
 
 
 

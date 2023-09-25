@@ -575,6 +575,7 @@ MonoBehaviour:
   _unlockEvent:
     m_PersistentCalls:
       m_Calls: []
+  _baseGroup: {fileID: 0}
   _screenObj: {fileID: 0}
   alwaysOpen: 0
   isReady: 1
@@ -592,7 +593,7 @@ MonoBehaviour:
   _screen: {fileID: 6377318365393675008}
   _isUnlock: 0
   _offObj: {fileID: 0}
-  _cleanGroup: {fileID: 0}
+  _cleanGroup: {fileID: 4484872272481225848}
   _cleanObjects: []
   _cleanObjectCount: 0
   _cleanCount: 0

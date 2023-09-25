@@ -10,14 +10,11 @@ public class CleanerStaff : CinemaStaff
     public float _maxTerm = 1f;
 
 
+    [SerializeField] Room _targetRoom;
 
 
 
 
-    private void Start()
-    {
-
-    }
 
     private void Update()
     {
@@ -52,12 +49,31 @@ public class CleanerStaff : CinemaStaff
                 {
                     _target.GetComponent<CleanObject>().RoomClear(true);
 
+
+                    //for (int i = 0; i < _targetRoom._cleanObjects.Length; i++)
+                    //{
+                    //    if (_targetRoom._cleanObjects[i].isClean == false)
+                    //    {
+                    //        _targetRoom = _cinemaManager._roomList[i];
+                    //        SetDest(_targetRoom._cleanObjects[i].transform.position);
+                    //        _target = _targetRoom._cleanObjects[i].transform;
+                    //        _staffState = CinemaStaffState.Move;
+                    //        break;
+                    //    }
+                    //    else
+                    //    {
                     SetDest(_waitPos);
 
                     //add _animator.SetBool("Cleaning", false);
                     _staffState = CinemaStaffState.Wait;
                     _currentTerm = 0f;
                     _target = null;
+                    break;
+
+                    //}
+                    //}
+
+
                 }
                 break;
 
@@ -77,6 +93,7 @@ public class CleanerStaff : CinemaStaff
                 {
                     if (_cinemaManager._roomList[i]._cleanObjects[j].isClean == false)
                     {
+                        _targetRoom = _cinemaManager._roomList[i];
                         SetDest(_cinemaManager._roomList[i]._cleanObjects[j].transform.position);
                         _target = _cinemaManager._roomList[i]._cleanObjects[j].transform;
                         _staffState = CinemaStaffState.Move;
