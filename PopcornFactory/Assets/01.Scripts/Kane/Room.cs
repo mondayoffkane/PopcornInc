@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 
 public class Room : EventObject
 {
-
+    public int _spawnCount = 6;
 
 
     public int _roomNumber = 0;
@@ -26,7 +26,7 @@ public class Room : EventObject
 
     public List<Customer> _customerList;
 
-    public float _moviePlayTime = 5f;
+    public float _moviePlayTime = 10f;
 
 
     public GameObject _screen;
@@ -50,10 +50,16 @@ public class Room : EventObject
 
     public GameObject[] _roomGroups;
 
+    public Transform _spawnPos;
 
     // ================================ ===============================
     private void Start()
     {
+        if (_spawnPos == null) _spawnPos = transform.Find("SpawnPos");
+        if (_spawnPos.GetComponent<MoneyZone>() == null) _spawnPos.gameObject.AddComponent<MoneyZone>();
+        _spawnPos.GetComponent<MoneyZone>().SetInit(new Vector3(4f, 2f, 3f), 2, 2);
+
+
         _customerList = new List<Customer>();
 
         if (_baseGroup == null) _baseGroup = transform.GetChild(0);
@@ -187,23 +193,55 @@ public class Room : EventObject
 
         isReady = false;
 
+        SpawnMoney();
+
     }
+
+    [Button]
+    public void SpawnMoney()
+    {
+
+        //int _count;
+        //switch (_upgradeLevel)
+        //{
+        //    case 1:
+        //        _count = _spawnCount;
+        //        break;
+
+        //    case 2:
+        //        _count = _spawnCount * 2;
+        //        break;
+
+        //    case 3:
+        //        _count = _spawnCount * 5;
+        //        break;
+
+        //    default:
+        //        _count = _spawnCount;
+        //        break;
+        //}
+
+        _spawnPos.GetComponent<MoneyZone>().PopMoney(transform, 3 * _upgradeLevel, _spawnCount * _upgradeLevel);
+    }
+
+
+
 
     public void Unlock(bool isLevelUp)
     {
 
         transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.Linear);
 
-        if (_upgradeLevel < 3)
-        {
-            if (_onObjs.Length > 0)
-            {
-                for (int i = 0; i < _onObjs.Length; i++)
-                {
-                    _onObjs[i].SetActive(true);
-                }
-            }
-        }
+        //if (_upgradeLevel < 3)
+        //{
+        //    if (_onObjs.Length > 0)
+        //    {
+        //        for (int i = 0; i < _onObjs.Length; i++)
+        //        {
+        //            _onObjs[i].SetActive(true);
+        //        }
+        //    }
+        //}
 
 
         if (_offObjs.Length > 0)
@@ -216,7 +254,7 @@ public class Room : EventObject
         }
 
 
-
+        if (_baseGroup == null) _baseGroup = transform.GetChild(0);
         _baseGroup.gameObject.SetActive(true);
         if (isLevelUp)
         {
@@ -228,10 +266,20 @@ public class Room : EventObject
             Managers.Game._cinemaManager._upgradeTarget = this;
 
             if (_upgradeLevel == 2)
+            {
                 Managers.GameUI.RoomUpgrade_Panel.SetActive(true);
+                Managers.Game._cinemaManager._joystick.isFix = true;
+            }
+
+            if (_upgradeLevel < 2)
+                RoomChange(_upgradeLevel - 1);
+        }
+        else
+        {
+
+            RoomChange(_upgradeLevel - 1);
         }
 
-        RoomChange(_upgradeLevel - 1);
         if (_isUnlock == false)
         {
             _isUnlock = true;
@@ -263,6 +311,7 @@ public class Room : EventObject
     [Button]
     public void RoomChange(int _num, bool isfix = false)
     {
+
         if (_num < 0) _num = 0;
 
 

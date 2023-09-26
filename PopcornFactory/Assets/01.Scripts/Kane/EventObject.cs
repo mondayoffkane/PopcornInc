@@ -7,7 +7,7 @@ public class EventObject : MonoBehaviour
 {
 
     public UnityEvent _unlockEvent;
-    //[HideInInspector] public UnityEvent _cleanEvent;
+   
 
 
 
@@ -16,10 +16,6 @@ public class EventObject : MonoBehaviour
         _unlockEvent.Invoke();
     }
 
-    //public void CallClean()
-    //{
-    //    _cleanEvent.Invoke();
-    //}
 
 
 

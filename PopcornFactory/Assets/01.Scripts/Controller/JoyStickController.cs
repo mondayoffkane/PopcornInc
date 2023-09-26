@@ -59,6 +59,7 @@ public class JoyStickController : MonoBehaviour
 
     public Animator _playeranimator;
 
+    public bool isFix = false;
     public void Awake()
     {
         _curSpeed = 0;
@@ -181,7 +182,7 @@ public class JoyStickController : MonoBehaviour
 
                         Vector3 dir = new Vector3(_joystickHandle.anchoredPosition.x, 0, _joystickHandle.anchoredPosition.y);
 
-                        if (MoveObjectRig != null)
+                        if (MoveObjectRig != null && isFix == false)
                         {
                             Move(dir);
                         }

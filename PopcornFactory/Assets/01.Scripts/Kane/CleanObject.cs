@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using Unity.Jobs.LowLevel.Unsafe;
 
 public class CleanObject : MonoBehaviour
 {
@@ -19,6 +20,13 @@ public class CleanObject : MonoBehaviour
     public Transform[] _objs;
 
     public GameObject _uiGroup;
+
+    public enum Type
+    {
+        Seat,
+        Screen
+    }
+    public Type _ObjType;
 
     /// =============================================
 
@@ -41,7 +49,17 @@ public class CleanObject : MonoBehaviour
         {
             foreach (Transform _trans in _objs)
             {
+                //switch (_ObjType)
+                //{
+                //    case Type.Seat:
                 _trans.transform.DORotate(Vector3.up * 180f, 0.5f);
+
+                //    break;
+
+                //case Type.Screen:
+
+                //    break;
+                //}
             }
             _room.ClearObj( /*num */);
             _uiGroup.SetActive(false);
@@ -50,7 +68,18 @@ public class CleanObject : MonoBehaviour
         {
             foreach (Transform _trans in _objs)
             {
-                _trans.transform.DORotate(Vector3.up * Random.Range(90f, 270f), 0.5f);
+                switch (_ObjType)
+                {
+                    case Type.Seat:
+                        _trans.transform.DORotate(Vector3.up * Random.Range(90f, 270f), 0.5f);
+
+                        break;
+
+                    case Type.Screen:
+                        _trans.transform.DORotate(new Vector3(0f, 180f, 4f), 0.5f);
+                        break;
+                }
+
             }
             _uiGroup.SetActive(true);
         }
@@ -58,38 +87,63 @@ public class CleanObject : MonoBehaviour
         _circleGuage.fillAmount = (_currentTerm / _maxTerm);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") || other.CompareTag("Staff"))
-        {
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player") || other.CompareTag("Staff"))
+    //    {
 
-        }
-    }
+    //    }
+    //}
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Staff"))
+        if (other.CompareTag("Player"))
+        {
+            if (other.GetComponent<Player>().isCleaner == true)
+            {
+                Cleaning(true);
+
+            }
+            else
+            {
+                Cleaning();
+            }
+        }
+        else if (other.CompareTag("Staff"))
         {
             Cleaning();
         }
 
     }
 
-    public void Cleaning()
+    public void Cleaning(bool isAll = false)
     {
-        if (isClean == false)
+        if (isAll)
         {
-
-            _currentTerm += Time.deltaTime;
-            _circleGuage.fillAmount = (_currentTerm / _maxTerm);
-            if (_currentTerm >= _maxTerm)
+            for (int i = 0; i < _room._cleanObjects.Length; i++)
             {
-
-                _currentTerm = 0;
-                RoomClear(true);
+                _room._cleanObjects[i].Cleaning();
 
             }
         }
+        else
+        {
+            if (isClean == false)
+            {
+
+                _currentTerm += Time.deltaTime;
+                _circleGuage.fillAmount = (_currentTerm / _maxTerm);
+                if (_currentTerm >= _maxTerm)
+                {
+
+                    _currentTerm = 0;
+                    RoomClear(true);
+
+                }
+            }
+        }
+
+
     }
 
 

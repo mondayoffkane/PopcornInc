@@ -49,14 +49,17 @@ public class CounterStaff : CinemaStaff
                 _currentTerm += Time.deltaTime;
                 if (_currentTerm >= _maxTerm && _productStack.Count < 1)
                 {
-                    PushProduct(_target.GetComponent<CinemaMachine>()._productStack.Pop());
+                    if (_target.GetComponent<CinemaMachine>()._productStack.Count > 0)
+                    {
+                        PushProduct(_target.GetComponent<CinemaMachine>()._productStack.Pop());
 
 
-                    _staffState = CinemaStaffState.PickMove;
-                    SetDest(_waitPos);
+                        _staffState = CinemaStaffState.PickMove;
+                        SetDest(_waitPos);
 
-                    _currentTerm = 0f;
-                    _target = _counter.transform;
+                        _currentTerm = 0f;
+                        _target = _counter.transform;
+                    }
                 }
                 break;
 

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
+    public bool isNone = false;
 
     public static TutorialManager _instance;
 
@@ -21,6 +22,10 @@ public class TutorialManager : MonoBehaviour
     public Image _mask;
     public Image _arrow;
 
+    public Transform _3dArrow;
+
+
+    // ===================================
     private void OnEnable()
     {
         _instance = this;
@@ -43,34 +48,37 @@ public class TutorialManager : MonoBehaviour
 
     public void Tutorial(bool isOff = true)
     {
-        if (isFix == false)
+        if (!isNone)
         {
-            if (Managers.Game._stageManager._targetMachine_Trans != null)
-                Managers.Game._stageManager._targetMachine_Trans.GetComponent<Machine>().isPress = false;
 
-            Debug.Log("tutorial Leve : " + _tutorialLevel);
-            if (isOff)
+            if (isFix == false)
             {
-                Managers.GameUI.OffPopup();
+                if (Managers.Game._stageManager._targetMachine_Trans != null)
+                    Managers.Game._stageManager._targetMachine_Trans.GetComponent<Machine>().isPress = false;
+
+                Debug.Log("tutorial Leve : " + _tutorialLevel);
+                if (isOff)
+                {
+                    Managers.GameUI.OffPopup();
+                }
+
+                isFix = true;
+                if (_mask == null)
+                {
+                    _mask = Managers.GameUI.Mask;
+                    _arrow = _mask.transform.GetChild(0).GetComponent<Image>();
+                }
+                _mask.enabled = true;
+                _arrow.gameObject.SetActive(true);
+
+                if (_tutorialLevel == 0) _arrow.gameObject.SetActive(false);
+
+                _mask.rectTransform.anchoredPosition = _pos[_tutorialLevel];
+                _mask.GetComponent<RectTransform>().sizeDelta = _size[_tutorialLevel];
+                _arrow.rectTransform.anchoredPosition = _arrowpos[_tutorialLevel];
+
             }
-
-            isFix = true;
-            if (_mask == null)
-            {
-                _mask = Managers.GameUI.Mask;
-                _arrow = _mask.transform.GetChild(0).GetComponent<Image>();
-            }
-            _mask.enabled = true;
-            _arrow.gameObject.SetActive(true);
-
-            if (_tutorialLevel == 0) _arrow.gameObject.SetActive(false);
-
-            _mask.rectTransform.anchoredPosition = _pos[_tutorialLevel];
-            _mask.GetComponent<RectTransform>().sizeDelta = _size[_tutorialLevel];
-            _arrow.rectTransform.anchoredPosition = _arrowpos[_tutorialLevel];
-
         }
-
     }
 
     public void Tutorial_Comple()

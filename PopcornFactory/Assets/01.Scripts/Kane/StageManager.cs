@@ -178,7 +178,7 @@ public class StageManager : MonoBehaviour
             _gameUi.AddParts_Upgrade_Button.gameObject.SetActive(true);
 
 
-     
+
 
         AddScrollContent();
 
@@ -704,7 +704,7 @@ public class StageManager : MonoBehaviour
 
         if (_gameManager == null) _gameManager = Managers.Game;
 
-
+        //Debug.Log(_addParts_Upgrade_Price[_parts_upgrade_level]);
         _gameUi.AddParts_Price_Text.text = _parts_upgrade_level == _machineList.Count ? "Max" : $"{Managers.ToCurrencyString(_addParts_Upgrade_Price[_parts_upgrade_level])}";
 
         if (_parts_upgrade_level < _addParts_Upgrade_Price.Length - 1)

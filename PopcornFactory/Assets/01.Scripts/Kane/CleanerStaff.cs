@@ -10,6 +10,8 @@ public class CleanerStaff : CinemaStaff
     public float _maxTerm = 1f;
 
 
+    public float _sleepTime = 10f;
+
     [SerializeField] Room _targetRoom;
 
 
@@ -85,22 +87,40 @@ public class CleanerStaff : CinemaStaff
 
     void FindWork()
     {
-        for (int i = 0; i < _cinemaManager._roomList.Count; i++)
+        int _num = Random.Range(0, 2);
+        if (_num == 1)
         {
-            if (_cinemaManager._roomList[i]._isUnlock)
+            for (int i = 0; i < _cinemaManager._roomList.Count; i++)
             {
-                for (int j = 0; j < _cinemaManager._roomList[i]._cleanObjects.Length; j++)
+                if (_cinemaManager._roomList[i]._isUnlock)
                 {
-                    if (_cinemaManager._roomList[i]._cleanObjects[j].isClean == false)
+                    for (int j = 0; j < _cinemaManager._roomList[i]._cleanObjects.Length; j++)
                     {
-                        _targetRoom = _cinemaManager._roomList[i];
-                        SetDest(_cinemaManager._roomList[i]._cleanObjects[j].transform.position);
-                        _target = _cinemaManager._roomList[i]._cleanObjects[j].transform;
-                        _staffState = CinemaStaffState.Move;
-                        break;
+                        if (_cinemaManager._roomList[i]._cleanObjects[j].isClean == false)
+                        {
+                            _targetRoom = _cinemaManager._roomList[i];
+                            SetDest(_cinemaManager._roomList[i]._cleanObjects[j].transform.position);
+                            _target = _cinemaManager._roomList[i]._cleanObjects[j].transform;
+                            _staffState = CinemaStaffState.Move;
+                            break;
+                        }
                     }
                 }
             }
+        }
+        else
+        {
+            StartCoroutine(Cor_Sleep());
+        }
+
+
+        IEnumerator Cor_Sleep()
+        {
+            SetDest(_waitPos);
+            _staffState = CinemaStaffState.Sleep;
+            yield return new WaitForSeconds(_sleepTime);
+            _staffState = CinemaStaffState.Wait;
+
         }
     }
 

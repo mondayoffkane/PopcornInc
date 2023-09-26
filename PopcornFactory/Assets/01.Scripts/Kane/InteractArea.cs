@@ -55,6 +55,10 @@ public class InteractArea : MonoBehaviour
         if (_fillImg == null) _fillImg = transform.Find("Canvas").Find("Fill").GetComponent<Image>();
 
 
+        _unlockLevel = ES3.Load<int>($"Interact_{_num}", 0);
+        if (_unlockLevel > 1) _unlockLevel = 1;
+
+
         _priceText.text = $"{Managers.ToCurrencyString(_currentPrice)}";
         _fillImg.fillAmount = (float)((_unlockPrice[_unlockLevel] - _currentPrice) / _unlockPrice[_unlockLevel]);
 
@@ -93,6 +97,7 @@ public class InteractArea : MonoBehaviour
             {
                 if (Managers.Game.CinemaMoney >= _unlockPrice[_unlockLevel] * Time.deltaTime)
                 {
+                    Managers.Sound.Play("Coins (3)");
                     Managers.Game.CalcMoney(-_unlockPrice[_unlockLevel] * Time.deltaTime, 1);
                     _currentPrice -= _unlockPrice[_unlockLevel] * Time.deltaTime;
 
@@ -125,15 +130,18 @@ public class InteractArea : MonoBehaviour
 
                                 break;
                             case OpenType.CounterStaff:
-                                Managers.Game._cinemaManager.AddCounterStaff();
+
+                                Managers.Game._cinemaManager.AddCounterStaff(true);
                                 break;
 
                             case OpenType.CleanerStaff:
-                                Managers.Game._cinemaManager.AddCleanerStaff();
+                                Managers.Game._cinemaManager.AddCleanerStaff(true);
                                 break;
+
                         }
 
                         _unlockLevel++;
+                        ES3.Save<int>($"Interact_{_num}", _unlockLevel);
                         Managers.Game._cinemaManager.NextInteract();
                         //NextObjOn();
 

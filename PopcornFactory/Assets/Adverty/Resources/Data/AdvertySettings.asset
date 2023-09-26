@@ -18,7 +18,7 @@ MonoBehaviour:
   hostUrl: https://adserver.adverty.com/{0}
   isLazyLoadAllowed: 1
   clickHandling: 0
-  sandboxMode: 1
+  sandboxMode: 0
   renderPipelineType: BuiltIn
   renderPipelineVersion: 
   advertyLogLevel: 6

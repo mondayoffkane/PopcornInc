@@ -34,6 +34,7 @@ public class CinemaStaff : MonoBehaviour
         Pick,
         PickMove,
         Cleaning,
+        Sleep
     }
     public CinemaStaffState _staffState;
 

@@ -550,7 +550,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 5
+  m_Speed: 8
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 360
@@ -591,7 +591,7 @@ MonoBehaviour:
   _animator: {fileID: 0}
   _agent: {fileID: 0}
   _currentTerm: 0
-  _maxTerm: 1
+  _maxTerm: 0.5
 --- !u!1 &5526132395927456768
 GameObject:
   m_ObjectHideFlags: 0

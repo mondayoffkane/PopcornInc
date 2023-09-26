@@ -100,7 +100,7 @@ public class Counter : EventObject
                     if (_cinemaManager.FindCinema())
                     {
                         _customer = null;
-                        _moneyStackPos.GetComponent<MoneyZone>().PopMoney(transform);
+                        _moneyStackPos.GetComponent<MoneyZone>().PopMoney(transform, 5, 1);
                     }
                 }
             }

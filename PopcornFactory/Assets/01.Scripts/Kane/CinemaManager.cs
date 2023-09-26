@@ -6,10 +6,13 @@ using UnityEngine.UI;
 using Sirenix.OdinInspector;
 using UnityEngine.ProBuilder.Shapes;
 using DG.Tweening;
+using MondayOFF;
 
 public class CinemaManager : MonoBehaviour
 {
     public JoyStickController _joystick;
+
+
 
     [TitleGroup("Interact_Group")] public InteractArea[] _interactAreas;
     [TitleGroup("Interact_Group")] public int _interactLevel = 0;
@@ -54,7 +57,13 @@ public class CinemaManager : MonoBehaviour
 
     public Player _player;
 
+    [SerializeField] bool _isRvSpawnReady = true;
+    [SerializeField] GameObject _rvInteractPref;
 
+    public RvInteract _rvInteractTarget;
+
+    public int _counterStaffLevel = 0;
+    public int _cleanerStaffLevel = 0;
     /// =============
     [Header("Serialized")]
     Transform _customerGroup;
@@ -116,14 +125,45 @@ public class CinemaManager : MonoBehaviour
             _interactAreas[_interactLevel].gameObject.SetActive(true);
 
 
+        switch (_stageManager._parts_upgrade_level)
+        {
+            case int n when n < 3:
+                _cinemaMachines[1].gameObject.SetActive(false);
+                _cinemaMachines[2].gameObject.SetActive(false);
+                break;
+
+            case int n when n > 2 && n < 5:
+                _cinemaMachines[2].gameObject.SetActive(false);
+                break;
+
+        }
+
+        if (_rvInteractPref == null) _rvInteractPref = Resources.Load<GameObject>("RVInteractArea");
+
+        _isRvSpawnReady = false;
+        DOTween.Sequence().AppendInterval(60f).AppendCallback(() => _isRvSpawnReady = true);
+
+        for (int i = 0; i < _counterStaffLevel; i++)
+        {
+            AddCounterStaff();
+        }
+
+        for (int i = 0; i < _cleanerStaffLevel; i++)
+        {
+            AddCleanerStaff();
+        }
+
+
         StartCoroutine(Cor_Update());
+
+
     }
 
     public void LoadData()
     {
         _interactLevel = ES3.Load<int>("_interactLevel", 0);
-
-
+        _counterStaffLevel = ES3.Load<int>("_counterStaffLevel", 0);
+        _cleanerStaffLevel = ES3.Load<int>("_cleanerStaffLevel", 0);
 
     }
 
@@ -150,6 +190,7 @@ public class CinemaManager : MonoBehaviour
             if (_customerList.Count < _maxCustomerCount)
             {
                 AddCustomer();
+                yield return new WaitForSeconds(1f);
             }
 
             if (_customerList[0].CustomerState == Customer.State.Wait && _customerList[0].isArrive)
@@ -161,10 +202,33 @@ public class CinemaManager : MonoBehaviour
                 _counter.Order(true);
             }
 
-            yield return new WaitForSeconds(2f);
+            //yield return new WaitForSeconds(2f);
+            yield return null;
+
+            SpawnRvObj();
+
         }
 
     }
+    [Button]
+    public void SpawnRvObj()
+    {
+        //if (Managers.Game.CinemaMoney < 1000)
+        //{
+        if (_isRvSpawnReady)
+        {
+            _isRvSpawnReady = false;
+            Transform _rvObj = Managers.Pool.Pop(_rvInteractPref, transform).transform;
+            _rvObj.transform.position = _player.transform.position + new Vector3(0f, 0.7f, 5f);
+            _rvObj.GetComponent<RvInteract>().SetRvType((RvInteract.RvType)Random.Range(0, 3));
+
+            DOTween.Sequence().AppendInterval(30f)
+            .AppendCallback(() => _isRvSpawnReady = true);
+        }
+
+        //}
+    }
+
 
     void AddCustomer()
     {
@@ -241,27 +305,37 @@ public class CinemaManager : MonoBehaviour
 
     }
 
-    public void AddCounterStaff()
+    public void AddCounterStaff(bool isUnlock = false)
     {
         CounterStaff _staff = Managers.Pool.Pop(Resources.Load<GameObject>("Counter_Staff")).GetComponent<CounterStaff>();
         _staff.SetInit(this, CinemaStaff.CinemaStaffType.Counter, _counter.transform.position);
         _counterStaffList.Add(_staff);
+        if (isUnlock)
+        {
+            _counterStaffLevel++;
+            ES3.Save<int>("_counterStaffLevel", _counterStaffLevel);
+        }
     }
 
-    public void AddCleanerStaff()
+    public void AddCleanerStaff(bool isUnlock = false)
     {
         CleanerStaff _staff = Managers.Pool.Pop(Resources.Load<GameObject>("Cleaner_Staff")).GetComponent<CleanerStaff>();
         _staff.SetInit(this, CinemaStaff.CinemaStaffType.Cleaner, _counter.transform.position + new Vector3(10f, 0f, 10f));
         _cleanerStaffList.Add(_staff);
-
+        if (isUnlock)
+        {
+            _cleanerStaffLevel++;
+            ES3.Save<int>("_cleanerStaffLevel", _cleanerStaffLevel);
+        }
 
     }
 
 
     public void RoomUpgrade(int _num)
     {
+        Managers.Sound.Play("UpgradeObj");
         _upgradeTarget.RoomChange(_num, true);
-
+        _joystick.isFix = false;
     }
 
     public void CinemaRv()
@@ -269,10 +343,12 @@ public class CinemaManager : MonoBehaviour
         switch (_cinemaRvNum)
         {
             case 0:
-                _joystick.Speed = 12f;
-                DOTween.Sequence().AppendInterval(30f)
-                   .AppendCallback(() => _joystick.Speed = 8f);
-
+                if (_joystick.Speed == 8f)
+                {
+                    _joystick.Speed = 12f;
+                    DOTween.Sequence().AppendInterval(180f)
+                       .AppendCallback(() => _joystick.Speed = 8f);
+                }
 
                 break;
 
@@ -281,11 +357,28 @@ public class CinemaManager : MonoBehaviour
                 break;
 
             case 2:
-                _player._maxCount += 3;
-                DOTween.Sequence().AppendInterval(30f)
-                    .AppendCallback(() => _player._maxCount = 1);
+                if (_player._maxCount == 1)
+                {
+                    _player._maxCount += 3;
+                    DOTween.Sequence().AppendInterval(180f)
+                        .AppendCallback(() => _player._maxCount = 1);
+                }
+                break;
+
+            case 3:
+                if (_player.isCleaner == false)
+                {
+                    _player.CleanerOnoff(true);
+
+                    DOTween.Sequence().AppendInterval(180f)
+                       .AppendCallback(() => _player.CleanerOnoff(false));
+
+                }
                 break;
         }
+
+        EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Cinema_" + ((RvInteract.RvType)_cinemaRvNum).ToString() } });
+        Managers.Pool.Push(_rvInteractTarget.GetComponent<Poolable>());
     }
 
 }

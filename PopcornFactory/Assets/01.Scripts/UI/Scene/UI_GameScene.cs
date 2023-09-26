@@ -32,13 +32,13 @@ public class UI_GameScene : UI_Scene
         Cinema_Button,
         Island_Button,
         NoAds_Button,
+        Shop_Button,
         AddStaff_Upgrade_Button,
         Income_Upgrade_Button,
         Close_Setting_Button,
         Sound_Button,
         Vibe_Button,
         Restore_Button,
-        Scroll_Close_Button,
         NextStageButton,
         NoAds_Purchase_Button,
         NoAds_Close_Button,
@@ -47,6 +47,7 @@ public class UI_GameScene : UI_Scene
         BaseRoom_Button,
         PremiumRoom_Button,
         CinemaRv_Accept_Button,
+        Scroll_Close_Button,
     }
     enum GameObjects
     {
@@ -55,7 +56,6 @@ public class UI_GameScene : UI_Scene
         Upgrade_Panel,
         Setting_Panel,
         Scroll_Panel,
-        Content,
         RvRail_Panel,
         RvWorker_Panel,
         NoAds_Panel,
@@ -65,6 +65,8 @@ public class UI_GameScene : UI_Scene
         Recipe_Content,
         RoomUpgrade_Panel,
         CInemaRvPanel,
+        Shop_Panel,
+        Content,
     }
 
 
@@ -89,6 +91,7 @@ public class UI_GameScene : UI_Scene
         , BaseRoom_Button
         , PremiumRoom_Button
         , CinemaRv_Accept_Button
+        , Shop_Button
                 ;
     //, NextStageButton;
 
@@ -113,6 +116,7 @@ public class UI_GameScene : UI_Scene
         , CinemaUI_Group
         , RoomUpgrade_Panel
         , CInemaRvPanel
+        , Shop_Panel
         ;
 
     public Image Mask;
@@ -161,7 +165,7 @@ public class UI_GameScene : UI_Scene
         BaseRoom_Button = GetButton(Buttons.BaseRoom_Button);
         PremiumRoom_Button = GetButton(Buttons.PremiumRoom_Button);
         CinemaRv_Accept_Button = GetButton(Buttons.CinemaRv_Accept_Button);
-
+        Shop_Button = GetButton(Buttons.Shop_Button);
 
 
         Money_Text = GetText(Texts.Money_Text);
@@ -192,7 +196,7 @@ public class UI_GameScene : UI_Scene
         CinemaUI_Group = GetObject(GameObjects.CinemaUI_Group);
         RoomUpgrade_Panel = GetObject(GameObjects.RoomUpgrade_Panel);
         CInemaRvPanel = GetObject(GameObjects.CInemaRvPanel);
-
+        Shop_Panel = GetObject(GameObjects.Shop_Panel);
 
         Mask = GetImage(Images.Mask);
         // ======================================
@@ -286,6 +290,8 @@ public class UI_GameScene : UI_Scene
 
         });
 
+        Shop_Button.AddButtonEvent(() => Shop_Panel.SetActive(true));
+
         // == Inapp , No Ads ===========================
         NoAds_Button.AddButtonEvent(() => { OffPopup(); NoAds_Panel.SetActive(true); });
         NoAds_Purchase_Button.AddButtonEvent(() =>
@@ -318,16 +324,16 @@ public class UI_GameScene : UI_Scene
             Managers.Game._cinemaManager.RoomUpgrade(1);
             RoomUpgrade_Panel.SetActive(false);
         });
-        PremiumRoom_Button.AddButtonEvent(() =>
+        PremiumRoom_Button.AddButtonEvent(() => AdsManager.ShowRewarded(() =>
         {
             Managers.Game._cinemaManager.RoomUpgrade(2);
             RoomUpgrade_Panel.SetActive(false);
-        });
-        CinemaRv_Accept_Button.AddButtonEvent(() =>
+        }));
+        CinemaRv_Accept_Button.AddButtonEvent(() => AdsManager.ShowRewarded(() =>
         {
             Managers.Game._cinemaManager.CinemaRv();
             CInemaRvPanel.SetActive(false);
-        });
+        }));
 
 
     }/// ========= end Set buttons
@@ -351,18 +357,21 @@ public class UI_GameScene : UI_Scene
     public void ShowCinemaRvPanel(int _num)
     {
         CInemaRvPanel.SetActive(true);
-        CInemaRvPanel.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-        CInemaRvPanel.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-        CInemaRvPanel.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
 
-        CInemaRvPanel.transform.GetChild(0).GetChild(_num).gameObject.SetActive(true);
+        for (int i = 0; i < CInemaRvPanel.transform.GetChild(1).childCount; i++)
+        {
+            CInemaRvPanel.transform.GetChild(1).GetChild(i).gameObject.SetActive(false);
+
+        }
+
+        CInemaRvPanel.transform.GetChild(1).GetChild(_num).gameObject.SetActive(true);
 
 
     }
 
 
 
-} 
+}
 
 
 

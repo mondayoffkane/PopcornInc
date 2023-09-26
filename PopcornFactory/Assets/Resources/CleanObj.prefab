@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isClean: 1
-  _maxTerm: 1
+  _maxTerm: 2
   _currentTerm: 0
   _circleGuage: {fileID: 3750966449833944166}
   _room: {fileID: 0}
@@ -379,6 +379,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _uiGroup: {fileID: 0}
+  _ObjType: 0
 --- !u!1 &6704789290055428798
 GameObject:
   m_ObjectHideFlags: 0

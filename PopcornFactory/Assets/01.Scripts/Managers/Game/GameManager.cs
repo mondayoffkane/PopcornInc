@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
         Managers.GameUI.CinemaMoney_Text.text = $"{Managers.ToCurrencyString(CinemaMoney, 2)}";
 
         ES3.Save<double>("CinemaMoney", CinemaMoney);
-        _stageManager.CheckButton();
+        //_stageManager.CheckButton();
     }
 
 

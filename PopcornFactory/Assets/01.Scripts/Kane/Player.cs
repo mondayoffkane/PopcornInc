@@ -8,6 +8,8 @@ using Sirenix.OdinInspector;
 
 public class Player : MonoBehaviour
 {
+    public GameObject _cleanerObj;
+    public bool isCleaner = false;
 
     [TitleGroup("Product")] public float _jumpPower = 10f;
     [TitleGroup("Product")] public float _moveSpeed = 1f;
@@ -44,11 +46,8 @@ public class Player : MonoBehaviour
 
         if (_stackPos == null) _stackPos = transform.Find("StackPos");
 
-    }
-
-
-    void Update()
-    {
+        _cleanerObj.SetActive(false);
+        isCleaner = false;
 
     }
 
@@ -146,5 +145,11 @@ public class Player : MonoBehaviour
 
         return _product;
 
+    }
+
+    public void CleanerOnoff(bool isOn)
+    {
+        _cleanerObj.SetActive(isOn);
+        isCleaner = isOn;
     }
 }

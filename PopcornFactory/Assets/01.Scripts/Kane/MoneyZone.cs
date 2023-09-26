@@ -15,6 +15,7 @@ public class MoneyZone : MonoBehaviour
     [TitleGroup("Money")] public int _width = 3, _height = 3;
 
 
+    public double _moneyPrice = 1d;
 
     private void OnEnable()
     {
@@ -27,13 +28,22 @@ public class MoneyZone : MonoBehaviour
             transform.gameObject.AddComponent<BoxCollider>().isTrigger = true;
 
         transform.GetComponent<BoxCollider>().size = new Vector3(5.5f, 0f, 3f);
+
+        transform.GetComponent<Renderer>().enabled = false;
+    }
+
+    public void SetInit(Vector3 _colSize, int _Width, int _Height)
+    {
+        transform.GetComponent<BoxCollider>().size = _colSize;
+        _width = _Width;
+        _height = _Height;
     }
 
     [Button]
-    public void PopMoney(Transform _spawnTrans, int _count = 4)
+    public void PopMoney(Transform _spawnTrans, double _price = 1, int _count = 1)
     {
 
-
+        _moneyPrice = _price;
         for (int i = 0; i < _count; i++)
         {
             Transform _money = Managers.Pool.Pop(_moneyPref, transform).GetComponent<Transform>();
@@ -42,9 +52,9 @@ public class MoneyZone : MonoBehaviour
             _moneyStack.Push(_money);
             _money.DOJump(transform.position
                 + new Vector3(
-                    (((_moneyStack.Count - 1) % _width) - 1) * _stackInterval.x
+                    (((_moneyStack.Count - 1) % _width) - (_width / 2)) * _stackInterval.x
                 , (((_moneyStack.Count - 1) / (_width * _height)) * _stackInterval.y)
-                , ((((_moneyStack.Count - 1) % (_width * _height)) / _width - 1) * _stackInterval.z)
+                , ((((_moneyStack.Count - 1) % (_width * _height)) / _width - (_height / 2)) * _stackInterval.z)
                 ), 5f, 1, 0.5f);
         }
     }
@@ -53,7 +63,11 @@ public class MoneyZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+
             //StartCoroutine(Cor_GetMoney());
+            if (_moneyStack.Count > 0)
+                Managers.Sound.Play("Money");
+
             while (_moneyStack.Count > 0)
             {
                 Transform _money = _moneyStack.Pop().transform;
@@ -61,7 +75,7 @@ public class MoneyZone : MonoBehaviour
                 _money.DOLocalJump(Vector3.zero, 8f, 1, 0.5f + 0.5f / (_moneyStack.Count + 1)).SetEase(Ease.InCubic)
                     .OnComplete(() => Managers.Pool.Push(_money.GetComponent<Poolable>()));
 
-                Managers.Game.CalcMoney(1d, 1);
+                Managers.Game.CalcMoney(_moneyPrice, 1);
             }
 
         }
