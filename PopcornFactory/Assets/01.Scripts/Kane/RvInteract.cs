@@ -23,24 +23,20 @@ public class RvInteract : MonoBehaviour
     public bool isPlayerIn = false;
 
 
-    //public float _currentTime = 0f;
-    //public float _maxTime = 2f;
-
-
-
-    //public Image _fillImg;
 
     [SerializeField] Player _player;
 
-
+    public float _remainTime = 40f;
     // ===================================================
+
+
 
     private void OnEnable()
     {
-        DOTween.Sequence().AppendInterval(90f).
+        DOTween.Sequence().AppendInterval(_remainTime).
              AppendCallback(() => Managers.Pool.Push(transform.GetComponent<Poolable>()));
 
-        
+
 
     }
 

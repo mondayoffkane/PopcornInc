@@ -49,7 +49,7 @@ public class CleanerStaff : CinemaStaff
                 _target.GetComponent<CleanObject>().Cleaning();
                 if (_currentTerm >= _maxTerm)
                 {
-                    _target.GetComponent<CleanObject>().RoomClear(true);
+                    //_target.GetComponent<CleanObject>().RoomClear(true);
 
 
                     //for (int i = 0; i < _targetRoom._cleanObjects.Length; i++)

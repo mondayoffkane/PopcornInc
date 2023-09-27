@@ -121,12 +121,12 @@ public class JoyStickController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isFix == false)
         {
             _playeranimator.SetBool("Walk", true);
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && isFix == false)
         {
             _playeranimator.SetBool("Walk", false);
         }

@@ -69,7 +69,10 @@ public class Cup : MonoBehaviour
     {
 
         if (_cupPosNum <= _cupPos.Length)
+        {
             transform.position = _cupPos[_cupPosNum].position;
+            transform.rotation = _cupPos[_cupPosNum].rotation;
+        }
 
         _cupPosNum++;
 

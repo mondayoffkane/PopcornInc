@@ -10,6 +10,10 @@ using MondayOFF;
 
 public class CinemaManager : MonoBehaviour
 {
+
+    public Transform[] _rvSpawnPos = new Transform[4];
+    public int _rvCount = 0;
+
     public JoyStickController _joystick;
 
 
@@ -83,6 +87,8 @@ public class CinemaManager : MonoBehaviour
 
     private void Start()
     {
+
+
         if (_player == null) _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
         if (_waitingPos == null) _waitingPos = transform.Find("WatingPos");
@@ -125,18 +131,9 @@ public class CinemaManager : MonoBehaviour
             _interactAreas[_interactLevel].gameObject.SetActive(true);
 
 
-        switch (_stageManager._parts_upgrade_level)
-        {
-            case int n when n < 3:
-                _cinemaMachines[1].gameObject.SetActive(false);
-                _cinemaMachines[2].gameObject.SetActive(false);
-                break;
 
-            case int n when n > 2 && n < 5:
-                _cinemaMachines[2].gameObject.SetActive(false);
-                break;
 
-        }
+        MachineOpen();
 
         if (_rvInteractPref == null) _rvInteractPref = Resources.Load<GameObject>("RVInteractArea");
 
@@ -157,6 +154,28 @@ public class CinemaManager : MonoBehaviour
         StartCoroutine(Cor_Update());
 
 
+    }
+
+    public void MachineOpen()
+    {
+        switch (_stageManager._parts_upgrade_level)
+        {
+            case int n when n < 3:
+                _cinemaMachines[1].gameObject.SetActive(false);
+                _cinemaMachines[2].gameObject.SetActive(false);
+                break;
+
+            case int n when n > 2 && n < 5:
+                _cinemaMachines[1].gameObject.SetActive(true);
+                _cinemaMachines[2].gameObject.SetActive(false);
+                break;
+
+            case int n when n > 5:
+                _cinemaMachines[1].gameObject.SetActive(true);
+                _cinemaMachines[2].gameObject.SetActive(true);
+                break;
+
+        }
     }
 
     public void LoadData()
@@ -214,12 +233,15 @@ public class CinemaManager : MonoBehaviour
     public void SpawnRvObj()
     {
         //if (Managers.Game.CinemaMoney < 1000)
-        //{
+        //{dd
+
+
         if (_isRvSpawnReady)
         {
             _isRvSpawnReady = false;
             Transform _rvObj = Managers.Pool.Pop(_rvInteractPref, transform).transform;
-            _rvObj.transform.position = _player.transform.position + new Vector3(0f, 0.7f, 5f);
+            _rvObj.transform.position = _rvSpawnPos[_rvCount % _rvSpawnPos.Length].position;  //_player.transform.position + new Vector3(0f, 0.7f, 5f);
+            _rvCount++;
             _rvObj.GetComponent<RvInteract>().SetRvType((RvInteract.RvType)Random.Range(0, 3));
 
             DOTween.Sequence().AppendInterval(30f)
@@ -340,6 +362,13 @@ public class CinemaManager : MonoBehaviour
 
     public void CinemaRv()
     {
+        Managers.Game._cinemaManager._joystick.isFix = false;
+
+     
+
+        _stageManager.GameRvCount();
+
+
         switch (_cinemaRvNum)
         {
             case 0:
@@ -348,12 +377,15 @@ public class CinemaManager : MonoBehaviour
                     _joystick.Speed = 12f;
                     DOTween.Sequence().AppendInterval(180f)
                        .AppendCallback(() => _joystick.Speed = 8f);
+
+                    EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "SpeedUp" } });
                 }
 
                 break;
 
             case 1:
-                Managers.Game.CalcMoney(1000, 1);
+                Managers.Game.CalcMoney(100, 1);
+                EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "CinemaBigMoney" } });
                 break;
 
             case 2:
@@ -362,6 +394,7 @@ public class CinemaManager : MonoBehaviour
                     _player._maxCount += 3;
                     DOTween.Sequence().AppendInterval(180f)
                         .AppendCallback(() => _player._maxCount = 1);
+                    EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "AddCapacity" } });
                 }
                 break;
 
@@ -372,7 +405,7 @@ public class CinemaManager : MonoBehaviour
 
                     DOTween.Sequence().AppendInterval(180f)
                        .AppendCallback(() => _player.CleanerOnoff(false));
-
+                    EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Cleaner" } });
                 }
                 break;
         }
@@ -380,5 +413,18 @@ public class CinemaManager : MonoBehaviour
         EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "Cinema_" + ((RvInteract.RvType)_cinemaRvNum).ToString() } });
         Managers.Pool.Push(_rvInteractTarget.GetComponent<Poolable>());
     }
+
+    public void SampleCleaner()
+    {
+        if (_player.isCleaner == false)
+        {
+            _player.CleanerOnoff(true);
+
+            DOTween.Sequence().AppendInterval(180f)
+               .AppendCallback(() => _player.CleanerOnoff(false));
+
+        }
+    }
+
 
 }

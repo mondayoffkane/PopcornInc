@@ -4,14 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using MoreMountains.NiceVibrations;
 
 public class InteractArea : MonoBehaviour
 {
+    public GameObject[] _imgs;
+
+
     public bool isFirstOpen = false;
     public bool isOpen = false;
     public int _num = 0;
 
     public int _unlockLevel = 0;
+
+
+
 
     public enum OpenType
     {
@@ -58,6 +65,8 @@ public class InteractArea : MonoBehaviour
         _unlockLevel = ES3.Load<int>($"Interact_{_num}", 0);
         if (_unlockLevel > 1) _unlockLevel = 1;
 
+        _imgs[_unlockLevel].SetActive(true);
+
 
         _priceText.text = $"{Managers.ToCurrencyString(_currentPrice)}";
         _fillImg.fillAmount = (float)((_unlockPrice[_unlockLevel] - _currentPrice) / _unlockPrice[_unlockLevel]);
@@ -90,14 +99,18 @@ public class InteractArea : MonoBehaviour
 
     IEnumerator Cor_Update()
     {
+        int _cnt = 0;
         while (true)
         {
+            _cnt++;
             yield return Time.deltaTime;
             if (isPlayerIn)
             {
                 if (Managers.Game.CinemaMoney >= _unlockPrice[_unlockLevel] * Time.deltaTime)
                 {
                     Managers.Sound.Play("Coins (3)");
+                    if (_cnt % 5 == 0)
+                        MMVibrationManager.Haptic(HapticTypes.LightImpact);
                     Managers.Game.CalcMoney(-_unlockPrice[_unlockLevel] * Time.deltaTime, 1);
                     _currentPrice -= _unlockPrice[_unlockLevel] * Time.deltaTime;
 
@@ -140,10 +153,18 @@ public class InteractArea : MonoBehaviour
 
                         }
 
+                        _imgs[_unlockLevel].SetActive(false);
                         _unlockLevel++;
+                        if (_unlockLevel < _imgs.Length - 2)
+                            _imgs[_unlockLevel].SetActive(true);
                         ES3.Save<int>($"Interact_{_num}", _unlockLevel);
                         Managers.Game._cinemaManager.NextInteract();
                         //NextObjOn();
+
+                        if (_num == 0 && _unlockLevel == 1)
+                        {
+                            TutorialManager._instance.Tutorial();
+                        }
 
 
                         gameObject.SetActive(false);

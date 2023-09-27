@@ -57,6 +57,8 @@ public class DataManager
 
         //public int Speed_Upgrade_Level;
         public int PlayTime;
+        public int IslandTime;
+        public int CinemaTime;
 
 
     }
@@ -80,6 +82,8 @@ public class DataManager
         ES3.Save<double>("Money", Managers.Game.Money);
         ES3.Save<int>("Gem", Managers.Game.Gem);
         ES3.Save<int>("Stage_" + _stageLevel.ToString(), _stagedata.PlayTime);
+        ES3.Save<int>("IslandTime", _stagedata.IslandTime);
+        ES3.Save<int>("CinemaTime", _stagedata.CinemaTime);
         ES3.Save<double>("CinemaMoney", Managers.Game.CinemaMoney);
 
     }

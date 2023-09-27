@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using DG.Tweening;
+using MondayOFF;
 using UnityEngine;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
@@ -28,7 +30,110 @@ public class GameManager : MonoBehaviour
 
         //_labotoryManager = GameObject.FindGameObjectWithTag("LabotoryManager").GetComponent<LabotoryManager>();
         _cinemaManager = GameObject.FindGameObjectWithTag("CinemaManager").GetComponent<CinemaManager>();
+
+
+
+        MondayOFF.IAPManager.RegisterProduct("popcorninc_starterpack", BuyStarterPack);
+        MondayOFF.IAPManager.RegisterProduct("popcorninc_cleanpack", BuyCleanPack);
+        MondayOFF.IAPManager.RegisterProduct("popcorninc_gempack_1", BuyGemPack1);
+        MondayOFF.IAPManager.RegisterProduct("popcorninc_gempack_2", BuyGemPack2);
+        MondayOFF.IAPManager.RegisterProduct("popcorninc_gempack_3", BuyGemPack3);
+        MondayOFF.IAPManager.RegisterProduct("popcorninc_upgradepack", BuyUpgradePack);
+
+        MondayOFF.IAPManager.OnAfterPurchase += (isSuccess) => Debug.Log("구매 완료!");
+
     }
+    private void BuyStarterPack()
+    {
+        _cinemaManager._player._cleaner_iap = true;
+        _cinemaManager._player._isBuyCleanPack = true;
+        _cinemaManager._player._cleanerObj.SetActive(true);
+        _cinemaManager._player.isCleaner = true;
+        _StageManager._noAds = 1;
+
+        AdsManager.DisableAdType(AdType.Banner | AdType.Interstitial);
+        PlayerPrefs.SetInt("NoAds", 1);
+
+        if (Managers.Game._stageManager._noAds == 0)
+        {
+            Managers.GameUI.CleanPack.SetActive(false);
+            Managers.GameUI.StarterPack.SetActive(true);
+        }
+
+        if (Managers.Game._cinemaManager._player._isBuyCleanPack)
+        {
+            Managers.GameUI.CleanPack.SetActive(false);
+            Managers.GameUI.StarterPack.SetActive(false);
+        }
+
+        _cinemaManager._player.SaveData();
+
+
+
+
+        // Disable RV, PlayOn, Adverty too?
+        MondayOFF.NoAds.OnNoAds?.Invoke();
+
+        PlayerPrefs.SetInt(MondayOFF.NoAds.NoAdsProductKey, 1);
+        PlayerPrefs.Save();
+
+
+        CalcGem(40);
+
+        //Debug.Log("Starter Pack");
+        EventTracker.LogCustomEvent("IAP", new Dictionary<string, string> { { "Product", "StarterPack" } });
+    }
+
+    private void BuyCleanPack()
+    {
+        _cinemaManager._player._cleaner_iap = true;
+        _cinemaManager._player._isBuyCleanPack = true;
+        _cinemaManager._player._cleanerObj.SetActive(true);
+        _cinemaManager._player.isCleaner = true;
+        _cinemaManager._player.SaveData();
+        CalcMoney(500, 1);
+        CalcGem(40);
+        //Debug.Log("Clean Pack");
+
+        EventTracker.LogCustomEvent("IAP", new Dictionary<string, string> { { "Product", "CleanPack" } });
+
+    }
+
+    void BuyUpgradePack()
+    {
+        _cinemaManager._player._speed_iap = true;
+        _cinemaManager._player._capacity_iap = true;
+        _cinemaManager._player._maxCount = 4;
+        _cinemaManager._player.SaveData();
+
+        _cinemaManager._player._speed = 12;
+        _cinemaManager._joystick.Speed = 12;
+
+        //Debug.Log("Upgrade Pack ");
+        EventTracker.LogCustomEvent("IAP", new Dictionary<string, string> { { "Product", "UpgradePack" } });
+    }
+
+    void BuyGemPack1()
+    {
+        CalcGem(20);
+        //Debug.Log("Gem Pack 1 _ 20");
+        EventTracker.LogCustomEvent("IAP", new Dictionary<string, string> { { "Product", "Gem_1" } });
+    }
+    void BuyGemPack2()
+    {
+        CalcGem(50);
+        //Debug.Log("Gem Pack 2 _ 50");
+        EventTracker.LogCustomEvent("IAP", new Dictionary<string, string> { { "Product", "Gem_2" } });
+    }
+    void BuyGemPack3()
+    {
+        CalcGem(100);
+        //Debug.Log("Gem Pack 3 _ 100");
+        EventTracker.LogCustomEvent("IAP", new Dictionary<string, string> { { "Product", "Gem_3" } });
+    }
+
+
+
     public void Clear()
     {
         if (JoyStickController != null)
@@ -173,6 +278,20 @@ public class GameManager : MonoBehaviour
         _floatingText.GetComponentInChildren<Text>().text = $"{Managers.ToCurrencyString(_value)}";
         _floatingText.DOLocalMoveY(7f, 1f).SetEase(Ease.OutCirc)
             .OnComplete(() => Managers.Pool.Push(_floatingText.GetComponent<Poolable>()));
+    }
+
+    public bool CanUseGem(int _count)
+    {
+        if (Gem > _count)
+        {
+            CalcGem(-_count);
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 

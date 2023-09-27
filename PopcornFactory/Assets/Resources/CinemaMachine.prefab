@@ -383,8 +383,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d921e1a14bded48e984358e08963fac2, type: 3}
-  m_Type: 2
+  m_Sprite: {fileID: 21300000, guid: eb038e823eaf64857842c95fd5a37b84, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -653,3 +653,22 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1241347250978806685}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2160407782626617036 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4ddf7c525127b4ab393cc20ec341d5f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1241347250978806685}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &6243081784171495243
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2160407782626617036}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.662784, y: 1.9624795, z: 3.8695605}
+  m_Center: {x: 0.00000047683716, y: 0.8917342, z: -0.000015258789}

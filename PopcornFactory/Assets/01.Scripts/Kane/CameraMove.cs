@@ -69,6 +69,7 @@ public class CameraMove : MonoBehaviour
         {
             Managers.Game.CalcMoney(100000000);
             Managers.Game.CalcMoney(1000, 1);
+            Managers.Game.CalcGem(10);
         }
 
         if (Input.GetKeyDown(KeyCode.A))

@@ -226,6 +226,7 @@ MonoBehaviour:
   _agent: {fileID: 0}
   _currentTerm: 0
   _maxTerm: 2
+  _sleepTime: 1
   _targetRoom: {fileID: 0}
 --- !u!1 &1485772176526685916
 GameObject:

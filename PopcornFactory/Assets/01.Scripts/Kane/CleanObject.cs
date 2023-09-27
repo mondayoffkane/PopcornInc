@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using Unity.Jobs.LowLevel.Unsafe;
+using MoreMountains.NiceVibrations;
 
 public class CleanObject : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class CleanObject : MonoBehaviour
     public Type _ObjType;
 
     /// =============================================
-
+    int _cnt = 0;
     private void Start()
     {
         //RoomClear(true);
@@ -66,6 +67,7 @@ public class CleanObject : MonoBehaviour
         }
         else
         {
+            
             foreach (Transform _trans in _objs)
             {
                 switch (_ObjType)
@@ -118,6 +120,7 @@ public class CleanObject : MonoBehaviour
 
     public void Cleaning(bool isAll = false)
     {
+        _cnt++;
         if (isAll)
         {
             for (int i = 0; i < _room._cleanObjects.Length; i++)
@@ -130,7 +133,8 @@ public class CleanObject : MonoBehaviour
         {
             if (isClean == false)
             {
-
+                if (_cnt % 5 == 0)
+                    MMVibrationManager.Haptic(HapticTypes.LightImpact);
                 _currentTerm += Time.deltaTime;
                 _circleGuage.fillAmount = (_currentTerm / _maxTerm);
                 if (_currentTerm >= _maxTerm)

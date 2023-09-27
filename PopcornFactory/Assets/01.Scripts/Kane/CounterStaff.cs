@@ -67,13 +67,16 @@ public class CounterStaff : CinemaStaff
             case CinemaStaffState.PickMove:
                 if (_agent.remainingDistance <= _minDist)
                 {
-                    _counter.PushProduct(_productStack.Pop());
-                    _counter.PopProduct();
+                    if (_productStack.Count > 0)
+                    {
+                        _counter.PushProduct(_productStack.Pop());
+                        _counter.PopProduct();
 
-                    _animator.SetBool("Pick", false);
+                        _animator.SetBool("Pick", false);
 
-                    _staffState = CinemaStaffState.Wait;
-                    _target = null;
+                        _staffState = CinemaStaffState.Wait;
+                        _target = null;
+                    }
                 }
                 break;
 

@@ -9,10 +9,10 @@ public class UI_GameScene : UI_Scene
     enum Images
     {
         Mask,
+        PlayTime_Guage,
     }
     enum Texts
     {
-        Gem_Text,
         AddParts_Price_Text,
         RV_Income_TimeText,
         UpgradeCountText,
@@ -20,10 +20,14 @@ public class UI_GameScene : UI_Scene
         CinemaMoney_Text,
         AddStaff_Price_Text,
         Income_Price_Text,
+        CurrentPlayTime_Text,
+        Gem_Text,
     }
     enum Buttons
     {
         Setting_Button,
+        NoAds_Button,
+        PlayTimeReward_Button,
         AddParts_Upgrade_Button,
         AddUpgrade_Button,
         RV_Income_Double,
@@ -31,14 +35,21 @@ public class UI_GameScene : UI_Scene
         Recipe_Button,
         Cinema_Button,
         Island_Button,
-        NoAds_Button,
         Shop_Button,
+        StarterPack_Button,
+        CleanPack_Button,
+        UpgradePack_Button,
+        GemPack_1_Button,
+        GemPack_2_Button,
+        GemPack_3_Button,
+        Shop_Close_Button,
         AddStaff_Upgrade_Button,
         Income_Upgrade_Button,
         Close_Setting_Button,
         Sound_Button,
         Vibe_Button,
         Restore_Button,
+        Scroll_Close_Button,
         NextStageButton,
         NoAds_Purchase_Button,
         NoAds_Close_Button,
@@ -46,16 +57,23 @@ public class UI_GameScene : UI_Scene
         Recipe_Close_Button,
         BaseRoom_Button,
         PremiumRoom_Button,
+        CinemaGem_Accept_Button,
         CinemaRv_Accept_Button,
-        Scroll_Close_Button,
+        NoThanks_button,
+        PlayTimeReward_Accept_Button,
+        PlayTimeReward_Close_Button,
     }
     enum GameObjects
     {
         IslandUi_Group,
         CinemaUI_Group,
+        Shop_Panel,
+        StarterPack,
+        CleanPack,
         Upgrade_Panel,
         Setting_Panel,
         Scroll_Panel,
+        Content,
         RvRail_Panel,
         RvWorker_Panel,
         NoAds_Panel,
@@ -65,8 +83,7 @@ public class UI_GameScene : UI_Scene
         Recipe_Content,
         RoomUpgrade_Panel,
         CInemaRvPanel,
-        Shop_Panel,
-        Content,
+        PlayTimeReward_Panel,
     }
 
 
@@ -92,6 +109,18 @@ public class UI_GameScene : UI_Scene
         , PremiumRoom_Button
         , CinemaRv_Accept_Button
         , Shop_Button
+        , CinemaGem_Accept_Button
+        , StarterPack_Button
+        , CleanPack_Button,
+        GemPack_1_Button,
+        GemPack_2_Button,
+        GemPack_3_Button
+        , UpgradePack_Button
+        , Shop_Close_Button
+        , PlayTimeReward_Button
+        , PlayTimeReward_Accept_Button
+        , NoThanks_button
+        , PlayTimeReward_Close_Button
                 ;
     //, NextStageButton;
 
@@ -101,6 +130,7 @@ public class UI_GameScene : UI_Scene
         , AddParts_Price_Text, Gem_Text, UpgradeCountText
         , RV_Income_TimeText
         , CinemaMoney_Text
+        , CurrentPlayTime_Text
         ;
 
     public GameObject Setting_Panel, Scroll_Panel
@@ -117,9 +147,12 @@ public class UI_GameScene : UI_Scene
         , RoomUpgrade_Panel
         , CInemaRvPanel
         , Shop_Panel
+        , StarterPack,
+        CleanPack
+        , PlayTimeReward_Panel
         ;
 
-    public Image Mask;
+    public Image Mask, PlayTime_Guage;
 
     public GameObject[] ScrollUpgrades;
 
@@ -166,6 +199,20 @@ public class UI_GameScene : UI_Scene
         PremiumRoom_Button = GetButton(Buttons.PremiumRoom_Button);
         CinemaRv_Accept_Button = GetButton(Buttons.CinemaRv_Accept_Button);
         Shop_Button = GetButton(Buttons.Shop_Button);
+        CinemaGem_Accept_Button = GetButton(Buttons.CinemaGem_Accept_Button);
+
+        StarterPack_Button = GetButton(Buttons.StarterPack_Button);
+        CleanPack_Button = GetButton(Buttons.CleanPack_Button);
+        GemPack_1_Button = GetButton(Buttons.GemPack_1_Button);
+        GemPack_2_Button = GetButton(Buttons.GemPack_2_Button);
+        GemPack_3_Button = GetButton(Buttons.GemPack_3_Button);
+        UpgradePack_Button = GetButton(Buttons.UpgradePack_Button);
+        Shop_Close_Button = GetButton(Buttons.Shop_Close_Button);
+
+        PlayTimeReward_Button = GetButton(Buttons.PlayTimeReward_Button);
+        PlayTimeReward_Accept_Button = GetButton(Buttons.PlayTimeReward_Accept_Button);
+        NoThanks_button = GetButton(Buttons.NoThanks_button);
+        PlayTimeReward_Close_Button = GetButton(Buttons.PlayTimeReward_Close_Button);
 
 
         Money_Text = GetText(Texts.Money_Text);
@@ -198,8 +245,21 @@ public class UI_GameScene : UI_Scene
         CInemaRvPanel = GetObject(GameObjects.CInemaRvPanel);
         Shop_Panel = GetObject(GameObjects.Shop_Panel);
 
+        StarterPack = GetObject(GameObjects.StarterPack);
+        CleanPack = GetObject(GameObjects.CleanPack);
+
+        PlayTimeReward_Panel = GetObject(GameObjects.PlayTimeReward_Panel);
+
+        CurrentPlayTime_Text = GetText(Texts.CurrentPlayTime_Text);
+        PlayTime_Guage = GetImage(Images.PlayTime_Guage);
+
+
+
+
         Mask = GetImage(Images.Mask);
         // ======================================
+
+        // ===================================
         Mask.alphaHitTestMinimumThreshold = 0.5f;
 
 
@@ -209,6 +269,8 @@ public class UI_GameScene : UI_Scene
             if (TutorialManager._instance._tutorialLevel == 6)
             {
                 TutorialManager._instance.Tutorial_Comple();
+                TutorialManager._instance.Tutorial();
+                Managers.GameUI.Cinema_Button.interactable = true;
             }
         });
 
@@ -279,6 +341,23 @@ public class UI_GameScene : UI_Scene
             IslandUi_Group.SetActive(false);
             CinemaUI_Group.SetActive(true);
             Managers.Game._stageManager.isCinemaOn(true);
+            if (TutorialManager._instance._tutorialLevel == 7)
+            {
+                TutorialManager._instance.Tutorial_Comple();
+                StartCoroutine(Cor_Func());
+            }
+
+            IEnumerator Cor_Func()
+            {
+                yield return new WaitForSeconds(2f);
+                TutorialManager._instance.Tutorial();
+
+                //yield return new WaitForSeconds(5f);
+                //TutorialManager._instance.Tutorial();
+            }
+
+
+            EventTracker.LogCustomEvent("Cinema", new Dictionary<string, string> { { "Change", "To Cinema" } });
         });
 
         Island_Button.AddButtonEvent(() =>
@@ -287,30 +366,52 @@ public class UI_GameScene : UI_Scene
             IslandUi_Group.SetActive(true);
             CinemaUI_Group.SetActive(false);
             Managers.Game._stageManager.isCinemaOn(false);
+            EventTracker.LogCustomEvent("Cinema", new Dictionary<string, string> { { "Change", "To Island" } });
+        });
+
+        Shop_Button.AddButtonEvent(() =>
+        {
+
+            // add max data check
+            Shop_Panel.SetActive(true);
+            Managers.Game._cinemaManager._joystick.isFix = true;
+            if (Managers.Game._stageManager._noAds == 0)
+            {
+                CleanPack.SetActive(false);
+                StarterPack.SetActive(true);
+            }
+
+            if (Managers.Game._cinemaManager._player._isBuyCleanPack)
+            {
+                CleanPack.SetActive(false);
+                StarterPack.SetActive(false);
+            }
+
+            EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", "ShopPanel" } });
 
         });
 
-        Shop_Button.AddButtonEvent(() => Shop_Panel.SetActive(true));
-
-        // == Inapp , No Ads ===========================
-        NoAds_Button.AddButtonEvent(() => { OffPopup(); NoAds_Panel.SetActive(true); });
-        NoAds_Purchase_Button.AddButtonEvent(() =>
+        Shop_Close_Button.AddButtonEvent(() =>
         {
-            MondayOFF.NoAds.Purchase();
-
+            Managers.Game._cinemaManager._joystick.isFix = false;
+            Shop_Panel.SetActive(false);
         });
-        NoAds.OnNoAds += () => Debug.Log("No Ads 구매 완료 ");
-        NoAds.OnNoAds += () =>
+        PlayTimeReward_Button.AddButtonEvent(()
+            => PlayTimeReward_Panel.SetActive(!PlayTimeReward_Panel.activeSelf));
+
+
+        NoThanks_button.AddButtonEvent(() =>
         {
+            Managers.Game._cinemaManager._joystick.isFix = false;
+            CInemaRvPanel.SetActive(false);
+        });
 
-            NoAds_Panel.SetActive(false);
-            NoAds_Button.gameObject.SetActive(false);
-            Managers.Game._stageManager._noAds = 1;
-        };
+        PlayTimeReward_Close_Button.AddButtonEvent(() =>
+        {
+            Managers.Game._cinemaManager._joystick.isFix = false;
+            PlayTimeReward_Panel.SetActive(false);
+        });
 
-        //NoAds_Close_Button.AddButtonEvent(() => NoAds_Panel.SetActive(false));
-
-        Restore_Button.AddButtonEvent(() => MondayOFF.IAPManager.RestorePurchase());
 
         // rv
 
@@ -329,11 +430,73 @@ public class UI_GameScene : UI_Scene
             Managers.Game._cinemaManager.RoomUpgrade(2);
             RoomUpgrade_Panel.SetActive(false);
         }));
+
+
+        CinemaGem_Accept_Button.AddButtonEvent(() =>
+        {
+            if (Managers.Game.CanUseGem(3))
+            {
+                Managers.Game._cinemaManager.CinemaRv();
+                CInemaRvPanel.SetActive(false);
+            }
+            else
+            {
+                AdsManager.ShowRewarded(() =>
+                {
+                    Managers.Game._cinemaManager.CinemaRv();
+                    CInemaRvPanel.SetActive(false);
+                });
+            }
+        });
         CinemaRv_Accept_Button.AddButtonEvent(() => AdsManager.ShowRewarded(() =>
         {
             Managers.Game._cinemaManager.CinemaRv();
             CInemaRvPanel.SetActive(false);
         }));
+
+        PlayTimeReward_Accept_Button.AddButtonEvent(() => Managers.Game._stageManager.GetPlayTimeReward());
+
+
+        // == IAP , No Ads ===========================
+        Restore_Button.AddButtonEvent(() => MondayOFF.IAPManager.RestorePurchase());
+
+        NoAds_Button.AddButtonEvent(() => { OffPopup(); NoAds_Panel.SetActive(true); });
+
+
+        NoAds_Purchase_Button.AddButtonEvent(() =>
+        {
+            MondayOFF.NoAds.Purchase();
+
+        });
+        NoAds.OnNoAds += () =>
+        {
+            Debug.Log("No Ads 구매 완료 ");
+            NoAds_Panel.SetActive(false);
+            NoAds_Button.gameObject.SetActive(false);
+            Managers.Game._stageManager._noAds = 1;
+        };
+
+
+
+        StarterPack_Button.AddButtonEvent(() => MondayOFF.IAPManager.PurchaseProduct("popcorninc_starterpack"));
+
+        CleanPack_Button.AddButtonEvent(() => MondayOFF.IAPManager.PurchaseProduct("popcorninc_cleanpack"));
+
+        GemPack_1_Button.AddButtonEvent(() => MondayOFF.IAPManager.PurchaseProduct("popcorninc_gempack_1"));
+
+        GemPack_2_Button.AddButtonEvent(() => MondayOFF.IAPManager.PurchaseProduct("popcorninc_gempack_2"));
+
+        GemPack_3_Button.AddButtonEvent(() => MondayOFF.IAPManager.PurchaseProduct("popcorninc_gempack_3"));
+
+        UpgradePack_Button.AddButtonEvent(() => MondayOFF.IAPManager.PurchaseProduct("popcorninc_upgradepack"));
+
+
+
+
+
+
+
+
 
 
     }/// ========= end Set buttons
@@ -357,6 +520,7 @@ public class UI_GameScene : UI_Scene
     public void ShowCinemaRvPanel(int _num)
     {
         CInemaRvPanel.SetActive(true);
+        Managers.Game._cinemaManager._joystick.isFix = true;
 
         for (int i = 0; i < CInemaRvPanel.transform.GetChild(1).childCount; i++)
         {
@@ -367,7 +531,12 @@ public class UI_GameScene : UI_Scene
         CInemaRvPanel.transform.GetChild(1).GetChild(_num).gameObject.SetActive(true);
 
 
+        EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", ((RvInteract.RvType)_num).ToString() } });
+
+
     }
+
+
 
 
 

@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using MoreMountains.NiceVibrations;
 
 
 
 public class Player : MonoBehaviour
 {
     public GameObject _cleanerObj;
-    public bool isCleaner = false;
+
 
     [TitleGroup("Product")] public float _jumpPower = 10f;
     [TitleGroup("Product")] public float _moveSpeed = 1f;
     [TitleGroup("Product")] public Transform _stackPos;
-    [TitleGroup("Product")] public int _maxCount = 5;
+
     [TitleGroup("Product")] public float _pickInterval = 0.5f;
     public bool isReady = true;
     [SerializeField] float _stackY = 0.5f;
@@ -36,6 +37,19 @@ public class Player : MonoBehaviour
 
     Animator _animator;
 
+    // ========================
+    public bool isCleaner = false;
+    public float _speed = 8f;
+    public int _maxCount = 5;
+    //Player Data
+    [Header("Player Data")]
+    public bool _cleaner_iap = false;
+    public bool _speed_iap = false;
+    public bool _capacity_iap = false;
+    public bool _isBuyCleanPack = false;
+
+
+
     // ======================================
 
     void Start()
@@ -49,9 +63,49 @@ public class Player : MonoBehaviour
         _cleanerObj.SetActive(false);
         isCleaner = false;
 
+        LoadData();
     }
 
 
+    public void SaveData()
+    {
+        ES3.Save<bool>("_cleaner_iap", _cleaner_iap);
+        ES3.Save<bool>("_speed_iap", _speed_iap);
+        ES3.Save<bool>("_capacity_iap", _capacity_iap);
+        ES3.Save<bool>("_isBuyCleanPack", _isBuyCleanPack);
+
+        if (_isBuyCleanPack)
+        {
+            Managers.GameUI.StarterPack.SetActive(false);
+            Managers.GameUI.CleanPack.SetActive(false);
+        }
+
+    }
+
+
+    public void LoadData()
+    {
+        _cleaner_iap = ES3.Load<bool>("_cleaner_iap", false);
+        _speed_iap = ES3.Load<bool>("_speed_iap", false);
+        _capacity_iap = ES3.Load<bool>("_capacity_iap", false);
+        _isBuyCleanPack = ES3.Load<bool>("_isBuyCleanPack", false);
+
+        if (_cleaner_iap) isCleaner = true;
+        if (_speed_iap) _speed = 12f;
+        if (_capacity_iap) _maxCount = 4;
+        if (_isBuyCleanPack)
+        {
+            Managers.GameUI.StarterPack.SetActive(false);
+            Managers.GameUI.CleanPack.SetActive(false);
+        }
+
+
+
+        if (isCleaner) _cleanerObj.SetActive(true);
+
+        Managers.Game._cinemaManager._joystick.Speed = _speed;
+
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -115,8 +169,8 @@ public class Player : MonoBehaviour
 
     void PushProduct(CinemaProduct _product)
     {
+        MMVibrationManager.Haptic(HapticTypes.LightImpact);
         DOTween.Kill(_product.transform);
-
         _stackY = _product.GetComponent<MeshFilter>().sharedMesh.bounds.size.y;
 
         _productStack.Push(_product);

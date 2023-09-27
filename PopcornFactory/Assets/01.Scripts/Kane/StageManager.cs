@@ -78,6 +78,8 @@ public class StageManager : MonoBehaviour
     //[SerializeField] int _rvRailNum = -1;
     [SerializeField] bool isFirst = true;
     public int _playTime = 0;
+    public int _islandTime = 0;
+    public int _cinemaTime = 0;
 
     public int _IsCount = 0;
     public int _RvCount = 0;
@@ -107,6 +109,10 @@ public class StageManager : MonoBehaviour
 
     public int _noAds = 0;
 
+    public bool[] _rewardChecks = new bool[4];
+
+
+    // ============================================================
     private void Start()
     {
         MondayOFF.IAPManager.RestorePurchase();
@@ -133,6 +139,7 @@ public class StageManager : MonoBehaviour
 
         DataManager.StageData _data = Managers.Data.GetStageData(_stageLevel);
 
+        _rewardChecks = ES3.Load<bool[]>("_rewardChecks", _rewardChecks);
         //TutorialManager._instance.Tutorial();
 
 
@@ -144,6 +151,8 @@ public class StageManager : MonoBehaviour
 
         _parts_upgrade_level = _data.Parts_Upgrade_Level;
         _playTime = _data.PlayTime;
+        _islandTime = _data.IslandTime;
+        _cinemaTime = _data.CinemaTime;
 
         _gameManager.CalcGem(0);
 
@@ -242,10 +251,59 @@ public class StageManager : MonoBehaviour
             while (true)
             {
                 yield return _term;
+
                 _playTime++;
+                if (isCinema)
+                {
+                    _cinemaTime++;
+                }
+                else
+                {
+                    _islandTime++;
+                }
+
+                Managers.GameUI.CurrentPlayTime_Text.text = $"{_playTime / 60} : {_playTime % 60}";
+
+                switch (_playTime)
+                {
+                    case 180:
+                        _rewardChecks[0] = true;
+                        break;
+
+                    case 600:
+                        _rewardChecks[1] = true;
+                        break;
+
+                    case 1200:
+                        _rewardChecks[2] = true;
+                        break;
+
+                    case 1800:
+                        _rewardChecks[3] = true;
+                        break;
+                }
+
+                ES3.Save<bool[]>("_rewardChecks", _rewardChecks);
+
+                bool isExist = false;
+                for (int i = 0; i < _rewardChecks.Length; i++)
+                {
+                    if (_rewardChecks[i] == true)
+                    {
+                        isExist = true;
+                        break;
+                    }
+                }
+                Managers.GameUI.PlayTimeReward_Button.transform.GetChild(0).gameObject.SetActive(isExist);
+                Managers.GameUI.PlayTimeReward_Accept_Button.interactable = isExist;
+                Managers.GameUI.PlayTime_Guage.fillAmount = (float)((float)(_playTime) / 1800f);
+
+
+
                 SaveData();
             }
         }
+
 
 
         StartCoroutine(Cor_Interstial());
@@ -320,6 +378,45 @@ public class StageManager : MonoBehaviour
 
 
     }
+
+
+    public void GetPlayTimeReward()
+    {
+        for (int i = 0; i < _rewardChecks.Length; i++)
+        {
+            if (_rewardChecks[i])
+            {
+                switch (i)
+                {
+                    case 0:
+                        Managers.Game.CalcGem(10);
+
+                        break;
+
+                    case 1:
+                        Managers.Game._cinemaManager.SampleCleaner();
+                        break;
+
+                    case 2:
+                        Managers.Game.CalcMoney(1000, 1);
+                        break;
+
+                    case 3:
+                        Managers.Game.CalcGem(30);
+                        break;
+
+                    default:
+
+                        break;
+                }
+                _rewardChecks[i] = false;
+            }
+        }
+
+        ES3.Save<bool[]>("_rewardChecks", _rewardChecks);
+        Managers.GameUI.PlayTimeReward_Accept_Button.interactable = false;
+    }
+
 
     void OnPointerDown(PointerEventData data)
     {
@@ -652,6 +749,8 @@ public class StageManager : MonoBehaviour
 
 
         _parts_upgrade_level++;
+
+        _gameManager._cinemaManager.MachineOpen();
 
         EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Land_Upgrade_Level", $"AddLand_Level_{_parts_upgrade_level}" } });
 
@@ -1390,6 +1489,16 @@ public class StageManager : MonoBehaviour
 
         }
     }
+
+
+    public void GameRvCount()
+    {
+        _RvCount++;
+
+        EventTracker.LogCustomEvent("AdsCount", new Dictionary<string, string> { { "AdsCount", $"RvCount_{_RvCount}" } });
+    }
+
+
 
 
 }

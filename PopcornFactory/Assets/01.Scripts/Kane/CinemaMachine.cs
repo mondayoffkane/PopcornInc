@@ -6,7 +6,8 @@ using Sirenix.OdinInspector;
 
 public class CinemaMachine : MonoBehaviour
 {
-    
+
+    public GameObject _lockImg;
 
 
     [TitleGroup("Product")] public GameObject _cinemaProduct;
@@ -25,10 +26,18 @@ public class CinemaMachine : MonoBehaviour
 
     StageManager _stageManager;
 
+    private void OnEnable()
+    {
+        if (_lockImg != null)
+            _lockImg.SetActive(false);
+    }
+
 
     /// <summary>
     ///  ================================================
     /// </summary>
+    ///
+
     void Start()
     {
 

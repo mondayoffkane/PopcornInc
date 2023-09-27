@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using MoreMountains.NiceVibrations;
 
 public class MoneyZone : MonoBehaviour
 {
@@ -63,7 +64,7 @@ public class MoneyZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-
+            MMVibrationManager.Haptic(HapticTypes.LightImpact);
             //StartCoroutine(Cor_GetMoney());
             if (_moneyStack.Count > 0)
                 Managers.Sound.Play("Money");

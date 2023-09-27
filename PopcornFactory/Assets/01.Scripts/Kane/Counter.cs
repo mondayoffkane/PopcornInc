@@ -97,10 +97,24 @@ public class Counter : EventObject
                 if (_customer.OrderCount <= 0)
                 {
 
+                    int _count = 1;
                     if (_cinemaManager.FindCinema())
                     {
+                        switch (_customer._productType)
+                        {
+                            case 0:
+                                _count = 1;
+                                break;
+                            case 1:
+                                _count = 5;
+                                break;
+
+                            case 2:
+                                _count = 14;
+                                break;
+                        }
+                        _moneyStackPos.GetComponent<MoneyZone>().PopMoney(transform, 5, _count);
                         _customer = null;
-                        _moneyStackPos.GetComponent<MoneyZone>().PopMoney(transform, 5, 1);
                     }
                 }
             }

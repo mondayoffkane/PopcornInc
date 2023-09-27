@@ -42,6 +42,8 @@ public class Room : EventObject
 
     public int _upgradeLevel = 0;
 
+    public bool istutorial = false;
+
     // ===============================================================
 
 
@@ -169,6 +171,7 @@ public class Room : EventObject
 
     IEnumerator Cor_PlayMovie()
     {
+        TutorialManager._instance.Tutorial();
         _screen.SetActive(true);
         yield return new WaitForSeconds(_moviePlayTime);
         _screen.SetActive(false);
@@ -178,6 +181,8 @@ public class Room : EventObject
     [Button]
     public void EndMovie()
     {
+        TutorialManager._instance.Tutorial();
+        _cleanCount = 0;
         foreach (Customer _customer in _customerList)
         {
             _customer.SetExit();
