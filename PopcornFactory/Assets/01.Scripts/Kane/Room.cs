@@ -171,7 +171,7 @@ public class Room : EventObject
 
     IEnumerator Cor_PlayMovie()
     {
-        TutorialManager._instance.Tutorial();
+        
         _screen.SetActive(true);
         yield return new WaitForSeconds(_moviePlayTime);
         _screen.SetActive(false);

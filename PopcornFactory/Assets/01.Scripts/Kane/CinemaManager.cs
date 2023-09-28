@@ -79,7 +79,7 @@ public class CinemaManager : MonoBehaviour
     public int _cinemaRvNum = 0;
 
 
-
+    public float _rvMoneyPrice = 0;
 
     // ================ =============================================
 
@@ -163,19 +163,25 @@ public class CinemaManager : MonoBehaviour
             case int n when n < 3:
                 _cinemaMachines[1].gameObject.SetActive(false);
                 _cinemaMachines[2].gameObject.SetActive(false);
+                _rvMoneyPrice = 200;
+
                 break;
 
             case int n when n > 2 && n < 5:
                 _cinemaMachines[1].gameObject.SetActive(true);
                 _cinemaMachines[2].gameObject.SetActive(false);
+                _rvMoneyPrice = 400;
+
                 break;
 
-            case int n when n > 5:
+            case int n when n > 4:
                 _cinemaMachines[1].gameObject.SetActive(true);
                 _cinemaMachines[2].gameObject.SetActive(true);
+                _rvMoneyPrice = 700;
                 break;
 
         }
+        Managers.GameUI.CinemaRvMoney_Text.text = $"Get {_rvMoneyPrice} Money!";
     }
 
     public void LoadData()
@@ -364,7 +370,7 @@ public class CinemaManager : MonoBehaviour
     {
         Managers.Game._cinemaManager._joystick.isFix = false;
 
-     
+
 
         _stageManager.GameRvCount();
 
@@ -384,8 +390,8 @@ public class CinemaManager : MonoBehaviour
                 break;
 
             case 1:
-                Managers.Game.CalcMoney(100, 1);
-                EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "CinemaBigMoney" } });
+                Managers.Game.CalcMoney(_rvMoneyPrice, 1);
+                EventTracker.LogCustomEvent("RV", new Dictionary<string, string> { { "RvType", "CinemaBigMoney_" + _rvMoneyPrice } });
                 break;
 
             case 2:

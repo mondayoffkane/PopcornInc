@@ -47,6 +47,9 @@ public class Counter : EventObject
 
     [SerializeField] public Image _orderImg;
 
+
+    [SerializeField] int _firstCount = 0;
+
     // ===========================================
     void Start()
     {
@@ -100,6 +103,14 @@ public class Counter : EventObject
                     int _count = 1;
                     if (_cinemaManager.FindCinema())
                     {
+
+                        _firstCount++;
+                        if (_firstCount == 6 && TutorialManager._instance._tutorialLevel == 10)
+                        {
+                            TutorialManager._instance.Tutorial(true, 8f);
+                        }
+
+
                         switch (_customer._productType)
                         {
                             case 0:

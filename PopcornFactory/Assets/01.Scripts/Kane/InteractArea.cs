@@ -5,9 +5,12 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using MoreMountains.NiceVibrations;
+using MondayOFF;
 
 public class InteractArea : MonoBehaviour
 {
+    public bool isAlone = false;
+
     public GameObject[] _imgs;
 
 
@@ -73,6 +76,14 @@ public class InteractArea : MonoBehaviour
 
 
         StartCoroutine(Cor_Update());
+
+
+        if (isAlone)
+        {
+            if (_unlockLevel > 0) gameObject.SetActive(false);
+        }
+
+
 
 
 
@@ -154,11 +165,21 @@ public class InteractArea : MonoBehaviour
                         }
 
                         _imgs[_unlockLevel].SetActive(false);
+
+                        if (_unlockLevel == 0)
+                        {
+                            EventTracker.LogCustomEvent("Cinema", new Dictionary<string, string> { { "UnlockObj", $"Interact_{_num}" } });
+                        }
+
+
                         _unlockLevel++;
                         if (_unlockLevel < _imgs.Length - 2)
                             _imgs[_unlockLevel].SetActive(true);
                         ES3.Save<int>($"Interact_{_num}", _unlockLevel);
-                        Managers.Game._cinemaManager.NextInteract();
+                        if (!isAlone)
+                        {
+                            Managers.Game._cinemaManager.NextInteract();
+                        }
                         //NextObjOn();
 
                         if (_num == 0 && _unlockLevel == 1)

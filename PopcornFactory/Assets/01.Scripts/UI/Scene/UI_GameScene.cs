@@ -20,6 +20,7 @@ public class UI_GameScene : UI_Scene
         CinemaMoney_Text,
         AddStaff_Price_Text,
         Income_Price_Text,
+        CinemaRvMoney_Text,
         CurrentPlayTime_Text,
         Gem_Text,
     }
@@ -131,6 +132,7 @@ public class UI_GameScene : UI_Scene
         , RV_Income_TimeText
         , CinemaMoney_Text
         , CurrentPlayTime_Text
+        , CinemaRvMoney_Text
         ;
 
     public GameObject Setting_Panel, Scroll_Panel
@@ -253,7 +255,7 @@ public class UI_GameScene : UI_Scene
         CurrentPlayTime_Text = GetText(Texts.CurrentPlayTime_Text);
         PlayTime_Guage = GetImage(Images.PlayTime_Guage);
 
-
+        CinemaRvMoney_Text = GetText(Texts.CinemaRvMoney_Text);
 
 
         Mask = GetImage(Images.Mask);
@@ -424,11 +426,14 @@ public class UI_GameScene : UI_Scene
         {
             Managers.Game._cinemaManager.RoomUpgrade(1);
             RoomUpgrade_Panel.SetActive(false);
+
+            EventTracker.LogCustomEvent("Cinema", new Dictionary<string, string> { { "RoomUpgradeType", "Basic" } });
         });
         PremiumRoom_Button.AddButtonEvent(() => AdsManager.ShowRewarded(() =>
         {
             Managers.Game._cinemaManager.RoomUpgrade(2);
             RoomUpgrade_Panel.SetActive(false);
+            EventTracker.LogCustomEvent("Cinema", new Dictionary<string, string> { { "RoomUpgradeType", "Premium" } });
         }));
 
 
@@ -438,6 +443,7 @@ public class UI_GameScene : UI_Scene
             {
                 Managers.Game._cinemaManager.CinemaRv();
                 CInemaRvPanel.SetActive(false);
+                EventTracker.LogCustomEvent("Cinema", new Dictionary<string, string> { { "RvPay", "Gem" } });
             }
             else
             {
@@ -445,6 +451,7 @@ public class UI_GameScene : UI_Scene
                 {
                     Managers.Game._cinemaManager.CinemaRv();
                     CInemaRvPanel.SetActive(false);
+                    EventTracker.LogCustomEvent("Cinema", new Dictionary<string, string> { { "RvPay", "Video" } });
                 });
             }
         });
@@ -532,6 +539,8 @@ public class UI_GameScene : UI_Scene
 
 
         EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", ((RvInteract.RvType)_num).ToString() } });
+
+        
 
 
     }

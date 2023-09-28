@@ -52,7 +52,7 @@ public class TutorialManager : MonoBehaviour
     }
 
 
-    public void Tutorial(bool isOff = true)
+    public void Tutorial(bool isOff = true, float _camTime = 4f)
     {
         if (Managers.Game._stageManager.isCinema == false && _tutorialLevel < 8)
         {
@@ -92,16 +92,19 @@ public class TutorialManager : MonoBehaviour
         {
 
             int _num = _tutorialLevel - 8;
-            _3dArrow.gameObject.SetActive(true);
-            _3dArrow.position = _3dArrowPos[_num].position;
-
-            DOTween.Sequence().AppendCallback(() => _virCams[_tutorialLevel - 8].SetActive(true))
-                .AppendInterval(3f).
-                AppendCallback(() =>
-                {
-                    _virCams[_tutorialLevel - 8].SetActive(false);
-                    Tutorial_Comple();
-                });
+            if (_num < _3dArrowPos.Length)
+            {
+                _3dArrow.gameObject.SetActive(true);
+                _3dArrow.position = _3dArrowPos[_num].position;
+                Debug.Log(_num);
+                DOTween.Sequence().AppendCallback(() => _virCams[_tutorialLevel - 8].SetActive(true))
+                    .AppendInterval(_camTime).
+                    AppendCallback(() =>
+                    {
+                        _virCams[_tutorialLevel - 8].SetActive(false);
+                        Tutorial_Comple();
+                    });
+            }
 
         }
     }

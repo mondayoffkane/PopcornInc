@@ -264,6 +264,13 @@ public class StageManager : MonoBehaviour
 
                 Managers.GameUI.CurrentPlayTime_Text.text = $"{_playTime / 60} : {_playTime % 60}";
 
+
+                if (_playTime % 10 == 0)
+                {
+                    EventTracker.LogCustomEvent("Time", new Dictionary<string, string> { { "AllTime", $"PT:{_playTime}_Land:{_islandTime}_Cinema:{_cinemaTime}" } });
+                }
+
+
                 switch (_playTime)
                 {
                     case 180:
@@ -386,6 +393,7 @@ public class StageManager : MonoBehaviour
         {
             if (_rewardChecks[i])
             {
+                EventTracker.LogCustomEvent("Cinema", new Dictionary<string, string> { { "PlayTimeReward", i.ToString() } });
                 switch (i)
                 {
                     case 0:
