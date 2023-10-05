@@ -155,6 +155,10 @@ public class CameraMove : MonoBehaviour
 
                             TutorialManager._instance.Tutorial_Comple();
                             TutorialManager._instance.Tutorial(false);
+                            if (Managers.Game.Money < 5)
+                            {
+                                Managers.Game.CalcMoney(3);
+                            }
                         }
                     }
                     else if (hit.collider.tag == "WorkerBox")
@@ -180,10 +184,10 @@ public class CameraMove : MonoBehaviour
 
                         LookTarget(hit.transform);
                         isClick = false;
-                        if (TutorialManager._instance._tutorialLevel == 8)
-                        {
-                            TutorialManager._instance.Tutorial_Comple();
-                        }
+                        //if (TutorialManager._instance._tutorialLevel == 8)
+                        //{
+                        //    TutorialManager._instance.Tutorial_Comple();
+                        //}
                     }
 
                 }

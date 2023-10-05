@@ -121,7 +121,8 @@ public class InteractArea : MonoBehaviour
                 {
                     Managers.Sound.Play("Coins (3)");
                     if (_cnt % 5 == 0)
-                        MMVibrationManager.Haptic(HapticTypes.LightImpact);
+                        Managers.Game.Vibe();
+                    //MMVibrationManager.Haptic(HapticTypes.LightImpact);
                     Managers.Game.CalcMoney(-_unlockPrice[_unlockLevel] * Time.deltaTime, 1);
                     _currentPrice -= _unlockPrice[_unlockLevel] * Time.deltaTime;
 

@@ -169,7 +169,8 @@ public class Player : MonoBehaviour
 
     void PushProduct(CinemaProduct _product)
     {
-        MMVibrationManager.Haptic(HapticTypes.LightImpact);
+        Managers.Game.Vibe();
+        //MMVibrationManager.Haptic(HapticTypes.LightImpact);
         DOTween.Kill(_product.transform);
         _stackY = _product.GetComponent<MeshFilter>().sharedMesh.bounds.size.y;
 

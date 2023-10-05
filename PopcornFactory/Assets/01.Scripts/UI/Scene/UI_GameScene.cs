@@ -82,6 +82,7 @@ public class UI_GameScene : UI_Scene
         Laboratory_Content,
         Recipe_Panel,
         Recipe_Content,
+        Loading_Panel,
         RoomUpgrade_Panel,
         CInemaRvPanel,
         PlayTimeReward_Panel,
@@ -152,6 +153,7 @@ public class UI_GameScene : UI_Scene
         , StarterPack,
         CleanPack
         , PlayTimeReward_Panel
+        , Loading_Panel
         ;
 
     public Image Mask, PlayTime_Guage;
@@ -252,6 +254,9 @@ public class UI_GameScene : UI_Scene
 
         PlayTimeReward_Panel = GetObject(GameObjects.PlayTimeReward_Panel);
 
+        Loading_Panel = GetObject(GameObjects.Loading_Panel);
+
+
         CurrentPlayTime_Text = GetText(Texts.CurrentPlayTime_Text);
         PlayTime_Guage = GetImage(Images.PlayTime_Guage);
 
@@ -264,6 +269,8 @@ public class UI_GameScene : UI_Scene
         // ===================================
         Mask.alphaHitTestMinimumThreshold = 0.5f;
 
+        Loading_Panel.SetActive(true);
+
 
         AddParts_Upgrade_Button.AddButtonEvent(() =>
         {
@@ -271,8 +278,8 @@ public class UI_GameScene : UI_Scene
             if (TutorialManager._instance._tutorialLevel == 6)
             {
                 TutorialManager._instance.Tutorial_Comple();
-                TutorialManager._instance.Tutorial();
-                Managers.GameUI.Cinema_Button.interactable = true;
+                //TutorialManager._instance.Tutorial();
+                //Managers.GameUI.Cinema_Button.interactable = true;
             }
         });
 
@@ -302,6 +309,10 @@ public class UI_GameScene : UI_Scene
             {
                 TutorialManager._instance.Tutorial_Comple();
                 TutorialManager._instance.Tutorial(false);
+                if (Managers.Game.Money < 5)
+                {
+                    Managers.Game.CalcMoney(5);
+                }
             }
         });
 
@@ -343,20 +354,20 @@ public class UI_GameScene : UI_Scene
             IslandUi_Group.SetActive(false);
             CinemaUI_Group.SetActive(true);
             Managers.Game._stageManager.isCinemaOn(true);
-            if (TutorialManager._instance._tutorialLevel == 7)
-            {
-                TutorialManager._instance.Tutorial_Comple();
-                StartCoroutine(Cor_Func());
-            }
+            //if (TutorialManager._instance._tutorialLevel == 7)
+            //{
+            //    TutorialManager._instance.Tutorial_Comple();
+            //    StartCoroutine(Cor_Func());
+            //}
 
-            IEnumerator Cor_Func()
-            {
-                yield return new WaitForSeconds(2f);
-                TutorialManager._instance.Tutorial();
+            //IEnumerator Cor_Func()
+            //{
+            //    yield return new WaitForSeconds(2f);
+            //    TutorialManager._instance.Tutorial();
 
-                //yield return new WaitForSeconds(5f);
-                //TutorialManager._instance.Tutorial();
-            }
+            //    //yield return new WaitForSeconds(5f);
+            //    //TutorialManager._instance.Tutorial();
+            //}
 
 
             EventTracker.LogCustomEvent("Cinema", new Dictionary<string, string> { { "Change", "To Cinema" } });
@@ -540,7 +551,7 @@ public class UI_GameScene : UI_Scene
 
         EventTracker.LogCustomEvent("RV_ShowCount", new Dictionary<string, string> { { "Rv_ShowPanel", ((RvInteract.RvType)_num).ToString() } });
 
-        
+
 
 
     }

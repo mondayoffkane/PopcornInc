@@ -88,10 +88,10 @@ public class TutorialManager : MonoBehaviour
                 }
             }
         }
-        else if (Managers.Game._stageManager.isCinema == true && _tutorialLevel >= 8)
+        else if (Managers.Game._stageManager.isCinema == true && _tutorialLevel >= _pos.Length)
         {
 
-            int _num = _tutorialLevel - 8;
+            int _num = _tutorialLevel - _pos.Length;
             if (_num < _3dArrowPos.Length)
             {
                 _3dArrow.gameObject.SetActive(true);
@@ -111,7 +111,7 @@ public class TutorialManager : MonoBehaviour
 
     public void Tutorial_Comple()
     {
-        if (_tutorialLevel < 9)
+        if (_tutorialLevel <= _pos.Length)
         {
             isFix = false;
             if (_mask == null)

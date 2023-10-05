@@ -79,7 +79,7 @@ public class CinemaManager : MonoBehaviour
     public int _cinemaRvNum = 0;
 
 
-    public float _rvMoneyPrice = 0;
+    public float _rvMoneyPrice = 200;
 
     // ================ =============================================
 

@@ -3,6 +3,8 @@ using DG.Tweening;
 using MondayOFF;
 using UnityEngine;
 using UnityEngine.UI;
+using MoreMountains.NiceVibrations;
+
 public class GameManager : MonoBehaviour
 {
 
@@ -274,6 +276,7 @@ public class GameManager : MonoBehaviour
         _value *= _double;
 
         Transform _floatingText = Managers.Pool.Pop(_FloatingText, _trans).GetComponent<Transform>();
+        _floatingText.rotation = Quaternion.Euler(45f, 0f, 0f);
         _floatingText.localPosition = new Vector3(0f, 4f, 0f);
         _floatingText.GetComponentInChildren<Text>().text = $"{Managers.ToCurrencyString(_value)}";
         _floatingText.DOLocalMoveY(7f, 1f).SetEase(Ease.OutCirc)
@@ -292,6 +295,12 @@ public class GameManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void Vibe(int _num = 4)
+    {
+        if (Managers.Data.UseHaptic)
+            MMVibrationManager.Haptic((HapticTypes)_num);
     }
 
 

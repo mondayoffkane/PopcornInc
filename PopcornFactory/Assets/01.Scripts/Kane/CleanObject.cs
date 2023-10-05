@@ -67,7 +67,7 @@ public class CleanObject : MonoBehaviour
         }
         else
         {
-            
+
             foreach (Transform _trans in _objs)
             {
                 switch (_ObjType)
@@ -134,7 +134,8 @@ public class CleanObject : MonoBehaviour
             if (isClean == false)
             {
                 if (_cnt % 5 == 0)
-                    MMVibrationManager.Haptic(HapticTypes.LightImpact);
+                    Managers.Game.Vibe();
+                //MMVibrationManager.Haptic(HapticTypes.LightImpact);
                 _currentTerm += Time.deltaTime;
                 _circleGuage.fillAmount = (_currentTerm / _maxTerm);
                 if (_currentTerm >= _maxTerm)

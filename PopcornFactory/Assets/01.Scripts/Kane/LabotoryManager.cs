@@ -131,10 +131,10 @@ public class LabotoryManager : MonoBehaviour
                         {
                             SaveRecipe(0);
                             _gameUi.Recipe_Button.gameObject.SetActive(true);
-                            if (TutorialManager._instance._tutorialLevel == 7)
-                            {
-                                TutorialManager._instance.Tutorial();
-                            }
+                            //if (TutorialManager._instance._tutorialLevel == 7)
+                            //{
+                            //    TutorialManager._instance.Tutorial();
+                            //}
 
                         }
                     }

@@ -19264,6 +19264,7 @@ MonoBehaviour:
   StarterPack: {fileID: 0}
   CleanPack: {fileID: 0}
   PlayTimeReward_Panel: {fileID: 0}
+  Loading_Panel: {fileID: 0}
   Mask: {fileID: 0}
   PlayTime_Guage: {fileID: 0}
   ScrollUpgrades: []

@@ -105,10 +105,10 @@ public class Counter : EventObject
                     {
 
                         _firstCount++;
-                        if (_firstCount == 6 && TutorialManager._instance._tutorialLevel == 10)
-                        {
-                            TutorialManager._instance.Tutorial(true, 8f);
-                        }
+                        //if (_firstCount == 6 && TutorialManager._instance._tutorialLevel == 10)
+                        //{
+                        //    TutorialManager._instance.Tutorial(true, 8f);
+                        //}
 
 
                         switch (_customer._productType)

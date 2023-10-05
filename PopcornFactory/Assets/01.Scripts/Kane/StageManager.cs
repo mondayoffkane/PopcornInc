@@ -115,6 +115,9 @@ public class StageManager : MonoBehaviour
     // ============================================================
     private void Start()
     {
+
+
+
         MondayOFF.IAPManager.RestorePurchase();
 
         if (_gameManager == null) _gameManager = Managers.Game;
@@ -169,6 +172,11 @@ public class StageManager : MonoBehaviour
             }
         }
 
+
+        if (_parts_upgrade_level < 2)
+        {
+            Managers.GameUI.Cinema_Button.interactable = false;
+        }
 
         // mapobj list init  and, add list 
         _mapObjs.Clear();
@@ -542,6 +550,10 @@ public class StageManager : MonoBehaviour
                 case 0:
 
                     break;
+
+                case 2:
+                    Managers.GameUI.Cinema_Button.interactable = true;
+                    break;
                 default:
 
                     break;
@@ -564,7 +576,7 @@ public class StageManager : MonoBehaviour
                     _landManagers[0]._cup.NextPos();
                     if (i == (_land_machineGroup[0].GetLength(0) - 1))
                     {
-                        _landManagers[0]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                        //_landManagers[0]._cup.transform.GetChild(0).gameObject.SetActive(false);
                         _landManagers[0]._cup.isRail = true;
                         RailOn(0);
                     }
@@ -579,7 +591,7 @@ public class StageManager : MonoBehaviour
 
                     if (i == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) - 1))
                     {
-                        _landManagers[1]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                        //_landManagers[1]._cup.transform.GetChild(0).gameObject.SetActive(false);
                         _landManagers[1]._cup.isRail = true;
                         RailOn(1);
                     }
@@ -594,7 +606,7 @@ public class StageManager : MonoBehaviour
 
                     if (i == (_land_machineGroup[0].GetLength(0) + _land_machineGroup[1].GetLength(0) + _land_machineGroup[2].GetLength(0) - 1))
                     {
-                        _landManagers[2]._cup.transform.GetChild(0).gameObject.SetActive(false);
+                        //_landManagers[2]._cup.transform.GetChild(0).gameObject.SetActive(false);
                         _landManagers[2]._cup.isRail = true;
                         RailOn(2);
                     }
@@ -665,7 +677,8 @@ public class StageManager : MonoBehaviour
                     break;
 
                 case 2:
-
+                    CustomReviewManager.instance.StoreReview();
+                    Debug.Log("Popup Store Review");
                     break;
 
             }
@@ -758,6 +771,11 @@ public class StageManager : MonoBehaviour
 
         _parts_upgrade_level++;
 
+        if (_parts_upgrade_level >= 2)
+        {
+            Managers.GameUI.Cinema_Button.interactable = true;
+        }
+
         _gameManager._cinemaManager.MachineOpen();
 
         EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Land_Upgrade_Level", $"AddLand_Level_{_parts_upgrade_level}" } });
@@ -801,6 +819,8 @@ public class StageManager : MonoBehaviour
         _stagedata.Parts_Upgrade_Level = _parts_upgrade_level;
         _stagedata.PlayTime = _playTime;
         _stagedata.isFirst = false;
+        _stagedata.IslandTime = _islandTime;
+        _stagedata.CinemaTime = _cinemaTime;
 
         Managers.Data.SetStageData(_stagedata, _stageLevel);
     }
