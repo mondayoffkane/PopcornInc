@@ -392,7 +392,8 @@ public class JoyStickController : MonoBehaviour
         }
         else
         {
-            MoveObjectRig.position += newDir * Time.deltaTime * Speed;
+            MoveObjectRig.transform.position += newDir * Time.deltaTime * Speed;
+            //MoveObjectRig.transform.Translate(newDir * Time.deltaTime * Speed);
         }
     }
     private void CheckMoveDir()

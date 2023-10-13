@@ -119,6 +119,12 @@ public class Player : MonoBehaviour
                 {
                     PushProduct(_machine._productStack.Pop());
                     _animator.SetBool("Pick", true);
+
+                    if (TutorialManager._instance._tutorialLevel == 8)
+                    {
+                        TutorialManager._instance.Tutorial_Comple();
+                        TutorialManager._instance.Tutorial();
+                    }
                 }
 
 
@@ -134,6 +140,11 @@ public class Player : MonoBehaviour
                     _counter.PushProduct(PopProduct());
                     DOTween.Sequence(isReady = false).AppendInterval(_pickInterval).OnComplete(() => isReady = true);
 
+                    if (TutorialManager._instance._tutorialLevel == 9)
+                    {
+                        TutorialManager._instance.Tutorial_Comple();
+                     
+                    }
                 }
 
                 break;

@@ -467,7 +467,7 @@ public class Machine : MonoBehaviour
                 _gamemanager.CalcMoney(-_scrollUpgrade2_Price[_spawnLevel]);
                 _spawnLevel++;
 
-                EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_Upgrade_Level", $"Machine_{_machineNum}Speed{_spawnLevel}" } });
+                EventTracker.LogCustomEvent("Upgrade", new Dictionary<string, string> { { $"Machine_Upgrade_Level", $"Machine_{_machineNum}_Speed_{_spawnLevel}" } });
                 break;
 
             default:

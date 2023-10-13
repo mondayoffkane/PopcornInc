@@ -87,7 +87,7 @@ public class CinemaManager : MonoBehaviour
 
     private void Start()
     {
-
+        GetComponent<NavMeshSurface>().BuildNavMesh();
 
         if (_player == null) _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 

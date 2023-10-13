@@ -54,9 +54,14 @@ public class Room : EventObject
 
     public Transform _spawnPos;
 
+    [SerializeField] GameObject _fogParticle;
+
     // ================================ ===============================
     private void Start()
     {
+        if (_fogParticle == null) _fogParticle = transform.Find("Fog_Particle").gameObject;
+
+
         if (_spawnPos == null) _spawnPos = transform.Find("SpawnPos");
         if (_spawnPos.GetComponent<MoneyZone>() == null) _spawnPos.gameObject.AddComponent<MoneyZone>();
         _spawnPos.GetComponent<MoneyZone>().SetInit(new Vector3(4f, 2f, 3f), 2, 2);
@@ -80,6 +85,7 @@ public class Room : EventObject
         _unlockEvent.AddListener(() =>
         {
             Unlock(true);
+            Managers.Game._cinemaManager.GetComponent<UnityEngine.AI.NavMeshSurface>().BuildNavMesh();
             //_upgradeLevel++;
             //ES3.Save<int>("Room_" + _roomNumber, _upgradeLevel);
         });
@@ -108,7 +114,7 @@ public class Room : EventObject
 
     public void LoadData()
     {
-
+        Managers.Game._cinemaManager.GetComponent<UnityEngine.AI.NavMeshSurface>().BuildNavMesh();
         _upgradeLevel = ES3.Load<int>("Room_" + _roomNumber, 0);
         _isUnlock = ES3.Load<bool>($"Room_{_roomNumber}_isUnlock", false);
 
@@ -171,7 +177,7 @@ public class Room : EventObject
 
     IEnumerator Cor_PlayMovie()
     {
-        
+
         _screen.SetActive(true);
         yield return new WaitForSeconds(_moviePlayTime);
         _screen.SetActive(false);
@@ -181,7 +187,11 @@ public class Room : EventObject
     [Button]
     public void EndMovie()
     {
-        TutorialManager._instance.Tutorial();
+        if (TutorialManager._instance._tutorialLevel == 10)
+        {
+            TutorialManager._instance.Tutorial();
+        }
+
         _cleanCount = 0;
         foreach (Customer _customer in _customerList)
         {
@@ -234,7 +244,8 @@ public class Room : EventObject
 
     public void Unlock(bool isLevelUp)
     {
-
+        _fogParticle.SetActive(false);
+        _fogParticle.SetActive(true);
         transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.Linear);
 
         //if (_upgradeLevel < 3)
@@ -308,6 +319,11 @@ public class Room : EventObject
         if (_cleanCount >= _cleanObjectCount)
         {
             isReady = true;
+            if (TutorialManager._instance._tutorialLevel == 10)
+            {
+                TutorialManager._instance.Tutorial_Comple();
+
+            }
         }
 
 

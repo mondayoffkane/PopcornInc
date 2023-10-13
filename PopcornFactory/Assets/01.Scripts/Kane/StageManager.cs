@@ -176,6 +176,15 @@ public class StageManager : MonoBehaviour
         if (_parts_upgrade_level < 2)
         {
             Managers.GameUI.Cinema_Button.interactable = false;
+
+
+            Managers.GameUI.Cinema_Button.transform.GetChild(0).gameObject.SetActive(true);
+            Managers.GameUI.Cinema_Button.transform.GetChild(1).gameObject.SetActive(false);
+            Managers.GameUI.Cinema_Button.transform.Find("CinemaImg").GetComponent<Image>().color = Managers.GameUI.Cinema_Button.colors.disabledColor;
+            Managers.GameUI.Cinema_Button.transform.Find("CinemaImg").GetChild(0).GetComponent<Text>().color =
+               Managers.GameUI.Cinema_Button.colors.disabledColor;
+            Managers.GameUI.Cinema_Button.transform.GetChild(0).GetComponent<Text>().color = Managers.GameUI.Cinema_Button.colors.disabledColor;
+
         }
 
         // mapobj list init  and, add list 
@@ -352,6 +361,18 @@ public class StageManager : MonoBehaviour
                 if (_noAds == 1)
                 {
                     break;
+                }
+
+                //Debug.Log(AdsManager.IsInterstitialReady());
+
+                if (AdsManager.IsInterstitialReady())
+                {
+                    Managers.GameUI.AdBreak_Panel.SetActive(true);
+                    Managers.GameUI.AdBreak_Panel.transform.Find("AdMoney_Text").GetComponent<Text>().text
+                        = Managers.ToCurrencyString(bigMoney * 0.5d);
+                    Managers.Game.CalcMoney(bigMoney * 0.5d);
+                    yield return _s1;
+                    Managers.GameUI.AdBreak_Panel.SetActive(false);
                 }
 
                 if (AdsManager.ShowInterstitial() == true && _noAds == 0)
@@ -553,6 +574,10 @@ public class StageManager : MonoBehaviour
 
                 case 2:
                     Managers.GameUI.Cinema_Button.interactable = true;
+                    Managers.GameUI.Cinema_Button.transform.GetChild(0).gameObject.SetActive(false);
+                    //Managers.GameUI.Cinema_Button.transform.GetChild(1).gameObject.SetActive(true);
+                    Managers.GameUI.Cinema_Button.transform.Find("CinemaImg").GetComponent<Image>().color = Managers.GameUI.Cinema_Button.colors.normalColor;
+                    Managers.GameUI.Cinema_Button.transform.Find("CinemaImg").GetChild(0).GetComponent<Text>().color = Managers.GameUI.Cinema_Button.colors.normalColor; Managers.GameUI.Cinema_Button.transform.GetChild(0).GetComponent<Text>().color = Managers.GameUI.Cinema_Button.colors.normalColor;
                     break;
                 default:
 
@@ -668,17 +693,17 @@ public class StageManager : MonoBehaviour
             switch (_parts_upgrade_level)
             {
                 case 0:
-
+                    //CustomReviewManager.instance.StoreReview();
 
                     break;
 
                 case 1:
-
+                    CustomReviewManager.instance.StoreReview();
                     break;
 
                 case 2:
-                    CustomReviewManager.instance.StoreReview();
-                    Debug.Log("Popup Store Review");
+                    //CustomReviewManager.instance.StoreReview();
+                    //Debug.Log("Popup Store Review");
                     break;
 
             }
@@ -771,9 +796,18 @@ public class StageManager : MonoBehaviour
 
         _parts_upgrade_level++;
 
+        if (_parts_upgrade_level == 2)
+        {
+            Managers.GameUI.Cinema_Button.transform.GetChild(1).gameObject.SetActive(true);
+        }
+
         if (_parts_upgrade_level >= 2)
         {
             Managers.GameUI.Cinema_Button.interactable = true;
+            Managers.GameUI.Cinema_Button.transform.GetChild(0).gameObject.SetActive(false);
+            //Managers.GameUI.Cinema_Button.transform.GetChild(1).gameObject.SetActive(true);
+            Managers.GameUI.Cinema_Button.transform.Find("CinemaImg").GetComponent<Image>().color = Managers.GameUI.Cinema_Button.colors.normalColor;
+            Managers.GameUI.Cinema_Button.transform.Find("CinemaImg").GetChild(0).GetComponent<Text>().color = Managers.GameUI.Cinema_Button.colors.normalColor; Managers.GameUI.Cinema_Button.transform.GetChild(0).GetComponent<Text>().color = Managers.GameUI.Cinema_Button.colors.normalColor;
         }
 
         _gameManager._cinemaManager.MachineOpen();
@@ -839,6 +873,8 @@ public class StageManager : MonoBehaviour
             if (_gameManager.Money >= _addParts_Upgrade_Price[_parts_upgrade_level])
             {
                 _gameUi.AddParts_Upgrade_Button.interactable = true;
+                _gameUi.AddParts_Upgrade_Button.transform.Find("IslandImg").GetComponent<Image>().color = _gameUi.AddParts_Upgrade_Button.colors.normalColor;
+                _gameUi.AddParts_Upgrade_Button.transform.Find("Dot").gameObject.SetActive(true);
                 if (TutorialManager._instance._tutorialLevel == 6)
                 {
                     TutorialManager._instance.Tutorial();
@@ -847,11 +883,15 @@ public class StageManager : MonoBehaviour
             else
             {
                 _gameUi.AddParts_Upgrade_Button.interactable = false;
+                _gameUi.AddParts_Upgrade_Button.transform.Find("IslandImg").GetComponent<Image>().color = _gameUi.AddParts_Upgrade_Button.colors.disabledColor;
+                _gameUi.AddParts_Upgrade_Button.transform.Find("Dot").gameObject.SetActive(false);
             }
         }
         else
         {
             _gameUi.AddParts_Upgrade_Button.interactable = false;
+            _gameUi.AddParts_Upgrade_Button.transform.Find("IslandImg").GetComponent<Image>().color = _gameUi.AddParts_Upgrade_Button.colors.disabledColor;
+            _gameUi.AddParts_Upgrade_Button.transform.Find("Dot").gameObject.SetActive(false);
         }
 
         /// ===========================================

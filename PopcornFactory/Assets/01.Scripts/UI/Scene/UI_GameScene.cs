@@ -82,10 +82,11 @@ public class UI_GameScene : UI_Scene
         Laboratory_Content,
         Recipe_Panel,
         Recipe_Content,
-        Loading_Panel,
         RoomUpgrade_Panel,
         CInemaRvPanel,
         PlayTimeReward_Panel,
+        Loading_Panel,
+        AdBreak_Panel,
     }
 
 
@@ -154,6 +155,7 @@ public class UI_GameScene : UI_Scene
         CleanPack
         , PlayTimeReward_Panel
         , Loading_Panel
+        , AdBreak_Panel
         ;
 
     public Image Mask, PlayTime_Guage;
@@ -255,6 +257,7 @@ public class UI_GameScene : UI_Scene
         PlayTimeReward_Panel = GetObject(GameObjects.PlayTimeReward_Panel);
 
         Loading_Panel = GetObject(GameObjects.Loading_Panel);
+        AdBreak_Panel = GetObject(GameObjects.AdBreak_Panel);
 
 
         CurrentPlayTime_Text = GetText(Texts.CurrentPlayTime_Text);
@@ -350,15 +353,17 @@ public class UI_GameScene : UI_Scene
 
         Cinema_Button.AddButtonEvent(() =>
         {
+            Cinema_Button.transform.GetChild(1).gameObject.SetActive(false);
             OffPopup();
             IslandUi_Group.SetActive(false);
             CinemaUI_Group.SetActive(true);
             Managers.Game._stageManager.isCinemaOn(true);
-            //if (TutorialManager._instance._tutorialLevel == 7)
-            //{
-            //    TutorialManager._instance.Tutorial_Comple();
-            //    StartCoroutine(Cor_Func());
-            //}
+            if (TutorialManager._instance._tutorialLevel == 7)
+            {
+                TutorialManager._instance.Tutorial();
+                //TutorialManager._instance.Tutorial_Comple();
+                //StartCoroutine(Cor_Func());
+            }
 
             //IEnumerator Cor_Func()
             //{

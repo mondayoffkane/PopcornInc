@@ -17,6 +17,10 @@ public class TutorialManager : MonoBehaviour
     public Vector3[] _pos;
     public Vector2[] _size;
 
+
+    // ////////////////////
+
+
     public Vector3[] _arrowpos;
     public bool isFix = false;
 
@@ -64,7 +68,7 @@ public class TutorialManager : MonoBehaviour
                     if (Managers.Game._stageManager._targetMachine_Trans != null)
                         Managers.Game._stageManager._targetMachine_Trans.GetComponent<Machine>().isPress = false;
 
-                    Debug.Log("tutorial Leve : " + _tutorialLevel);
+                    //Debug.Log("tutorial Leve : " + _tutorialLevel);
                     if (isOff)
                     {
                         Managers.GameUI.OffPopup();
@@ -88,22 +92,23 @@ public class TutorialManager : MonoBehaviour
                 }
             }
         }
-        else if (Managers.Game._stageManager.isCinema == true && _tutorialLevel >= _pos.Length)
+        else if (Managers.Game._stageManager.isCinema == true && _tutorialLevel >= _pos.Length - 1) // Cinema Tutorial
         {
 
-            int _num = _tutorialLevel - _pos.Length;
+            int _num = _tutorialLevel - (_pos.Length - 1);
+            //Debug.Log(_num);
             if (_num < _3dArrowPos.Length)
             {
                 _3dArrow.gameObject.SetActive(true);
                 _3dArrow.position = _3dArrowPos[_num].position;
-                Debug.Log(_num);
-                DOTween.Sequence().AppendCallback(() => _virCams[_tutorialLevel - 8].SetActive(true))
-                    .AppendInterval(_camTime).
-                    AppendCallback(() =>
-                    {
-                        _virCams[_tutorialLevel - 8].SetActive(false);
-                        Tutorial_Comple();
-                    });
+                //Debug.Log(_num);
+                //DOTween.Sequence().AppendCallback(() => _virCams[_tutorialLevel - 8].SetActive(true))
+                //    .AppendInterval(_camTime).
+                //    AppendCallback(() =>
+                //    {
+                //        _virCams[_tutorialLevel - 8].SetActive(false);
+                //        Tutorial_Comple();
+                //    });
             }
 
         }

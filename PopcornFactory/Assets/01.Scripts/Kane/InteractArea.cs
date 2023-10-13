@@ -170,6 +170,12 @@ public class InteractArea : MonoBehaviour
                         if (_unlockLevel == 0)
                         {
                             EventTracker.LogCustomEvent("Cinema", new Dictionary<string, string> { { "UnlockObj", $"Interact_{_num}" } });
+
+                            if (_num == 0)
+                            {
+                                TutorialManager._instance.Tutorial_Comple();
+                                TutorialManager._instance.Tutorial();
+                            }
                         }
 
 
