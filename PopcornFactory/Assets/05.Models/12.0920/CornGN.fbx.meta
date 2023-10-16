@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:PopcornFactory/Assets/05.Models/12.0920/CornGN.fbx.meta
 guid: bef4c025a33714a5c855cc20547d6c95
+=======
+guid: d6f7aab1556194a58bea22287e62672f
+>>>>>>> a6273aa43530c17958d1e1dfd4e2aeadfc2378e9:PopcornFactory/Assets/DDUI/Cinema_Map_OutDoor.fbx.meta
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []

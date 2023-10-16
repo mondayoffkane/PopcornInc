@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:PopcornFactory/Assets/04.Materials/Cinema_Floor_4 1.mat.meta
 guid: f9bfd8addba6041dc90bd69fc4671a78
+=======
+guid: 56ccace0418214344860b5f8a783df5f
+>>>>>>> a6273aa43530c17958d1e1dfd4e2aeadfc2378e9:PopcornFactory/Assets/04.Materials/Skybox 1.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000

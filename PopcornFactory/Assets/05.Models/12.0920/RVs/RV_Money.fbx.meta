@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:PopcornFactory/Assets/05.Models/12.0920/RVs/RV_Money.fbx.meta
 guid: 8b997ee82491d46b396629fe34a24bfa
+=======
+guid: e179e91fd6c834a94b79856b0f6a1ccd
+>>>>>>> a6273aa43530c17958d1e1dfd4e2aeadfc2378e9:PopcornFactory/Assets/DDUI/Model/Corn_Peel.fbx.meta
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []

@@ -1,8 +1,14 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:PopcornFactory/Assets/03.Textures and Sprites/12.UIs.meta
 guid: 6a69dd616368b431a947561745f92378
 folderAsset: yes
 DefaultImporter:
+=======
+guid: a610b8f1da778489ebbacfa426cc0a6c
+NativeFormatImporter:
+>>>>>>> a6273aa43530c17958d1e1dfd4e2aeadfc2378e9:PopcornFactory/Assets/04.Materials/Skybox 2.mat.meta
   externalObjects: {}
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
