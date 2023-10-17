@@ -28,10 +28,10 @@ MonoBehaviour:
     AOS_IS_Backup_AdUnitID: 
     AOS_RV_Backup_AdUnitID: 
     AOS_BN_Backup_AdUnitID: 
-    AOS_APS_AppID: 
-    AOS_APS_IS_SlotID: 
-    AOS_APS_RV_SlotID: 
-    AOS_APS_BN_SlotID: 
+    AOS_APS_AppID: c28c3427-ead2-4ba4-8f4d-70b3ee8bd35c
+    AOS_APS_IS_SlotID: 23635d5f-d130-4e91-847d-5403fc2acb9d
+    AOS_APS_RV_SlotID: c53becba-a54b-4afc-900c-a10954a36915
+    AOS_APS_BN_SlotID: ab3376eb-3b7c-433f-938c-22483c395104
     AOS_PlayOnApiKey: d6d89ba8-75ef-46ad-a618-67ae37a68193
     AOS_AdvertyApiKey: MGNjNjkwOWYtZmNmMC00MmE0LWJlNDYtY2UyMzNjNTg4MjBkJGh0dHBzOi8vYWRzZXJ2ZXIuYWR2ZXJ0eS5jb20=
     iOS_IS_AdUnitID: 35d2e9be2c59bbf5
@@ -40,10 +40,10 @@ MonoBehaviour:
     iOS_IS_Backup_AdUnitID: 
     iOS_RV_Backup_AdUnitID: 
     iOS_BN_Backup_AdUnitID: 
-    iOS_APS_AppID: 
-    iOS_APS_IS_SlotID: 
-    iOS_APS_RV_SlotID: 
-    iOS_APS_BN_SlotID: 
+    iOS_APS_AppID: 8c97e50c-11bc-49ea-b871-62393ab629e5
+    iOS_APS_IS_SlotID: 987723e7-5811-49b6-9103-bc3d726191b1
+    iOS_APS_RV_SlotID: adc48f20-5852-4f59-938a-b9d41db9ebfd
+    iOS_APS_BN_SlotID: 30b419d1-b199-4380-8672-7831f9a35e9f
     iOS_PlayOnApiKey: 384a72e9-3848-4552-a615-a609c355b8d6
     iOS_storeID: 6450912365
     iOS_AdvertyApiKey: M2ViNGI3ZTEtYTYxZC00ZGQ2LTk1NmUtNzQ1ZWU1NWNkOGM4JGh0dHBzOi8vYWRzZXJ2ZXIuYWR2ZXJ0eS5jb20=

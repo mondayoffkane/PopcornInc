@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ES3Defaults
   m_EditorClassIdentifier: 
   settings:
-    _location: 1
-    path: PopcornInc_1.es3
+    _location: 0
+    path: SaveFile.es3
     encryptionType: 0
     compressionType: 0
     encryptionPassword: password
@@ -43,11 +43,11 @@ MonoBehaviour:
     - Everyday.Events
     - Everyday.Events.Editor
     - Everyday.IAP
+    - Everyday.IAP.Editor
     - Google.Android.AppBundle.Editor
     - Google.Play.Common
     - Google.Play.Core
     - Google.Play.Review
-    - JsonDotNet
     - LeTai.TrueShadow
     - LeTai.TrueShadow.Editor
     - Lofelt.NiceVibrations
@@ -64,12 +64,16 @@ MonoBehaviour:
     - Nementic.SelectionUtility.Editor
     - Nementic.SelectionUtility.Runtime
     - PlayOn
+    - Purchasing.Common
+    - SingularityGroup.HotReload.Editor
+    - SingularityGroup.HotReload.Runtime
+    - SingularityGroup.HotReload.Runtime.Public
     - SingularSDK
     - Sirenix.OdinInspector.CompatibilityLayer
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
-  autoUpdateReferences: 0
+  autoUpdateReferences: 1
   addAllPrefabsToManager: 1
   logDebugInfo: 0
   logWarnings: 1
