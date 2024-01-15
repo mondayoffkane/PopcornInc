@@ -8,15 +8,10 @@ namespace MondayOFF
     {
         internal Adverty(in Camera mainCamera)
         {
-
             EverydayLogger.Info("Initializing Adverty");
-            UserData userData = new UserData(AgeSegment.Unknown, Gender.Unknown);
-            //Debug.Log("Test1");
-            AdvertySDK.Init(EverydaySettings.AdSettings.advertyApiKey, AdvertySettings.Mode.Mobile, !AdsManager.HAS_USER_CONSENT, userData);
-            //Debug.Log("Test2");
+            UserData userData = new UserData(Privacy.TCString, Privacy.IS_GDPR_APPLICABLE, Privacy.CCPA_STRING);
+            AdvertySDK.Init(EverydaySettings.AdSettings.advertyApiKey, AdvertySettings.Mode.Mobile, !Privacy.HAS_ATT_CONSENT, userData);
             AdvertySettings.SetMainCamera(mainCamera);
-
-            // AdvertySettings.SandboxMode = false;
         }
 
         public void Dispose()

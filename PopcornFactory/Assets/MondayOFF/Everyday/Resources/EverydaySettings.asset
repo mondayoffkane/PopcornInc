@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0da90100806d46409dc5f2bb6272482, type: 3}
   m_Name: EverydaySettings
   m_EditorClassIdentifier: 
-  logLevel: 4
+  initializeOnLaunch: 1
+  initializationDelay: 1.5
+  logLevel: 3
   isTestMode: 0
   adSettings:
     initializeOnLoad: 1
@@ -28,31 +30,33 @@ MonoBehaviour:
     AOS_IS_Backup_AdUnitID: 
     AOS_RV_Backup_AdUnitID: 
     AOS_BN_Backup_AdUnitID: 
-    AOS_APS_AppID: 
-    AOS_APS_IS_SlotID: 
-    AOS_APS_RV_SlotID: 
-    AOS_APS_BN_SlotID: 
+    AOS_APS_AppID: c28c3427-ead2-4ba4-8f4d-70b3ee8bd35c
+    AOS_APS_IS_SlotID: 23635d5f-d130-4e91-847d-5403fc2acb9d
+    AOS_APS_RV_SlotID: c53becba-a54b-4afc-900c-a10954a36915
+    AOS_APS_BN_SlotID: ab3376eb-3b7c-433f-938c-22483c395104
     AOS_PlayOnApiKey: d6d89ba8-75ef-46ad-a618-67ae37a68193
-    AOS_AdvertyApiKey: MGNjNjkwOWYtZmNmMC00MmE0LWJlNDYtY2UyMzNjNTg4MjBkJGh0dHBzOi8vYWRzZXJ2ZXIuYWR2ZXJ0eS5jb20=
+    AOS_AdvertyApiKey: ZjI3YzM3YjQtNDJmYy00ZDFkLWE4N2MtOWE4MTI1NTk3MDUzJGh0dHBzOi8vYWRzZXJ2ZXIuYWR2ZXJ0eS5jb20=
     iOS_IS_AdUnitID: 35d2e9be2c59bbf5
     iOS_RV_AdUnitID: 923be71792d7e85f
     iOS_BN_AdUnitID: dc08e83993a3292d
     iOS_IS_Backup_AdUnitID: 
     iOS_RV_Backup_AdUnitID: 
     iOS_BN_Backup_AdUnitID: 
-    iOS_APS_AppID: 
-    iOS_APS_IS_SlotID: 
-    iOS_APS_RV_SlotID: 
-    iOS_APS_BN_SlotID: 
+    iOS_APS_AppID: 8c97e50c-11bc-49ea-b871-62393ab629e5
+    iOS_APS_IS_SlotID: 987723e7-5811-49b6-9103-bc3d726191b1
+    iOS_APS_RV_SlotID: adc48f20-5852-4f59-938a-b9d41db9ebfd
+    iOS_APS_BN_SlotID: 30b419d1-b199-4380-8672-7831f9a35e9f
     iOS_PlayOnApiKey: 384a72e9-3848-4552-a615-a609c355b8d6
     iOS_storeID: 6450912365
-    iOS_AdvertyApiKey: M2ViNGI3ZTEtYTYxZC00ZGQ2LTk1NmUtNzQ1ZWU1NWNkOGM4JGh0dHBzOi8vYWRzZXJ2ZXIuYWR2ZXJ0eS5jb20=
+    iOS_AdvertyApiKey: YmZkOWNjMTEtOWZlYi00MGU3LWFhYjEtZTE0MTE5N2Q1Y2I0JGh0dHBzOi8vYWRzZXJ2ZXIuYWR2ZXJ0eS5jb20=
     showPlayOnAfterInterstitial: 1
     playOnInterstitialCount: 2
     playOnPosition:
-      useScreenPositioning: 1
+      useScreenPositioning: 0
       playOnLogoAnchor: 0
       playOnLogoOffset: {x: 0, y: 150}
       playOnLogoSize: 64
     initializeAdvertyOnAwake: 1
   gameId: 
+  companyLogo: {fileID: 0}
+  gameSceneName: 11.Stage_1005

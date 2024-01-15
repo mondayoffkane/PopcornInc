@@ -9,9 +9,11 @@
 @implementation EverydayPrivacy
 +(void)requestTrackingAuthorization:(AuthorizationRequestCallback)callbackPointer{
     if (@available(iOS 14, *)) {
-        [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
-            callbackPointer(status);
-        }];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
+                callbackPointer(status);
+            }];
+        });
     }else{
         callbackPointer(3);
     }
@@ -42,5 +44,9 @@ extern "C" {
 
     char* _GetLocale(){
         return convertNSStringToCString([EverydayPrivacy getLocale]);
+    }
+
+    void _OpenAppSettings(){
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
     }
 }

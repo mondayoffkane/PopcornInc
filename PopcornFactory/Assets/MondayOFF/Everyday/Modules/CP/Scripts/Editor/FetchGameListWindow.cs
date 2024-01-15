@@ -4,28 +4,33 @@ using System.Threading;
 using UnityEngine;
 using UnityEditor;
 
-namespace MondayOFF {
+namespace MondayOFF
+{
     [System.Serializable]
-    internal class StoreLookupData {
+    internal class StoreLookupData
+    {
         public AppInfo[] results;
     }
 
     [System.Serializable]
-    internal class AppInfo {
+    internal class AppInfo
+    {
         public bool shouldInclude;
         public string bundleId;
         public string trackId;
         public string trackName;
     }
 
-    internal enum SortStatus {
+    internal enum SortStatus
+    {
         NONE = 0,
         ASC = 1,
         DESC = 2
     }
 
-    internal class FetchGameListWindow : EditorWindow {
-        const string QUERY_URL = "https://itunes.apple.com/lookup/?entity=software&id=1448226898";
+    internal class FetchGameListWindow : EditorWindow
+    {
+        const string QUERY_URL = "https://itunes.apple.com/lookup/?entity=software&id=1448226898&limit=200";
         const string AppStoreUrlBase = "https://apps.apple.com/app/id{0}";
         // ex/ https://apps.apple.com/app/id1575647531
         const string GooglePlayUrlBase = "https://play.google.com/store/apps/details?id={0}";
@@ -51,16 +56,20 @@ namespace MondayOFF {
         SortStatus _selectionSort = SortStatus.NONE;
         SortStatus _nameSort = SortStatus.NONE;
 
-        private string PlayStoreUrlBuilder(string bundleId) {
+        private string PlayStoreUrlBuilder(string bundleId)
+        {
             return string.Format(GooglePlayUrlBase, bundleId);
         }
 
-        private string AppStoreUrlBuilder(string trackId) {
+        private string AppStoreUrlBuilder(string trackId)
+        {
             return string.Format(AppStoreUrlBase, trackId.ToString());
         }
 
-        private string SortStatusToString(SortStatus status) {
-            switch (status) {
+        private string SortStatusToString(SortStatus status)
+        {
+            switch (status)
+            {
                 case SortStatus.ASC:
                     return "↑";
                 case SortStatus.DESC:
@@ -69,14 +78,18 @@ namespace MondayOFF {
             return "";
         }
 
-        private void NextStatus(ref SortStatus status) {
+        private void NextStatus(ref SortStatus status)
+        {
             status = (SortStatus)(((int)status + 1) % 3);
         }
 
-        private void OnGUI() {
-            if (!_isReady) {
+        private void OnGUI()
+        {
+            if (!_isReady)
+            {
                 var loading = "Loading";
-                for (int i = 0; i < ((int)EditorApplication.timeSinceStartup) % 4; ++i) {
+                for (int i = 0; i < ((int)EditorApplication.timeSinceStartup) % 4; ++i)
+                {
                     loading += ".";
                 }
                 GUILayout.Label(loading);
@@ -89,13 +102,17 @@ namespace MondayOFF {
 
             GUILayout.Space(3);
 
-            if (GUILayout.Button("Apply", _width180)) {
-                if (EditorUtility.DisplayDialog("Overwrite CP", "Do you want to overwrite CP list?\n(Videos must be referenced manually)", "Ok", "Cancel")) {
+            if (GUILayout.Button("Apply", _width180))
+            {
+                if (EditorUtility.DisplayDialog("Overwrite CP", "Do you want to overwrite CP list?\n(Videos must be referenced manually)", "Ok", "Cancel"))
+                {
                     _cpVideoList.list.Clear();
                     _cpVideoList.list = null;
                     List<VideoAndUrl> newList = new List<VideoAndUrl>();
-                    foreach (var item in _gamesList) {
-                        if (item.shouldInclude) {
+                    foreach (var item in _gamesList)
+                    {
+                        if (item.shouldInclude)
+                        {
                             var urls = new VideoAndUrl();
                             urls.SetData(item.trackName, AppStoreUrlBuilder(item.trackId), PlayStoreUrlBuilder(item.bundleId));
                             newList.Add(urls);
@@ -110,13 +127,17 @@ namespace MondayOFF {
             }
             GUILayout.Space(3);
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("Select All", _width75)) {
-                foreach (var item in _gamesList) {
+            if (GUILayout.Button("Select All", _width75))
+            {
+                foreach (var item in _gamesList)
+                {
                     item.shouldInclude = true;
                 }
             }
-            if (GUILayout.Button("Deselect All", _width75)) {
-                foreach (var item in _gamesList) {
+            if (GUILayout.Button("Deselect All", _width75))
+            {
+                foreach (var item in _gamesList)
+                {
                     item.shouldInclude = false;
                 }
             }
@@ -126,15 +147,21 @@ namespace MondayOFF {
             GUILayout.Space(3);
 
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button($"Select {SortStatusToString(_selectionSort)}", _titleStyle, _width75)) {
+            if (GUILayout.Button($"Select {SortStatusToString(_selectionSort)}", _titleStyle, _width75))
+            {
                 NextStatus(ref _selectionSort);
                 _nameSort = SortStatus.NONE;
-                switch (_selectionSort) {
+                switch (_selectionSort)
+                {
                     case SortStatus.ASC:
-                        _indexBuffer.Sort((first, second) => {
-                            if (_gamesList[first].shouldInclude && !_gamesList[second].shouldInclude) {
+                        _indexBuffer.Sort((first, second) =>
+                        {
+                            if (_gamesList[first].shouldInclude && !_gamesList[second].shouldInclude)
+                            {
                                 return -1;
-                            } else if (!_gamesList[first].shouldInclude && _gamesList[second].shouldInclude) {
+                            }
+                            else if (!_gamesList[first].shouldInclude && _gamesList[second].shouldInclude)
+                            {
                                 return 1;
                             }
                             return _gamesList[first].trackName.CompareTo(_gamesList[second].trackName);
@@ -142,10 +169,14 @@ namespace MondayOFF {
                         break;
 
                     case SortStatus.DESC:
-                        _indexBuffer.Sort((first, second) => {
-                            if (_gamesList[first].shouldInclude && !_gamesList[second].shouldInclude) {
+                        _indexBuffer.Sort((first, second) =>
+                        {
+                            if (_gamesList[first].shouldInclude && !_gamesList[second].shouldInclude)
+                            {
                                 return 1;
-                            } else if (!_gamesList[first].shouldInclude && _gamesList[second].shouldInclude) {
+                            }
+                            else if (!_gamesList[first].shouldInclude && _gamesList[second].shouldInclude)
+                            {
                                 return -1;
                             }
                             return _gamesList[first].trackName.CompareTo(_gamesList[second].trackName);
@@ -156,19 +187,23 @@ namespace MondayOFF {
                         break;
                 }
             }
-            if (GUILayout.Button($"Name {SortStatusToString(_nameSort)}", _titleStyle, _width180)) {
+            if (GUILayout.Button($"Name {SortStatusToString(_nameSort)}", _titleStyle, _width180))
+            {
                 NextStatus(ref _nameSort);
                 _selectionSort = SortStatus.NONE;
 
-                switch (_nameSort) {
+                switch (_nameSort)
+                {
                     case SortStatus.ASC:
-                        _indexBuffer.Sort((first, second) => {
+                        _indexBuffer.Sort((first, second) =>
+                        {
                             return _gamesList[first].trackName.CompareTo(_gamesList[second].trackName);
                         });
                         break;
 
                     case SortStatus.DESC:
-                        _indexBuffer.Sort((first, second) => {
+                        _indexBuffer.Sort((first, second) =>
+                        {
                             return -_gamesList[first].trackName.CompareTo(_gamesList[second].trackName);
                         });
                         break;
@@ -190,7 +225,8 @@ namespace MondayOFF {
 
             GUILayout.Space(3);
 
-            for (int i = 0; i < _indexBuffer.Count; ++i) {
+            for (int i = 0; i < _indexBuffer.Count; ++i)
+            {
                 var item = _gamesList[_indexBuffer[i]];
 
                 EditorGUILayout.BeginHorizontal();
@@ -201,10 +237,12 @@ namespace MondayOFF {
                 GUILayout.TextField(item.bundleId, _width180);
                 GUILayout.TextField(item.trackId.ToString(), _width180);
 
-                if (GUILayout.Button(_appleTexture, _iconButton, _widthSingleLine, _heightSingleLine)) {
+                if (GUILayout.Button(_appleTexture, _iconButton, _widthSingleLine, _heightSingleLine))
+                {
                     Application.OpenURL(AppStoreUrlBuilder(item.trackId));
                 }
-                if (GUILayout.Button(_androidTexture, _iconButton, _widthSingleLine, _heightSingleLine)) {
+                if (GUILayout.Button(_androidTexture, _iconButton, _widthSingleLine, _heightSingleLine))
+                {
                     Application.OpenURL(PlayStoreUrlBuilder(item.bundleId));
                 }
                 EditorGUILayout.EndHorizontal();
@@ -213,7 +251,8 @@ namespace MondayOFF {
             EditorGUILayout.EndScrollView();
         }
 
-        private async void OnEnable() {
+        private async void OnEnable()
+        {
             this.minSize = new Vector2(750f, 400f);
 
             _horizontalLineStyle = new GUIStyle();
@@ -238,7 +277,8 @@ namespace MondayOFF {
 
             var cpVidList = AssetDatabase.FindAssets("t:CPVideoList");
 
-            if (cpVidList.Length != 1) {
+            if (cpVidList.Length != 1)
+            {
                 EverydayLogger.Error("There are zero or more than two Objects! " + cpVidList.Length);
                 this.Close();
                 return;
@@ -248,21 +288,26 @@ namespace MondayOFF {
             _cancellationSource = new CancellationTokenSource();
             _cancellationToken = _cancellationSource.Token;
 
-            using (HttpClient client = new HttpClient()) {
+            using (HttpClient client = new HttpClient())
+            {
                 var getRequest = new HttpRequestMessage(HttpMethod.Get, QUERY_URL);
                 var response = await client.SendAsync(getRequest, _cancellationToken);
-                if (response.IsSuccessStatusCode) {
+                if (response.IsSuccessStatusCode)
+                {
                     _cancellationToken.Register(() => response.Content.Dispose());
-                    try {
+                    try
+                    {
                         var content = await response.Content.ReadAsStringAsync();
                         var data = JsonUtility.FromJson<StoreLookupData>(content);
                         _gamesList = new List<AppInfo>(data.results);
                         _gamesList.RemoveAll(item => string.IsNullOrEmpty(item.bundleId));
 
                         _indexBuffer = new List<int>(_gamesList.Count);
-                        for (int i = 0; i < _gamesList.Count; ++i) {
+                        for (int i = 0; i < _gamesList.Count; ++i)
+                        {
                             var item = _gamesList[i];
-                            foreach (var cp in _cpVideoList.list) {
+                            foreach (var cp in _cpVideoList.list)
+                            {
                                 string id =
 #if UNITY_IOS
                                         item.trackId.ToString()
@@ -270,7 +315,8 @@ namespace MondayOFF {
                                         item.bundleId
 #endif
                                 ;
-                                if (cp.url.Contains(id)) {
+                                if (cp.url.Contains(id))
+                                {
                                     item.shouldInclude = true;
                                 }
                             }
@@ -281,17 +327,22 @@ namespace MondayOFF {
                         // _gamesList.Sort((a, b) => string.Compare(a.trackName, b.trackName));
 
                         _isReady = true;
-                    } catch (System.Exception e) {
+                    }
+                    catch (System.Exception e)
+                    {
                         Debug.LogException(e);
                     }
-                } else {
+                }
+                else
+                {
                     EverydayLogger.Error("Failed to fetch game list from AppStore");
                     this.Close();
                 }
             }
         }
 
-        private void OnDisable() {
+        private void OnDisable()
+        {
             _isReady = false;
 
             _cancellationSource?.Cancel();

@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using MondayOFF;
+using AudienceNetwork;
 
-public class EverydayTestScript : MonoBehaviour {
+public class EverydayTestScript : MonoBehaviour
+{
     [SerializeField] GameObject _bigBadCanvas = default;
     [SerializeField] RectTransform _playonAdUnitAnchor = default;
     [Space(10)]
@@ -13,7 +15,9 @@ public class EverydayTestScript : MonoBehaviour {
     [SerializeField] Button _hideBannerButton = default;
 
 
-    private void Start() {
+    private void Start()
+    {
+        AdsManager.ShowBanner();
         AdsManager.OnInitialized -= HideInitializeAdsManagerButton;
         AdsManager.OnInitialized += HideInitializeAdsManagerButton;
 
@@ -23,163 +27,196 @@ public class EverydayTestScript : MonoBehaviour {
         AdsManager.OnBeforeInterstitial -= ShowBadCanvas;
         AdsManager.OnBeforeInterstitial += ShowBadCanvas;
 
-        AdsManager.OnAfterInterstitial -= HideBadCanvas;
-        AdsManager.OnAfterInterstitial += HideBadCanvas;
-
+        AdsManager.OnAfterInterstitial -= HideBadCanvasAfterAd;
+        AdsManager.OnAfterInterstitial += HideBadCanvasAfterAd;
 
         AdsManager.OnBeforeRewarded -= ShowBadCanvas;
         AdsManager.OnBeforeRewarded += ShowBadCanvas;
 
-        AdsManager.OnAfterRewarded -= HideBadCanvas;
-        AdsManager.OnAfterRewarded += HideBadCanvas;
+        AdsManager.OnAfterRewarded -= HideBadCanvasAfterAd;
+        AdsManager.OnAfterRewarded += HideBadCanvasAfterAd;
 
         IAPManager.OnBeforePurchase -= ShowBadCanvas;
         IAPManager.OnBeforePurchase += ShowBadCanvas;
 
-        IAPManager.OnAfterPurchase -= HideBadCanvas;
-        IAPManager.OnAfterPurchase += HideBadCanvas;
+        // IAPManager.OnAfterPurchase -= HideBadCanvas;
+        // IAPManager.OnAfterPurchase += HideBadCanvas;
 
-        // UserData userData = new UserData(AgeSegment.Unknown, Gender.Unknown);
-        // Adverty.AdvertySDK.Init(userData);
+        IAPManager.OnAfterPurchaseWithProductId -= HideBadCanvasAfterIap;
+        IAPManager.OnAfterPurchaseWithProductId += HideBadCanvasAfterIap;
 
         Adverty.AdvertySettings.SetMainCamera(Camera.main);
     }
 
-    private void Update() {
+    private void Update()
+    {
+        var currentLogLevel = EverydaySettings.GetLogLevel();
+        EverydaySettings.SetLogLevel(LogLevel.Warning);
         var timeUntilNextInterstitial = AdsManager.GetTimeUntilNextInterstitial();
 
-        if (AdsManager.IsInterstitialReady()) {
-            if (timeUntilNextInterstitial > 0) {
+        if (AdsManager.IsInterstitialReady())
+        {
+            if (timeUntilNextInterstitial > 0)
+            {
                 _showInterstitialButton.GetComponentInChildren<Text>().text = $"Waiting for {timeUntilNextInterstitial:0.00} seconds..";
                 _showInterstitialButton.interactable = false;
-            } else {
+            }
+            else
+            {
                 _showInterstitialButton.GetComponentInChildren<Text>().text = "Show Interstitial";
                 _showInterstitialButton.interactable = true;
             }
-        } else {
+        }
+        else
+        {
             _showInterstitialButton.GetComponentInChildren<Text>().text = "Loading Interstitial..";
             _showInterstitialButton.interactable = false;
         }
 
-        if (AdsManager.IsRewardedReady()) {
+        if (AdsManager.IsRewardedReady())
+        {
             _showRewardedButton.GetComponentInChildren<Text>().text = "Show Rewarded";
             _showRewardedButton.interactable = true;
-        } else {
+        }
+        else
+        {
             _showRewardedButton.gameObject.GetComponentInChildren<Text>().text = "Loading Rewarded..";
             _showRewardedButton.interactable = false;
         }
 
-        if (AdsManager.IsBannerReady()) {
+        if (AdsManager.IsBannerReady())
+        {
             bool isBannerDisplayed = AdsManager.IsBannerDisplayed();
             _showBannerButton.interactable = !isBannerDisplayed;
             _hideBannerButton.interactable = isBannerDisplayed;
-        } else {
+        }
+        else
+        {
             _showBannerButton.interactable = _hideBannerButton.interactable = false;
         }
+        EverydaySettings.SetLogLevel(currentLogLevel);
     }
 
-    private void HideInitializeAdsManagerButton() {
+    private void HideInitializeAdsManagerButton()
+    {
         _initializeAdsManagerButton.interactable = false;
         _initializeAdsManagerButton.GetComponentInChildren<Text>().text = "Ads Manager Initialized";
     }
 
-    private void ShowBadCanvas() {
+    private void ShowBadCanvas()
+    {
         EverydayLogger.Info("SHOW LOADING CANVAS");
         _bigBadCanvas.SetActive(true);
     }
 
-    private void HideBadCanvas() {
-        EverydayLogger.Info("HIDE LOADING CANVAS");
+    private void HideBadCanvasAfterAd()
+    {
+        EverydayLogger.Info("HIDE LOADING CANVAS AFTER AD");
         _bigBadCanvas.SetActive(false);
     }
 
-    private void HideBadCanvas(bool isSuccess) {
-        string message = default;
-        if (isSuccess) {
-            message = "blue>Successful";
-        } else {
-            message = "red>Failed";
-        }
-        EverydayLogger.Info($"Purchase <color={message}</color>");
+    private void HideBadCanvasAfterIap(PurchaseProcessStatus processStatus, string productId)
+    {
+        EverydayLogger.Info("HIDE LOADING CANVAS AFTER PURCHASE");
         _bigBadCanvas.SetActive(false);
     }
 
-    private void OnRewarededReady() {
+    private void OnRewarededReady()
+    {
         EverydayLogger.Info("REWARED IS READY");
     }
 
-    public void Ads_InitializeAdsManager() {
+    public void Ads_InitializeAdsManager()
+    {
         AdsManager.Initialize();
     }
 
-    public void Ads_ShowIS() {
+    public void Ads_ShowIS()
+    {
         AdsManager.ShowInterstitial();
     }
 
-    public void Ads_ShowRV() {
+    public void Ads_ShowRV()
+    {
         AdsManager.ShowRewarded(() => EverydayLogger.Info("-- Your Reward --"));
     }
 
-    public void Ads_ShowBN() {
+    public void Ads_ShowBN()
+    {
         AdsManager.ShowBanner();
     }
 
-    public void Ads_HideBN() {
+    public void Ads_HideBN()
+    {
         AdsManager.HideBanner();
     }
 
-    public void Ads_SetPlayOnPos() {
+    public void Ads_SetPlayOnPos()
+    {
         AdsManager.LinkLogoToRectTransform(PlayOnSDK.Position.Centered, _playonAdUnitAnchor, _playonAdUnitAnchor.GetComponentInParent<Canvas>());
     }
 
-    public void Ads_ShowPlayOn() {
+    public void Ads_ShowPlayOn()
+    {
         AdsManager.ShowPlayOn();
     }
 
-    public void Ads_HidePlayOn() {
+    public void Ads_HidePlayOn()
+    {
         AdsManager.HidePlayOn();
     }
 
-    public void Ads_DisableIS() {
+    public void Ads_DisableIS()
+    {
         // Either method works. DisableAdType(AdType) is useful when disabling multiple ad types.
         // AdsManager.DisableIS();
         AdsManager.DisableAdType(AdType.Interstitial);
     }
 
-    public void Ads_DisableRV() {
+    public void Ads_DisableRV()
+    {
         // AdsManager.DisableRV();
         AdsManager.DisableAdType(AdType.Rewarded);
     }
 
-    public void Ads_DisableBN() {
+    public void Ads_DisableBN()
+    {
         // AdsManager.DisableBN();
         AdsManager.DisableAdType(AdType.Banner);
     }
 
-    public void IAP_InitializeIAPManager() {
+    public void IAP_InitializeIAPManager()
+    {
         // IAPManager.Initialize();
     }
 
-    public void IAP_RegisterCallbackConsumable() {
-        IAPManager.RegisterProduct("Consumable", () => {
+    public void IAP_RegisterCallbackConsumable()
+    {
+        IAPManager.RegisterProduct("Consumable", () =>
+        {
             EverydayLogger.Info("Purchased Consumable");
         });
     }
 
-    public void IAP_PurchaseConsumable() {
+    public void IAP_PurchaseConsumable()
+    {
         IAPManager.PurchaseProduct("Consumable");
     }
 
-    public void IAP_RegisterCallbackNonConsumable() {
-        IAPManager.RegisterProduct("Non Consumable", () => {
+    public void IAP_RegisterCallbackNonConsumable()
+    {
+        IAPManager.RegisterProduct("Non Consumable", () =>
+        {
             EverydayLogger.Info("Purchased Non Consumable");
             PlayerPrefs.SetInt("Non Consumable", 1);
             PlayerPrefs.Save();
         });
     }
 
-    public void IAP_PurchaseNonConsumable() {
-        if (PlayerPrefs.GetInt("Non Consumable", 0) > 0) {
+    public void IAP_PurchaseNonConsumable()
+    {
+        if (PlayerPrefs.GetInt("Non Consumable", 0) > 0)
+        {
             EverydayLogger.Info("Non Consumable is already purchased! Do you really want to re-purchase it?");
             return;
         }
@@ -187,8 +224,10 @@ public class EverydayTestScript : MonoBehaviour {
         IAPManager.PurchaseProduct("Non Consumable");
     }
 
-    public void IAP_PurchaseNoAds() {
-        if (NoAds.IsNoAds) {
+    public void IAP_PurchaseNoAds()
+    {
+        if (NoAds.IsNoAds)
+        {
             EverydayLogger.Info("No Ads is already purchased!");
             return;
         }
@@ -200,23 +239,33 @@ public class EverydayTestScript : MonoBehaviour {
         NoAds.Purchase();
     }
 
-    public void IAP_RestorePurchase() {
+    public void IAP_RestorePurchase()
+    {
         IAPManager.RestorePurchase();
     }
 
-    public void Events_TryStage(int stageNum) {
+    public void Events_TryStage(int stageNum)
+    {
         EventTracker.TryStage(stageNum);
     }
 
-    public void Events_ClearStage(int stageNum) {
+    public void Events_ClearStage(int stageNum)
+    {
         EventTracker.ClearStage(stageNum);
     }
 
-    public void Show_MediationDebugger() {
+    public void Show_MediationDebugger()
+    {
         MaxSdk.ShowMediationDebugger();
     }
 
-    public void Show_Review() {
+    public void Show_Review()
+    {
         Review.RequestReview();
+    }
+
+    public void OpenAppSettings()
+    {
+        Privacy.OpenAppSettings();
     }
 }

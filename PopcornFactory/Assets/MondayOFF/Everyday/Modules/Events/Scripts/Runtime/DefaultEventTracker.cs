@@ -2,21 +2,27 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace MondayOFF {
-    public static class EventTracker {
+namespace MondayOFF
+{
+    public static class EventTracker
+    {
         private static bool _isInitialized = false;
 
-        public static void TryStage(int stageNum, string stageName = "Stage") {
-            if (!_isInitialized) {
+        public static void TryStage(int stageNum, string stageName = "Stage")
+        {
+            if (!_isInitialized)
+            {
                 EverydayLogger.Info("Event Tracker is NOT initialized!");
                 return;
             }
             EverydayLogger.Info($"Default Event Tracker: Trying {stageName} {stageNum}");
         }
 
-        public static void ClearStage(int stageNum, string stageName = "Stage") {
+        public static void ClearStage(int stageNum, string stageName = "Stage")
+        {
             // Send event regardless of initialization status
-            switch (stageNum) {
+            switch (stageNum)
+            {
                 case 10:
                 case 20:
                 case 30:
@@ -24,7 +30,8 @@ namespace MondayOFF {
                     break;
             }
 
-            if (!_isInitialized) {
+            if (!_isInitialized)
+            {
                 EverydayLogger.Info("Event Tracker is NOT initialized!");
                 return;
             }
@@ -33,17 +40,23 @@ namespace MondayOFF {
         }
 
         // Stringify prameter values
-        public static void LogCustomEvent(string eventName, Dictionary<string, string> parameters = null) {
-            if (!_isInitialized) {
+        public static void LogCustomEvent(string eventName, Dictionary<string, string> parameters = null)
+        {
+            if (!_isInitialized)
+            {
                 EverydayLogger.Info("Event Tracker is NOT initialized!");
                 return;
             }
 
-            if (parameters == null) {
+            if (parameters == null)
+            {
                 EverydayLogger.Info($"Default Event Tracker: {eventName} logged without any parameters");
-            } else {
+            }
+            else
+            {
                 string paramString = "\n";
-                foreach (var item in parameters) {
+                foreach (var item in parameters)
+                {
                     paramString += $"{item.Key} : {item.Value}\n";
                 }
 
@@ -52,12 +65,21 @@ namespace MondayOFF {
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        private static void AfterAssembliesLoaded() {
+        private static void AfterSceneLoad()
+        {
             Initialize();
         }
 
-        internal static void Initialize() {
-            if (_isInitialized) {
+        internal static void Initialize()
+        {
+            if (!EveryDay.isInitialized)
+            {
+                EveryDay.OnEverydayInitialized += Initialize;
+                return;
+            }
+
+            if (_isInitialized)
+            {
                 EverydayLogger.Info("Event Tracker is already initialized!");
                 return;
             }
@@ -70,7 +92,8 @@ namespace MondayOFF {
         }
 
 #if UNITY_EDITOR
-        private static void OnEditorStop() {
+        private static void OnEditorStop()
+        {
             EverydayLogger.Info("Stop Playmode Event Tracker");
             _isInitialized = false;
         }

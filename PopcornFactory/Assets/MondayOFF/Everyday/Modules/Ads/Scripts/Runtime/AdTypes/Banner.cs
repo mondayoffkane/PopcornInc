@@ -1,60 +1,80 @@
 using UnityEngine;
 
-namespace MondayOFF {
-    internal sealed class Banner : AdTypeBase {
+namespace MondayOFF
+{
+    internal sealed class Banner : AdTypeBase
+    {
         private string _adUnitID => EverydaySettings.AdSettings.bannerAdUnitId;
         private bool _isBannerDisplayed = false;
+        private bool _isBannerCreated = false;
 
-        public override void Dispose() {
+        public override void Dispose()
+        {
             MaxSdkCallbacks.Banner.OnAdLoadFailedEvent -= OnAdLoadFailed;
             EverydayLogger.Info("Disposing Banner Ad");
             Hide();
             MaxSdk.DestroyBanner(_adUnitID);
         }
 
-        internal override bool IsReady() {
+        internal override bool IsReady()
+        {
             // There is no preload for banner
             return true;
         }
 
-        internal override bool Show() {
+        internal override bool Show()
+        {
             EverydayLogger.Info("Show Banner");
+            if (!_isBannerCreated)
+            {
+                EverydayLogger.Info("Banner is not created yet");
+                CreateMaxBannerAd();
+            }
             //show banner
             MaxSdk.ShowBanner(_adUnitID);
             _isBannerDisplayed = true;
             return true;
         }
 
-        internal bool IsDisplayed() {
+        internal bool IsDisplayed()
+        {
             return _isBannerDisplayed;
         }
 
-        internal void Hide() {
+        internal void Hide()
+        {
             EverydayLogger.Info("Hide Banner");
             MaxSdk.HideBanner(_adUnitID);
             _isBannerDisplayed = false;
         }
 
-        internal Banner() {
+        internal Banner()
+        {
             EverydayLogger.Info("Createing Banner Ad");
 
             MaxSdkCallbacks.Banner.OnAdLoadFailedEvent += OnAdLoadFailed;
 
-            if (EverydaySettings.AdSettings.HasAPSKey(AdType.Banner)) {
+            if (EverydaySettings.AdSettings.HasAPSKey(AdType.Banner))
+            {
                 LoadAPSBanner();
-            } else {
+            }
+            else
+            {
                 CreateMaxBannerAd();
             }
         }
 
-        private void LoadAPSBanner() {
+        private void LoadAPSBanner()
+        {
             EverydayLogger.Info("Loading APS Banner");
             var apsBanner = new AmazonAds.APSBannerAdRequest(320, 50, EverydaySettings.AdSettings.apsBannerSlotId);
-            apsBanner.onSuccess += (adResponse) => {
+            apsBanner.onSuccess += (adResponse) =>
+            {
                 MaxSdk.SetBannerLocalExtraParameter(_adUnitID, "amazon_ad_response", adResponse.GetResponse());
                 CreateMaxBannerAd();
             };
-            apsBanner.onFailedWithError += (adError) => {
+            apsBanner.onFailedWithError += (adError) =>
+            {
                 MaxSdk.SetBannerLocalExtraParameter(_adUnitID, "amazon_ad_error", adError.GetAdError());
                 CreateMaxBannerAd();
             };
@@ -62,17 +82,21 @@ namespace MondayOFF {
             apsBanner.LoadAd();
         }
 
-        private void CreateMaxBannerAd() {
-            if (AdsManager.IsAdTypeActive(AdType.Banner)) {
+        private void CreateMaxBannerAd()
+        {
+            if (AdsManager.IsAdTypeActive(AdType.Banner))
+            {
                 MaxSdk.CreateBanner(_adUnitID, EverydaySettings.AdSettings.bannerPosition);
-
-                if (EverydaySettings.AdSettings.showBannerOnLoad) {
+                _isBannerCreated = true;
+                if (EverydaySettings.AdSettings.showBannerOnLoad)
+                {
                     this.Show();
                 }
             }
         }
 
-        private void OnAdLoadFailed(string adUnitId, MaxSdk.ErrorInfo errorInfo) {
+        private void OnAdLoadFailed(string adUnitId, MaxSdk.ErrorInfo errorInfo)
+        {
             EverydayLogger.Info("Banner ad failed to load with error code: " + errorInfo.Code + ", and message: " + errorInfo.Message);
             CreateMaxBannerAd();
         }

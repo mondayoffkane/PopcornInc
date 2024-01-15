@@ -13,15 +13,11 @@ MonoBehaviour:
   m_Name: EverydayProducts
   m_EditorClassIdentifier: MondayOFF.IAP:MondayOFF:MondayOFFProducts
   products:
-  - productID: Consumable
-    productType: 0
-  - productID: Non Consumable
-    productType: 1
-  - productID: popcorninc_starterpack
+  - productID: popcorninc_upgradepack
     productType: 1
   - productID: popcorninc_cleanpack
     productType: 1
-  - productID: popcorninc_upgradepack
+  - productID: popcorninc_starterpack
     productType: 1
   - productID: popcorninc_gempack_1
     productType: 0
@@ -29,3 +25,7 @@ MonoBehaviour:
     productType: 0
   - productID: popcorninc_gempack_3
     productType: 0
+  - productID: Consumable
+    productType: 0
+  - productID: Non Consumable
+    productType: 1

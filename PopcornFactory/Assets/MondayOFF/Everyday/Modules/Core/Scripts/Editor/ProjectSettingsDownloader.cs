@@ -31,7 +31,7 @@ namespace MondayOFF {
                 EverydayLogger.Info($"Getting app settings for {EverydaySettings.Instance.appId}");
 
                 HttpClient httpClient = new HttpClient() {
-                    BaseAddress = new System.Uri(APP_SETTINGS_URL)
+                    BaseAddress = new System.Uri(APP_SETTINGS_URL),
                 };
 
                 var response = await httpClient.GetAsync(query, window.cancellationTokenSource.Token);

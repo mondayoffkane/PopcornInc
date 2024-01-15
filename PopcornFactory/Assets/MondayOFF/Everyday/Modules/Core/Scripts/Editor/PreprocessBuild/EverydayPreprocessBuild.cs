@@ -6,30 +6,40 @@ using System.Linq;
 using Facebook.Unity.Settings;
 using Adverty;
 
-namespace MondayOFF {
-    public class EverydayPreprocessBuild : IPreprocessBuildWithReport {
+namespace MondayOFF
+{
+    public class EverydayPreprocessBuild : IPreprocessBuildWithReport
+    {
         public int callbackOrder => 0;
 
-        public void OnPreprocessBuild(BuildReport report) {
+        public void OnPreprocessBuild(BuildReport report)
+        {
+#if UNITY_STANDALONE
+            return;
+#endif
             AppLovinSettings.Instance.SdkKey = Keys.EVERYDAY_MAX_KEY;
             AppLovinSettings.Instance.SaveAsync();
 
             var settingAssets = AssetDatabase.FindAssets("t:EverydaySettings");
 
-            if (settingAssets.Length != 1) {
+            if (settingAssets.Length != 1)
+            {
                 throw new UnityEditor.Build.BuildFailedException("[EVERYDAY] There should be ONLY 1 settings object.");
             }
 
             var settings = AssetDatabase.LoadAssetAtPath<EverydaySettings>(AssetDatabase.GUIDToAssetPath(settingAssets[0]));
             AddSettingsToPreload(settings);
 
-            if (string.IsNullOrEmpty(Facebook.Unity.Settings.FacebookSettings.ClientToken)) {
+            if (string.IsNullOrEmpty(Facebook.Unity.Settings.FacebookSettings.ClientToken))
+            {
                 UnityEditor.Selection.activeObject = FacebookSettings.Instance;
                 throw new UnityEditor.Build.BuildFailedException("[EVERYDAY] Facebook Client Token is empty!");
             }
 
-            if (AdvertySettings.SandboxMode) {
-                if (!EditorUtility.DisplayDialog("Adverty is in Sandbox Mode", "Do you want to build as Adverty Sandbox mode?", "Yes", "Cancel")) {
+            if (AdvertySettings.SandboxMode)
+            {
+                if (!EditorUtility.DisplayDialog("Adverty is in Sandbox Mode", "Do you want to build as Adverty Sandbox mode?", "Yes", "Cancel"))
+                {
                     throw new UnityEditor.Build.BuildFailedException("[EVERYDAY] Check Adverty Sandbox mode.");
                 }
             }
@@ -44,10 +54,13 @@ namespace MondayOFF {
 #endif
         }
 
-        private void AddSettingsToPreload(EverydaySettings everydaySettings) {
+        private void AddSettingsToPreload(EverydaySettings everydaySettings)
+        {
             var preloadedAssets = PlayerSettings.GetPreloadedAssets();
-            foreach (var asset in preloadedAssets) {
-                if (asset.GetType() == typeof(EverydaySettings)) {
+            foreach (var asset in preloadedAssets)
+            {
+                if (asset.GetType() == typeof(EverydaySettings))
+                {
                     EverydayLogger.Info("EverydaySettigns is in preload asset");
                     return;
                 }

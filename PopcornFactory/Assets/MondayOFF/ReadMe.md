@@ -219,7 +219,7 @@ public class SampleScript: MonoBehaviour {
 - As of PlayOn 2.0.9, they support positioning logo ad based on RectTransform. You can add component `PlayOnAnchor` to an RectTransform to locate logo ad inside it. Keep in mind that it is NOT displayed inside RectTransform like Unity UI component. It CAPTURES screen points relative to RectTransfom and displays it on native layer.
 - You can also call `AdsManager.LinkLogoToRectTransform()` directly.
 - Logo ad size is automatically calculated based on size of RectTransform. It will not display anything if RectTransform is too small. Logo size can not be larger than allowed size regardless of RectTransform size.
-- (NOT RECOMMENDED) If you really need to use old positioning, where you had to put arbitary coordinates which was not adaptive to screen resolution, you can do it by check `Use Legacy Play On Positioning`.
+- If you really need to use old positioning, where you had to put arbitary coordinates which was not adaptive to screen resolution, you can do it by check `Use Legacy Play On Positioning`.
 
 ## Adverty
 

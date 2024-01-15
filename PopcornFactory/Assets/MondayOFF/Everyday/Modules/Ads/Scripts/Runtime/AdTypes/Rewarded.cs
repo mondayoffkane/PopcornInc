@@ -2,6 +2,8 @@ using UnityEngine;
 
 namespace MondayOFF {
     internal sealed class Rewarded : FullscreenAdType {
+        internal static event System.Action OnBeforeShow = default;
+        internal static event System.Action OnAfterShow = default;
         private string _adUnitID => EverydaySettings.AdSettings.rewardedAdUnitId;
         private System.Action _onRewarded = default;
 
@@ -26,7 +28,7 @@ namespace MondayOFF {
 
         internal override bool Show() {
             if (IsReady()) {
-                CallOnBeforeShow();
+                OnBeforeShow?.Invoke();
                 EverydayLogger.Info("Show Rewarded");
                 MaxSdk.ShowRewardedAd(_adUnitID);
                 return true;
@@ -96,7 +98,7 @@ namespace MondayOFF {
         }
 
         private void OnAdDisplayFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo) {
-            CallOnAfterShow();
+            OnAfterShow?.Invoke();
             // Rewarded ad failed to display. We recommend loading the next ad
             LoadRewardedAd();
         }
@@ -106,7 +108,7 @@ namespace MondayOFF {
         }
 
         private void OnAdHiddenEvent(string adUnitId, MaxSdkBase.AdInfo adInfo) {
-            CallOnAfterShow();
+            OnAfterShow?.Invoke();
             // Rewarded ad is hidden. Pre-load the next ad
             LoadRewardedAd();
         }

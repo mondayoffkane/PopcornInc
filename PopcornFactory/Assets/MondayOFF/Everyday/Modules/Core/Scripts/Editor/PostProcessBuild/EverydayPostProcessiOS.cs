@@ -6,10 +6,13 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 
-namespace MondayOFF {
-    public static class EverydayPostProcessiOS {
+namespace MondayOFF
+{
+    public static class EverydayPostProcessiOS
+    {
         [PostProcessBuild(int.MaxValue)]
-        public static void OnPostprocessBuild(BuildTarget buildTarget, string buildPath) {
+        public static void OnPostprocessBuild(BuildTarget buildTarget, string buildPath)
+        {
             PrepareProject(buildPath);
             PrepareInfoPlist(buildPath);
 
@@ -20,7 +23,8 @@ namespace MondayOFF {
             // CreateEmptySwiftFile(buildPath);
         }
 
-        private static void PrepareProject(string buildPath) {
+        private static void PrepareProject(string buildPath)
+        {
             var projPath = Path.Combine(buildPath, "Unity-iPhone.xcodeproj/project.pbxproj");
             var project = new PBXProject();
             project.ReadFromString(File.ReadAllText(projPath));
@@ -62,7 +66,8 @@ namespace MondayOFF {
             File.WriteAllText(projPath, project.WriteToString());
         }
 
-        private static void PrepareInfoPlist(string buildPath) {
+        private static void PrepareInfoPlist(string buildPath)
+        {
             // Get plist
             string plistPath = Path.Combine(buildPath, "Info.plist");
             PlistDocument plist = new PlistDocument();
@@ -73,36 +78,44 @@ namespace MondayOFF {
 
             // ! Temporal solution for APS
 
-            var skAdNetworkIds = new[]{
-                "bvpn9ufa9b.skadnetwork",
-                "hjevpa356n.skadnetwork"
-            };
-            PlistElement skAdNetworkItems;
-            plist.root.values.TryGetValue("SKAdNetworkItems", out skAdNetworkItems);
-            var existingSkAdNetworkIds = new HashSet<string>();
-            // Check if SKAdNetworkItems array is already in the Plist document and collect all the IDs that are already present.
-            if (skAdNetworkItems != null && skAdNetworkItems.GetType() == typeof(PlistElementArray)) {
-                var plistElementDictionaries = skAdNetworkItems.AsArray().values.Where(plistElement => plistElement.GetType() == typeof(PlistElementDict));
-                foreach (var plistElement in plistElementDictionaries) {
-                    PlistElement existingId;
-                    plistElement.AsDict().values.TryGetValue("SKAdNetworkIdentifier", out existingId);
-                    if (existingId == null || existingId.GetType() != typeof(PlistElementString) || string.IsNullOrEmpty(existingId.AsString())) continue;
+            // var skAdNetworkIds = new[]{
+            //     "bvpn9ufa9b.skadnetwork",
+            //     "hjevpa356n.skadnetwork",
+            //     "gvmwg8q7h5.skadnetwork",
+            //     "pu4na253f3.skadnetwork",
+            //     "yrqqpx2mcb.skadnetwork",
+            //     "z4gj7hsk7h.skadnetwork"
+            // };
+            // PlistElement skAdNetworkItems;
+            // plist.root.values.TryGetValue("SKAdNetworkItems", out skAdNetworkItems);
+            // var existingSkAdNetworkIds = new HashSet<string>();
+            // // Check if SKAdNetworkItems array is already in the Plist document and collect all the IDs that are already present.
+            // if (skAdNetworkItems != null && skAdNetworkItems.GetType() == typeof(PlistElementArray))
+            // {
+            //     var plistElementDictionaries = skAdNetworkItems.AsArray().values.Where(plistElement => plistElement.GetType() == typeof(PlistElementDict));
+            //     foreach (var plistElement in plistElementDictionaries)
+            //     {
+            //         PlistElement existingId;
+            //         plistElement.AsDict().values.TryGetValue("SKAdNetworkIdentifier", out existingId);
+            //         if (existingId == null || existingId.GetType() != typeof(PlistElementString) || string.IsNullOrEmpty(existingId.AsString())) continue;
 
-                    existingSkAdNetworkIds.Add(existingId.AsString());
-                }
-            }
-            // Else, create an array of SKAdNetworkItems into which we will add our IDs.
-            else {
-                skAdNetworkItems = plist.root.CreateArray("SKAdNetworkItems");
-            }
+            //         existingSkAdNetworkIds.Add(existingId.AsString());
+            //     }
+            // }
+            // // Else, create an array of SKAdNetworkItems into which we will add our IDs.
+            // else
+            // {
+            //     skAdNetworkItems = plist.root.CreateArray("SKAdNetworkItems");
+            // }
 
-            foreach (var skAdNetworkId in skAdNetworkIds) {
-                // Skip adding IDs that are already in the array.
-                if (existingSkAdNetworkIds.Contains(skAdNetworkId)) continue;
+            // foreach (var skAdNetworkId in skAdNetworkIds)
+            // {
+            //     // Skip adding IDs that are already in the array.
+            //     if (existingSkAdNetworkIds.Contains(skAdNetworkId)) continue;
 
-                var skAdNetworkItemDict = skAdNetworkItems.AsArray().AddDict();
-                skAdNetworkItemDict.SetString("SKAdNetworkIdentifier", skAdNetworkId);
-            }
+            //     var skAdNetworkItemDict = skAdNetworkItems.AsArray().AddDict();
+            //     skAdNetworkItemDict.SetString("SKAdNetworkIdentifier", skAdNetworkId);
+            // }
 
             // ! End of temporal solution for APS
 
@@ -127,7 +140,8 @@ namespace MondayOFF {
             File.WriteAllText(plistPath, plist.WriteToString());
         }
 
-        private static void PrepareBuildPhases(string buildPath) {
+        private static void PrepareBuildPhases(string buildPath)
+        {
             var projPath = Path.Combine(buildPath, "Unity-iPhone.xcodeproj/project.pbxproj");
             var project = new PBXProject();
             project.ReadFromString(File.ReadAllText(projPath));
@@ -139,12 +153,16 @@ namespace MondayOFF {
 
             var names = new List<string>();
             string headerGUID = null, sourcesGUID = null;
-            for (int i = 0; i < buildPhases.Length; ++i) {
+            for (int i = 0; i < buildPhases.Length; ++i)
+            {
                 var name = project.GetBuildPhaseName(buildPhases[i]);
                 if (name == null) { continue; }
-                if (name.Equals(PBXSourcesBuildPhase)) {
+                if (name.Equals(PBXSourcesBuildPhase))
+                {
                     sourcesGUID = buildPhases[i];
-                } else if (name.Equals(PBXHeadersBuildPhase)) {
+                }
+                else if (name.Equals(PBXHeadersBuildPhase))
+                {
                     headerGUID = buildPhases[i];
                 }
             }
@@ -158,7 +176,8 @@ namespace MondayOFF {
             File.WriteAllText(projPath, projectContent);
         }
 
-        private static void PrepareSwiftLibrarySearchPath(string buildPath) {
+        private static void PrepareSwiftLibrarySearchPath(string buildPath)
+        {
             var projPath = Path.Combine(buildPath, "Unity-iPhone.xcodeproj/project.pbxproj");
             var project = new PBXProject();
             project.ReadFromString(File.ReadAllText(projPath));
@@ -170,24 +189,29 @@ namespace MondayOFF {
             string toolchain_swift5 = "$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
             string sdkroot_swift = "$(SDKROOT)/usr/lib/swift";
 
-            if (!librarySearchPaths.Contains(toolchain_swift)) {
+            if (!librarySearchPaths.Contains(toolchain_swift))
+            {
                 project.AddBuildProperty(target, "LIBRARY_SEARCH_PATHS", toolchain_swift);
             }
-            if (!librarySearchPaths.Contains(toolchain_swift5)) {
+            if (!librarySearchPaths.Contains(toolchain_swift5))
+            {
                 project.AddBuildProperty(target, "LIBRARY_SEARCH_PATHS", toolchain_swift5);
             }
-            if (!librarySearchPaths.Contains(sdkroot_swift)) {
+            if (!librarySearchPaths.Contains(sdkroot_swift))
+            {
                 project.AddBuildProperty(target, "LIBRARY_SEARCH_PATHS", sdkroot_swift);
             }
 
             File.WriteAllText(projPath, project.WriteToString());
         }
 
-        private static void CreateEmptySwiftFile(string buildPath) {
+        private static void CreateEmptySwiftFile(string buildPath)
+        {
             string fileName = "File.swift";
             var filePath = Path.Combine(buildPath, fileName);
 
-            if (File.Exists(filePath)) {
+            if (File.Exists(filePath))
+            {
                 return;
             }
 

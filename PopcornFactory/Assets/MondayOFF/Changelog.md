@@ -1,3 +1,60 @@
+# v3.0.35
+
+- [Adverty] Updated to 4.2.0
+- [Singular] Updated to 4.2.0
+- [Ads] Added Smaato Adpater
+
+# v3.0.34
+
+- [IAP] Added `OnPurchaseFailed(Product, PurchaseFailureReason)` event
+- [IAP] Added `OnAfterPurchaseWithProductId(PurchaseProcessStatus, string)` event
+- [IAP] `OnAfterPurchase` is now obsolete, use `OnAfterPurchaseWithProductId(PurchaseProcessStatus, string)`instead
+- [Firebase] (Android only) Automatically regenerate `google-services-desktop.json` before build
+- [Settings] Added `InitializationDelay`. Initialization delay is used only when `InitializeOnLaunch` is set to `true`. Goal is to show ATT dialog after splash screen.
+
+# v3.0.33
+
+- [IAP] Added `(string isoCurrencyCode, string localizedPrice) GetLocalizedPrice(string productID)` to `IAPManager`
+- [Privacy] (iOS) Added `Privacy.OpenAppSettings()` to redirect user to current app's settings window
+- [Privacy] (iOS) Added `UserTrackingUsageDescription`in the Everyday Settings
+- [Ads] Added Ogury Adapter
+- [Android] Added Firebase to proguard
+- [Singular] Updated to 4.1.1
+
+# v3.0.32
+
+- [Adverty] Updated to 4.1.8
+- [Facebook] Updated to 16.0.2
+- [Settings] Added `InitializeOnLaunch` option
+- [Everyday] Added `Everyday.Initialize()` for manual initialization
+- [Adverty] Added URP fix for `AdSpriteLitShader.shader`
+
+# v3.0.31
+
+- [Singular] Updated to 4.0.19
+- [IAP] Duplicate product ID no longer crashes IAP manager
+- [Ads] TapJoy adapter has been removed
+
+# v3.0.30
+
+- [Firebase] Fixed a bug where logging events before initialization was causing app crash
+
+# v3.0.29
+
+- [Firebase] Firebase now tracks ad impression
+- [Settings] Fixed typo
+- [APS] Fixed test mode
+
+# v3.0.28
+
+- [Odeeo] Updated to 2.2.5
+- [Singular] Updated to 4.0.18
+- [Adverty] Updated to 4.1.7
+- [Firebase] Updated to 11.2.0
+- [Facebook] Updated to 16.0.1
+<!-- - [Everyday] Delayed Everyday initialization for iOS 16.5+ -->
+- [Ads] Fixed `OnBeforeXXX` and `OnAfterXXX` to full screen ad type specific.
+
 # v3.0.27
 
 - [Privacy] [IN TEST] Uses Google's UMP for GDPR applicable region

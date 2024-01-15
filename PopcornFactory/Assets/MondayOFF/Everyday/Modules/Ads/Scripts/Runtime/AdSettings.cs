@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MondayOFF {
+namespace MondayOFF
+{
     [System.Serializable]
-    internal class AdSettings {
+    internal class AdSettings
+    {
         const int BACKUP_RETENTION_THRESHOLD = 2;
         [SerializeField] internal bool initializeOnLoad = true;
         [SerializeField] internal bool showBannerOnLoad = true;
@@ -83,19 +85,23 @@ namespace MondayOFF {
 
         internal System.Func<bool> IsNoAds = () => false;
 
-        internal bool HasAPSKey() {
+        internal bool HasAPSKey()
+        {
 #if UNITY_EDITOR
             return false;
 #endif
             return !string.IsNullOrEmpty(apsAppId);
         }
 
-        internal bool HasAPSKey(AdType adType) {
-            if (!HasAPSKey()) {
+        internal bool HasAPSKey(AdType adType)
+        {
+            if (!HasAPSKey())
+            {
                 return false;
             }
 
-            switch (adType) {
+            switch (adType)
+            {
                 case AdType.Interstitial:
                     return !string.IsNullOrEmpty(apsInterstitialSlotId);
                 case AdType.Rewarded:
@@ -109,7 +115,8 @@ namespace MondayOFF {
     }
 
     [System.Serializable]
-    internal class PlayOnPosition {
+    internal class PlayOnPosition
+    {
         [SerializeField] internal bool useScreenPositioning = false;
         [Tooltip("Anchor position of logo ad")]
         [SerializeField][DrawIf("useScreenPositioning")] internal PlayOnSDK.Position playOnLogoAnchor = PlayOnSDK.Position.TopLeft;

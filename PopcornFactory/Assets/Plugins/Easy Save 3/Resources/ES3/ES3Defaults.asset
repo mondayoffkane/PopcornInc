@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ES3Defaults
   m_EditorClassIdentifier: 
   settings:
-    _location: 1
-    path: PopcornInc_1.es3
+    _location: 0
+    path: SaveFile.es3
     encryptionType: 0
     compressionType: 0
     encryptionPassword: password
@@ -30,12 +30,14 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
+    - Adverty.PlatformSpecific.Editor
     - AdvertyPlatformSpecific
     - Amazon.Editor
     - Amazon.Scripts
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
     - Cinemachine
+    - CodeStage.Maintainer.Editor
     - Coffee.UIParticle
     - Coffee.UIParticle.Editor
     - Everyday
@@ -43,11 +45,12 @@ MonoBehaviour:
     - Everyday.Events
     - Everyday.Events.Editor
     - Everyday.IAP
-    - Google.Android.AppBundle.Editor
+    - Everyday.IAP.Editor
+    - Everyday.SplashScreen
+    - Everyday.SplashScreen.Editor
     - Google.Play.Common
     - Google.Play.Core
     - Google.Play.Review
-    - JsonDotNet
     - LeTai.TrueShadow
     - LeTai.TrueShadow.Editor
     - Lofelt.NiceVibrations
@@ -64,12 +67,15 @@ MonoBehaviour:
     - Nementic.SelectionUtility.Editor
     - Nementic.SelectionUtility.Runtime
     - PlayOn
+    - PPv2URPConverters
+    - Purchasing.Common
     - SingularSDK
     - Sirenix.OdinInspector.CompatibilityLayer
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
+    - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
-  autoUpdateReferences: 0
+  autoUpdateReferences: 1
   addAllPrefabsToManager: 1
   logDebugInfo: 0
   logWarnings: 1

@@ -9,6 +9,7 @@
 
 @interface EverydayPrivacy : NSObject
 typedef void (*AuthorizationRequestCallback)(int);
-+(void)requestTrackingAuthorization:(AuthorizationRequestCallback)callback;
-+(NSString*)getLocale;
++ (void)requestTrackingAuthorization:(AuthorizationRequestCallback)callback;
++ (NSString *)getLocale;
++ (void)openAppSettings;
 @end

@@ -3,7 +3,8 @@
     "rootNamespace": "",
     "references": [
         "Everyday",
-        "SingularSDK"
+        "SingularSDK",
+        "MaxSdk.Scripts"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

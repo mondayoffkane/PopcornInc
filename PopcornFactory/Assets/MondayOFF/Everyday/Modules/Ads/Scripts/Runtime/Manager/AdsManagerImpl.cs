@@ -3,8 +3,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using AmazonAds;
 
-namespace MondayOFF {
-    public static partial class AdsManager {
+namespace MondayOFF
+{
+    public static partial class AdsManager
+    {
         private static bool _isInitializeRequested = false;
         private static AdType _activeAdTypes = AdType.All;
 
@@ -18,10 +20,12 @@ namespace MondayOFF {
         private static CancellationTokenSource _source = default;
 #endif
 
-        internal static void PrepareManager() {
+        internal static void PrepareManager()
+        {
             EverydayLogger.Info($"Preparing Ads Manager");
 
-            if (_isInitializeRequested) {
+            if (_isInitializeRequested)
+            {
                 InitializeAdTypes();
             }
 
@@ -31,12 +35,14 @@ namespace MondayOFF {
 #endif
         }
 
-        internal static bool IsAdTypeActive(in AdType adType) {
+        internal static bool IsAdTypeActive(in AdType adType)
+        {
             return (_activeAdTypes & adType) == adType;
         }
 
 #if UNITY_EDITOR
-        private static void OnEditorStop() {
+        private static void OnEditorStop()
+        {
             EverydayLogger.Info("Stop Playmode Ads Manager");
             _source?.Cancel();
             _source?.Dispose();
@@ -51,6 +57,8 @@ namespace MondayOFF {
             _playOn?.Dispose();
             _playOn = null;
 
+            _isInitializeRequested = false;
+
             var methodInfo = typeof(MaxSdk).GetMethod("RemoveReadyAdUnit", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
             methodInfo?.Invoke(null, new[] { EverydaySettings.AdSettings.bannerAdUnitId });
             methodInfo?.Invoke(null, new[] { EverydaySettings.AdSettings.interstitialAdUnitId });
@@ -58,27 +66,31 @@ namespace MondayOFF {
         }
 #endif
 
-        private static async void InitializeAdTypes() {
-            if (EverydaySettings.AdSettings == null) {
+        private static async void InitializeAdTypes()
+        {
+            if (EverydaySettings.AdSettings == null)
+            {
                 EverydayLogger.Info($"Ads Manager is not prepared. It will continue initialization after settings are loaded.");
                 return;
             }
 
-            if (EverydaySettings.AdSettings.HasAPSKey()) {
+            if (EverydaySettings.AdSettings.HasAPSKey())
+            {
                 EverydayLogger.Info($"Initializing APS");
                 Amazon.Initialize(EverydaySettings.AdSettings.apsAppId);
                 Amazon.SetAdNetworkInfo(new AdNetworkInfo(DTBAdNetwork.MAX));
                 Amazon.UseGeoLocation(true);
                 // Amazon.SetConsentStatus(AdsManager.HAS_USER_CONSENT ? Amazon.ConsentStatus.EXPLICIT_YES : Amazon.ConsentStatus.EXPLICIT_NO);
 #if UNITY_IOS
-                                Amazon.SetAPSPublisherExtendedIdFeatureEnabled(true);
+                Amazon.SetAPSPublisherExtendedIdFeatureEnabled(Privacy.HAS_ATT_CONSENT);
 #endif
                 // Amazon.EnableTesting(true);
                 // Amazon.EnableLogging(true);
             }
 
             // Is this right place??
-            if (EverydaySettings.AdSettings.IsNoAds()) {
+            if (EverydaySettings.AdSettings.IsNoAds())
+            {
                 _activeAdTypes = AdType.Rewarded;
             }
 
@@ -94,40 +106,50 @@ namespace MondayOFF {
 #if UNITY_EDITOR
             _source = new CancellationTokenSource();
             CancellationToken token = _source.Token;
-            try {
-                if (createAd.Invoke()) {
+            try
+            {
+                if (createAd.Invoke())
+                {
                     EverydayLogger.Info($"First Ad type: {createAd.Method.Name}");
                     await Task.Delay(delay, token);
                     token.ThrowIfCancellationRequested();
                 }
 
                 createAd = adLoadingFuncs[(loadingOrder >> 4) & 0b11];
-                if (createAd.Invoke()) {
+                if (createAd.Invoke())
+                {
                     EverydayLogger.Info($"Second Ad Type: {createAd.Method.Name}");
                     await Task.Delay(delay, token);
                     token.ThrowIfCancellationRequested();
                 }
 
                 createAd = adLoadingFuncs[(loadingOrder >> 1) & 0b11];
-                if (createAd.Invoke()) {
+                if (createAd.Invoke())
+                {
                     EverydayLogger.Info($"Third Ad Type: {createAd.Method.Name}");
                     await Task.Delay(delay, token);
                     token.ThrowIfCancellationRequested();
                 }
 
-                if (CreatePlayOn()) {
+                if (CreatePlayOn())
+                {
                     EverydayLogger.Info($"Creating PlayOn");
                     await Task.Delay(delay, token);
                     token.ThrowIfCancellationRequested();
                 }
 
-                if (EverydaySettings.AdSettings.initializeAdvertyOnAwake) {
+                if (EverydaySettings.AdSettings.initializeAdvertyOnAwake)
+                {
                     CreateAdverty(Camera.main);
                     EverydayLogger.Info($"Creating Adverty");
                 }
-            } catch (System.Exception) {
+            }
+            catch (System.Exception)
+            {
                 EverydayLogger.Info("Application stopped, stop initializing ads");
-            } finally {
+            }
+            finally
+            {
                 _source.Dispose();
                 _source = null;
             }
@@ -165,13 +187,16 @@ namespace MondayOFF {
             OnInitialized = null;
         }
 
-        private static bool CreateBanner() {
-            if (_banner != null) {
+        private static bool CreateBanner()
+        {
+            if (_banner != null)
+            {
                 EverydayLogger.Warn("Banner is already initialized!");
                 return false;
             }
 
-            if (!_activeAdTypes.HasFlag(AdType.Banner) || !EverydaySettings.AdSettings.hasBanner) {
+            if (!_activeAdTypes.HasFlag(AdType.Banner) || !EverydaySettings.AdSettings.hasBanner)
+            {
                 EverydayLogger.Info("Skipping banner initialization");
                 return false;
             }
@@ -180,13 +205,16 @@ namespace MondayOFF {
             return true;
         }
 
-        private static bool CreateInterstitial() {
-            if (_interstitial != null) {
+        private static bool CreateInterstitial()
+        {
+            if (_interstitial != null)
+            {
                 EverydayLogger.Warn("Interstitial is already initialized!!");
                 return false;
             }
 
-            if (!_activeAdTypes.HasFlag(AdType.Interstitial) || !EverydaySettings.AdSettings.hasInterstitial) {
+            if (!_activeAdTypes.HasFlag(AdType.Interstitial) || !EverydaySettings.AdSettings.hasInterstitial)
+            {
                 EverydayLogger.Info("Skipping intersitial initialization");
                 return false;
             }
@@ -195,13 +223,16 @@ namespace MondayOFF {
             return true;
         }
 
-        private static bool CreateRewarded() {
-            if (_rewarded != null) {
+        private static bool CreateRewarded()
+        {
+            if (_rewarded != null)
+            {
                 EverydayLogger.Warn("Rewarded is already initialized!");
                 return false;
             }
 
-            if (!_activeAdTypes.HasFlag(AdType.Rewarded) || !EverydaySettings.AdSettings.hasRewarded) {
+            if (!_activeAdTypes.HasFlag(AdType.Rewarded) || !EverydaySettings.AdSettings.hasRewarded)
+            {
                 EverydayLogger.Info("Skipping rewarded initialization");
                 return false;
             }
@@ -211,18 +242,22 @@ namespace MondayOFF {
             return true;
         }
 
-        private static bool CreatePlayOn() {
-            if (EverydaySettings.AdSettings.IsNoAds()) {
+        private static bool CreatePlayOn()
+        {
+            if (EverydaySettings.AdSettings.IsNoAds())
+            {
                 EverydayLogger.Info("No Ads, skipping PlayOn initialization");
                 return false;
             }
 
-            if (_playOn != null) {
+            if (_playOn != null)
+            {
                 EverydayLogger.Warn("PlayOn is already initialized!");
                 return false;
             }
 
-            if (string.IsNullOrEmpty(EverydaySettings.AdSettings.playOnAPIKey)) {
+            if (string.IsNullOrEmpty(EverydaySettings.AdSettings.playOnAPIKey))
+            {
                 EverydayLogger.Info("PlayOn Api Key is empty! Skipping PlayOn initialization");
                 return false;
             }
@@ -232,15 +267,18 @@ namespace MondayOFF {
             return true;
         }
 
-        private static void CreateAdverty(in Camera mainCamera) {
-            if (string.IsNullOrEmpty(EverydaySettings.AdSettings.advertyApiKey)) {
+        private static void CreateAdverty(in Camera mainCamera)
+        {
+            if (string.IsNullOrEmpty(EverydaySettings.AdSettings.advertyApiKey))
+            {
                 EverydayLogger.Info("Adverty Api Key is empty! Skipping Adverty initialization");
                 return;
             }
             _adverty = new Adverty(mainCamera);
         }
 
-        private static void InternalLoadedCallback(string _, MaxSdk.AdInfo __) {
+        private static void InternalLoadedCallback(string _, MaxSdk.AdInfo __)
+        {
             OnRewardedAdLoaded?.Invoke();
         }
     }

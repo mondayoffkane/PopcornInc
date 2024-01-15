@@ -1,4 +1,4 @@
-#if !UNITY_EDITOR
+#if !UNITY_EDITOR && !UNITY_STANDALONE
 using UnityEngine;
 
 namespace MondayOFF {
@@ -33,9 +33,9 @@ namespace MondayOFF {
 
             Privacy.CCPA_STRING = new string(privacyCharacters);
 
-            EverydayLogger.Info($"Is GDPR applicable?: {Privacy.IS_GDPR_APPLICABLE}");
-            EverydayLogger.Info($"GDPR string: {Privacy.GDPR_STRING}");
-            EverydayLogger.Info($"Privacy string: {Privacy.CCPA_STRING}");
+            EverydayLogger.Debug($"Is GDPR applicable?: {Privacy.IS_GDPR_APPLICABLE}");
+            EverydayLogger.Debug($"GDPR string: {Privacy.TCString}");
+            EverydayLogger.Debug($"Privacy string: {Privacy.CCPA_STRING}");
         }
     }
 }

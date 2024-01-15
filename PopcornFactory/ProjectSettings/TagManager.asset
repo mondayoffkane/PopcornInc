@@ -3,27 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - StageManager
-  - CPI_Obj
-  - Upgrade_Obj
-  - WorkerBox
-  - Ball
-  - None
-  - Bullet
-  - Gate
-  - WaveManager
-  - Enemy
-  - Popup_Canvas
-  - LabotoryManager
-  - UiCamera
-  - Lab_Product
-  - WorkerBox_Init
-  - CinemaCam
-  - CinemaMachine
-  - Counter
-  - CinemaManager
-  - TrashCan
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -31,10 +11,10 @@ TagManager:
   - Walkable
   - Water
   - UI
-  - Walkable2
-  - Grass
-  - Worker
-  - NotWork
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

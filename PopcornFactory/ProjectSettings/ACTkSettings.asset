@@ -19,4 +19,4 @@ MonoBehaviour:
   disableWallhackDetectorPhysicsValidation: 0
   disableWallhackDetectorLinkXmlValidation: 0
   injectionDetectorWhiteList: []
-  version: 2021.6.3
+  version: 2023.2.2

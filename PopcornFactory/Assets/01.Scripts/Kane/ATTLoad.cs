@@ -5,21 +5,21 @@ using UnityEngine;
 public class ATTLoad : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
-    {
-        MondayOFF.EveryDay.AfterSceneLoad();
+    //void Start()
+    //{
+    //    MondayOFF.EveryDay.AfterSceneLoad();
 
 
-        StartCoroutine(cor_load());
+    //    StartCoroutine(cor_load());
 
 
-        IEnumerator cor_load()
-        {
-            yield return new WaitForSeconds(0.5f);
+    //    IEnumerator cor_load()
+    //    {
+    //        yield return new WaitForSeconds(0.5f);
 
-            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
-        }
-    }
+    //        UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+    //    }
+    //}
 
 
 }
