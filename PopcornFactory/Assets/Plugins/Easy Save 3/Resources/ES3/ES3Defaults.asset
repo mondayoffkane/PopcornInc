@@ -46,8 +46,12 @@ MonoBehaviour:
     - Everyday.Events.Editor
     - Everyday.IAP
     - Everyday.IAP.Editor
+<<<<<<< HEAD
     - Everyday.SplashScreen
     - Everyday.SplashScreen.Editor
+=======
+    - Google.Android.AppBundle.Editor
+>>>>>>> 331918dd1c8e85156f01891bd0afcf9d621b2442
     - Google.Play.Common
     - Google.Play.Core
     - Google.Play.Review
@@ -67,8 +71,15 @@ MonoBehaviour:
     - Nementic.SelectionUtility.Editor
     - Nementic.SelectionUtility.Runtime
     - PlayOn
+<<<<<<< HEAD
     - PPv2URPConverters
     - Purchasing.Common
+=======
+    - Purchasing.Common
+    - SingularityGroup.HotReload.Editor
+    - SingularityGroup.HotReload.Runtime
+    - SingularityGroup.HotReload.Runtime.Public
+>>>>>>> 331918dd1c8e85156f01891bd0afcf9d621b2442
     - SingularSDK
     - Sirenix.OdinInspector.CompatibilityLayer
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
